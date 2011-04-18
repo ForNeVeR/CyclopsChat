@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{08CEBA92-6628-4818-85EB-7C24C531F1D2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cyclops.MainApplication</RootNamespace>
+    <AssemblyName>Cyclops.MainApplication</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
+      <HintPath>..\Libraries\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.WPF4">
+      <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\Libraries\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="ApplicationContext.cs" />
+    <Compile Include="Configuration\Profile.cs" />
+    <Compile Include="Configuration\ProfileManager.cs" />
+    <Compile Include="Controls\AnimatedImage.cs" />
+    <Compile Include="Controls\SmilesTable.cs" />
+    <Compile Include="Helpers\ImageUtils.cs" />
+    <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
+    <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
+    <Compile Include="Themes\ThemeManager.cs" />
+    <Compile Include="ViewModel\ConferencesListViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.Commands.cs" />
+    <Compile Include="ViewModel\PrivateViewModel.cs" />
+    <Compile Include="View\ConferencesList.xaml.cs">
+      <DependentUpon>ConferencesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConferenceView.xaml.cs">
+      <DependentUpon>ConferenceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ChatFlowDocument.cs" />
+    <Compile Include="Controls\ChatScrollViewer.cs" />
+    <Compile Include="Controls\ConferencesTabControl.cs" />
+    <Compile Include="Controls\InputBox.cs" />
+    <Compile Include="Controls\TrayController.cs" />
+    <Compile Include="Helpers\GlassEffectHelper.cs" />
+    <Compile Include="MessageDecoration\DecoratorsRegistry.cs" />
+    <Compile Include="MessageDecoration\Decorators\CommonMessageDecorator.cs" />
+    <Compile Include="MessageDecoration\Decorators\HyperlinkDecorator.cs" />
+    <Compile Include="MessageDecoration\Decorators\IMessageDecorator.cs" />
+    <Compile Include="MessageDecoration\Decorators\NickDecorator.cs" />
+    <Compile Include="MessageDecoration\Decorators\SmilesDecorator.cs" />
+    <Compile Include="MessageDecoration\Decorators\TimestampDecorator.cs" />
+    <Compile Include="MessageDecoration\MessagePresenter.cs" />
+    <Compile Include="ChatObjectFactory.cs" />
+    <Compile Include="ViewModel\ConferenceViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MessageViewModel.cs" />
+    <Compile Include="View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PrivateView.xaml.cs">
+      <DependentUpon>PrivateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SmilesView.xaml.cs">
+      <DependentUpon>SmilesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewController.cs" />
+    <Content Include="Themes\Default\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Page Include="View\SmilesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="AppIcon.ico" />
+    <Page Include="View\ConferencesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConferenceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="Resources\ligth-off.ico" />
+    <None Include="Resources\ligth-on.ico" />
+    <None Include="Resources\EmptyIcon.ico" />
+    <Resource Include="Resources\email.png" />
+    <Resource Include="Resources\users.png" />
+    <Content Include="Themes\Default\OutputAreaStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Page Include="View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PrivateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj">
+      <Project>{3D3E964F-34F2-423B-B22D-865DFE640182}</Project>
+      <Name>Cyclops.Core.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj">
+      <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
+      <Name>Cyclops.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

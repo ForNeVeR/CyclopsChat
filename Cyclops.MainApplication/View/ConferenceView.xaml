@@ -1,0 +1,101 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:Cyclops.Client.Controls" 
+             xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" xmlns:Controls2="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" x:Class="Cyclops.MainApplication.ConferenceView" IsVisibleChanged="UserControl_IsVisibleChanged"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" TextOptions.TextFormattingMode="Display">
+	<UserControl.Resources>
+
+		<DataTemplate x:Key="MemberInfoTemplate">
+			<Grid Height="32">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Image Grid.RowSpan="2" Source="{Binding AvatarUrl}" Height="27" Width="29" Stretch="UniformToFill" />
+				<TextBlock x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick}" FontWeight="Bold" FontSize="13.333" Foreground="#FF565656" />
+				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding StatusText}" Foreground="#FF919191" Margin="0,0,0,0" />
+			</Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsModer}" Value="True">
+                    <Setter TargetName="nickTextBlock" Property="Foreground" Value="Green" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+		</DataTemplate>
+
+        <CollectionViewSource x:Key="membersSource" Source="{Binding ConferenceViewModel.Conference.Members}">
+            <CollectionViewSource.SortDescriptions>
+                <ComponentModel:SortDescription PropertyName="IsModer" Direction="Descending"/>
+                <ComponentModel:SortDescription PropertyName="Nick"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
+	</UserControl.Resources>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="3*" MinWidth="100" />
+			<ColumnDefinition Width="*" MinWidth="100" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+			<RowDefinition Height="60" />
+		</Grid.RowDefinitions>
+
+		<TextBox IsReadOnly="True" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" />
+    
+   
+		<Controls1:ChatFlowDocumentScrollViewer Grid.Row="1" BorderThickness="1">
+			<Controls1:ChatFlowDocument TextOptions.TextFormattingMode="Display" Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" Style="{DynamicResource flowDocumentStyle}" />
+		</Controls1:ChatFlowDocumentScrollViewer>
+
+
+        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Expander IsExpanded="False" FontWeight="Bold" Foreground="DarkGray" Header="{Binding ConferenceViewModel.Conference.ConferenceId.Resource}">
+                <Grid Height="100">
+                    
+                </Grid>
+            </Expander>
+            <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Source={StaticResource membersSource}}" 
+                 ItemTemplate="{StaticResource MemberInfoTemplate}" ScrollViewer.CanContentScroll="False" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 SelectedItem="{Binding ConferenceViewModel.SelectedMember, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ConferenceViewModel.StartPrivateWithSelectedMember}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+        </Grid>
+		<Grid Grid.Row="2" Grid.ColumnSpan="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition  />
+				<ColumnDefinition Width="65" />
+			</Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+			<Controls:InputBox x:Name="inputBox" Grid.Row="1" Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SendCommand="{Binding ConferenceViewModel.SendMessage}" />
+            <Button Grid.Row="1" Grid.Column="1" Content="Send" Command="{Binding ConferenceViewModel.SendMessage}" />
+            <Button x:Name="smilesButton" Content="smiles" Width="40" HorizontalAlignment="Left" Margin="3" Click="SmilesButtonClick" />
+
+		</Grid>
+
+		<GridSplitter Grid.RowSpan="2" Grid.Column="1" Height="Auto" Width="2" HorizontalAlignment="Left" />
+        
+    </Grid>
+</UserControl>

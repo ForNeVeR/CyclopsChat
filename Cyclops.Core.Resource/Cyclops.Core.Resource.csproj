@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3D3E964F-34F2-423B-B22D-865DFE640182}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cyclops.Core.Resource</RootNamespace>
+    <AssemblyName>Cyclops.Core.Resource</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\Libraries\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FileLogger.cs" />
+    <Compile Include="Helpers\ZipStorer.cs" />
+    <Compile Include="Smiles\Smile.cs" />
+    <Compile Include="Smiles\SmilePack.cs" />
+    <Compile Include="Smiles\SmilePackMeta.cs" />
+    <Compile Include="Smiles\SmilesManager.cs" />
+    <Compile Include="SynchronizeInvokeImpl.cs" />
+    <Compile Include="Conference.cs" />
+    <Compile Include="ConferenceMember.cs" />
+    <Compile Include="ConferenceUserMessage.cs" />
+    <Compile Include="Helpers\CastUtility.cs" />
+    <Compile Include="InternalObservableCollection.cs" />
+    <Compile Include="NotifyPropertyChangedBase.cs" />
+    <Compile Include="Security\TripleDesStringEncryptor.cs" />
+    <Compile Include="UserSession.cs" />
+    <Compile Include="Composition\Module.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj">
+      <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
+      <Name>Cyclops.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj">
+      <Project>{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}</Project>
+      <Name>2005-jabber-net</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Smiles\note.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

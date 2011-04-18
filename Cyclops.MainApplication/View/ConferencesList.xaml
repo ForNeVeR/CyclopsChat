@@ -1,0 +1,60 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
+        xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" 
+        x:Class="Cyclops.MainApplication.View.ConferencesList" 
+        Title="Room list" Height="500" Width="320" MinWidth="300" MinHeight="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+	<Window.Resources>
+		<DataTemplate x:Key="ConferenceDataTemplate">
+			<Grid Margin="2,2,2,2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="30" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Image Source="..\Resources\users.png" Grid.RowSpan="2" Height="28" VerticalAlignment="Top" />
+				<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Id.User}" FontSize="13.333" FontWeight="Bold" Foreground="#FF6A6A6A" Margin="0,-3,0,2" />
+				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}" Foreground="#FF858585" Margin="0,-4,0,0" />
+
+			</Grid>
+		</DataTemplate>
+	</Window.Resources>
+	<Window.DataContext>
+		<ViewModel:ConferencesListViewModel />
+	</Window.DataContext>
+	<Controls:BusyIndicator IsBusy="{Binding IsBusy}">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30" />
+				<RowDefinition />
+				<RowDefinition Height="30" />
+			</Grid.RowDefinitions>
+
+
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Filter:" VerticalAlignment="Center" Margin="10,0,8,0" />
+				<TextBox Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" Height="22" />
+			</StackPanel>
+
+			<StackPanel Grid.Row="2" Orientation="Horizontal">
+				<TextBlock Text="Nick:" VerticalAlignment="Center" Margin="10,0,8,0" />
+				<TextBox Text="{Binding OpenWithNick, Mode=TwoWay}" Width="120" Height="22" />
+			</StackPanel>
+
+			<Button IsDefault="True" Command="{Binding OpenConference}" Grid.Row="3" Content="Join" Width="80" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
+
+			<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Conferences}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="False" SelectedItem="{Binding SelectedConference, Mode=TwoWay}" ItemTemplate="{DynamicResource ConferenceDataTemplate}">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="MouseDoubleClick" SourceObject="{Binding ElementName=listBox}">
+						<GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding OpenConference}" />
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+			</ListBox>
+		</Grid>
+	</Controls:BusyIndicator>
+</Window>
