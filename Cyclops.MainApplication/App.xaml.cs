@@ -11,7 +11,14 @@ namespace Cyclops.MainApplication
     {
         public App()
         {
+            Dispatcher.UnhandledException += DispatchernhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
+        }
+
+        void DispatchernhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            var logger = ChatObjectFactory.GetLogger();
+            logger.LogError("Unhandled exception", e.Exception);
         }
 
         private static void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)

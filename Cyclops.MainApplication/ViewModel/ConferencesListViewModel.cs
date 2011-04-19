@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using GalaSoft.MvvmLight;
@@ -104,7 +105,7 @@ namespace Cyclops.MainApplication.ViewModel
             if (!e.Success)
                 return;
             sourceConferences = Conferences = e.Result.Select(i => 
-                new ConferenceInfo {Id = i.Item1, Name = i.Item2}).OrderBy(i => i.Id.User);
+                new ConferenceInfo {Id = i.Item1, Name = i.Item2}).OrderBy(i => i.Id.User).ToList();
         }
 
         private bool OpenConferenceCanExecute()

@@ -137,7 +137,9 @@ namespace Cyclops.Core.Resource
 
             // some default settings
             JabberClient.AutoReconnect = -1;
-            JabberClient.AutoRoster = false;
+            JabberClient.AutoRoster = false; 
+            JabberClient.Priority = -1;
+            //JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5; - can't connect to jabber.uruchie.org (ejabbered) :(
             JabberClient[Options.SASL_MECHANISMS] = MechanismType.PLAIN;
             JabberClient.KeepAlive = 20F;
 
@@ -233,7 +235,6 @@ namespace Cyclops.Core.Resource
 
         private void jabberClient_OnAuthenticate(object sender)
         {
-            GetConferenceListAsync();
             IsAuthenticated = true;
             Authenticated(sender, new AuthenticationEventArgs());
         }
@@ -291,7 +292,7 @@ namespace Cyclops.Core.Resource
         void DiscoHandlerGetItems(DiscoManager sender, DiscoNode node, object state)
         {
             var result = (from DiscoNode childNode in node.Children
-                          select new Tuple<IEntityIdentifier, string>(childNode.JID, childNode.Name)).ToList();
+                            select new Tuple<IEntityIdentifier, string>(childNode.JID, /*childNode.Name ---  BUG!!*/ "TODO: name")).ToList();
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
 
