@@ -113,9 +113,9 @@ namespace Cyclops.Core.Resource
 
         public IObservableCollection<IConference> Conferences { get; private set; }
 
-        public void OpenConference(string name, string server, string nick)
+        public void OpenConference(IEntityIdentifier id)
         {
-            Conferences.AsInternalImpl().Add(new Conference(this, new JID(name, server, nick)));
+            Conferences.AsInternalImpl().Add(new Conference(this, id));
         }
 
         public void AuthenticateAsync(ConnectionConfig info)
@@ -130,17 +130,17 @@ namespace Cyclops.Core.Resource
             JabberClient.Port = info.Port;
             JabberClient.Resource = "cyclops v." + Assembly.GetAssembly(GetType()).GetName().Version.ToString(3);
 
-            JabberClient.InvokeControl = new SynchronizeInvokeImpl(Dispatcher);
+            if (Dispatcher != null)
+                JabberClient.InvokeControl = new SynchronizeInvokeImpl(Dispatcher);
 
-            CurrentUserId = new JID(info.User, info.Server, JabberClient.Resource);
+            currentUserId = new JID(info.User, info.Server, JabberClient.Resource);
             ConnectionConfig = info;
 
             // some default settings
             JabberClient.AutoReconnect = -1;
             JabberClient.AutoRoster = false; 
             JabberClient.Priority = -1;
-            //JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5; - can't connect to jabber.uruchie.org (ejabbered) :(
-            JabberClient[Options.SASL_MECHANISMS] = MechanismType.PLAIN;
+            JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5;
             JabberClient.KeepAlive = 20F;
 
             //let's go!
@@ -250,10 +250,26 @@ namespace Cyclops.Core.Resource
             JabberClient.OnError += jabberClient_OnError;
             JabberClient.OnInvalidCertificate += jabberClient_OnInvalidCertificate;
             JabberClient.OnStreamError += jabberClient_OnStreamError;
+            JabberClient.OnIQ += JabberClient_OnIQ;
+            JabberClient.OnWriteText += JabberClient_OnWriteText;
+            JabberClient.OnReadText += JabberClient_OnReadText;
 
             ConferenceManager.OnRoomMessage += ConferenceManager_OnRoomMessage;
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
+        }
+
+        void JabberClient_OnReadText(object sender, string txt)
+        {
+        }
+
+        void JabberClient_OnWriteText(object sender, string txt)
+        {
+        }
+
+        void JabberClient_OnIQ(object sender, IQ iq)
+        {
+            //throw new NotImplementedException();
         }
 
         private void JabberClient_OnMessage(object sender, Message msg)

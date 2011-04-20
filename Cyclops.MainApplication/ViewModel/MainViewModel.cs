@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using Cyclops.Core;
+using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.Themes;
 using Cyclops.MainApplication.View;
@@ -38,14 +39,13 @@ namespace Cyclops.MainApplication.ViewModel
             ConferencesModels = new ObservableCollection<ConferenceViewModel>();
             PrivateViewModels = new ObservableCollection<PrivateViewModel>();
 
-            string defaultNick = Session.CurrentUserId.User;
 
-            Session.OpenConference("main", "conference.jabber.uruchie.org", defaultNick);
-            Session.OpenConference("dotnet", "conference.jabber.ru", defaultNick);
-            Session.OpenConference("CIA", "conference.jabber.uruchie.org", defaultNick);
-            Session.OpenConference("support", "conference.jabber.uruchie.org", defaultNick);
+            ApplicationContext.Current.CurrentProfile.Rooms.ForEach(
+                i => Session.OpenConference(IdentifierBuilder.Create(i)));
 
-            Session.Conferences.SynchronizeWith(ConferencesModels, conference => new ConferenceViewModel(conference), i => i, i => i.Conference);
+            Session.Conferences.SynchronizeWith(ConferencesModels, 
+                conference => new ConferenceViewModel(conference), i => i, i => i.Conference);
+            
             SubscribeToEvents();
             IsApplicationInActiveState = Application.Current.MainWindow.IsActive;
         }

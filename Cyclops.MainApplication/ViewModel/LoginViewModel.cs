@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using Cyclops.Core;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Resource;
 using Cyclops.Core.Security;
+using Cyclops.MainApplication.Configuration;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -16,12 +19,14 @@ namespace Cyclops.MainApplication.ViewModel
         private bool isBusy;
         private string name;
         private IUserSession session;
+        private IEnumerable<Profile> profiles;
 
         public LoginViewModel()
         {
             if (IsInDesignMode)
                 return;
 
+            //profiles = ProfileManager.GetSavedProfiles();
             Session = ChatObjectFactory.GetSession();
             Session.Authenticated += SessionAuthenticated;
             Session.ConnectionDropped += SessionConnectionDropped;
@@ -97,14 +102,21 @@ namespace Cyclops.MainApplication.ViewModel
         private void AuthenticateAction(PasswordBox passwordBox)
         {
             IsBusy = true;
-            string encodedPsw =
-                ChatObjectFactory.ServiceLocator.GetInstance<IStringEncryptor>().EncryptString(passwordBox.Password);
-            Session.AuthenticateAsync(new ConnectionConfig
-                                          {
-                                              EncodedPassword = encodedPsw,
-                                              Server = ConfigurationManager.AppSettings["DefaultServer"],
-                                              User = Name,
-                                          });
+            string encodedPsw = ChatObjectFactory.GetStringEncryptor().EncryptString(passwordBox.Password);
+            var connectionConfig = new ConnectionConfig
+                                       {
+                                           EncodedPassword = encodedPsw,
+                                           Server = ConfigurationManager.AppSettings["DefaultServer"],
+                                           User = Name,
+                                       };
+
+            ApplicationContext.Current.CurrentProfile = new Profile
+                                                            {
+                                                                Name = Name, 
+                                                                ConnectionConfig = connectionConfig
+                                                            };
+
+            Session.AuthenticateAsync(connectionConfig);
         }
 
         protected override void Dispose(bool disposing)

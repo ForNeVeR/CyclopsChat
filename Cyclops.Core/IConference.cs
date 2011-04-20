@@ -1,4 +1,5 @@
 ﻿using System;
+using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 
 namespace Cyclops.Core
@@ -9,6 +10,7 @@ namespace Cyclops.Core
 
         bool IsInConference { get; }
 
+        IAvatarsManager AvatarsManager { get; }
         IEntityIdentifier ConferenceId { get; }
         IObservableCollection<IConferenceMember> Members { get; }
         IObservableCollection<IConferenceMessage> Messages { get; }

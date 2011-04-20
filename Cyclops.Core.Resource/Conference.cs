@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Resource.Avatars;
 using Cyclops.Core.Resources;
 using jabber;
 using jabber.connection;
@@ -23,12 +25,21 @@ namespace Cyclops.Core.Resource
             session.ConnectionDropped += OnConnectionDropped;
             Members = new InternalObservableCollection<IConferenceMember>();
             Messages = new InternalObservableCollection<IConferenceMessage>();
+            AvatarsManager = new AvatarsManager(session);
+            AvatarsManager.AvatarChange += AvatarsManagerAvatarChange;
 
             //if we are currently authenticated lets join to the channel imidiatly
             if (session.IsAuthenticated)
                 Authenticated(this, new AuthenticationEventArgs());
 
             session.Authenticated += Authenticated;
+        }
+
+        private void AvatarsManagerAvatarChange(object sender, AvatarChangedEventArgs e)
+        {
+            var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(e.UserId));
+            if (member != null)
+                ((ConferenceMember) member).AvatarUrl = e.BitmapImage;
         }
 
         #region IConference Members
@@ -155,13 +166,13 @@ namespace Cyclops.Core.Resource
 
         private void room_OnParticipantJoin(Room room, RoomParticipant participant)
         {
+            AvatarsManager.SendAvatarRequest(participant.NickJID);
             if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                Members.AsInternalImpl().Add(new ConferenceMember(session, participant, room));
+                Members.AsInternalImpl().Add(new ConferenceMember(session, participant, room) { AvatarUrl = AvatarsManager.GetFromCache(participant.NickJID)});
         }
 
         private void room_OnRoomMessage(object sender, Message msg)
         {
-            
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
         }
 
@@ -227,6 +238,8 @@ namespace Cyclops.Core.Resource
                 OnPropertyChanged("IsInConference");
             }
         }
+
+        public IAvatarsManager AvatarsManager { get; private set; }
 
         public IEntityIdentifier ConferenceId { get; private set; }
 

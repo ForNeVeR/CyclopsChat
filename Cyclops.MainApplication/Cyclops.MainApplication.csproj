@@ -79,11 +79,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationContext.cs" />
+    <Compile Include="ChatObjectFactory.cs" />
     <Compile Include="Configuration\Profile.cs" />
     <Compile Include="Configuration\ProfileManager.cs" />
     <Compile Include="Controls\AnimatedImage.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
-    <Compile Include="Helpers\ImageUtils.cs" />
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="Themes\ThemeManager.cs" />
@@ -110,7 +110,6 @@
     <Compile Include="MessageDecoration\Decorators\SmilesDecorator.cs" />
     <Compile Include="MessageDecoration\Decorators\TimestampDecorator.cs" />
     <Compile Include="MessageDecoration\MessagePresenter.cs" />
-    <Compile Include="ChatObjectFactory.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

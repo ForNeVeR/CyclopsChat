@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Resource;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -132,7 +133,7 @@ namespace Cyclops.MainApplication.ViewModel
             }
 
             string nick = string.IsNullOrWhiteSpace(OpenWithNick) ? session.CurrentUserId.User : OpenWithNick;
-            session.OpenConference(SelectedConference.Id.User, SelectedConference.Id.Server, nick);
+            session.OpenConference(IdentifierBuilder.Create(SelectedConference.Id.User, SelectedConference.Id.Server, nick));
             Close(this, EventArgs.Empty);
         }
 

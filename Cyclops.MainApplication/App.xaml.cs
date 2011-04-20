@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Cyclops.Core;
+using Cyclops.Core.Resource;
 
 namespace Cyclops.MainApplication
 {

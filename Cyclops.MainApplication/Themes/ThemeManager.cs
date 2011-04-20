@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Markup;
+using Cyclops.Core.Resource;
 
 namespace Cyclops.MainApplication.Themes
 {

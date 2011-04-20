@@ -2,6 +2,7 @@
 using Cyclops.Core;
 using Cyclops.Core.Composition;
 using Cyclops.Core.Modularity;
+using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
 using Microsoft.Practices.ServiceLocation;
 
@@ -43,10 +44,10 @@ namespace Cyclops.MainApplication
         {
             return serviceLocator.GetInstance<ISmilesManager>();
         }
-
-        //public static IEntityIdentifier CreateIdentifier(string user, string server, string resource)
-        //{
-        //    var identifier = serviceLocator.GetInstance<IEntityIdentifier>();
-        //}
+        
+        public static IStringEncryptor GetStringEncryptor()
+        {
+            return serviceLocator.GetInstance<IStringEncryptor>();
+        }
     }
 }

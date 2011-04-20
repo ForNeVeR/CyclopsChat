@@ -1,4 +1,6 @@
-﻿using Cyclops.Core.Configuration;
+﻿using System.Collections.Generic;
+using Cyclops.Core;
+using Cyclops.Core.Configuration;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.Configuration
@@ -6,6 +8,7 @@ namespace Cyclops.MainApplication.Configuration
     public class Profile : ViewModelBase
     {
         private ConnectionConfig connectionConfig;
+        private List<string> rooms;
         private string name;
 
         private string theme;
@@ -13,6 +16,15 @@ namespace Cyclops.MainApplication.Configuration
         public Profile()
         {
             Theme = "Default";
+
+            //default rooms (not for "production")
+            Rooms = new List<string>
+                        {
+                            "main@conference.jabber.uruchie.org/cyclops",
+                            "CIA@conference.jabber.uruchie.org/cyclops",
+                            "dotnet@conference.jabber.ru/cyclops",
+                        };
+
             ConnectionConfig = new ConnectionConfig();
         }
 
@@ -52,6 +64,16 @@ namespace Cyclops.MainApplication.Configuration
             {
                 connectionConfig = value;
                 RaisePropertyChanged("ConnectionConfig");
+            }
+        }
+
+        public List<string> Rooms
+        {
+            get { return rooms; }
+            set
+            {
+                rooms = value;
+                RaisePropertyChanged("Rooms");
             }
         }
 

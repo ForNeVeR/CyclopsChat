@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Cyclops.Core;
+using Cyclops.Core.Resource;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 

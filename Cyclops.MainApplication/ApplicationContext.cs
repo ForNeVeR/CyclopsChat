@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cyclops.Core.Smiles;
+using Cyclops.MainApplication.Configuration;
 
 namespace Cyclops.MainApplication
 {
@@ -27,5 +28,7 @@ namespace Cyclops.MainApplication
         #endregion
 
         public ISmilePack[] SmilePacks { get; set; }
+
+        public Profile CurrentProfile { get; set; }
     }
 }

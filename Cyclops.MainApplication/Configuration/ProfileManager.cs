@@ -4,39 +4,26 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using Cyclops.MainApplication.Configuration;
 
-namespace Cyclops.Client.Configuration
+namespace Cyclops.MainApplication.Configuration
 {
-    public class ProfileManager
+    public static class ProfileManager
     {
         private const string ProfileExtensions = ".config.xml";
-        private static readonly XmlSerializer xmlSerializer = new XmlSerializer(typeof (Profile));
-        private readonly string profilesFolder;
+        private static readonly XmlSerializer XmlSerializer = new XmlSerializer(typeof (Profile));
+        private static readonly string ProfilesFolder;
 
         static ProfileManager()
         {
-            DefaultInstance = new ProfileManager(ConfigurationManager.AppSettings["ProfilesFolder"]);
+            ProfilesFolder = ConfigurationManager.AppSettings["ProfilesFolder"];
         }
-
-        public ProfileManager(string folder)
-        {
-            profilesFolder = folder;
-        }
-
-        public static ProfileManager DefaultInstance { get; private set; }
-
-        /// <summary>
-        /// Get current profile
-        /// </summary>
-        public Profile CurrentProfile { get; set; }
-
+        
         /// <summary>
         /// Get all saved profiles
         /// </summary>
-        public IEnumerable<Profile> GetSavedProfiles()
+        public static IEnumerable<Profile> GetSavedProfiles()
         {
-            foreach (string folder in Directory.GetDirectories(profilesFolder))
+            foreach (string folder in Directory.GetDirectories(ProfilesFolder))
             {
                 string[] files = Directory.GetFiles(folder, Path.GetFileName(folder) + ProfileExtensions);
 
@@ -49,13 +36,13 @@ namespace Cyclops.Client.Configuration
             }
         }
 
-        private Profile DeserializeProfile(string path)
+        private static Profile DeserializeProfile(string path)
         {
             Stream stream = null;
             try
             {
                 stream = File.OpenRead(path);
-                return xmlSerializer.Deserialize(stream) as Profile;
+                return XmlSerializer.Deserialize(stream) as Profile;
             }
             catch
             {
@@ -70,7 +57,7 @@ namespace Cyclops.Client.Configuration
         /// <summary>
         /// Save new or changed profile to the specific folder
         /// </summary>
-        public void SaveProfile(Profile profile)
+        public static void SaveProfile(Profile profile)
         {
             string path = CreatePath(profile);
             string directory = Path.GetDirectoryName(path);
@@ -82,22 +69,22 @@ namespace Cyclops.Client.Configuration
                 File.Delete(path);
 
             using (FileStream stream = File.Create(path))
-                xmlSerializer.Serialize(stream, profile);
+                XmlSerializer.Serialize(stream, profile);
         }
 
-        private string CreatePath(Profile profile)
+        private static string CreatePath(Profile profile)
         {
             if (Path.GetInvalidFileNameChars().Any(i => profile.Name.Contains(i)))
                 throw new ArgumentException("Profile name contains invalid symbol(s)");
 
-            string path = Path.Combine(profilesFolder, profile.Name, profile.Name + ProfileExtensions);
+            string path = Path.Combine(ProfilesFolder, profile.Name, profile.Name + ProfileExtensions);
             return path;
         }
 
         /// <summary>
         /// Totally removes user profile
         /// </summary>
-        public void RemoveProfile(Profile profile)
+        public static void RemoveProfile(Profile profile)
         {
             string path = Path.GetDirectoryName(CreatePath(profile));
 

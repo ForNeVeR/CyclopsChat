@@ -15,7 +15,7 @@ namespace Cyclops.Core
         IObservableCollection<IConference> Conferences { get; }
         IObservableCollection<IConferenceMessage> PrivateMessages { get; }
 
-        void OpenConference(string name, string server, string nick);
+        void OpenConference(IEntityIdentifier id);
         void AuthenticateAsync(ConnectionConfig config);
         void Close();
         void Reconnect();

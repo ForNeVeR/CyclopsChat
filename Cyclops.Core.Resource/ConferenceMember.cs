@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Media.Imaging;
 using jabber.connection;
 using jabber.protocol.iq;
 
@@ -12,6 +13,7 @@ namespace Cyclops.Core.Resource
         private readonly RoomParticipant participant;
         private readonly Room room;
         private readonly UserSession session;
+        private BitmapImage avatarUrl;
 
         internal ConferenceMember(UserSession session, RoomParticipant participant, Room room)
         {
@@ -54,13 +56,13 @@ namespace Cyclops.Core.Resource
             get { return participant.Presence.Show; }
         }
 
-        public string AvatarUrl
+        public BitmapImage AvatarUrl
         {
-            get
+            get { return avatarUrl; }
+            internal set
             {
-                string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                                           string.Format(@"Avatars\{0}.jpg", random.Next(1, 8)));
-                return path;
+                avatarUrl = value;
+                OnPropertyChanged("AvatarUrl");
             }
         }
 

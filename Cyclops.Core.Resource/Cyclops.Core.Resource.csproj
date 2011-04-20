@@ -41,9 +41,11 @@
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,8 +54,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Avatars\AvatarsManager.cs" />
+    <Compile Include="Avatars\ImageUtils.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="Helpers\ZipStorer.cs" />
+    <Compile Include="IdentifierBuilder.cs" />
     <Compile Include="Smiles\Smile.cs" />
     <Compile Include="Smiles\SmilePack.cs" />
     <Compile Include="Smiles\SmilePackMeta.cs" />

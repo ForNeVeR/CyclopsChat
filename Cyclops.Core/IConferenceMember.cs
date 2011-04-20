@@ -1,4 +1,6 @@
-﻿namespace Cyclops.Core
+﻿using System.Windows.Media.Imaging;
+
+namespace Cyclops.Core
 {
     public interface IConferenceMember : ISessionHolder
     {
@@ -6,7 +8,7 @@
         bool IsModer { get; }
         string StatusText { get; }
         string StatusType { get; }
-        string AvatarUrl { get; }
+        BitmapImage AvatarUrl { get; }
 
         IEntityIdentifier ConferenceUserId { get; }
         IEntityIdentifier RealUserId { get; }
