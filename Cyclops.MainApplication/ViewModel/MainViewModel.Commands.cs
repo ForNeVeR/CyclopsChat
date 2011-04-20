@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using Cyclops.MainApplication.Themes;
 using Cyclops.MainApplication.View;
 using GalaSoft.MvvmLight.Command;
 

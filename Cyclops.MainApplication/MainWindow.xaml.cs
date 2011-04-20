@@ -2,7 +2,6 @@
 using System.Windows;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.Helpers;
-using Cyclops.MainApplication.Themes;
 using Cyclops.MainApplication.View;
 
 namespace Cyclops.MainApplication

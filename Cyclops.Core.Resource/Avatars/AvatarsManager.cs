@@ -41,7 +41,7 @@ namespace Cyclops.Core.Resource.Avatars
             } 
         }
 
-        public static string AvatarsFolder = @"Data/Avatars";
+        public static string AvatarsFolder = @"Data\Avatars";
         private BitmapImage defaultAvatar;
 
         #region Implementation of ISessionHolder

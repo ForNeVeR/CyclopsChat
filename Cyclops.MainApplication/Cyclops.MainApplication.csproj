@@ -121,7 +121,7 @@
     <Compile Include="Controls\SmilesTable.cs" />
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
-    <Compile Include="Themes\ThemeManager.cs" />
+    <Compile Include="ThemeManager.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
@@ -162,12 +162,20 @@
       <DependentUpon>SmilesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewController.cs" />
-    <Content Include="Themes\Default\Theme.xaml">
+    <Content Include="Data\Avatars\default.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Smiles\kolobok.jisp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Themes\Default\OutputAreaStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Smiles\kolobok.jisp">
+    <Content Include="Data\Themes\Default\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Page Include="View\SmilesView.xaml">
@@ -201,11 +209,6 @@
     <None Include="Resources\EmptyIcon.ico" />
     <Resource Include="Resources\email.png" />
     <Resource Include="Resources\users.png" />
-    <Content Include="Themes\Default\OutputAreaStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Page Include="View\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,6 +278,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Profiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

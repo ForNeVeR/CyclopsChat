@@ -6,7 +6,6 @@ using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Controls;
-using Cyclops.MainApplication.Themes;
 using Cyclops.MainApplication.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;

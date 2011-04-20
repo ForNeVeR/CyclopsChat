@@ -11,7 +11,7 @@ namespace Cyclops.Core.Resource.Smiles
 {
     public class SmilesManager : ISmilesManager
     {
-        public const string SmilesPackFolder = "Smiles";
+        public const string SmilesPackFolder = @"Data\Smiles";
         private static readonly XmlSerializer XmlSerializer = new XmlSerializer(typeof(SmilePack));
 
         public ISmilePack[] GetSmilePacks()
