@@ -18,6 +18,7 @@ namespace Cyclops.MainApplication.ViewModel
     {
         private bool isBusy;
         private string name;
+        private string errorMessage;
         private IUserSession session;
         private IEnumerable<Profile> profiles;
 
@@ -59,6 +60,16 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                errorMessage = value;
+                RaisePropertyChanged("ErrorMessage");
+            }
+        }
+
         public IUserSession Session
         {
             get { return session; }
@@ -74,7 +85,7 @@ namespace Cyclops.MainApplication.ViewModel
         private void SessionConnectionDropped(object sender, AuthenticationEventArgs e)
         {
             IsBusy = false;
-            MessageBox.Show(e.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            ErrorMessage = e.ErrorMessage;
         }
 
         private void SessionAuthenticated(object sender, AuthenticationEventArgs e)
@@ -89,7 +100,7 @@ namespace Cyclops.MainApplication.ViewModel
             else
             {
                 IsBusy = false;
-                MessageBox.Show(e.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ErrorMessage = e.ErrorMessage;
             }
         }
 
@@ -98,9 +109,17 @@ namespace Cyclops.MainApplication.ViewModel
             return !string.IsNullOrWhiteSpace(Name) &&
                    !Name.Contains("@") && !Name.Contains("/");
         }
-
+        
         private void AuthenticateAction(PasswordBox passwordBox)
         {
+            ErrorMessage = string.Empty;
+
+            if (string.IsNullOrEmpty(passwordBox.Password))
+            {
+                ErrorMessage = "Password can't be empty";
+                return;
+            }
+            
             IsBusy = true;
             string encodedPsw = ChatObjectFactory.GetStringEncryptor().EncryptString(passwordBox.Password);
             var connectionConfig = new ConnectionConfig

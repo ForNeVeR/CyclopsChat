@@ -27,7 +27,8 @@ namespace Cyclops.MainApplication.Controls
             notifyIcon.Text = notifyIcon.BalloonTipText = "Cyclops chat (double-click to show/hide)";
             notifyIcon.Visible = false;
             notifyIcon.MouseDoubleClick += NotifyIconMouseDoubleClick;
-            window.StateChanged += WindowStateChanged;
+            if (window != null)
+                window.StateChanged += WindowStateChanged;
         }
 
         void WindowStateChanged(object sender, EventArgs e)
