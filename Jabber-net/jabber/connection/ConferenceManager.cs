@@ -973,8 +973,8 @@ namespace jabber.connection
         /// <param name="body">The message body to send.</param>
         public void PrivateMessage(string nick, string body)
         {
-            if (m_state != STATE.running)
-                throw new InvalidOperationException("Must be in running state to send message: " + m_state.ToString());
+            //if (m_state != STATE.running)
+            //    throw new InvalidOperationException("Must be in running state to send message: " + m_state.ToString());
 
 /*
 <message

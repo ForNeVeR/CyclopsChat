@@ -1,4 +1,6 @@
-﻿namespace Cyclops.Core
+﻿using System.Windows.Media.Imaging;
+
+namespace Cyclops.Core
 {
     public class CaptchaSystemMessage : SystemConferenceMessage
     {
@@ -7,6 +9,6 @@
             IsErrorMessage = true;
         }
 
-        public string Url { get; set; }
+        public BitmapImage Bitmap { get; set; }
     }
 }

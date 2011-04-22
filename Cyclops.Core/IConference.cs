@@ -25,5 +25,6 @@ namespace Cyclops.Core
         event EventHandler<CaptchaEventArgs> CaptchaRequirment;
         event EventHandler<KickedEventArgs> Kicked;
         event EventHandler<BannedEventArgs> Banned;
+        event EventHandler InvalidCaptchaCode;
     }
 }

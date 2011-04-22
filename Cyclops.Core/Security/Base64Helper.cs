@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Cyclops.Core.Security
 {
-    public static class Base64Helper
+    public static class CryptoHelper
     {
         /// <summary>
         /// Encode string into Base64
         /// </summary>
-        public static string Encode(string source)
+        public static string Base64Encode(string source)
         {
             return Convert.ToBase64String(Encoding.Default.GetBytes(source));
         }
@@ -17,7 +17,7 @@ namespace Cyclops.Core.Security
         /// <summary>
         /// Decode string from base64
         /// </summary>
-        public static string Decode(string base64)
+        public static string Base64Decode(string base64)
         {
             byte[] data = Convert.FromBase64String(base64);
             return Encoding.Default.GetString(data);
@@ -31,6 +31,11 @@ namespace Cyclops.Core.Security
             byte[] data = Encoding.UTF8.GetBytes(val);
             SHA1 sha = new SHA1Managed();
             return sha.ComputeHash(data);
+        }
+
+        public static string CalculateMd5Hash(string val)
+        {
+            return BitConverter.ToString((new MD5CryptoServiceProvider()).ComputeHash(Encoding.Default.GetBytes(val)));
         }
     }
 }

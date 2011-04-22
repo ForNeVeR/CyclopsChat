@@ -33,9 +33,9 @@ namespace Cyclops.MainApplication.ViewModel
             Session.ConnectionDropped += SessionConnectionDropped;
             Authenticate = new RelayCommand<PasswordBox>(AuthenticateAction, AuthenticateCanExecute);
 
-            //DEBUG:
-            //Name = "cyclops";
-            //AuthenticateAction(new PasswordBox { Password = "cyclops" });
+            //QUICK:
+            //Name = "nagg";
+            //AuthenticateAction(new PasswordBox { Password = "" });
         }
 
         public RelayCommand<PasswordBox> Authenticate { get; set; }
@@ -96,9 +96,9 @@ namespace Cyclops.MainApplication.ViewModel
                 ApplicationContext.Current.SmilePacks = ChatObjectFactory.GetSmilesManager().GetSmilePacks();
                 IsBusy = false;
 
-#if DEBUG
+//#if DEBUG
                 ChatObjectFactory.ShowDebugWindow();
-#endif
+//#endif
                 Authenticated(this, e);
             }
             else

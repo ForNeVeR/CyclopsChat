@@ -20,9 +20,10 @@ namespace Cyclops.MainApplication.Configuration
             //default rooms (not for "production")
             Rooms = new List<string>
                         {
-                            "main@conference.jabber.uruchie.org/cyclops",
-                            "CIA@conference.jabber.uruchie.org/cyclops",
-                            "dotnet@conference.jabber.ru/cyclops",
+                            //"main@conference.jabber.uruchie.org/cyclops",
+                            //"CIA@conference.jabber.uruchie.org/cyclops",
+                            //"dotnet@conference.jabber.ru/cyclops",
+                            "anime@conference.jabber.ru/cyclops",
                         };
 
             ConnectionConfig = new ConnectionConfig();

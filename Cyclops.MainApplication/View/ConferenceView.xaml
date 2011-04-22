@@ -50,7 +50,7 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
-		<TextBox IsReadOnly="True" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" />
+		<TextBox Height="24" IsReadOnly="True" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" />
     
    
 		<Controls1:ChatFlowDocumentScrollViewer Grid.Row="1" BorderThickness="1">

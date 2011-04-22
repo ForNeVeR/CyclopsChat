@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
 using Cyclops.Core;
 
 namespace Cyclops.MainApplication.MessageDecoration.Decorators
@@ -33,13 +34,14 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
 
             if (msg is CaptchaSystemMessage)
             {
-                var web = new WebBrowser();
-                web.Navigate(((CaptchaSystemMessage) msg).Url);
-                web.MaxHeight = 150;
-                web.MaxWidth = 230;
+                var imageControl = new Image();
+                BitmapImage image;
+                imageControl.Source = image =(((CaptchaSystemMessage)msg).Bitmap);
+                imageControl.Width = image.Width;
+                imageControl.Height = image.Height;
                 Span span = new Span();
                 span.Inlines.Add(messageInline);
-                span.Inlines.Add(new Figure(new BlockUIContainer(web)));
+                span.Inlines.Add(imageControl);
                 return span;
             }
 

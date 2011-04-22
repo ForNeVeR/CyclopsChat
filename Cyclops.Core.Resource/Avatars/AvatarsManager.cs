@@ -102,7 +102,7 @@ namespace Cyclops.Core.Resource.Avatars
         
         private static string BuildPath(IEntityIdentifier id)
         {
-            return Path.Combine(AvatarsFolder, Base64Helper.Encode(id.ToString()) + ".png");
+            return Path.Combine(AvatarsFolder, CryptoHelper.CalculateMd5Hash(id.ToString()) + ".png");
         }
 
         #endregion

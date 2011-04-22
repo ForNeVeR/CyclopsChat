@@ -69,6 +69,7 @@
     <Compile Include="FileLogger.cs" />
     <Compile Include="Helpers\ZipStorer.cs" />
     <Compile Include="IdentifierBuilder.cs" />
+    <Compile Include="JabberNetExtensions\CaptchaAnswer.cs" />
     <Compile Include="Smiles\Smile.cs" />
     <Compile Include="Smiles\SmilePack.cs" />
     <Compile Include="Smiles\SmilePackMeta.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="Conference.cs" />
     <Compile Include="ConferenceMember.cs" />
     <Compile Include="ConferenceUserMessage.cs" />
-    <Compile Include="Helpers\CastUtility.cs" />
+    <Compile Include="Helpers\CommonUtility.cs" />
     <Compile Include="InternalObservableCollection.cs" />
     <Compile Include="NotifyPropertyChangedBase.cs" />
     <Compile Include="Security\TripleDesStringEncryptor.cs" />

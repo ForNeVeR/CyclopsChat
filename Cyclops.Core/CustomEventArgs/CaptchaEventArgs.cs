@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace Cyclops.Core.CustomEventArgs
 {
     public class CaptchaEventArgs : EventArgs
     {
-        public string CaptchaUrl { get; private set; }
+        public BitmapImage BitmapImage { get; private set; }
 
-        public CaptchaEventArgs(string url)
+        public CaptchaEventArgs(BitmapImage bitmapImage)
         {
-            CaptchaUrl = url;
+            this.BitmapImage = bitmapImage;
         }
     }
 }

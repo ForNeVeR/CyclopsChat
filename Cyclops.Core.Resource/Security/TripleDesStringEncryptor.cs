@@ -22,12 +22,12 @@ namespace Cyclops.Core.Resource.Security
 
         public string EncryptString(string plainText)
         {
-            return Base64Helper.Encode(Transform(plainText, provider.CreateEncryptor(key, iv)));
+            return CryptoHelper.Base64Encode(Transform(plainText, provider.CreateEncryptor(key, iv)));
         }
 
         public string DecryptString(string encryptedText)
         {
-            return Transform(Base64Helper.Decode(encryptedText), provider.CreateDecryptor(key, iv));
+            return Transform(CryptoHelper.Base64Decode(encryptedText), provider.CreateDecryptor(key, iv));
         }
 
         #endregion

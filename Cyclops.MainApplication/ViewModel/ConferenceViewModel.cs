@@ -14,6 +14,7 @@ namespace Cyclops.MainApplication.ViewModel
         private IConference conference;
         private string currentlyTypedMessage;
         private ObservableCollection<MessageViewModel> messages;
+        private IConferenceMember selectedMember;
 
         public ConferenceViewModel(IConference conference)
         {
@@ -21,6 +22,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.Joined += ConferenceJoined;
             Conference.Banned += ConferenceBanned;
             Conference.Kicked += ConferenceKicked;
+            Conference.InvalidCaptchaCode += ConferenceInvalidCaptchaCode;
             Conference.Disconnected += ConferenceDisconnected;
 
             Conference.CaptchaRequirment += ConferenceCaptchaRequirment;
@@ -33,13 +35,18 @@ namespace Cyclops.MainApplication.ViewModel
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
         }
 
+        private void ConferenceInvalidCaptchaCode(object sender, EventArgs e)
+        {
+            AddSystemMessage("Invalid code.");
+        }
+
         private void ConferenceCaptchaRequirment(object sender, CaptchaEventArgs e)
         {
             Messages.Add(new MessageViewModel(
                 new CaptchaSystemMessage
                     {
-                        Body = string.Format("Proof you are not the bot:"), 
-                        Url = e.CaptchaUrl
+                        Body = string.Format("Proof you are not the bot:\n"), 
+                        Bitmap = e.BitmapImage
                     }));
         }
 
@@ -72,7 +79,6 @@ namespace Cyclops.MainApplication.ViewModel
         public RelayCommand SendMessage { get; private set; }
         public RelayCommand StartPrivateWithSelectedMember { get; private set; }
 
-        private IConferenceMember selectedMember;
         public IConferenceMember SelectedMember
         {
             get { return selectedMember; }

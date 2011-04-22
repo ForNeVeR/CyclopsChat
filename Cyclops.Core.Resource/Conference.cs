@@ -3,12 +3,14 @@ using System.Linq;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource.Avatars;
+using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using jabber;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+using jabber.protocol.x;
 
 namespace Cyclops.Core.Resource
 {
@@ -108,6 +110,9 @@ namespace Cyclops.Core.Resource
             if (pres.Error == null)
                 return;
 
+            if (captchaMode)
+                return;
+
             switch (pres.Error.Code)
             {
                 case 409: //conflict
@@ -176,18 +181,34 @@ namespace Cyclops.Core.Resource
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
         }
 
-        public event EventHandler<CaptchaEventArgs> CaptchaRequirment = delegate { }; 
+        public event EventHandler<CaptchaEventArgs> CaptchaRequirment = delegate { };
+
+        private bool captchaMode = false;
+        private string captchaChallenge = null;
 
         private void room_OnAdminMessage(object sender, Message msg)
         {
-            if (msg.OfType<Element>().Any(i => string.Equals(i.Name, "captcha", StringComparison.InvariantCultureIgnoreCase)))
+            var captchaElement = msg.OfType<Element>().GetNodeByName<Element>("captcha");
+            if (captchaElement != null && captchaElement["x"] != null)
             {
-                var element = msg.OfType<Element>().FirstOrDefault(i => string.Equals(i.Name, "x", StringComparison.InvariantCultureIgnoreCase)) as OOB;
-                if (element != null)
+                captchaChallenge = captchaElement["x"].OfType<Field>().FirstOrDefault(i => string.Equals(i.Var, "challenge")).Val;
+
+                var element = msg.OfType<Element>().GetNodeByName<Element>("data");
+                if (element != null && !element.ChildNodes.IsNullOrEmpty())
                 {
-                    string captcha = element.Url;
-                    CaptchaRequirment(this, new CaptchaEventArgs(captcha));
-                    return;
+                    try
+                    {
+                        var captchaInBase64 = element.FirstChild.Value;
+                        var captcha = ImageUtils.Base64ToImage(captchaInBase64).ToBitmapImage(); //TODO: create method Base64ToBitmapImage
+
+                        CaptchaRequirment(this, new CaptchaEventArgs(captcha));
+                        captchaMode = true;
+                        return;
+                    }
+                    catch
+                    {
+
+                    }
                 }
                 
             }
@@ -270,20 +291,45 @@ namespace Cyclops.Core.Resource
 
         public void SendPublicMessage(string body)
         {
-            //if (room.IsParticipating)
-                room.PublicMessage(body);
+            if (captchaMode)
+            {
+                ConferenceManager manager = session.ConferenceManager;
+                var iq = new TypedIQ<CaptchaAnswer>(session.JabberClient.Document);
+                iq.To = ((JID) ConferenceId).BareJID;
+                iq.Type = IQType.set;
+                iq.Instruction.CaptchaAnswerX = new CaptchaAnswerX(session.JabberClient.Document);
+                iq.Instruction.CaptchaAnswerX.FillAnswer(body, (JID)ConferenceId, captchaChallenge);
+                manager.BeginIQ(iq, OnCaptchaResponse, new Object());
+                return;
+            }
+                
+            room.PublicMessage(body);
+        }
+        
+        private void OnCaptchaResponse(object sender, IQ iq, object data)
+        {
+            if (iq.Error == null)
+                captchaMode = false;
+            else
+            {
+                //let's rejoin
+                room.Leave("");
+                room.Join();
+                InvalidCaptchaCode(this, EventArgs.Empty);
+            }
         }
 
         public void SendPrivateMessage(IEntityIdentifier target, string body)
         {
-            if (room.IsParticipating)
-                room.PrivateMessage(target.Resource, body);
+            room.PrivateMessage(target.Resource, body);
         }
 
         public event EventHandler<ConferenceJoinEventArgs> Joined = delegate { };
         public event EventHandler<KickedEventArgs> Kicked = delegate { };
         public event EventHandler<BannedEventArgs> Banned = delegate { };
+        public event EventHandler InvalidCaptchaCode = delegate { };
 
         #endregion
+
     }
 }
