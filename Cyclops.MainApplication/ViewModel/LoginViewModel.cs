@@ -95,6 +95,10 @@ namespace Cyclops.MainApplication.ViewModel
                 //load smiles into context
                 ApplicationContext.Current.SmilePacks = ChatObjectFactory.GetSmilesManager().GetSmilePacks();
                 IsBusy = false;
+
+#if DEBUG
+                ChatObjectFactory.ShowDebugWindow();
+#endif
                 Authenticated(this, e);
             }
             else

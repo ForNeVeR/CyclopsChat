@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Tests", "Cyclops.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.ConsoleForTests", "Cyclops.ConsoleForTests\Cyclops.ConsoleForTests.csproj", "{D764C812-40D2-4305-B646-4578AA6B77A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2005-muzzle", "Jabber-net\muzzle\2005-muzzle.csproj", "{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,16 @@ Global
 		{D764C812-40D2-4305-B646-4578AA6B77A9}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D764C812-40D2-4305-B646-4578AA6B77A9}.Release|x86.ActiveCfg = Release|x86
 		{D764C812-40D2-4305-B646-4578AA6B77A9}.Release|x86.Build.0 = Release|x86
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,5 +138,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5} = {1164E110-8696-43FE-878F-C8F39BD7882B}
 		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1} = {1164E110-8696-43FE-878F-C8F39BD7882B}
+		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB} = {1164E110-8696-43FE-878F-C8F39BD7882B}
 	EndGlobalSection
 EndGlobal

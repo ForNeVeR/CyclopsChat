@@ -45,7 +45,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin5\Debug\</OutputPath>
@@ -206,6 +206,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Cyclops.Core\Cyclops.Core.csproj">
+      <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
+      <Name>Cyclops.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\2005-jabber-net.csproj">
       <Project>{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}</Project>
       <Name>2005-jabber-net</Name>

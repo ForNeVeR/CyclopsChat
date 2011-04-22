@@ -948,8 +948,8 @@ namespace jabber.connection
         /// <param name="body">The message text to send.</param>
         public void PublicMessage(string body)
         {
-            if (m_state != STATE.running)
-                throw new InvalidOperationException("Must be in running state to send message: " + m_state.ToString());
+            //if (m_state != STATE.running)
+            //    throw new InvalidOperationException("Must be in running state to send message: " + m_state.ToString());
 /*
 <message
     to='darkcave@macbeth.shakespeare.lit'

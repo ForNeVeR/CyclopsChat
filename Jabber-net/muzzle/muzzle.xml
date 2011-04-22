@@ -4,224 +4,6 @@
         <name>muzzle</name>
     </assembly>
     <members>
-        <member name="T:muzzle.ChatHistory">
-            <summary>
-            Keep track of the history of a conversation or room.
-            </summary>
-        </member>
-        <member name="T:muzzle.BottomScrollRichText">
-            <summary>
-            Summary description for BottomScrollRichText.
-            </summary>
-        </member>
-        <member name="F:muzzle.BottomScrollRichText.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.#ctor">
-            <summary>
-            Create a RichText that can scroll to the bottom easily.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.WndProc(System.Windows.Forms.Message@)">
-            <summary>
-            The message pump.  Overriden to catch the WM_VSCROLL events.
-            </summary>
-            <param name="m"></param>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.ClearAndScroll">
-            <summary>
-            Clear the text, and scroll back to the top.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.ScrollToBottom">
-            <summary>
-            Scroll to the bottom of the current text.
-            </summary>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.AppendText(System.Drawing.Color,System.String)">
-            <summary>
-            Append text with the given color to the end of the text area.
-            Side effect: the existing selection is modified.  Save the selection
-            if you want to keep it.
-            </summary>
-            <param name="c"></param>
-            <param name="text"></param>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.String)">
-            <summary>
-            Append text.  If we were at the bottom, scroll to the bottom.  Otherwise leave the scroll position
-            where it is.
-            </summary>
-            <param name="text"></param>
-        </member>
-        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.Drawing.Color,System.String,System.String)">
-             <summary>
-             Add a line that has a colored tag string, followed by a space, followed by
-             a chunk of text in the default color, followed by a newline.
-            
-             Note: Although this seems kind of random, it's needed in several places.
-             </summary>
-             <param name="tagColor">The color to use for the tag</param>
-             <param name="tag">The tag string</param>
-             <param name="text">The main text</param>
-        </member>
-        <member name="P:muzzle.BottomScrollRichText.MaxLines">
-            <summary>
-            Maximum number of lines to keep
-            </summary>
-        </member>
-        <member name="P:muzzle.BottomScrollRichText.IsAtBottom">
-            <summary>
-            Is the text currently scrolled to the bottom?
-            </summary>
-        </member>
-        <member name="M:muzzle.ChatHistory.#ctor">
-            <summary>
-            Create.  Make sure to set Client and From, at least.
-            </summary>
-        </member>
-        <member name="M:muzzle.ChatHistory.InsertMessage(jabber.protocol.client.Message)">
-            <summary>
-            Insert the given message into the history.  The timestamp on the message will be used, if
-            included, otherwise the current time will be used.
-            Messages without bodies will be ignored.
-            </summary>
-            <param name="msg"></param>
-        </member>
-        <member name="M:muzzle.ChatHistory.InsertSend(System.String)">
-            <summary>
-            We sent some text; insert it.
-            </summary>
-            <param name="text"></param>
-        </member>
-        <member name="M:muzzle.ChatHistory.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:muzzle.ChatHistory.Nickname">
-            <summary>
-            Nickname for the associated user.  If null, the resource will be used (e.g. MUC).
-            </summary>
-        </member>
-        <member name="T:muzzle.OptionForm">
-            <summary>
-            Base class for forms that configure XmppStream subclasses.
-            </summary>
-        </member>
-        <member name="F:muzzle.OptionForm.tip">
-            <summary>
-            ToolTips.
-            </summary>
-        </member>
-        <member name="F:muzzle.OptionForm.error">
-            <summary>
-            Error notifications.
-            </summary>
-        </member>
-        <member name="M:muzzle.OptionForm.#ctor">
-            <summary>
-            Create new form
-            </summary>
-        </member>
-        <member name="M:muzzle.OptionForm.#ctor(jabber.connection.XmppStream)">
-            <summary>
-            Create new form.
-            </summary>
-            <param name="xmpp"></param>
-        </member>
-        <member name="M:muzzle.OptionForm.WriteXmpp">
-            <summary>
-            Write to the XmppStream the current values.
-            </summary>
-        </member>
-        <member name="M:muzzle.OptionForm.Configure(jabber.connection.XmppStream)">
-            <summary>
-            Write the configuration values to the given XmppStream.
-            </summary>
-            <param name="stream">The stream to configure</param>
-        </member>
-        <member name="M:muzzle.OptionForm.WriteToFile(System.String)">
-            <summary>
-            Write the current connection properties to an XML config file.
-            TODO: Replace this with a better ConfigFile implementation that can write.
-            </summary>
-            <param name="file"></param>
-        </member>
-        <member name="M:muzzle.OptionForm.ReadXmpp">
-            <summary>
-            Read current values from the XmppStream
-            </summary>
-        </member>
-        <member name="M:muzzle.OptionForm.Login(System.String)">
-            <summary>
-            Read connection properties from the given file,
-            pop up the dialog to see if the user wants to change them,
-            save the changes, and
-            connect to the server.
-            </summary>
-            <param name="propertyFile">The name of the file to store connection information in.</param>
-            <returns>True if the user hit OK, otherwise false</returns>
-        </member>
-        <member name="M:muzzle.OptionForm.ReadFromFile(System.String)">
-            <summary>
-            Set the connection properties from an XML config file.
-            TODO: Replace this with a better ConfigFile implementation that can write.
-            </summary>
-            <param name="file"></param>
-        </member>
-        <member name="M:muzzle.OptionForm.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:muzzle.OptionForm.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:muzzle.OptionForm.Required(System.Object,System.ComponentModel.CancelEventArgs)">
-            <summary>
-            This field is required.
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:muzzle.OptionForm.ClearError(System.Object,System.EventArgs)">
-            <summary>
-            Clear any error blinkies.
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:muzzle.OptionForm.Xmpp">
-            <summary>
-            The client connection to manage
-            </summary>
-        </member>
-        <member name="P:muzzle.OptionForm.Item(System.String)">
-            <summary>
-            Set/Get the value of an option, as it currently exists in a control.
-            </summary>
-            <param name="option"></param>
-            <returns></returns>
-        </member>
         <member name="T:muzzle.JidMulti">
             <summary>
             Summary description for JidMulti.
@@ -253,87 +35,6 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="T:muzzle.LitmusColorScheme">
-            <summary>
-            How should colors be picked?
-            </summary>
-        </member>
-        <member name="F:muzzle.LitmusColorScheme.Blue">
-            <summary>
-            Just shades of blue
-            </summary>
-        </member>
-        <member name="F:muzzle.LitmusColorScheme.Multicolor">
-            <summary>
-            More colors for non-ASCII
-            </summary>
-        </member>
-        <member name="T:muzzle.Litmus">
-             <summary>
-             Litmus is like StripChart, but shows a graphical representation of protocol going by.
-             This was inspired by DW &amp; Craig&apos;s suggestion that the next generation protocol should
-             just be shades of blue.
-            
-             Good gracious.  Did I really take the time to write this?
-             </summary>
-        </member>
-        <member name="F:muzzle.Litmus.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:muzzle.Litmus.#ctor">
-            <summary>
-            Create a new Litmus object
-            </summary>
-        </member>
-        <member name="M:muzzle.Litmus.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-        </member>
-        <member name="M:muzzle.Litmus.Clear">
-            <summary>
-            Clear all data in the window
-            </summary>
-        </member>
-        <member name="M:muzzle.Litmus.AddText(System.String)">
-            <summary>
-            Add a string to the window.  Each byte will become roughly a
-            pixel with color based on the byte's value.
-            </summary>
-            <param name="text"></param>
-        </member>
-        <member name="M:muzzle.Litmus.AddBytes(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Add bytes to the window.  Each byte will become roughly a
-            pixel with color based on the byte's value.
-            </summary>
-            <param name="buf"></param>
-            <param name="offset"></param>
-            <param name="length"></param>
-        </member>
-        <member name="M:muzzle.Litmus.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="P:muzzle.Litmus.ColorScheme">
-            <summary>
-            Color scheme to use.
-            </summary>
-        </member>
-        <member name="P:muzzle.Litmus.History">
-            <summary>
-            Number of points to show.  -1 means all
-            </summary>
-        </member>
-        <member name="P:muzzle.Litmus.Paused">
-            <summary>
-            Don't update the display for now.  Useful for bulk loads.
             </summary>
         </member>
         <member name="T:muzzle.XDataForm">
@@ -387,42 +88,47 @@
             </summary>
             <param name="x"></param>
         </member>
-        <member name="T:muzzle.ComponentLogin">
-             <summary>
-             A login form for client connections.
-             </summary>
-             <example>
-             ComponentLogin l = new ComponentLogin(jc);
-            
-             if (l.ShowDialog(this) == DialogResult.OK)
-             {
-                 jc.Connect();
-             }
-             </example>
-        </member>
-        <member name="M:muzzle.ComponentLogin.#ctor">
+        <member name="T:muzzle.StreamControl">
             <summary>
-            Create a Client Login dialog box
+            A UserControl that references an XmppStream.
             </summary>
         </member>
-        <member name="M:muzzle.ComponentLogin.Login(jabber.server.JabberService,System.String)">
+        <member name="F:muzzle.StreamControl.m_stream">
             <summary>
-            Log in to the server
+            The XmppStream for this control.  Set at design time when a subclass control is dragged onto a form.
             </summary>
-            <param name="service">The JabberClient instance to connect</param>
-            <param name="propertyFile">The name of an XML file to store properties in.</param>
-            <returns>True if the user clicked OK, false on cancel</returns>
         </member>
-        <member name="M:muzzle.ComponentLogin.#ctor(jabber.server.JabberService)">
+        <member name="M:muzzle.StreamControl.Write(System.Xml.XmlElement)">
             <summary>
-            Create a Client Login dialog box that manages a component
+            Write the specified stanza to the stream.
             </summary>
-            <param name="service">The component to manage</param>
+            <param name="elem"></param>
         </member>
-        <member name="M:muzzle.ComponentLogin.InitializeComponent">
+        <member name="M:muzzle.StreamControl.BeginIQ(jabber.protocol.client.IQ,jabber.connection.IqCB,System.Object)">
             <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
+             Does an asynchronous IQ call.
+             If the from address hasn't been set, and an OverrideFrom has been set,
+             the from address will be set to the value of OverrideFrom.
+            </summary>
+            <param name="iq">IQ packet to send.</param>
+            <param name="cb">Callback to execute when the result comes back.</param>
+            <param name="cbArg">Arguments to pass to the callback.</param>
+        </member>
+        <member name="E:muzzle.StreamControl.OnStreamChanged">
+            <summary>
+            The XmppStream was changed.  Often at design time.  The object will be this StreamControl.
+            </summary>
+        </member>
+        <member name="P:muzzle.StreamControl.Stream">
+            <summary>
+            The JabberClient or JabberService to hook up to.
+            </summary>
+        </member>
+        <member name="P:muzzle.StreamControl.OverrideFrom">
+            <summary>
+            Override the from address that will be stamped on outbound packets.
+            Unless your server implemets XEP-193, you shouldn't use this for 
+            client connections.
             </summary>
         </member>
         <member name="T:muzzle.ChartStyle">
@@ -588,90 +294,6 @@
             The last value inserted into the chart.
             </summary>
         </member>
-        <member name="T:muzzle.StreamControl">
-            <summary>
-            A UserControl that references an XmppStream.
-            </summary>
-        </member>
-        <member name="F:muzzle.StreamControl.m_stream">
-            <summary>
-            The XmppStream for this control.  Set at design time when a subclass control is dragged onto a form.
-            </summary>
-        </member>
-        <member name="M:muzzle.StreamControl.Write(System.Xml.XmlElement)">
-            <summary>
-            Write the specified stanza to the stream.
-            </summary>
-            <param name="elem"></param>
-        </member>
-        <member name="M:muzzle.StreamControl.BeginIQ(jabber.protocol.client.IQ,jabber.connection.IqCB,System.Object)">
-            <summary>
-             Does an asynchronous IQ call.
-             If the from address hasn't been set, and an OverrideFrom has been set,
-             the from address will be set to the value of OverrideFrom.
-            </summary>
-            <param name="iq">IQ packet to send.</param>
-            <param name="cb">Callback to execute when the result comes back.</param>
-            <param name="cbArg">Arguments to pass to the callback.</param>
-        </member>
-        <member name="E:muzzle.StreamControl.OnStreamChanged">
-            <summary>
-            The XmppStream was changed.  Often at design time.  The object will be this StreamControl.
-            </summary>
-        </member>
-        <member name="P:muzzle.StreamControl.Stream">
-            <summary>
-            The JabberClient or JabberService to hook up to.
-            </summary>
-        </member>
-        <member name="P:muzzle.StreamControl.OverrideFrom">
-            <summary>
-            Override the from address that will be stamped on outbound packets.
-            Unless your server implemets XEP-193, you shouldn't use this for 
-            client connections.
-            </summary>
-        </member>
-        <member name="T:muzzle.InputBox">
-            <summary>
-            A generic input getter dialog.
-            </summary>
-        </member>
-        <member name="F:muzzle.InputBox.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:muzzle.InputBox.#ctor">
-            <summary>
-            Create
-            </summary>
-        </member>
-        <member name="M:muzzle.InputBox.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:muzzle.InputBox.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
-        <member name="M:muzzle.InputBox.ShowDialog(System.String,System.String,System.String)">
-            <summary>
-            Pop up the input box with the given parameters
-            </summary>
-            <param name="title">The text of the window title</param>
-            <param name="prompt">Prompt value.  Include colon if desired.</param>
-            <param name="defaultValue">Initial value of the input box</param>
-            <returns></returns>
-        </member>
-        <member name="P:muzzle.InputBox.Value">
-            <summary>
-            The value entered by the user
-            </summary>
-        </member>
         <member name="T:muzzle.ClientLogin">
              <summary>
              A login form for client connections.
@@ -684,6 +306,110 @@
                  jc.Connect();
              }
              </example>
+        </member>
+        <member name="T:muzzle.OptionForm">
+            <summary>
+            Base class for forms that configure XmppStream subclasses.
+            </summary>
+        </member>
+        <member name="F:muzzle.OptionForm.tip">
+            <summary>
+            ToolTips.
+            </summary>
+        </member>
+        <member name="F:muzzle.OptionForm.error">
+            <summary>
+            Error notifications.
+            </summary>
+        </member>
+        <member name="M:muzzle.OptionForm.#ctor">
+            <summary>
+            Create new form
+            </summary>
+        </member>
+        <member name="M:muzzle.OptionForm.#ctor(jabber.connection.XmppStream)">
+            <summary>
+            Create new form.
+            </summary>
+            <param name="xmpp"></param>
+        </member>
+        <member name="M:muzzle.OptionForm.WriteXmpp">
+            <summary>
+            Write to the XmppStream the current values.
+            </summary>
+        </member>
+        <member name="M:muzzle.OptionForm.Configure(jabber.connection.XmppStream)">
+            <summary>
+            Write the configuration values to the given XmppStream.
+            </summary>
+            <param name="stream">The stream to configure</param>
+        </member>
+        <member name="M:muzzle.OptionForm.WriteToFile(System.String)">
+            <summary>
+            Write the current connection properties to an XML config file.
+            TODO: Replace this with a better ConfigFile implementation that can write.
+            </summary>
+            <param name="file"></param>
+        </member>
+        <member name="M:muzzle.OptionForm.ReadXmpp">
+            <summary>
+            Read current values from the XmppStream
+            </summary>
+        </member>
+        <member name="M:muzzle.OptionForm.Login(System.String)">
+            <summary>
+            Read connection properties from the given file,
+            pop up the dialog to see if the user wants to change them,
+            save the changes, and
+            connect to the server.
+            </summary>
+            <param name="propertyFile">The name of the file to store connection information in.</param>
+            <returns>True if the user hit OK, otherwise false</returns>
+        </member>
+        <member name="M:muzzle.OptionForm.ReadFromFile(System.String)">
+            <summary>
+            Set the connection properties from an XML config file.
+            TODO: Replace this with a better ConfigFile implementation that can write.
+            </summary>
+            <param name="file"></param>
+        </member>
+        <member name="M:muzzle.OptionForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:muzzle.OptionForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:muzzle.OptionForm.Required(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+            This field is required.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:muzzle.OptionForm.ClearError(System.Object,System.EventArgs)">
+            <summary>
+            Clear any error blinkies.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:muzzle.OptionForm.Xmpp">
+            <summary>
+            The client connection to manage
+            </summary>
+        </member>
+        <member name="P:muzzle.OptionForm.Item(System.String)">
+            <summary>
+            Set/Get the value of an option, as it currently exists in a control.
+            </summary>
+            <param name="option"></param>
+            <returns></returns>
         </member>
         <member name="F:muzzle.ClientLogin.tpBasic">
             <summary>
@@ -711,6 +437,44 @@
             <param name="cli">The client connection to modify</param>
         </member>
         <member name="M:muzzle.ClientLogin.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:muzzle.ComponentLogin">
+             <summary>
+             A login form for client connections.
+             </summary>
+             <example>
+             ComponentLogin l = new ComponentLogin(jc);
+            
+             if (l.ShowDialog(this) == DialogResult.OK)
+             {
+                 jc.Connect();
+             }
+             </example>
+        </member>
+        <member name="M:muzzle.ComponentLogin.#ctor">
+            <summary>
+            Create a Client Login dialog box
+            </summary>
+        </member>
+        <member name="M:muzzle.ComponentLogin.Login(jabber.server.JabberService,System.String)">
+            <summary>
+            Log in to the server
+            </summary>
+            <param name="service">The JabberClient instance to connect</param>
+            <param name="propertyFile">The name of an XML file to store properties in.</param>
+            <returns>True if the user clicked OK, false on cancel</returns>
+        </member>
+        <member name="M:muzzle.ComponentLogin.#ctor(jabber.server.JabberService)">
+            <summary>
+            Create a Client Login dialog box that manages a component
+            </summary>
+            <param name="service">The component to manage</param>
+        </member>
+        <member name="M:muzzle.ComponentLogin.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
@@ -804,6 +568,161 @@
         <member name="P:muzzle.XmppDebugger.ErrorPrefix">
             <summary>
             The string to prefix on errors.
+            </summary>
+        </member>
+        <member name="T:muzzle.ChatHistory">
+            <summary>
+            Keep track of the history of a conversation or room.
+            </summary>
+        </member>
+        <member name="T:muzzle.BottomScrollRichText">
+            <summary>
+            Summary description for BottomScrollRichText.
+            </summary>
+        </member>
+        <member name="F:muzzle.BottomScrollRichText.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.#ctor">
+            <summary>
+            Create a RichText that can scroll to the bottom easily.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.WndProc(System.Windows.Forms.Message@)">
+            <summary>
+            The message pump.  Overriden to catch the WM_VSCROLL events.
+            </summary>
+            <param name="m"></param>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.ClearAndScroll">
+            <summary>
+            Clear the text, and scroll back to the top.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.ScrollToBottom">
+            <summary>
+            Scroll to the bottom of the current text.
+            </summary>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.AppendText(System.Drawing.Color,System.String)">
+            <summary>
+            Append text with the given color to the end of the text area.
+            Side effect: the existing selection is modified.  Save the selection
+            if you want to keep it.
+            </summary>
+            <param name="c"></param>
+            <param name="text"></param>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.String)">
+            <summary>
+            Append text.  If we were at the bottom, scroll to the bottom.  Otherwise leave the scroll position
+            where it is.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:muzzle.BottomScrollRichText.AppendMaybeScroll(System.Drawing.Color,System.String,System.String)">
+             <summary>
+             Add a line that has a colored tag string, followed by a space, followed by
+             a chunk of text in the default color, followed by a newline.
+            
+             Note: Although this seems kind of random, it's needed in several places.
+             </summary>
+             <param name="tagColor">The color to use for the tag</param>
+             <param name="tag">The tag string</param>
+             <param name="text">The main text</param>
+        </member>
+        <member name="P:muzzle.BottomScrollRichText.MaxLines">
+            <summary>
+            Maximum number of lines to keep
+            </summary>
+        </member>
+        <member name="P:muzzle.BottomScrollRichText.IsAtBottom">
+            <summary>
+            Is the text currently scrolled to the bottom?
+            </summary>
+        </member>
+        <member name="M:muzzle.ChatHistory.#ctor">
+            <summary>
+            Create.  Make sure to set Client and From, at least.
+            </summary>
+        </member>
+        <member name="M:muzzle.ChatHistory.InsertMessage(jabber.protocol.client.Message)">
+            <summary>
+            Insert the given message into the history.  The timestamp on the message will be used, if
+            included, otherwise the current time will be used.
+            Messages without bodies will be ignored.
+            </summary>
+            <param name="msg"></param>
+        </member>
+        <member name="M:muzzle.ChatHistory.InsertSend(System.String)">
+            <summary>
+            We sent some text; insert it.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:muzzle.ChatHistory.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:muzzle.ChatHistory.Nickname">
+            <summary>
+            Nickname for the associated user.  If null, the resource will be used (e.g. MUC).
+            </summary>
+        </member>
+        <member name="T:muzzle.InputBox">
+            <summary>
+            A generic input getter dialog.
+            </summary>
+        </member>
+        <member name="F:muzzle.InputBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:muzzle.InputBox.#ctor">
+            <summary>
+            Create
+            </summary>
+        </member>
+        <member name="M:muzzle.InputBox.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:muzzle.InputBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:muzzle.InputBox.ShowDialog(System.String,System.String,System.String)">
+            <summary>
+            Pop up the input box with the given parameters
+            </summary>
+            <param name="title">The text of the window title</param>
+            <param name="prompt">Prompt value.  Include colon if desired.</param>
+            <param name="defaultValue">Initial value of the input box</param>
+            <returns></returns>
+        </member>
+        <member name="P:muzzle.InputBox.Value">
+            <summary>
+            The value entered by the user
             </summary>
         </member>
         <member name="T:muzzle.RosterTree">
@@ -944,6 +863,87 @@
         <member name="P:muzzle.RosterTree.ItemNode.Item">
             <summary>
             The roster item.  Please make a clone before using it.
+            </summary>
+        </member>
+        <member name="T:muzzle.LitmusColorScheme">
+            <summary>
+            How should colors be picked?
+            </summary>
+        </member>
+        <member name="F:muzzle.LitmusColorScheme.Blue">
+            <summary>
+            Just shades of blue
+            </summary>
+        </member>
+        <member name="F:muzzle.LitmusColorScheme.Multicolor">
+            <summary>
+            More colors for non-ASCII
+            </summary>
+        </member>
+        <member name="T:muzzle.Litmus">
+             <summary>
+             Litmus is like StripChart, but shows a graphical representation of protocol going by.
+             This was inspired by DW &amp; Craig&apos;s suggestion that the next generation protocol should
+             just be shades of blue.
+            
+             Good gracious.  Did I really take the time to write this?
+             </summary>
+        </member>
+        <member name="F:muzzle.Litmus.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:muzzle.Litmus.#ctor">
+            <summary>
+            Create a new Litmus object
+            </summary>
+        </member>
+        <member name="M:muzzle.Litmus.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:muzzle.Litmus.Clear">
+            <summary>
+            Clear all data in the window
+            </summary>
+        </member>
+        <member name="M:muzzle.Litmus.AddText(System.String)">
+            <summary>
+            Add a string to the window.  Each byte will become roughly a
+            pixel with color based on the byte's value.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:muzzle.Litmus.AddBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Add bytes to the window.  Each byte will become roughly a
+            pixel with color based on the byte's value.
+            </summary>
+            <param name="buf"></param>
+            <param name="offset"></param>
+            <param name="length"></param>
+        </member>
+        <member name="M:muzzle.Litmus.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:muzzle.Litmus.ColorScheme">
+            <summary>
+            Color scheme to use.
+            </summary>
+        </member>
+        <member name="P:muzzle.Litmus.History">
+            <summary>
+            Number of points to show.  -1 means all
+            </summary>
+        </member>
+        <member name="P:muzzle.Litmus.Paused">
+            <summary>
+            Don't update the display for now.  Useful for bulk loads.
             </summary>
         </member>
     </members>

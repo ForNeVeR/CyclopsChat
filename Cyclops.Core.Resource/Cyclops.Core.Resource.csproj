@@ -41,10 +41,14 @@
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="muzzle">
+      <HintPath>..\Jabber-net\muzzle\obj5\Debug\muzzle.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +60,12 @@
   <ItemGroup>
     <Compile Include="Avatars\AvatarsManager.cs" />
     <Compile Include="Avatars\ImageUtils.cs" />
+    <Compile Include="Debug\RawXmppViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debug\RawXmppViewer.Designer.cs">
+      <DependentUpon>RawXmppViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileLogger.cs" />
     <Compile Include="Helpers\ZipStorer.cs" />
     <Compile Include="IdentifierBuilder.cs" />
@@ -85,7 +95,11 @@
       <Name>2005-jabber-net</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Debug\RawXmppViewer.resx">
+      <DependentUpon>RawXmppViewer.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Smiles\note.txt" />
   </ItemGroup>

@@ -49,5 +49,10 @@ namespace Cyclops.MainApplication
         {
             return serviceLocator.GetInstance<IStringEncryptor>();
         }
+
+        public static void ShowDebugWindow()
+        {
+            serviceLocator.GetInstance<IDebugWindow>().ShowWindow(GetSession());
+        }
     }
 }

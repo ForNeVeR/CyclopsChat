@@ -65,6 +65,7 @@
     <Compile Include="CaptchaSystemMessage.cs" />
     <Compile Include="CustomEventArgs\AvatarChangedEventArgs.cs" />
     <Compile Include="CustomEventArgs\CaptchaEventArgs.cs" />
+    <Compile Include="IDebugWindow.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="CustomEventArgs\ConferenceJoinErrorKind.cs" />
     <Compile Include="Configuration\ConnectionConfigValidator.cs" />

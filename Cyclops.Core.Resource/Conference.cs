@@ -270,7 +270,7 @@ namespace Cyclops.Core.Resource
 
         public void SendPublicMessage(string body)
         {
-            if (room.IsParticipating)
+            //if (room.IsParticipating)
                 room.PublicMessage(body);
         }
 
