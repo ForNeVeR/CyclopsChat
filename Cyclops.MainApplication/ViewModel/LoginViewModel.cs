@@ -96,9 +96,9 @@ namespace Cyclops.MainApplication.ViewModel
                 ApplicationContext.Current.SmilePacks = ChatObjectFactory.GetSmilesManager().GetSmilePacks();
                 IsBusy = false;
 
-//#if DEBUG
+#if DEBUG
                 ChatObjectFactory.ShowDebugWindow();
-//#endif
+#endif
                 Authenticated(this, e);
             }
             else
