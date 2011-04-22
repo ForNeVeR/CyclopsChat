@@ -9,7 +9,7 @@
         <ViewExperimentations:TestViewModel/>
     </Window.DataContext>
 	<Window.Resources>
-		<ControlTemplate x:Key="TabItemControlTemplate" TargetType="{x:Type TabItem}">
+		<!--<ControlTemplate x:Key="TabItemControlTemplate" TargetType="{x:Type TabItem}">
 			<Border x:Name="grid" Width="100" CornerRadius="0" BorderThickness="1,1,1,0" Height="26">
 				<Border.BorderBrush>
 					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -72,13 +72,13 @@
 				</VisualStateManager.VisualStateGroups>
 				<ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,0,7,0" OpacityMask="Black" />
 			</Border>
-		</ControlTemplate>
+		</ControlTemplate>-->
 	</Window.Resources>
     <Grid>
-    	<TabControl>
+    	<!--<TabControl>
 			<TabItem Header="Support" Template="{DynamicResource TabItemControlTemplate}"/>
 			<TabItem Header="Room with long long long name" Template="{DynamicResource TabItemControlTemplate}"/>
 			<TabItem Header="Атрарататата бдыщь нах!" Template="{DynamicResource TabItemControlTemplate}"/>
-		</TabControl>
+		</TabControl>-->
     </Grid>
 </Window>

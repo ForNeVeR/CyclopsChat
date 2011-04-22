@@ -122,6 +122,7 @@
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
+    <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
@@ -178,6 +179,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\testavatar.png" />
     <Resource Include="Resources\smile.gif" />
     <Page Include="View\SmilesView.xaml">
       <SubType>Designer</SubType>

@@ -28,8 +28,9 @@
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="32" />
-						<RowDefinition Height="32" />
-					</Grid.RowDefinitions>
+                        <RowDefinition Height="32" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 					<TextBlock Text="User:" HorizontalAlignment="Right" VerticalAlignment="Center" 
                                Margin="0,0,10,0" FontWeight="Bold" Foreground="#FF313131" />
 					<TextBlock Text="Password:" Grid.Row="1" HorizontalAlignment="Right" 
@@ -46,6 +47,25 @@
 					</TextBox>
 					<PasswordBox x:Name="passwordBox" Grid.Column="1" 
                                  Grid.Row="1" Margin="0,6,6,3" BorderThickness="2" />
+                    
+                    <Expander Grid.Row="3" Grid.ColumnSpan="2" Header="Advanced settings:" Foreground="Gray">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="32" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Server:" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                Margin="0,0,10,0" FontWeight="Bold" Foreground="#FF313131" />
+                            <TextBox Grid.Column="1" Text="{Binding Server, Mode=TwoWay}" 
+                                Margin="0,6,6,3" BorderThickness="2"/>
+                            <TextBlock VerticalAlignment="Bottom" Margin="3,0,3,0" Grid.Row="1" TextWrapping="Wrap" LineStackingStrategy="BlockLineHeight" LineHeight="11" Grid.ColumnSpan="2" Text="Tip: default account for jabber.uruchie.org is a cyclops/cyclops" />
+                        </Grid>
+                    </Expander>
 				</Grid>
         </Border>
 

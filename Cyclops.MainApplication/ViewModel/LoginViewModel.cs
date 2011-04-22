@@ -18,6 +18,7 @@ namespace Cyclops.MainApplication.ViewModel
     {
         private bool isBusy;
         private string name;
+        private string server;
         private string errorMessage;
         private IUserSession session;
         private IEnumerable<Profile> profiles;
@@ -26,6 +27,8 @@ namespace Cyclops.MainApplication.ViewModel
         {
             if (IsInDesignMode)
                 return;
+
+            Server = ConfigurationManager.AppSettings["DefaultServer"];
 
             //profiles = ProfileManager.GetSavedProfiles();
             Session = ChatObjectFactory.GetSession();
@@ -47,6 +50,16 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 name = value;
                 RaisePropertyChanged("Name");
+            }
+        }
+
+        public string Server
+        {
+            get { return server; }
+            set
+            {
+                server = value;
+                RaisePropertyChanged("Server");
             }
         }
 
@@ -111,6 +124,7 @@ namespace Cyclops.MainApplication.ViewModel
         private bool AuthenticateCanExecute(PasswordBox passwordBox)
         {
             return !string.IsNullOrWhiteSpace(Name) &&
+                   !string.IsNullOrWhiteSpace(Server) &&
                    !Name.Contains("@") && !Name.Contains("/");
         }
         
@@ -129,7 +143,7 @@ namespace Cyclops.MainApplication.ViewModel
             var connectionConfig = new ConnectionConfig
                                        {
                                            EncodedPassword = encodedPsw,
-                                           Server = ConfigurationManager.AppSettings["DefaultServer"],
+                                           Server = Server,
                                            User = Name,
                                        };
 

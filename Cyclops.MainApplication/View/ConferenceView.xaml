@@ -4,10 +4,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:Cyclops.Client.Controls" 
              xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
+             xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" xmlns:Controls2="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" x:Class="Cyclops.MainApplication.ConferenceView" IsVisibleChanged="UserControl_IsVisibleChanged"
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" TextOptions.TextFormattingMode="Display">
+             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" 
+             x:Class="Cyclops.MainApplication.ConferenceView" 
+             IsVisibleChanged="UserControl_IsVisibleChanged"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display"
+             d:DataContext="{d:DesignInstance vm:ConferenceViewModelDesignTime, IsDesignTimeCreatable=True}">
+ 
 	<UserControl.Resources>
 
 		<DataTemplate x:Key="MemberInfoTemplate">
@@ -21,12 +26,47 @@
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<Image Grid.RowSpan="2" Source="{Binding AvatarUrl}" Height="27" Width="29" Stretch="UniformToFill" />
-				<TextBlock x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick}" FontWeight="Bold" FontSize="13.333" Foreground="#FF565656" />
-				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding StatusText}" Foreground="#FF919191" Margin="0,0,0,0" />
+				<TextBlock x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" Foreground="#FF565656" />
+				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
+			
+
+			
+			<Border x:Name="awayMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="Black" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
+				<Border.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform AngleX="-18"/>
+						<RotateTransform Angle="-17.859"/>
+						<TranslateTransform X="-1"/>
+					</TransformGroup>
+				</Border.RenderTransform>
+			</Border>
+			
+			<Border x:Name="naMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="Black" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
+				<Border.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform AngleX="-18"/>
+						<RotateTransform Angle="-17.859"/>
+						<TranslateTransform X="-1"/>
+					</TransformGroup>
+				</Border.RenderTransform>
+				<TextBlock Text="NA" FontWeight="Bold" Margin="2,-1,0,0" Foreground="#FFBC2E2E" FontSize="10.667"/>
+			</Border>
+			
 			</Grid>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsModer}" Value="True">
                     <Setter TargetName="nickTextBlock" Property="Foreground" Value="Green" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding StatusType}" Value="xa">
+                    <Setter TargetName="naMark" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding StatusType}" Value="dnd">
+                    <Setter TargetName="awayMark" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding StatusType}" Value="away">
+                    <Setter TargetName="awayMark" Property="Visibility" Value="Visible" />
                 </DataTrigger>
             </DataTemplate.Triggers>
 		</DataTemplate>
