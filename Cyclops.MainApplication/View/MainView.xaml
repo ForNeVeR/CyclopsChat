@@ -22,6 +22,6 @@
 
         <Button Height="20" Width="60" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding UpdateStyles}" />
 		<Button Margin="0,0,60,0" Height="20" Width="60" Content="Rooms" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding OpenConferenceList}" />
-		<Button Margin="0,0,120,0" Height="20" Width="20" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding CloseActiveConferenceOrPrivate}" />
+		
 	</Grid>
 </UserControl>
