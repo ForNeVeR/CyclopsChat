@@ -5,7 +5,7 @@
 
     <!-- data template for the chat tab (conferences and privates)-->
     <DataTemplate x:Key="chatTabTemplate">
-        <Grid x:Name="rootGrid" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Margin="-5,0,-3,-3">
+        <Grid x:Name="rootGrid" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Margin="-5,0,-3,-3" Height="18">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="22" />
                 <ColumnDefinition />
@@ -14,14 +14,23 @@
             <Image x:Name="tabIcon" Source="pack://application:,,,/Cyclops.MainApplication;component/Resources/users_c.png" Margin="3,0,0,0"/>
             <TextBlock Grid.Column="1" Margin="6,-2,8,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                    HorizontalAlignment="Center" Text="{Binding }"/>
-            <Button x:Name="buttonClose" Grid.Column="2" Height="18" Width="18" Visibility="Collapsed" 
+            <Button x:Name="buttonClose" Grid.Column="2" Height="16" Width="18" Visibility="Collapsed" 
                     Command="{Binding DataContext.CloseActiveConferenceOrPrivate, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}">
                 <Image Source="pack://application:,,,/Cyclops.MainApplication;component/Resources/stop.png"/>
             </Button>
 
-            <Grid x:Name="messagesCountIndicator" Visibility="Visible"  Width="13" Height="13" Margin="0,3,-10,0" >
-                <Ellipse Fill="Black"/>
-                <TextBlock Foreground="White" FontSize="10" Text="{Binding UnreadMessagesCount}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid x:Name="messagesCountIndicator" Width="26" Height="20" Margin="0,-1,-13,0" >
+                <Image Source="pack://application:,,,/Cyclops.MainApplication;component/Resources/mail.png" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-20.148"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock Foreground="Black" FontSize="11" Text="{Binding UnreadMessagesCount}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
 
         </Grid>

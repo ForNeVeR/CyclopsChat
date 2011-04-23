@@ -113,6 +113,14 @@ namespace Cyclops.Core.Resource
 
         public IObservableCollection<IConference> Conferences { get; private set; }
 
+        public void ChangeStatus(StatusType type, string status)
+        {
+            if (!IsAuthenticated)
+                return;
+
+            JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), -1);
+        }
+
         public void OpenConference(IEntityIdentifier id)
         {
             Conferences.AsInternalImpl().Add(new Conference(this, id));
@@ -247,6 +255,7 @@ namespace Cyclops.Core.Resource
             JabberClient.OnAuthError += jabberClient_OnAuthError;
             JabberClient.OnConnect += jabberClient_OnConnect;
             JabberClient.OnDisconnect += jabberClient_OnDisconnect;
+           
             JabberClient.OnError += jabberClient_OnError;
             JabberClient.OnInvalidCertificate += jabberClient_OnInvalidCertificate;
             JabberClient.OnStreamError += jabberClient_OnStreamError;

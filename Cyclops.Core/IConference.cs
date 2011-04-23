@@ -18,6 +18,7 @@ namespace Cyclops.Core
         void Leave(string reason = "");
         void LeaveAndClose(string reason = "");
         void SendPublicMessage(string body);
+        bool ChangeNick(string value);
         void SendPrivateMessage(IEntityIdentifier target, string body);
 
         event EventHandler<DisconnectEventArgs> Disconnected;
@@ -26,5 +27,6 @@ namespace Cyclops.Core
         event EventHandler<KickedEventArgs> Kicked;
         event EventHandler<BannedEventArgs> Banned;
         event EventHandler InvalidCaptchaCode;
+        event EventHandler AccessDenied;
     }
 }

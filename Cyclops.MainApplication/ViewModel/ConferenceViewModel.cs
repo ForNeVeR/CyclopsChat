@@ -22,6 +22,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.Joined += ConferenceJoined;
             Conference.Banned += ConferenceBanned;
             Conference.Kicked += ConferenceKicked;
+            Conference.AccessDenied += ConferenceAccessDenied;
             Conference.InvalidCaptchaCode += ConferenceInvalidCaptchaCode;
             Conference.Disconnected += ConferenceDisconnected;
 
@@ -33,6 +34,11 @@ namespace Cyclops.MainApplication.ViewModel
 
             SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
+        }
+
+        private void ConferenceAccessDenied(object sender, EventArgs e)
+        {
+            AddSystemMessage("Only members can join to this conference.");
         }
 
         private MessageViewModel OnInsertMessage(IConferenceMessage msg)
@@ -51,7 +57,7 @@ namespace Cyclops.MainApplication.ViewModel
             Messages.Add(new MessageViewModel(
                 new CaptchaSystemMessage
                     {
-                        Body = string.Format("Proof you are not the bot:\n"), 
+                        Body = string.Format("Prove you are not the bot:\n"), 
                         Bitmap = e.BitmapImage
                     }));
         }
@@ -112,6 +118,28 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 messages = value;
                 RaisePropertyChanged("Messages");
+            }
+        }
+
+        private string statusText;
+        public string StatusText
+        {
+            get { return statusText; }
+            set
+            {
+                statusText = value;
+                ChatObjectFactory.GetSession().ChangeStatus(StatusType.Online, value);
+            }
+        }
+
+        private string newNick;
+        public string NewNick
+        {
+            get { return newNick; }
+            set
+            {
+                newNick = value;
+                Conference.ChangeNick(value);
             }
         }
 

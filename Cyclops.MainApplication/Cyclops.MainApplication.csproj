@@ -117,6 +117,7 @@
     <Compile Include="Configuration\Profile.cs" />
     <Compile Include="Configuration\ProfileManager.cs" />
     <Compile Include="Controls\AnimatedImage.cs" />
+    <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />

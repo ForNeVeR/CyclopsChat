@@ -104,8 +104,19 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Expander IsExpanded="False" FontWeight="Bold" Foreground="DarkGray" Header="{Binding ConferenceViewModel.Conference.ConferenceId.Resource}">
-                <Grid Height="100">
-                    
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition Height="18" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" FontWeight="Normal" VerticalAlignment="Bottom" Text="Nick:" />
+                    <TextBox Margin="4" FontWeight="Normal" MaxLength="60" Grid.Row="1" Text="{Binding ConferenceViewModel.NewNick, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                             Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
+                    <TextBlock Grid.Row="2" FontWeight="Normal" VerticalAlignment="Bottom" Text="Status:" />
+                    <TextBox Margin="4" FontWeight="Normal" MaxLength="60" Grid.Row="3" Text="{Binding ConferenceViewModel.StatusText, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                             Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
                 </Grid>
             </Expander>
             <ListBox Grid.Row="1"

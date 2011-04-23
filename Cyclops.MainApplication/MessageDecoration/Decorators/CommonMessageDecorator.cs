@@ -28,6 +28,11 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             if (msg is SystemConferenceMessage && ((SystemConferenceMessage) msg).IsErrorMessage)
                 style = "errorMessageStyle";
 
+            if (msg.Body != null && msg.Body.StartsWith("/me", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                style = "meCommandNickStyle";
+                message = msg.Body.Remove(0, 3);
+            }
 
             var messageInline = new RunEx(message, MessagePartType.Body);
             messageInline.SetResourceReference(FrameworkContentElement.StyleProperty, style);

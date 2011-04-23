@@ -31,6 +31,11 @@
   <Style x:Key="moderNickStyle" BasedOn="{StaticResource nickStyle}">
     <Setter Property="ex:RunEx.Foreground" Value="Green" />
   </Style>
+    
+  <!-- Nick in /me command style -->
+  <Style x:Key="meCommandNickStyle" BasedOn="{StaticResource nickStyle}">
+    <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
+  </Style>
 
   <!-- common message style -->
   <Style x:Key="commonMessageStyle">
@@ -44,6 +49,10 @@
     <Setter Property="ex:RunEx.Foreground" Value="LightGray" />
   </Style>
 
+  <Style x:Key="meCommandMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
+    <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
+  </Style>
+    
   <Style x:Key="errorMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
     <Setter Property="ex:RunEx.Foreground" Value="DarkRed" />
   </Style>

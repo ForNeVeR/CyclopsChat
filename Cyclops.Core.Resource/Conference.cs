@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
@@ -130,7 +131,15 @@ namespace Cyclops.Core.Resource
                                                              ErrorMessageResources.PasswordRequiredErrorMessage));
                     break;
 
-                    //captcha... :(
+                case 407:
+                    AccessDenied(this, EventArgs.Empty);
+                    break;
+
+#if DEBUG
+                default:
+                    Debugger.Break();
+                break;
+#endif
             }
         }
 
@@ -305,7 +314,20 @@ namespace Cyclops.Core.Resource
                 
             room.PublicMessage(body);
         }
-        
+
+        public bool ChangeNick(string value)
+        {
+            if (IsInConference)
+            {
+                //TODO: GLOBAL VALIDATOR!!!
+                if (!string.IsNullOrWhiteSpace(value) && value.Length < 30 &&
+                    !value.Contains("@") && !value.Contains("/"))
+                    room.Nickname = value;
+            }
+
+            return true;
+        }
+
         private void OnCaptchaResponse(object sender, IQ iq, object data)
         {
             if (iq.Error == null)
@@ -328,6 +350,7 @@ namespace Cyclops.Core.Resource
         public event EventHandler<KickedEventArgs> Kicked = delegate { };
         public event EventHandler<BannedEventArgs> Banned = delegate { };
         public event EventHandler InvalidCaptchaCode = delegate { };
+        public event EventHandler AccessDenied = delegate { };
 
         #endregion
 

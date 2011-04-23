@@ -11,9 +11,18 @@
 	<Window.Resources>
 		<DataTemplate x:Key="tabHeaderTemplate">
 			<Grid Width="100" Height="30">
-				<Grid Width="16" Height="16" >
-					<Ellipse Fill="Black"/>
-					<TextBlock Foreground="White" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+				<Grid Width="20" Height="20" >
+					<Image Source="mail.png" RenderTransformOrigin="0.5,0.5">
+						<Image.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform/>
+								<SkewTransform/>
+								<RotateTransform Angle="-39.148"/>
+								<TranslateTransform/>
+							</TransformGroup>
+						</Image.RenderTransform>
+					</Image>
+					<TextBlock Foreground="Black" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 				</Grid>
 			</Grid>
 		</DataTemplate>

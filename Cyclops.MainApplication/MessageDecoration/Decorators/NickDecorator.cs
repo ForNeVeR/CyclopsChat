@@ -15,6 +15,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         public List<Inline> Decorate(IConferenceMessage msg, List<Inline> inlines)
         {
             string style = "nickStyle";
+            string format = "{0}: ";
             string nick = msg.AuthorNick;
             if (msg is SystemConferenceMessage)
             {
@@ -23,19 +24,21 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             }
 
             if (msg.IsSelfMessage)
-            {
                 style = "myNickStyle";
-            }
 
             if (msg.IsAuthorModer)
-            {
                 style = "moderNickStyle";
+
+            if (msg.Body != null && msg.Body.StartsWith("/me", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                style = "meCommandNickStyle";
+                format = "{0} ";
             }
 
             if (msg is SystemConferenceMessage && !((SystemConferenceMessage)msg).IsErrorMessage)
                 return inlines;
 
-            var nickInline = new RunEx(string.Format("{0}: ", nick), MessagePartType.Nick);
+            var nickInline = new RunEx(string.Format(format, nick), MessagePartType.Nick);
             nickInline.SetResourceReference(FrameworkContentElement.StyleProperty, style);
 
             inlines.Insert(0, nickInline);
