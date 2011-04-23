@@ -37,8 +37,8 @@ namespace Cyclops.MainApplication.ViewModel
             Authenticate = new RelayCommand<PasswordBox>(AuthenticateAction, AuthenticateCanExecute);
 
             //QUICK:
-            //Name = "nagg";
-            //AuthenticateAction(new PasswordBox { Password = "" });
+            Name = "nagg";
+            AuthenticateAction(new PasswordBox { Password = "5ty67ui8" });
         }
 
         public RelayCommand<PasswordBox> Authenticate { get; set; }

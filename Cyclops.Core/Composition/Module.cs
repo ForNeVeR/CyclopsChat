@@ -8,7 +8,6 @@ namespace Cyclops.Core.Composition
     {
         public override void Initialize(IUnityContainer container)
         {
-            container.RegisterType<ConnectionConfig>();
         }
     }
 }

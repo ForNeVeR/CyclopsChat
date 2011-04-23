@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+    <!-- data template for the chat tab (conferences and privates)-->
+    <DataTemplate x:Key="chatTabTemplate">
+        <Grid x:Name="rootGrid" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Margin="-5,0,-3,-3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="22" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Image x:Name="tabIcon" Source="pack://application:,,,/Cyclops.MainApplication;component/Resources/users_c.png" Margin="3,0,0,0"/>
+            <TextBlock Grid.Column="1" Margin="6,-2,8,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                   HorizontalAlignment="Center" Text="{Binding }"/>
+            <Button x:Name="buttonClose" Grid.Column="2" Height="18" Width="18" Visibility="Collapsed" 
+                    Command="{Binding DataContext.CloseActiveConferenceOrPrivate, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}">
+                <Image Source="pack://application:,,,/Cyclops.MainApplication;component/Resources/stop.png"/>
+            </Button>
+
+            <Grid x:Name="messagesCountIndicator" Visibility="Visible"  Width="13" Height="13" Margin="0,3,-10,0" >
+                <Ellipse Fill="Black"/>
+                <TextBlock Foreground="White" FontSize="10" Text="{Binding UnreadMessagesCount}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Value="True">
+                <Setter TargetName="buttonClose" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=DataContext.IsPrivate, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Value="True">
+                <Setter TargetName="tabIcon" Property="Source" Value="pack://application:,,,/Cyclops.MainApplication;component/Resources/user1.png"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=DataContext.UnreadMessagesCount, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Value="0">
+                <Setter TargetName="messagesCountIndicator" Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public class PrivateViewModel : ViewModelBase
+    public class PrivateViewModel : ChatAreaViewModel
     {
         private string currentlyTypedMessage;
         private ObservableCollection<MessageViewModel> messages;
@@ -14,7 +14,13 @@ namespace Cyclops.MainApplication.ViewModel
         public PrivateViewModel()
         {
             Messages = new ObservableCollection<MessageViewModel>();
+            Messages.CollectionChanged += MessagesCollectionChanged;
             SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
+        }
+
+        void MessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (!IsActive) UnreadMessagesCount++;
         }
 
         public string CurrentlyTypedMessage
@@ -53,6 +59,11 @@ namespace Cyclops.MainApplication.ViewModel
 
             Messages.Add(new MessageViewModel(new PrivateMessage {AuthorNick = "Me", IsSelfMessage = true, Body = CurrentlyTypedMessage}));
             CurrentlyTypedMessage = string.Empty;
+        }
+
+        public override bool IsPrivate
+        {
+            get { return true; }
         }
 
         public override string ToString()

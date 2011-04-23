@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Cyclops.MainApplication.View;
 using Cyclops.MainApplication.ViewModel;
 
@@ -131,8 +132,15 @@ namespace Cyclops.MainApplication.Controls
             var tab = new TabItem
                           {
                               Content = new ConferenceView {ConferenceViewModel = conference},
-                              Header = conference.ToString()
+                              DataContext = conference,
                           };
+
+            Binding binding = new Binding("IsActive");
+            binding.Mode = BindingMode.OneWayToSource;
+            binding.Source = conference;
+            tab.SetBinding(TabItem.IsSelectedProperty, binding);
+
+            tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
             Items.Add(tab);
             SelectedItem = tab;
         }
@@ -142,8 +150,15 @@ namespace Cyclops.MainApplication.Controls
             var tab = new TabItem
                           {
                               Content = new PrivateView {PrivateViewModel = privateModel},
-                              Header = privateModel.ToString()
+                              DataContext = privateModel,
                           };
+
+            Binding binding = new Binding("IsActive");
+            binding.Mode = BindingMode.OneWayToSource;
+            binding.Source = privateModel;
+            tab.SetBinding(TabItem.IsSelectedProperty, binding);
+
+            tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
             Items.Add(tab);
             SelectedItem = tab;
         }

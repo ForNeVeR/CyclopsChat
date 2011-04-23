@@ -9,7 +9,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public class ConferenceViewModel : ViewModelBase
+    public class ConferenceViewModel : ChatAreaViewModel
     {
         private IConference conference;
         private string currentlyTypedMessage;
@@ -29,10 +29,16 @@ namespace Cyclops.MainApplication.ViewModel
 
             Conference.Members.CollectionChanged += MembersCollectionChanged;
             Messages = new ObservableCollection<MessageViewModel>();
-            Conference.Messages.SynchronizeWith(Messages, msg => new MessageViewModel(msg));
+            Conference.Messages.SynchronizeWith(Messages, OnInsertMessage);
 
             SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
+        }
+
+        private MessageViewModel OnInsertMessage(IConferenceMessage msg)
+        {
+            if (!IsActive) UnreadMessagesCount++;
+            return new MessageViewModel(msg);
         }
 
         private void ConferenceInvalidCaptchaCode(object sender, EventArgs e)

@@ -126,6 +126,7 @@
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
+    <Compile Include="ViewModel\ChatAreaViewModel.cs" />
     <Compile Include="View\ConferencesList.xaml.cs">
       <DependentUpon>ConferencesList.xaml</DependentUpon>
     </Compile>
@@ -179,8 +180,18 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\users_c.png" />
+    <Resource Include="Resources\user group.ico" />
+    <Resource Include="Resources\user1.png" />
+    <Resource Include="Resources\mail.png" />
+    <Resource Include="Resources\stop.png" />
     <Resource Include="Resources\testavatar.png" />
     <Resource Include="Resources\smile.gif" />
+    <Content Include="Data\Themes\Default\General.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Page Include="View\SmilesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

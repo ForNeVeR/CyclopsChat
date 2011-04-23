@@ -65,6 +65,8 @@
     <Compile Include="CaptchaSystemMessage.cs" />
     <Compile Include="CustomEventArgs\AvatarChangedEventArgs.cs" />
     <Compile Include="CustomEventArgs\CaptchaEventArgs.cs" />
+    <Compile Include="CustomEventArgs\RegistrationEventArgs.cs" />
+    <Compile Include="CustomEventArgs\RegistrationResult.cs" />
     <Compile Include="IDebugWindow.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="CustomEventArgs\ConferenceJoinErrorKind.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Configuration\ConnectionConfig.cs" />
     <Compile Include="IConference.cs" />
     <Compile Include="PrivateMessage.cs" />
+    <Compile Include="Registration\IRegistrationManager.cs" />
     <Compile Include="Resources\ConnectionConfigResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -127,9 +130,7 @@
       <LastGenOutput>ErrorMessageResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Registration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Smiles\note.txt" />
   </ItemGroup>

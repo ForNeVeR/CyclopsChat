@@ -11,7 +11,7 @@ namespace Cyclops.MainApplication
         {
             Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(LoadDictionary(@"Data\Themes\Default\OutputAreaStyles.xaml"));
-            //Application.Current.Resources.MergedDictionaries.Add(LoadDictionary(@"Themes\Default\Theme.xaml"));
+            Application.Current.Resources.MergedDictionaries.Add(LoadDictionary(@"Data\Themes\Default\General.xaml"));
         }
 
         private static ResourceDictionary LoadDictionary(string file)
