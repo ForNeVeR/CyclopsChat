@@ -28,5 +28,6 @@ namespace Cyclops.Core
         event EventHandler<BannedEventArgs> Banned;
         event EventHandler InvalidCaptchaCode;
         event EventHandler AccessDenied;
+        event EventHandler<NickChangeEventArgs> NickChange;
     }
 }

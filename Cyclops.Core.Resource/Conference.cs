@@ -90,6 +90,16 @@ namespace Cyclops.Core.Resource
             room.OnRoomMessage += room_OnRoomMessage;
             room.OnParticipantJoin += room_OnParticipantJoin;
             room.OnParticipantLeave += room_OnParticipantLeave;
+
+            session.JabberClient.OnPresence += JabberClient_OnPresence;
+        }
+
+        void JabberClient_OnPresence(object sender, Presence pres)
+        {
+        //    if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID))
+        //        return;
+
+
         }
 
         private void UnSubscribeToEvents()
@@ -104,6 +114,8 @@ namespace Cyclops.Core.Resource
             room.OnRoomMessage -= room_OnRoomMessage;
             room.OnParticipantJoin -= room_OnParticipantJoin;
             room.OnParticipantLeave -= room_OnParticipantLeave;
+
+            session.JabberClient.OnPresence -= JabberClient_OnPresence;
         }
 
         private void room_OnPresenceError(Room room, Presence pres)
@@ -173,9 +185,27 @@ namespace Cyclops.Core.Resource
             }
         }
 
+        private string changeNickMode = null;
         private void room_OnParticipantLeave(Room room, RoomParticipant participant)
         {
+            //if leave for nick changing
+
+            //handle nick change
+            var nickChange = participant.Presence.OfType<UserX>().FirstOrDefault(i => i.Status != null && i.Status.Any(s => s == RoomStatus.NEW_NICK));
+            if (nickChange != null && nickChange.OfType<AdminItem>().Any(i => !string.IsNullOrEmpty(i.Nick)))
+            {
+                string newNick = nickChange.OfType<AdminItem>().First(i => !string.IsNullOrEmpty(i.Nick)).Nick;
+                string oldNick = participant.Nick;
+                NickChange(this, new NickChangeEventArgs(oldNick, newNick));
+                changeNickMode = newNick;
+            }
+            
             Members.AsInternalImpl().Remove(i => participant.NickJID == (JID) i.ConferenceUserId);
+
+            if (participant.NickJID.Equals(ConferenceId))
+            {
+                //TODO:
+            }
         }
 
         private void room_OnParticipantJoin(Room room, RoomParticipant participant)
@@ -351,6 +381,7 @@ namespace Cyclops.Core.Resource
         public event EventHandler<BannedEventArgs> Banned = delegate { };
         public event EventHandler InvalidCaptchaCode = delegate { };
         public event EventHandler AccessDenied = delegate { };
+        public event EventHandler<NickChangeEventArgs> NickChange = delegate { };
 
         #endregion
 

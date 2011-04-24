@@ -21,6 +21,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference = conference;
             Conference.Joined += ConferenceJoined;
             Conference.Banned += ConferenceBanned;
+            Conference.NickChange += ConferenceNickChange;
             Conference.Kicked += ConferenceKicked;
             Conference.AccessDenied += ConferenceAccessDenied;
             Conference.InvalidCaptchaCode += ConferenceInvalidCaptchaCode;
@@ -34,6 +35,11 @@ namespace Cyclops.MainApplication.ViewModel
 
             SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
+        }
+
+        private void ConferenceNickChange(object sender, NickChangeEventArgs e)
+        {
+            AddNotifyMessage("{0} is now known as {1}", e.OldNick, e.NewNick);
         }
 
         private void ConferenceAccessDenied(object sender, EventArgs e)

@@ -20,6 +20,7 @@ namespace Cyclops.Core.Resource
             this.session = session;
             this.participant = participant;
             this.room = room;
+            conferenceUserId = participant.NickJID;
             room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
         }
 
@@ -66,9 +67,15 @@ namespace Cyclops.Core.Resource
             }
         }
 
+        private IEntityIdentifier conferenceUserId;
         public IEntityIdentifier ConferenceUserId
         {
-            get { return participant.NickJID; }
+            get { return conferenceUserId; }
+            set
+            {
+                conferenceUserId = value;
+                OnPropertyChanged("ConferenceUserId");
+            }
         }
 
         public IEntityIdentifier RealUserId

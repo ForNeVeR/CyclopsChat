@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using Cyclops.Core.Resource.Avatars;
 using Cyclops.Core.Smiles;
+using Image = System.Windows.Controls.Image;
 
 namespace Cyclops.MainApplication.Controls
 {
@@ -41,17 +44,26 @@ namespace Cyclops.MainApplication.Controls
             p.LineHeight = 0.2;
             p.FontFamily = new System.Windows.Media.FontFamily("Tahoma");
 
-            foreach (var smile in SmilePack.Smiles.OrderBy(i => i.Bitmap.Height).ThenBy(i => i.Bitmap.Width))
+            foreach (var smile in SmilePack.Smiles/*.OrderBy(i => i.Bitmap.Height).ThenBy(i => i.Bitmap.Width)*/)
             {
-                AnimatedImage image = new AnimatedImage();
-                image.ToolTip = string.Join(", ", smile.Masks);
-                image.AnimatedBitmap = smile.Bitmap;
-                image.Width = smile.Bitmap.Width;
-                image.Tag = smile.Masks.First();
-                image.Height = smile.Bitmap.Height;
-                image.MouseLeftButtonDown += InlineMouseLeftButtonDown;
+                FrameworkElement smileElement = null;
+                //if (IsGif(smile.Bitmap))
+                //{
+                    smileElement = new AnimatedImage();
+                    ((AnimatedImage)smileElement).AnimatedBitmap = smile.Bitmap;
+                //}
+                //else
+                //{
+                //    smileElement = new Image();
+                //    ((Image) smileElement).Source = smile.Bitmap.ToBitmapImage();
+                //}
 
-                var inline = new InlineUIContainer(image);
+                smileElement.ToolTip = string.Join(", ", smile.Masks);
+                smileElement.Width = smile.Bitmap.Width;
+                smileElement.Tag = smile.Masks.First();
+                smileElement.Height = smile.Bitmap.Height;
+                smileElement.MouseLeftButtonDown += InlineMouseLeftButtonDown;
+                var inline = new InlineUIContainer(smileElement);
                 p.Inlines.Add(inline);
             }
             Blocks.Add(p);
@@ -65,6 +77,12 @@ namespace Cyclops.MainApplication.Controls
         }
 
         public event EventHandler<SmilesPickEventArgs> SmilePick = delegate { };
+
+        private static readonly Guid GiffFormatId = new Guid("{B96B3CB0-0728-11D3-9D7B-0000F81EF32E}");
+        private bool IsGif(Bitmap bmp)
+        {
+            return bmp.RawFormat.Guid.Equals(GiffFormatId);
+        }
     }
 
     public class SmilesPickEventArgs : EventArgs
