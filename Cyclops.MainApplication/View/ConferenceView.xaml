@@ -25,7 +25,7 @@
 					<RowDefinition />
 					<RowDefinition />
 				</Grid.RowDefinitions>
-				<Image Grid.RowSpan="2" Source="{Binding AvatarUrl}" Height="27" Width="29" Stretch="UniformToFill" />
+                <Image Grid.RowSpan="2" Source="{Binding AvatarUrl}" Height="27" Width="29" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
 				<TextBlock x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" Foreground="#FF565656" />
 				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
 			
