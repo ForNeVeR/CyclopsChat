@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Security;
 using jabber;
+using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 
@@ -55,9 +58,15 @@ namespace Cyclops.Core.Resource.Avatars
 
         #region Implementation of IAvatarsManager
 
-        public BitmapImage GetFromCache(IEntityIdentifier id)
+        public bool DoesCacheContain(string hash)
         {
-            string file = BuildPath(id);
+            string file = BuildPath(hash);
+            return File.Exists(file);
+        }
+
+        public BitmapImage GetFromCache(string hash)
+        {
+            string file = BuildPath(hash);
             if (!File.Exists(file))
                 return defaultAvatar;
             return FromFile(file);
@@ -92,17 +101,68 @@ namespace Cyclops.Core.Resource.Avatars
                     }
                 if (vcard.Photo != null && vcard.Photo.Image != null)
                 {
-                    vcard.Photo.Image.Save(BuildPath(iq.From), ImageFormat.Png);
-                    image = vcard.Photo.Image.ToBitmapImage();
+                    try
+                    {
+                        vcard.Photo.Image.Save(BuildPath(CalculateSha1HashOfAnImage(vcard.Photo.Image)), ImageFormat.Png);
+                        image = vcard.Photo.Image.ToBitmapImage();
+                    }
+                    catch
+                    {
+                        //TODO: log an exception
+                    }
                 }
 
                 AvatarChange(this, new AvatarChangedEventArgs(iq.From, image ?? defaultAvatar));
             }
         }
-        
-        private static string BuildPath(IEntityIdentifier id)
+
+        private static byte[] ImageToByte(Image img)
         {
-            return Path.Combine(AvatarsFolder, CryptoHelper.CalculateMd5Hash(id.ToString()) + ".png");
+            var converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+        }
+
+        private static string CalculateSha1HashOfAnImage(Image image)
+        {
+            byte[] buffer = ImageToByte(image);
+            var cryptoTransformSha1 =new SHA1CryptoServiceProvider();
+            string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(buffer)).Replace("-", "").ToLower();
+            return hash;
+        }
+
+        private static string BuildPath(string hash)
+        {
+            return Path.Combine(AvatarsFolder, hash.ToLower() + ".png");
+        }
+
+        internal void ProcessAvatarChangeHash(Presence pres)
+        {
+            try
+            {
+                bool hasAvatar = false;
+                var photoTagParent = pres.OfType<Element>().FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
+                if (photoTagParent != null)
+                {
+
+                    string sha1Hash = photoTagParent["photo"].InnerText;
+                    if (sha1Hash != null && sha1Hash.Length == 40)
+                    {
+
+                        hasAvatar = true;
+                        if (DoesCacheContain(sha1Hash))
+                            AvatarChange(this, new AvatarChangedEventArgs(pres.From, GetFromCache(sha1Hash)));
+
+                        SendAvatarRequest(pres.From);
+                    }
+                }
+
+                if (!hasAvatar)
+                    SendAvatarRequest(pres.From);
+            }
+            catch
+            {
+                //todo: log an exception
+            }
         }
 
         #endregion

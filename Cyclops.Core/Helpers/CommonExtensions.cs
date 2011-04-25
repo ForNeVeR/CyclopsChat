@@ -14,6 +14,7 @@ namespace Cyclops
                 yield return new ResultPair { String = text };
                 yield break;
             }
+            delimiters = delimiters.OrderByDescending(i => i.Length).ToArray();
 
             string[] split = text.Split(delimiters, StringSplitOptions.None);
 

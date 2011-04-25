@@ -96,9 +96,17 @@ namespace Cyclops.Core.Resource
 
         void JabberClient_OnPresence(object sender, Presence pres)
         {
-        //    if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID))
-        //        return;
+            if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID))
+                return;
 
+            var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(pres.From));
+            if (member == null)
+                return;
+            if (!member.IsSubscribed)
+            {
+                ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(pres);
+                ((ConferenceMember)member).IsSubscribed = true;
+            }
 
         }
 
@@ -210,7 +218,7 @@ namespace Cyclops.Core.Resource
 
         private void room_OnParticipantJoin(Room room, RoomParticipant participant)
         {
-            AvatarsManager.SendAvatarRequest(participant.NickJID);
+            //AvatarsManager.SendAvatarRequest(participant.NickJID);
             if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
                 Members.AsInternalImpl().Add(new ConferenceMember(session, participant, room) { AvatarUrl = AvatarsManager.GetFromCache(participant.NickJID)});
         }

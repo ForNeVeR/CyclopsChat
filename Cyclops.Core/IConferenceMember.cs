@@ -8,6 +8,7 @@ namespace Cyclops.Core
         bool IsModer { get; }
         string StatusText { get; }
         string StatusType { get; }
+        bool IsSubscribed { get; }
         BitmapImage AvatarUrl { get; }
 
         IEntityIdentifier ConferenceUserId { get; }

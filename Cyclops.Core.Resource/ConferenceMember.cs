@@ -14,6 +14,7 @@ namespace Cyclops.Core.Resource
         private readonly Room room;
         private readonly UserSession session;
         private BitmapImage avatarUrl;
+        private bool isSubscribed;
 
         internal ConferenceMember(UserSession session, RoomParticipant participant, Room room)
         {
@@ -45,6 +46,16 @@ namespace Cyclops.Core.Resource
         public bool IsModer
         {
             get { return participant.IsModer(); }
+        }
+
+        public bool IsSubscribed
+        {
+            get { return isSubscribed; }
+            set
+            {
+                isSubscribed = value;
+                OnPropertyChanged("IsSubscribed");
+            }
         }
 
         public string StatusText
@@ -88,8 +99,11 @@ namespace Cyclops.Core.Resource
         private void room_OnParticipantPresenceChange(Room room, RoomParticipant participant)
         {
             if (this.participant == participant)
-                foreach (PropertyInfo property in GetType().GetProperties())
-                    OnPropertyChanged(property.Name); //Request for UI to update all member fields
+            {
+                string[] props = {"StatusType", "StatusText", "IsModer"};
+                foreach (var prop in props)
+                    OnPropertyChanged(prop);
+            }
         }
     }
 }

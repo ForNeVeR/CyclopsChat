@@ -38,8 +38,8 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
                 string[] parts = inline.Text.SplitAndIncludeDelimiters(matches).Select(p => p.String).ToArray();
                 for (int j = i; j < parts.Length + i; j++)
                 {
-                    string part = parts[j];
-                    if (matches.Contains(part))
+                    string part = parts[j - i];
+                    if (matches.Contains(part) && Uri.IsWellFormedUriString(part, UriKind.RelativeOrAbsolute))
                         inlines.Insert(j, DecorateAsHyperlink(part));
                     else
                         inlines.Insert(j, CommonMessageDecorator.Decorate(msg, part));
