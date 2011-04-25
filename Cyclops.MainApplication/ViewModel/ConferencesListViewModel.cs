@@ -69,6 +69,8 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 selectedConference = value;
                 RaisePropertyChanged("SelectedConference");
+                if (value != null)
+                    value.Name = conferenceCache[value.Id]();
             }
         }
 
@@ -100,13 +102,17 @@ namespace Cyclops.MainApplication.ViewModel
 
         public RelayCommand OpenConference { get; set; }
 
+        private Dictionary<IEntityIdentifier, Func<string>> conferenceCache =
+            new Dictionary<IEntityIdentifier, Func<string>>();
+
         private void ConferencesListReceived(object sender, ConferencesListEventArgs e)
         {
             IsBusy = false;
             if (!e.Success)
                 return;
             sourceConferences = Conferences = e.Result.Select(i => 
-                new ConferenceInfo {Id = i.Item1, Name = i.Item2}).OrderBy(i => i.Id.User).ToList();
+                new ConferenceInfo {Id = i.Item1, Name = "Select item to get description"}).OrderBy(i => i.Id.User).ToList();
+            conferenceCache = e.Result.ToDictionary(i => i.Item1, i => (Func<string>)(() => i.Item2));
         }
 
         private bool OpenConferenceCanExecute()
@@ -146,10 +152,29 @@ namespace Cyclops.MainApplication.ViewModel
         }
     }
 
-    public class ConferenceInfo
+    public class ConferenceInfo : NotifyPropertyChangedBase
     {
-        public IEntityIdentifier Id { get; set; }
-        public string Name { get; set; }
+        private IEntityIdentifier id;
+        public IEntityIdentifier Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("Id");
+            }
+        }
+
+        private string name;
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
     }
 
     public class FakeId : IEntityIdentifier

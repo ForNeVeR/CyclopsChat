@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource.Avatars;
@@ -102,9 +103,13 @@ namespace Cyclops.Core.Resource
             var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(pres.From));
             if (member == null)
                 return;
+
+
+            bool successHandling = ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(pres);
             if (!member.IsSubscribed)
             {
-                ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(pres);
+                if (!successHandling)
+                    AvatarsManager.SendAvatarRequest(pres.From);
                 ((ConferenceMember)member).IsSubscribed = true;
             }
 
@@ -185,7 +190,6 @@ namespace Cyclops.Core.Resource
         {
             Joined(this, new ConferenceJoinEventArgs());
             IsInConference = true;
-            RoomParticipant meAsParticipant = null;
             foreach (RoomParticipant participant in room.Participants)
             {
                 if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
@@ -222,7 +226,7 @@ namespace Cyclops.Core.Resource
             if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
                 Members.AsInternalImpl().Add(new ConferenceMember(session, participant, room) { AvatarUrl = AvatarsManager.GetFromCache(participant.NickJID)});
         }
-
+         
         private void room_OnRoomMessage(object sender, Message msg)
         {
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
@@ -235,30 +239,14 @@ namespace Cyclops.Core.Resource
 
         private void room_OnAdminMessage(object sender, Message msg)
         {
-            var captchaElement = msg.OfType<Element>().GetNodeByName<Element>("captcha");
-            if (captchaElement != null && captchaElement["x"] != null)
+            BitmapImage captcha = null;
+            if (CaptchaHelper.ExtractImage(msg, ref captcha, ref captchaChallenge))
             {
-                captchaChallenge = captchaElement["x"].OfType<Field>().FirstOrDefault(i => string.Equals(i.Var, "challenge")).Val;
-
-                var element = msg.OfType<Element>().GetNodeByName<Element>("data");
-                if (element != null && !element.ChildNodes.IsNullOrEmpty())
-                {
-                    try
-                    {
-                        var captchaInBase64 = element.FirstChild.Value;
-                        var captcha = ImageUtils.Base64ToImage(captchaInBase64).ToBitmapImage(); //TODO: create method Base64ToBitmapImage
-
-                        CaptchaRequirment(this, new CaptchaEventArgs(captcha));
-                        captchaMode = true;
-                        return;
-                    }
-                    catch
-                    {
-
-                    }
-                }
-                
+                CaptchaRequirment(this, new CaptchaEventArgs(captcha));
+                captchaMode = true;
+                return;
             }
+
 
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
         }

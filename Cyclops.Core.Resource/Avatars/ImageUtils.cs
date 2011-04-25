@@ -99,5 +99,21 @@ namespace Cyclops.Core.Resource.Avatars
             bi.EndInit();
             return bi;
         }
+
+
+        /// <summary>
+        /// Convert System.Drawing.Image into wpf BitmapImage
+        /// </summary>
+        public static BitmapImage Base64ToBitmapImage(string base64)
+        {
+            byte[] imageBytes = Convert.FromBase64String(base64);
+            var ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            var bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = ms;
+            bi.EndInit();
+            return bi;
+        }
     }
 }

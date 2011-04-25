@@ -26,6 +26,7 @@ namespace Cyclops.Core.Resource
         /// </summary>
         private readonly DispatcherTimer reconnectTimer;
         private readonly IStringEncryptor stringEncryptor;
+        private readonly IChatObjectsValidator commonValidator;
         private ConnectionConfig connectionConfig;
         private IEntityIdentifier currentUserId;
         private bool isAuthenticated;
@@ -33,11 +34,12 @@ namespace Cyclops.Core.Resource
 
         private IObservableCollection<IConferenceMessage> privateMessages;
 
-        public UserSession(IStringEncryptor stringEncryptor)
+        public UserSession(IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator)
         {
             Conferences = new InternalObservableCollection<IConference>();
             PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
             this.stringEncryptor = stringEncryptor;
+            this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
             DiscoManager = new DiscoManager {Stream = JabberClient};
@@ -128,7 +130,7 @@ namespace Cyclops.Core.Resource
 
         public void AuthenticateAsync(ConnectionConfig info)
         {
-            if (!ConnectionConfigValidator.Validate(info))
+            if (!commonValidator.ValidateConfig(info))
                 return;
 
             JabberClient.Server = info.Server;
@@ -317,24 +319,12 @@ namespace Cyclops.Core.Resource
         void DiscoHandlerGetItems(DiscoManager sender, DiscoNode node, object state)
         {
             var result = (from DiscoNode childNode in node.Children
-                            select new Tuple<IEntityIdentifier, string>(childNode.JID, /*childNode.Name ---  BUG!!*/ "TODO: name")).ToList();
+                            select new Tuple<IEntityIdentifier, string>(childNode.JID, childNode.Name)).ToList();
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
 
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { }; 
-
-        ///// <summary>
-        ///// Switch to UI thread and invoke an action
-        ///// </summary>
-        //internal void Invoke(Action action)
-        //{
-        //    action();
-        //    //if (Dispatcher == null)
-        //    //    action();
-        //    //else
-        //    //    Dispatcher.BeginInvoke(action); //.Invoke(action);
-        //}
-
+        
         private void ReconnectTimerTick(object sender, EventArgs e)
         {
             reconnectTimer.Stop();

@@ -135,7 +135,7 @@ namespace Cyclops.Core.Resource.Avatars
             return Path.Combine(AvatarsFolder, hash.ToLower() + ".png");
         }
 
-        internal void ProcessAvatarChangeHash(Presence pres)
+        internal bool ProcessAvatarChangeHash(Presence pres)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Cyclops.Core.Resource.Avatars
                 {
 
                     string sha1Hash = photoTagParent["photo"].InnerText;
-                    if (sha1Hash != null && sha1Hash.Length == 40)
+                    if (!string.IsNullOrWhiteSpace(sha1Hash) && sha1Hash.Length == 40)
                     {
 
                         hasAvatar = true;
@@ -156,12 +156,12 @@ namespace Cyclops.Core.Resource.Avatars
                     }
                 }
 
-                if (!hasAvatar)
-                    SendAvatarRequest(pres.From);
+                return hasAvatar;
             }
             catch
             {
                 //todo: log an exception
+                return false;
             }
         }
 

@@ -14,7 +14,8 @@ namespace Cyclops.MainApplication
             new IModule[]
                 {
                     new Module(),
-                    new Core.Resource.Composition.Module()
+                    new Core.Resource.Composition.Module(),
+                    new Composition.Module()
                 });
 
         private static IUserSession session;

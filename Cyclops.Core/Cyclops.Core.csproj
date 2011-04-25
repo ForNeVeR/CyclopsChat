@@ -72,7 +72,7 @@
     <Compile Include="IDebugWindow.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="CustomEventArgs\ConferenceJoinErrorKind.cs" />
-    <Compile Include="Configuration\ConnectionConfigValidator.cs" />
+    <Compile Include="IChatObjectsValidator.cs" />
     <Compile Include="CustomEventArgs\ConferencesListEventArgs.cs" />
     <Compile Include="CustomEventArgs\ConnectionErrorKind.cs" />
     <Compile Include="CustomEventArgs\AuthenticationEventArgs.cs" />
@@ -91,6 +91,7 @@
     <Compile Include="IConferenceMember.cs" />
     <Compile Include="Configuration\ConnectionConfig.cs" />
     <Compile Include="IConference.cs" />
+    <Compile Include="NotifyPropertyChangedBase.cs" />
     <Compile Include="PrivateMessage.cs" />
     <Compile Include="Registration\IRegistrationManager.cs" />
     <Compile Include="Resources\ConnectionConfigResources.Designer.cs">

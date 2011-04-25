@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Avatars\AvatarsManager.cs" />
     <Compile Include="Avatars\ImageUtils.cs" />
+    <Compile Include="ChatObjectsValidator.cs" />
     <Compile Include="Debug\RawXmppViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,7 +81,6 @@
     <Compile Include="ConferenceUserMessage.cs" />
     <Compile Include="Helpers\CommonUtility.cs" />
     <Compile Include="InternalObservableCollection.cs" />
-    <Compile Include="NotifyPropertyChangedBase.cs" />
     <Compile Include="Security\TripleDesStringEncryptor.cs" />
     <Compile Include="UserSession.cs" />
     <Compile Include="Composition\Module.cs" />

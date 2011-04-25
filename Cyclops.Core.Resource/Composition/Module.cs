@@ -14,6 +14,7 @@ namespace Cyclops.Core.Resource.Composition
         public override void Initialize(IUnityContainer container)
         {
             container
+                .RegisterType<IChatObjectsValidator, ChatObjectsValidator>()
                 .RegisterType<ILogger, FileLogger>()
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()

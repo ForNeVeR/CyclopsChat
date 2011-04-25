@@ -21,7 +21,7 @@ namespace Cyclops.ConsoleForTests
         static void Main(string[] args)
         {
             var encoder = new TripleDesStringEncryptor();
-            session = new UserSession(encoder);
+            session = new UserSession(encoder, new ChatObjectsValidator());
             session.Authenticated += SessionAuthenticated;
             session.AuthenticateAsync(new ConnectionConfig
                                           {
