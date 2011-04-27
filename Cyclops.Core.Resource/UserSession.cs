@@ -36,6 +36,7 @@ namespace Cyclops.Core.Resource
 
         public UserSession(IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator, Dispatcher dispatcher)
         {
+            AutoReconnect = true;
             Dispatcher = dispatcher;
             Conferences = new InternalObservableCollection<IConference>();
             PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
@@ -69,6 +70,8 @@ namespace Cyclops.Core.Resource
                 OnPropertyChanged("PrivateMessages");
             }
         }
+
+        public bool AutoReconnect { get; set; }
 
         public bool IsAuthenticating
         {
@@ -175,7 +178,9 @@ namespace Cyclops.Core.Resource
             if (ConnectionConfig == null)
                 throw new InvalidOperationException(
                     "You can't call Reconnect() before at least one AuthenticateAsync() calling");
-            AuthenticateAsync(ConnectionConfig);
+
+            if (AutoReconnect)
+                AuthenticateAsync(ConnectionConfig);
         }
 
         public void SendPrivate(IEntityIdentifier target, string body)
@@ -212,6 +217,7 @@ namespace Cyclops.Core.Resource
                 ConnectionDropped(this, new AuthenticationEventArgs(
                                             ConnectionErrorKind.ConnectionError,
                                             ErrorMessageResources.CommonAuthenticationErrorMessage));
+            reconnectTimer.Start();
         }
 
         private bool jabberClient_OnInvalidCertificate(object sender, X509Certificate certificate, X509Chain chain,

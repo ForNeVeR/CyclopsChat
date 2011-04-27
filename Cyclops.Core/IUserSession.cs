@@ -13,6 +13,7 @@ namespace Cyclops.Core
         ConnectionConfig ConnectionConfig { get; }
         IObservableCollection<IConference> Conferences { get; }
         IObservableCollection<IConferenceMessage> PrivateMessages { get; }
+        bool AutoReconnect { get; set; }
 
         void ChangeStatus(StatusType type, string status);
         void OpenConference(IEntityIdentifier id);

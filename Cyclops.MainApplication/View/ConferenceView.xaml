@@ -101,7 +101,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Expander IsExpanded="False" FontWeight="Bold" Foreground="DarkGray" Header="{Binding ConferenceViewModel.Conference.ConferenceId.Resource}">
+            <Expander IsExpanded="False" IsEnabled="False" FontWeight="Bold" Foreground="DarkGray" Header="{Binding ConferenceViewModel.Conference.ConferenceId.Resource}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />

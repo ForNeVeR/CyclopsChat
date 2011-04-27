@@ -34,6 +34,7 @@ namespace Cyclops.MainApplication.ViewModel
             Server = ConfigurationManager.AppSettings["DefaultServer"];
 
             Session = ChatObjectFactory.GetSession();
+            Session.AutoReconnect = false;
             Session.Authenticated += SessionAuthenticated;
             Session.ConnectionDropped += SessionConnectionDropped;
             Authenticate = new RelayCommand<PasswordBox>(AuthenticateAction, AuthenticateCanExecute);
@@ -149,6 +150,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             if (e.Success)
             {
+                Session.AutoReconnect = true;
                 //load smiles into context
                 ApplicationContext.Current.SmilePacks = ChatObjectFactory.GetSmilesManager().GetSmilePacks();
                 IsBusy = false;
@@ -179,13 +181,8 @@ namespace Cyclops.MainApplication.ViewModel
         
         private void AuthenticateAction(PasswordBox passwordBox)
         {
-            ErrorMessage = string.Empty;
-
-            if (string.IsNullOrEmpty(passwordBox.Password))
-            {
-                ErrorMessage = "Password can't be empty";
+            if (!ValidatePassword(passwordBox))
                 return;
-            }
             
             IsBusy = true;
             string encodedPsw = ChatObjectFactory.GetStringEncryptor().EncryptString(passwordBox.Password);
