@@ -34,7 +34,7 @@ namespace Cyclops.MainApplication.View
         private void UserControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == true && tabControl.Items.Count == 0) 
-                foreach (var smilePack in SmilePacks)
+                foreach (var smilePack in SmilePacks.OrderByDescending(i => i.Meta.Name))
                 {
                     var document = new SmilesTable { SmilePack = smilePack };
                     document.SmilePick += DocumentSmilePick;
@@ -63,7 +63,7 @@ namespace Cyclops.MainApplication.View
                             {
                                 Child = new SmilesView(),
                                 StaysOpen = false,
-                                MaxHeight = 320,
+                                Height = 320,
                                 Width = 500,
                                 AllowsTransparency = true
                             };

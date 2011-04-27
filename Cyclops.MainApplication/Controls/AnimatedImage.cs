@@ -104,35 +104,48 @@ namespace Cyclops.MainApplication.Controls
         {
             RaiseEvent(args);
         }
+
+
+        private static readonly Guid GiffFormatId = new Guid("{B96B3CB0-0728-11D3-9D7B-0000F81EF32E}");
+        private bool IsGif(Bitmap bmp)
+        {
+            return bmp.RawFormat.Guid.Equals(GiffFormatId);
+        }
+
         private void UpdateAnimatedBitmap()
         {
-
-
-
-
+            if (!IsGif(AnimatedBitmap))
+            {
+                Source = ToBitmapSource(AnimatedBitmap);
+                return;
+            }
+            
             int nTimeFrames = AnimatedBitmap.GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
             _nCurrentFrame = 0;
             if (nTimeFrames > 0)
             {
-
                 _BitmapSources = new BitmapSource[nTimeFrames];
 
                 for (int i = 0; i < nTimeFrames; i++)
                 {
-
                     AnimatedBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Time, i);
-                    Bitmap bitmap = new Bitmap(AnimatedBitmap);
-                    bitmap.MakeTransparent();
-
-                    _BitmapSources[i] = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                        bitmap.GetHbitmap(),
-                        IntPtr.Zero,
-                        Int32Rect.Empty,
-                        System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                    _BitmapSources[i] = ToBitmapSource(AnimatedBitmap);
                 }
                 StartAnimate();
             }
         }
+
+        private BitmapSource ToBitmapSource(Bitmap bmp)
+        {
+            Bitmap bitmap = new Bitmap(bmp);
+            bitmap.MakeTransparent();
+            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                bitmap.GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+        }
+
         private delegate void VoidDelegate();
 
         private void OnFrameChanged(object o, EventArgs e)
@@ -162,6 +175,7 @@ namespace Cyclops.MainApplication.Controls
             if (!_bIsAnimating)
             {
                 ImageAnimator.Animate(AnimatedBitmap, new EventHandler(this.OnFrameChanged));
+                ChangeSource();
                 _bIsAnimating = true;
             }
         }

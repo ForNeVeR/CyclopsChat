@@ -166,6 +166,9 @@
     <Compile Include="View\SmilesView.xaml.cs">
       <DependentUpon>SmilesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\VcardView.xaml.cs">
+      <DependentUpon>VcardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ViewController.cs" />
     <Content Include="Data\Avatars\default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -183,6 +186,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Page Include="View\VcardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\users_c.png" />
     <Resource Include="Resources\user group.ico" />
     <Resource Include="Resources\user1.png" />
