@@ -7,17 +7,19 @@ namespace Cyclops.Core.CustomEventArgs
 {
     public class RegistrationEventArgs : EventArgs
     {
-        public RegistrationResult Result { get; set; }
+        //public RegistrationResult Result { get; set; }
         public string ErrorMessage { get; set; }
+
+        public bool HasError { get { return !string.IsNullOrEmpty(ErrorMessage); } }
 
         public RegistrationEventArgs()
         {
-            Result = RegistrationResult.Success;
+            //Result = RegistrationResult.Success;
         }
 
-        public RegistrationEventArgs(RegistrationResult result, string errorMessage)
+        public RegistrationEventArgs(string errorMessage)
         {
-            Result = result;
+            //Result = result;
             ErrorMessage = errorMessage;
         }
     }

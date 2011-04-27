@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using Cyclops.Core;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Registration;
 using Cyclops.Core.Resource;
 using Cyclops.Core.Security;
 using Cyclops.MainApplication.Configuration;
@@ -21,27 +22,70 @@ namespace Cyclops.MainApplication.ViewModel
         private string server;
         private string errorMessage;
         private IUserSession session;
-        private IEnumerable<Profile> profiles;
+        private readonly IRegistrationManager registrationManager;
+        private string password;
 
         public LoginViewModel()
         {
             if (IsInDesignMode)
                 return;
 
+            registrationManager = ChatObjectFactory.GetRegistrationManager();
             Server = ConfigurationManager.AppSettings["DefaultServer"];
 
-            //profiles = ProfileManager.GetSavedProfiles();
             Session = ChatObjectFactory.GetSession();
             Session.Authenticated += SessionAuthenticated;
             Session.ConnectionDropped += SessionConnectionDropped;
             Authenticate = new RelayCommand<PasswordBox>(AuthenticateAction, AuthenticateCanExecute);
+            Register = new RelayCommand<PasswordBox>(RegisterAction, RegisterCanExecute);
 
             //QUICK:
             //Name = "nagg";
             //AuthenticateAction(new PasswordBox { Password = "" });
         }
 
+        private bool RegisterCanExecute(PasswordBox obj)
+        {
+            return Validate();
+        }
+
+        private bool ValidatePassword(PasswordBox passwordBox)
+        {
+            ErrorMessage = string.Empty;
+            if (string.IsNullOrEmpty(passwordBox.Password))
+            {
+                ErrorMessage = "Password can't be empty";
+                return false;
+            }
+            return true;
+        }
+
+        private void RegisterAction(PasswordBox passwordBox)
+        {
+            if (!ValidatePassword(passwordBox))
+                return;
+            
+            IsBusy = true;
+            password = passwordBox.Password;
+            registrationManager.RegisterNewUserAsync(new ConnectionConfig
+                {
+                    Server = Server,
+                    User = Name,
+                    EncodedPassword = ChatObjectFactory.GetStringEncryptor().EncryptString(password),
+                }, OnRegistered);
+        }
+
+        private void OnRegistered(RegistrationEventArgs obj)
+        {
+            ErrorMessage = obj.ErrorMessage;
+            if (!obj.HasError)
+                AuthenticateAction(new PasswordBox {Password = password});
+            else
+                IsBusy = false;
+        }
+
         public RelayCommand<PasswordBox> Authenticate { get; set; }
+        public RelayCommand<PasswordBox> Register { get; set; }
 
         public string Name
         {
@@ -122,6 +166,11 @@ namespace Cyclops.MainApplication.ViewModel
         }
 
         private bool AuthenticateCanExecute(PasswordBox passwordBox)
+        {
+            return Validate();
+        }
+
+        private bool Validate()
         {
             return !string.IsNullOrWhiteSpace(Name) &&
                    !string.IsNullOrWhiteSpace(Server) &&

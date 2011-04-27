@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using Unity.Extensions;
 
 namespace Cyclops.Core.Modularity
 {
@@ -10,6 +11,7 @@ namespace Cyclops.Core.Modularity
         public static IServiceLocator Run(IEnumerable<IModule> modules)
         {
             var unity = new UnityContainer();
+            unity.AddNewExtension<LazySupportExtension>();
             var locator = new ServiceLocatorImpl(unity);
 
             ServiceLocator.SetLocatorProvider(() => locator);

@@ -1,4 +1,6 @@
-﻿using Cyclops.Core.Modularity;
+﻿using System.Windows;
+using System.Windows.Threading;
+using Cyclops.Core.Modularity;
 using Microsoft.Practices.Unity;
 
 namespace Cyclops.MainApplication.Composition
@@ -7,6 +9,7 @@ namespace Cyclops.MainApplication.Composition
     {
         public override void Initialize(IUnityContainer container)
         {
+            container.RegisterInstance<Dispatcher>(Application.Current.Dispatcher);
         }
     }
 }

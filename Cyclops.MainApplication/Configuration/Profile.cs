@@ -21,7 +21,7 @@ namespace Cyclops.MainApplication.Configuration
             Rooms = new List<string>
                         {
                             "main@conference.jabber.uruchie.org",
-                            //"CIA@conference.jabber.uruchie.org",
+                            "CIA@conference.jabber.uruchie.org",
                             //"dotnet@conference.jabber.ru",
                             //"windows@conference.jabber.ru",
                         };

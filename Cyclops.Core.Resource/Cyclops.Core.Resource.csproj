@@ -61,6 +61,7 @@
     <Compile Include="Avatars\AvatarsManager.cs" />
     <Compile Include="Avatars\ImageUtils.cs" />
     <Compile Include="ChatObjectsValidator.cs" />
+    <Compile Include="ResourceLocator.cs" />
     <Compile Include="Debug\RawXmppViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +72,7 @@
     <Compile Include="Helpers\ZipStorer.cs" />
     <Compile Include="IdentifierBuilder.cs" />
     <Compile Include="JabberNetExtensions\CaptchaAnswer.cs" />
+    <Compile Include="Registration\RegistrationManager.cs" />
     <Compile Include="Smiles\Smile.cs" />
     <Compile Include="Smiles\SmilePack.cs" />
     <Compile Include="Smiles\SmilePackMeta.cs" />

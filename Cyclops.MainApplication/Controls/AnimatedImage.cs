@@ -109,6 +109,7 @@ namespace Cyclops.MainApplication.Controls
 
 
 
+
             int nTimeFrames = AnimatedBitmap.GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
             _nCurrentFrame = 0;
             if (nTimeFrames > 0)
@@ -160,7 +161,6 @@ namespace Cyclops.MainApplication.Controls
         {
             if (!_bIsAnimating)
             {
-
                 ImageAnimator.Animate(AnimatedBitmap, new EventHandler(this.OnFrameChanged));
                 _bIsAnimating = true;
             }

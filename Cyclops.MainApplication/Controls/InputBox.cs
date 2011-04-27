@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Cyclops.Client.Controls
+namespace Cyclops.MainApplication.Controls
 {
     /// <summary>
     /// Text box with command on 'enter' button

@@ -2,6 +2,7 @@
 using Cyclops.Core;
 using Cyclops.Core.Composition;
 using Cyclops.Core.Modularity;
+using Cyclops.Core.Registration;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
 using Microsoft.Practices.ServiceLocation;
@@ -28,10 +29,7 @@ namespace Cyclops.MainApplication
         public static IUserSession GetSession()
         {
             if (session == null)
-            {
                 session = ServiceLocator.GetInstance<IUserSession>();
-                session.Dispatcher = Dispatcher.CurrentDispatcher;
-            }
 
             return session;
         }
@@ -45,6 +43,11 @@ namespace Cyclops.MainApplication
         {
             return serviceLocator.GetInstance<ISmilesManager>();
         }
+
+        public static IRegistrationManager GetRegistrationManager()
+        {
+            return serviceLocator.GetInstance<IRegistrationManager>();
+        }
         
         public static IStringEncryptor GetStringEncryptor()
         {
@@ -54,6 +57,11 @@ namespace Cyclops.MainApplication
         public static void ShowDebugWindow()
         {
             serviceLocator.GetInstance<IDebugWindow>().ShowWindow(GetSession());
+        }
+
+        public static IChatObjectsValidator GetValidator()
+        {
+            return serviceLocator.GetInstance<IChatObjectsValidator>();
         }
     }
 }

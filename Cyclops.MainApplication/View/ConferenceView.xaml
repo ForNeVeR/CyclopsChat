@@ -1,9 +1,7 @@
 ﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Controls="clr-namespace:Cyclops.Client.Controls" 
-             xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
              xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
@@ -140,7 +138,7 @@
                 <RowDefinition Height="25"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-			<Controls:InputBox x:Name="inputBox" Grid.Row="1" Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SendCommand="{Binding ConferenceViewModel.SendMessage}" />
+			<Controls1:InputBox x:Name="inputBox" Grid.Row="1" Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SendCommand="{Binding ConferenceViewModel.SendMessage}" />
             <Button Grid.Row="1" Grid.Column="1" Content="Send" Command="{Binding ConferenceViewModel.SendMessage}" />
 
             <Button x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">

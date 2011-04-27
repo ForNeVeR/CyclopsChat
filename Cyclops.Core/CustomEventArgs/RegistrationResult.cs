@@ -4,5 +4,9 @@
     {
         Success,
         UserWithSameNameExists,
+        UserConstraint,
+        Unknown,
+
+        //TODO: 
     }
 }

@@ -91,6 +91,10 @@
     <Compile Include="IConferenceMember.cs" />
     <Compile Include="Configuration\ConnectionConfig.cs" />
     <Compile Include="IConference.cs" />
+    <Compile Include="ISynchronizeInvokeHolder.cs" />
+    <Compile Include="Modularity\UnityExtensions\EnumerableResolutionStrategy.cs" />
+    <Compile Include="Modularity\UnityExtensions\LazyResolveBuildPlanPolicy.cs" />
+    <Compile Include="Modularity\UnityExtensions\LazySupportExtension.cs" />
     <Compile Include="NotifyPropertyChangedBase.cs" />
     <Compile Include="PrivateMessage.cs" />
     <Compile Include="Registration\IRegistrationManager.cs" />

@@ -45,9 +45,16 @@ namespace Cyclops.Core.Resource.Smiles
                     if (smilePack != null)
                         foreach (var item in dir.Join(smilePack.Smiles, i => Path.GetFileName(i.FilenameInZip), i => i.File, (f, i) => new { Smile = i, ZipEntry = f }))
                         {
-                            var ms = new MemoryStream();
-                            zip.ExtractFile(item.ZipEntry, ms);
-                            ((Smile)item.Smile).Bitmap = (Bitmap)Image.FromStream(ms);
+                            try
+                            {
+                                var ms = new MemoryStream();
+                                zip.ExtractFile(item.ZipEntry, ms);
+                                ((Smile) item.Smile).Bitmap = (Bitmap) Image.FromStream(ms);
+                            }
+                            catch
+                            {
+                                //todo: log an exception
+                            }
                         }
                 }
             }

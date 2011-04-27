@@ -44,7 +44,7 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 var identity = IdentifierBuilder.Create(room);
                 if (string.IsNullOrEmpty(identity.Resource))
-                    identity = IdentifierBuilder.Create(identity.User, identity.Server, defaultNick);
+                    identity = IdentifierBuilder.WithAnotherResource(identity, defaultNick);
 
                 Session.OpenConference(identity);
             }

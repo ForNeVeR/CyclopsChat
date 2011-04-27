@@ -34,8 +34,9 @@ namespace Cyclops.Core.Resource
 
         private IObservableCollection<IConferenceMessage> privateMessages;
 
-        public UserSession(IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator)
+        public UserSession(IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator, Dispatcher dispatcher)
         {
+            Dispatcher = dispatcher;
             Conferences = new InternalObservableCollection<IConference>();
             PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
             this.stringEncryptor = stringEncryptor;
@@ -89,7 +90,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public Dispatcher Dispatcher { get; set; }
+        internal Dispatcher Dispatcher { get; set; }
 
 
         public IEntityIdentifier CurrentUserId

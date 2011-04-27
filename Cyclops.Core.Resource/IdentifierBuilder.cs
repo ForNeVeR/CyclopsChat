@@ -17,5 +17,10 @@ namespace Cyclops.Core.Resource
         {
             return new JID(str);
         }
+
+        public static IEntityIdentifier WithAnotherResource(IEntityIdentifier sourceId, string resource)
+        {
+            return new JID(sourceId.User, sourceId.Server, resource);
+        }
     }
 }
