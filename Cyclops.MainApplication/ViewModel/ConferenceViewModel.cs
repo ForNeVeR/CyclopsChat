@@ -4,6 +4,7 @@ using System.Linq;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource;
+using Cyclops.MainApplication.Properties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -26,6 +27,8 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.AccessDenied += ConferenceAccessDenied;
             Conference.InvalidCaptchaCode += ConferenceInvalidCaptchaCode;
             Conference.Disconnected += ConferenceDisconnected;
+            Conference.BeginJoin += ConferenceBeginJoin;
+            Conference.StartReconnectTimer += ConferenceStartReconnectTimer;
 
             Conference.CaptchaRequirment += ConferenceCaptchaRequirment;
 
@@ -37,14 +40,24 @@ namespace Cyclops.MainApplication.ViewModel
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
         }
 
+        private void ConferenceStartReconnectTimer(object sender, EventArgs e)
+        {
+            AddNotifyMessage(Localization.Conference.ReconnectStart, 10 /*config context!*/);
+        }
+
+        private void ConferenceBeginJoin(object sender, EventArgs e)
+        {
+            AddNotifyMessage(Localization.Conference.Entering);
+        }
+
         private void ConferenceNickChange(object sender, NickChangeEventArgs e)
         {
-            AddNotifyMessage("{0} is now known as {1}", e.OldNick, e.NewNick);
+            AddNotifyMessage(Localization.Conference.IsNowKnownAs, e.OldNick, e.NewNick);
         }
 
         private void ConferenceAccessDenied(object sender, EventArgs e)
         {
-            AddSystemMessage("Only members can join to this conference.");
+            AddSystemMessage(Localization.Conference.OnlyMembersAccess);
         }
 
         private MessageViewModel OnInsertMessage(IConferenceMessage msg)
@@ -55,7 +68,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ConferenceInvalidCaptchaCode(object sender, EventArgs e)
         {
-            AddSystemMessage("Invalid code.");
+            AddSystemMessage(Localization.Conference.InvalidCaptchaCode);
         }
 
         private void ConferenceCaptchaRequirment(object sender, CaptchaEventArgs e)
@@ -63,7 +76,7 @@ namespace Cyclops.MainApplication.ViewModel
             Messages.Add(new MessageViewModel(
                 new CaptchaSystemMessage
                     {
-                        Body = string.Format("Prove you are not the bot:\n"), 
+                        Body = string.Format(Localization.Conference.CaptchaMessage + Environment.NewLine), 
                         Bitmap = e.BitmapImage
                     }));
         }
@@ -72,10 +85,10 @@ namespace Cyclops.MainApplication.ViewModel
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
                 foreach (var item in e.NewItems.OfType<IConferenceMember>())
-                    AddNotifyMessage("{0} has joined to us", item.Nick);
+                    AddNotifyMessage(Localization.Conference.UserJoinMessage, item.Nick);
             else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
                 foreach (var item in e.OldItems.OfType<IConferenceMember>())
-                    AddNotifyMessage("{0} has left the room", item.Nick);
+                    AddNotifyMessage(Localization.Conference.UserLeaveMessage, item.Nick);
         }
 
         private void StartPrivateWithSelectedMemberAction()
@@ -154,32 +167,32 @@ namespace Cyclops.MainApplication.ViewModel
             string text = "";
             if (e.ErrorKind == ConferenceJoinErrorKind.NickConflict)
                 text = string.Format(
-                    "Nick conflict ({0}). Please, change it and rejoin.",
+                    Localization.Conference.NickConflictMessage,
                     Conference.ConferenceId.Resource);
             else if (e.ErrorKind == ConferenceJoinErrorKind.Banned)
-                text = "You are banned in this room.";
+                text = Localization.Conference.AlreadyBannedMessage;
             else if (e.ErrorKind == ConferenceJoinErrorKind.PasswordRequired)
-                text = "This room has a password :( (not implemented yet).";
+                text = Localization.Conference.RoomHasPassword;
 
             if (!string.IsNullOrEmpty(text))
                 AddSystemMessage(text);
             else
-                AddNotifyMessage("Entered");
+                AddNotifyMessage(Localization.Conference.EnteredToTheRoom);
         }
 
         private void ConferenceDisconnected(object sender, DisconnectEventArgs e)
         {
-            AddSystemMessage("Disconnect due '{0}'.", e.ErrorMessage);
+            AddSystemMessage(Localization.Conference.DisconnectMessage, e.ErrorMessage);
         }
 
         private void ConferenceKicked(object sender, KickedEventArgs e)
         {
-            AddSystemMessage("You are kicked due the reason: '{0}'.", e.Reason);
+            AddSystemMessage(Localization.Conference.KickMessage, e.Reason);
         }
 
         private void ConferenceBanned(object sender, BannedEventArgs e)
         {
-            AddSystemMessage("You are banned due the reason: '{0}'.", e.Reason);
+            AddSystemMessage(Localization.Conference.BanMessage, e.Reason);
         }
 
         private void AddSystemMessage(string messageFormat, params object[] args)

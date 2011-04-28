@@ -1,4 +1,5 @@
-﻿using System.Windows.Threading;
+﻿using System.Windows.Controls;
+using System.Windows.Threading;
 using Cyclops.Core;
 using Cyclops.Core.Composition;
 using Cyclops.Core.Modularity;

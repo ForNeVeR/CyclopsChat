@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Cyclops.Core;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.Configuration;
@@ -23,6 +24,7 @@ namespace Cyclops.ConsoleForTests
 
         static void Main(string[] args)
         {
+            var c = Thread.CurrentThread.CurrentCulture;
             var encryptor = new TripleDesStringEncryptor();
             manager.RegisterNewUserAsync(new ConnectionConfig
                                              {

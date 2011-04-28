@@ -10,6 +10,7 @@ using Cyclops.Core.Registration;
 using Cyclops.Core.Resource;
 using Cyclops.Core.Security;
 using Cyclops.MainApplication.Configuration;
+using Cyclops.MainApplication.Localization;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -41,8 +42,8 @@ namespace Cyclops.MainApplication.ViewModel
             Register = new RelayCommand<PasswordBox>(RegisterAction, RegisterCanExecute);
 
             //QUICK:
-            //Name = "nagg";
-            //AuthenticateAction(new PasswordBox { Password = "" });
+            //Name = "cyclops";
+            //AuthenticateAction(new PasswordBox { Password = "cyclops" });
         }
 
         private bool RegisterCanExecute(PasswordBox obj)
@@ -55,7 +56,7 @@ namespace Cyclops.MainApplication.ViewModel
             ErrorMessage = string.Empty;
             if (string.IsNullOrEmpty(passwordBox.Password))
             {
-                ErrorMessage = "Password can't be empty";
+                ErrorMessage = Localization.Login.EmptyPassword;
                 return false;
             }
             return true;

@@ -139,7 +139,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 			<Controls1:InputBox x:Name="inputBox" Grid.Row="1" Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SendCommand="{Binding ConferenceViewModel.SendMessage}" />
-            <Button Grid.Row="1" Grid.Column="1" Content="Send" Command="{Binding ConferenceViewModel.SendMessage}" />
+            <Button Grid.Row="1" Grid.Column="1" Content="{Binding Path=Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
             <Button x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">
                 <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>

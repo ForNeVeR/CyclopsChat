@@ -5,7 +5,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" 
         x:Class="Cyclops.MainApplication.View.ConferencesList" 
-        Title="Room list" Height="500" Width="320" MinWidth="300" MinHeight="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+        Title="{Binding Path=ConferenceList.RoomList, Source={StaticResource ResourceWrapper}}" Height="500" Width="320" MinWidth="300" MinHeight="300" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 	<Window.Resources>
 		<DataTemplate x:Key="ConferenceDataTemplate">
 			<Grid Margin="2,2,2,2">
@@ -27,7 +27,7 @@
 	<Window.DataContext>
 		<ViewModel:ConferencesListViewModel />
 	</Window.DataContext>
-	<Controls:BusyIndicator IsBusy="{Binding IsBusy}">
+    <Controls:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}">
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="30" />
@@ -37,16 +37,16 @@
 
 
 			<StackPanel Orientation="Horizontal">
-				<TextBlock Text="Filter:" VerticalAlignment="Center" Margin="10,0,8,0" />
+                <TextBlock Text="{Binding Path=ConferenceList.Filter, Source={StaticResource ResourceWrapper}}" VerticalAlignment="Center" Margin="10,0,8,0" />
 				<TextBox Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" Height="22" />
 			</StackPanel>
 
 			<StackPanel Grid.Row="2" Orientation="Horizontal">
-				<TextBlock Text="Nick:" VerticalAlignment="Center" Margin="10,0,8,0" />
+                <TextBlock Text="{Binding Path=ConferenceList.Nick, Source={StaticResource ResourceWrapper}}" VerticalAlignment="Center" Margin="10,0,8,0" />
 				<TextBox Text="{Binding OpenWithNick, Mode=TwoWay}" Width="120" Height="22" />
 			</StackPanel>
 
-			<Button IsDefault="True" Command="{Binding OpenConference}" Grid.Row="3" Content="Join" Width="80" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
+            <Button IsDefault="True" Command="{Binding OpenConference}" Grid.Row="3" Content="{Binding Path=ConferenceList.Join, Source={StaticResource ResourceWrapper}}" Width="80" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
 
 			<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Conferences}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="False" SelectedItem="{Binding SelectedConference, Mode=TwoWay}" ItemTemplate="{DynamicResource ConferenceDataTemplate}">
 				<i:Interaction.Triggers>

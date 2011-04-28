@@ -1,0 +1,6 @@
+﻿Localization snippet (TODO: create VS one)
+
+Text="{Binding Path=%resourceName%.%field%, Source={StaticResource ResourceWrapper}}"
+
+i.e:
+Text="{Binding Path=Login.UserName, Source={StaticResource ResourceWrapper}}"

@@ -75,7 +75,7 @@ namespace Cyclops.MainApplication.Controls
 
             control.UpdateAnimatedBitmap();
 
-            RoutedPropertyChangedEventArgs<Bitmap> e = new RoutedPropertyChangedEventArgs<Bitmap>(
+            var e = new RoutedPropertyChangedEventArgs<Bitmap>(
                 (Bitmap)args.OldValue, (Bitmap)args.NewValue, AnimatedBitmapChangedEvent);
             control.OnAnimatedBitmapChanged(e);
         }
@@ -105,9 +105,8 @@ namespace Cyclops.MainApplication.Controls
             RaiseEvent(args);
         }
 
-
         private static readonly Guid GiffFormatId = new Guid("{B96B3CB0-0728-11D3-9D7B-0000F81EF32E}");
-        private bool IsGif(Bitmap bmp)
+        private static bool IsGif(Bitmap bmp)
         {
             return bmp.RawFormat.Guid.Equals(GiffFormatId);
         }
@@ -143,14 +142,14 @@ namespace Cyclops.MainApplication.Controls
                 bitmap.GetHbitmap(),
                 IntPtr.Zero,
                 Int32Rect.Empty,
-                System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
+                BitmapSizeOptions.FromEmptyOptions());
         }
 
         private delegate void VoidDelegate();
 
         private void OnFrameChanged(object o, EventArgs e)
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Render, new VoidDelegate(delegate { ChangeSource(); }));
+            Dispatcher.BeginInvoke(DispatcherPriority.Render, new VoidDelegate(ChangeSource));
 
         }
         void ChangeSource()
@@ -158,14 +157,13 @@ namespace Cyclops.MainApplication.Controls
             Source = _BitmapSources[_nCurrentFrame++];
             _nCurrentFrame = _nCurrentFrame % _BitmapSources.Length;
             ImageAnimator.UpdateFrames();
-
         }
 
         public void StopAnimate()
         {
             if (_bIsAnimating)
             {
-                ImageAnimator.StopAnimate(AnimatedBitmap, new EventHandler(this.OnFrameChanged));
+                ImageAnimator.StopAnimate(AnimatedBitmap, OnFrameChanged);
                 _bIsAnimating = false;
             }
         }
@@ -174,7 +172,7 @@ namespace Cyclops.MainApplication.Controls
         {
             if (!_bIsAnimating)
             {
-                ImageAnimator.Animate(AnimatedBitmap, new EventHandler(this.OnFrameChanged));
+                ImageAnimator.Animate(AnimatedBitmap, OnFrameChanged);
                 ChangeSource();
                 _bIsAnimating = true;
             }

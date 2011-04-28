@@ -57,10 +57,8 @@ namespace Cyclops.Core.Resource
             Members.AsInternalImpl().Clear();
             IsInConference = false;
             Disconnected(this, new DisconnectEventArgs(ConnectionErrorKind.ConnectionError, e.ErrorMessage));
-            Messages.AsInternalImpl().Add(new SystemConferenceMessage
-                                              {
-                                                  Body = "Reconnect in a 10 seconds ..."  //TODO: MOVE to presentation layer
-                                              });
+
+            StartReconnectTimer(this, EventArgs.Empty);
         }
 
         private void Authenticated(object sender, AuthenticationEventArgs e)
@@ -73,8 +71,7 @@ namespace Cyclops.Core.Resource
                 Leave("Replaced with new connection.");
             }
 
-            
-            Messages.AsInternalImpl().Add(new SystemConferenceMessage { Body = "Entering the room..." }); //TODO: MOVE to presentation layer
+            BeginJoin(this, EventArgs.Empty);
             room = session.ConferenceManager.GetRoom((JID)ConferenceId);
             SubscribeToEvents();
             room.Join();
@@ -222,9 +219,12 @@ namespace Cyclops.Core.Resource
 
         private void room_OnParticipantJoin(Room room, RoomParticipant participant)
         {
-            //AvatarsManager.SendAvatarRequest(participant.NickJID);
             if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                Members.AsInternalImpl().Add(new ConferenceMember(session, participant, room) { AvatarUrl = AvatarsManager.GetFromCache(participant.NickJID)});
+                Members.AsInternalImpl().Add(
+                    new ConferenceMember(session, participant, room)
+                        {
+                            AvatarUrl = AvatarsManager.GetFromCache(participant.NickJID)
+                        });
         }
          
         private void room_OnRoomMessage(object sender, Message msg)
@@ -378,6 +378,8 @@ namespace Cyclops.Core.Resource
         public event EventHandler InvalidCaptchaCode = delegate { };
         public event EventHandler AccessDenied = delegate { };
         public event EventHandler<NickChangeEventArgs> NickChange = delegate { };
+        public event EventHandler BeginJoin = delegate { };
+        public event EventHandler StartReconnectTimer = delegate { };
 
         #endregion
 

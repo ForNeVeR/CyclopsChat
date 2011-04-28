@@ -29,5 +29,7 @@ namespace Cyclops.Core
         event EventHandler InvalidCaptchaCode;
         event EventHandler AccessDenied;
         event EventHandler<NickChangeEventArgs> NickChange;
+        event EventHandler BeginJoin;
+        event EventHandler StartReconnectTimer;
     }
 }

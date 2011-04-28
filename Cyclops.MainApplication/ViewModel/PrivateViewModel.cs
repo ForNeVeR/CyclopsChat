@@ -57,7 +57,12 @@ namespace Cyclops.MainApplication.ViewModel
 
             ChatObjectFactory.GetSession().SendPrivate(Participant, CurrentlyTypedMessage);
 
-            Messages.Add(new MessageViewModel(new PrivateMessage {AuthorNick = "Me", IsSelfMessage = true, Body = CurrentlyTypedMessage}));
+            Messages.Add(new MessageViewModel(new PrivateMessage
+                                                  {
+                                                      AuthorNick = Localization.Conference.Me, 
+                                                      IsSelfMessage = true, 
+                                                      Body = CurrentlyTypedMessage
+                                                  }));
             CurrentlyTypedMessage = string.Empty;
         }
 

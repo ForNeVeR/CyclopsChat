@@ -121,6 +121,32 @@
     <Compile Include="Controls\AnimatedImage.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
+    <Compile Include="Localization\Common.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\Conference.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Conference.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\ConferenceList.Designer.cs">
+      <DependentUpon>ConferenceList.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Localization\Main.Designer.cs">
+      <DependentUpon>Main.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Localization\LocalizationManager.cs" />
+    <Compile Include="Localization\Login.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.resx</DependentUpon>
+    </Compile>
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="ThemeManager.cs" />
@@ -154,6 +180,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
+    <Compile Include="Localization\ResourceWrapper.cs" />
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -186,6 +213,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="View\Localization.txt" />
     <Page Include="View\VcardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -260,6 +288,30 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Localization\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Conference.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Conference.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Conference.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\ConferenceList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConferenceList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\ConferenceList.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Common.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Main.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Main.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Login.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Login.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

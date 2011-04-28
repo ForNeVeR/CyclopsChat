@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.Resource;
+using Cyclops.MainApplication.Localization;
 
 namespace Cyclops.MainApplication
 {

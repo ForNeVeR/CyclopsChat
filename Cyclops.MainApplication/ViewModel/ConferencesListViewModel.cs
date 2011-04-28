@@ -85,7 +85,7 @@ namespace Cyclops.MainApplication.ViewModel
                     Conferences = sourceConferences.ToArray();
                 else
                     Conferences = sourceConferences.Where(i => 
-                        i.Name.ToLower().Contains(value.ToLower()) ||
+                        /*i.Name.ToLower().Contains(value.ToLower()) ||*/
                         i.Id.User.ToLower().Contains(value.ToLower())).ToArray();
             }
         }
@@ -111,7 +111,7 @@ namespace Cyclops.MainApplication.ViewModel
             if (!e.Success)
                 return;
             sourceConferences = Conferences = e.Result.Select(i => 
-                new ConferenceInfo {Id = i.Item1, Name = "Select item to get description"}).OrderBy(i => i.Id.User).ToList();
+                new ConferenceInfo {Id = i.Item1, Name = Localization.ConferenceList.DefaultConferenceDescInList}).OrderBy(i => i.Id.User).ToList();
             conferenceCache = e.Result.ToDictionary(i => i.Item1, i => (Func<string>)(() => i.Item2));
         }
 
@@ -132,7 +132,7 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 if (existsConference.IsInConference)
                 {
-                    MessageBox.Show("You are already in this room.", "Warrning", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(Localization.ConferenceList.AlreadyInRoom, "Warrning", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 existsConference.LeaveAndClose();

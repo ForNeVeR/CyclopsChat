@@ -17,8 +17,6 @@ using jabber.protocol.iq;
 namespace Cyclops.Core.Resource.Avatars
 {
     /// <summary>
-    /// TODO:
-    /// Handle user updating his vcard
     /// </summary>
     public class AvatarsManager : IAvatarsManager
     {

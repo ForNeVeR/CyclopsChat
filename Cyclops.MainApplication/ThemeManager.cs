@@ -10,9 +10,14 @@ namespace Cyclops.MainApplication
     {
         public static void ApplyDefault()
         {
-            Application.Current.Resources.MergedDictionaries.Clear();
-            Application.Current.Resources.MergedDictionaries.Add(LoadDictionary(@"Data\Themes\Default\OutputAreaStyles.xaml"));
-            Application.Current.Resources.MergedDictionaries.Add(LoadDictionary(@"Data\Themes\Default\General.xaml"));
+            var dictionaries = Application.Current.Resources.MergedDictionaries;
+            
+            //i don't want to remove "fixed" RD, but how can i determinate it in the code??
+            for (int i = 1; i < dictionaries.Count; i++)
+                dictionaries.Remove(dictionaries[i]); 
+
+            dictionaries.Add(LoadDictionary(@"Data\Themes\Default\OutputAreaStyles.xaml"));
+            dictionaries.Add(LoadDictionary(@"Data\Themes\Default\General.xaml"));
         }
 
         private static ResourceDictionary LoadDictionary(string file)
