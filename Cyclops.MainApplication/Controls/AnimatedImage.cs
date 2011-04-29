@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -61,6 +62,8 @@ namespace Cyclops.MainApplication.Controls
             set { StopAnimate(); SetValue(AnimatedBitmapProperty, value); }
         }
 
+        public bool StaticByDefault { get; set; }
+
         /// <summary>
         /// Identifies the Value dependency property.
         /// </summary>
@@ -113,7 +116,7 @@ namespace Cyclops.MainApplication.Controls
 
         private void UpdateAnimatedBitmap()
         {
-            if (!IsGif(AnimatedBitmap))
+            if (StaticByDefault || !IsAnimated)
             {
                 Source = ToBitmapSource(AnimatedBitmap);
                 return;
@@ -154,6 +157,8 @@ namespace Cyclops.MainApplication.Controls
         }
         void ChangeSource()
         {
+            if (!_bIsAnimating)
+                return;
             Source = _BitmapSources[_nCurrentFrame++];
             _nCurrentFrame = _nCurrentFrame % _BitmapSources.Length;
             ImageAnimator.UpdateFrames();
@@ -161,20 +166,37 @@ namespace Cyclops.MainApplication.Controls
 
         public void StopAnimate()
         {
+            if (!IsAnimated) return;
             if (_bIsAnimating)
             {
+                Trace.TraceInformation("Stop animate!");
                 ImageAnimator.StopAnimate(AnimatedBitmap, OnFrameChanged);
                 _bIsAnimating = false;
             }
         }
 
+        private bool IsAnimated
+        {
+            get { return AnimatedBitmap != null && IsGif(AnimatedBitmap); }
+        }
+
         public void StartAnimate()
         {
+            if (!IsAnimated) return;
+
+            if (StaticByDefault)
+            {
+                StaticByDefault = false;
+                UpdateAnimatedBitmap();
+                return;
+            }
+
             if (!_bIsAnimating)
             {
+                Trace.TraceInformation("Animate!");
+                _bIsAnimating = true;
                 ImageAnimator.Animate(AnimatedBitmap, OnFrameChanged);
                 ChangeSource();
-                _bIsAnimating = true;
             }
         }
 

@@ -151,11 +151,15 @@
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
+    <Compile Include="ViewModel\CommonInputViewModel.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
     <Compile Include="ViewModel\ChatAreaViewModel.cs" />
+    <Compile Include="View\CommonInputView.xaml.cs">
+      <DependentUpon>CommonInputView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ConferencesList.xaml.cs">
       <DependentUpon>ConferencesList.xaml</DependentUpon>
     </Compile>
@@ -214,6 +218,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="View\Localization.txt" />
+    <Page Include="View\CommonInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\VcardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

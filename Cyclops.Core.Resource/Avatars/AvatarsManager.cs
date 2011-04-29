@@ -27,7 +27,7 @@ namespace Cyclops.Core.Resource.Avatars
             this.session = session;
             var currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             AvatarsFolder = Path.Combine(currentDir, AvatarsFolder);
-            defaultAvatar = FromFile(Path.Combine(AvatarsFolder, "default.png"));
+            defaultAvatar = FromFile(Path.Combine(AvatarsFolder, DefaultAvatar));
         }
 
         private static BitmapImage FromFile(string file)
@@ -43,6 +43,8 @@ namespace Cyclops.Core.Resource.Avatars
         }
 
         public static string AvatarsFolder = @"Data\Avatars";
+        public const string DefaultAvatar = "default.png";
+
         private BitmapImage defaultAvatar;
 
         #region Implementation of ISessionHolder

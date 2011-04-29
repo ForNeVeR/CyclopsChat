@@ -16,7 +16,11 @@ namespace Cyclops.Core.Resource.Smiles
 
         public ISmilePack[] GetSmilePacks()
         {
-            return GetJispFiles(SmilesPackFolder).Select(Deserialize).Where(item => item != null).ToArray();
+            return GetJispFiles(SmilesPackFolder)
+                .Select(Deserialize)
+                .Where(item => item != null)
+                .OrderByDescending(item => item.Meta.Name)
+                .ToArray();
         }
 
         private static IEnumerable<string> GetJispFiles(string directory)

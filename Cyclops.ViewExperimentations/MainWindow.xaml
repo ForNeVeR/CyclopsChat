@@ -29,7 +29,13 @@
 	</Window.Resources>
     <Grid>
     	<TabControl>
-			<TabItem HeaderTemplate="{StaticResource tabHeaderTemplate}" Header="Support" />
+            <TabItem HeaderTemplate="{StaticResource tabHeaderTemplate}" Header="Support">
+            
+                <UniformGrid>
+                    
+                </UniformGrid>
+                
+            </TabItem>
             <TabItem Header="Room with long long long name"/>
             <TabItem Header="Атрарататата бдыщь нах"/>
 		</TabControl>

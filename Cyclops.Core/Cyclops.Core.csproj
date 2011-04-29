@@ -98,11 +98,6 @@
     <Compile Include="NotifyPropertyChangedBase.cs" />
     <Compile Include="PrivateMessage.cs" />
     <Compile Include="Registration\IRegistrationManager.cs" />
-    <Compile Include="Resources\ConnectionConfigResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ConnectionConfigResources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\ErrorMessageResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -128,10 +123,6 @@
     <None Include="CyclopsKey.snk" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ConnectionConfigResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ConnectionConfigResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ErrorMessageResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessageResources.Designer.cs</LastGenOutput>

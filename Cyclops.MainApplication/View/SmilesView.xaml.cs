@@ -33,14 +33,16 @@ namespace Cyclops.MainApplication.View
         
         private void UserControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if ((bool)e.NewValue == true && tabControl.Items.Count == 0) 
+            if ((bool)e.NewValue && tabControl.Items.Count == 0) 
                 foreach (var smilePack in SmilePacks.OrderByDescending(i => i.Meta.Name))
                 {
-                    var document = new SmilesTable { SmilePack = smilePack };
-                    document.SmilePick += DocumentSmilePick;
+                    var grid = new SmilesGrid { SmilePack = smilePack };
+                    grid.Width = 480;
+                    grid.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    grid.SmilePick += DocumentSmilePick;
                     tabControl.Items.Add(new TabItem
                     {
-                        Content = new FlowDocumentScrollViewer { Document = document },
+                        Content = new ScrollViewer { Content = grid },
                         Header = smilePack.Meta.Name,
                     });
                 }
@@ -59,12 +61,13 @@ namespace Cyclops.MainApplication.View
             callbackStatic = callback;
             if (popup == null)
             {
+                var view = new SmilesView();
                 popup = new Popup
                             {
-                                Child = new SmilesView(),
                                 StaysOpen = false,
                                 Height = 320,
-                                Width = 500,
+                                Width = 510,
+                                Child = view,
                                 AllowsTransparency = true
                             };
             }
