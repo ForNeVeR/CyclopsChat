@@ -14,6 +14,7 @@ namespace Cyclops.Core
         IObservableCollection<IConference> Conferences { get; }
         IObservableCollection<IConferenceMessage> PrivateMessages { get; }
         bool AutoReconnect { get; set; }
+        string Status { get; set; }
 
         void ChangeStatus(StatusType type, string status);
         void OpenConference(IEntityIdentifier id);

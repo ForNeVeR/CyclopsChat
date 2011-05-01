@@ -18,7 +18,11 @@ namespace Cyclops.Core.Resource
 
         public bool ValidateName(string name)
         {
-            //TODO:
+            if (string.IsNullOrEmpty(name))
+                return false;
+            if (name.Length > 100)
+                return false;
+
             return true;
         }
 

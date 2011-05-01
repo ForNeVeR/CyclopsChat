@@ -178,6 +178,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action you tried to perform is not allowed at this conference..
+        /// </summary>
+        public static string MethodNotAllowedError {
+            get {
+                return ResourceManager.GetString("MethodNotAllowedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nick conflict. Please, rejoin with another one..
         /// </summary>
         public static string NickConflictMessage {

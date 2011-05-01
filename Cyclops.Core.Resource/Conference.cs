@@ -157,6 +157,10 @@ namespace Cyclops.Core.Resource
                     AccessDenied(this, EventArgs.Empty);
                     break;
 
+                case 405://i.e. changing nickname if one is visitor and this action is not allowed at the conference
+                    MethodNotAllowedError(this, EventArgs.Empty);
+                    break;
+
 #if DEBUG
                 default:
                     Debugger.Break();
@@ -179,6 +183,7 @@ namespace Cyclops.Core.Resource
                 }
             }
 
+            Members.ForEach(i => ParticipantLeave(this, new ConferenceMemberEventArgs(i)));
             Members.AsInternalImpl().Clear();
             IsInConference = false;
         }
@@ -190,41 +195,65 @@ namespace Cyclops.Core.Resource
             foreach (RoomParticipant participant in room.Participants)
             {
                 if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                    Members.AsInternalImpl().Add(new ConferenceMember(session, participant, room));
+                    Members.AsInternalImpl().Add(new ConferenceMember(session, this, participant, room));
             }
         }
 
-        private string changeNickMode = null;
         private void room_OnParticipantLeave(Room room, RoomParticipant participant)
         {
-            //if leave for nick changing
+            //HANDLE NICK CHANGE
+            bool nickChangeAction = false;
+            string newNick = string.Empty;
 
-            //handle nick change
+            var memberObj = Members.FirstOrDefault(i => i.Nick == participant.Nick);
+
             var nickChange = participant.Presence.OfType<UserX>().FirstOrDefault(i => i.Status != null && i.Status.Any(s => s == RoomStatus.NEW_NICK));
             if (nickChange != null && nickChange.OfType<AdminItem>().Any(i => !string.IsNullOrEmpty(i.Nick)))
             {
-                string newNick = nickChange.OfType<AdminItem>().First(i => !string.IsNullOrEmpty(i.Nick)).Nick;
+                newNick = nickChange.OfType<AdminItem>().First(i => !string.IsNullOrEmpty(i.Nick)).Nick;
                 string oldNick = participant.Nick;
                 NickChange(this, new NickChangeEventArgs(oldNick, newNick));
-                changeNickMode = newNick;
+                nickChangeAction = true;
             }
             
-            Members.AsInternalImpl().Remove(i => participant.NickJID == (JID) i.ConferenceUserId);
-
-            if (participant.NickJID.Equals(ConferenceId))
+            if (nickChangeAction && participant.NickJID.Equals(ConferenceId))
             {
-                //TODO:
+                // a small hack:
+                room.RetrieveListByAffiliation(participant.Affiliation, (r, p, s) =>
+                    {
+                        var newParticipantObj = r.Participants.OfType<RoomParticipant>().FirstOrDefault(i => i.Nick == newNick);
+                        if (newParticipantObj == null)
+                        {
+                            //LOG?
+                        }
+                        else
+                            Members.AsInternalImpl().Add(new ConferenceMember(session, this, newParticipantObj, r)
+                                {
+                                    AvatarUrl = memberObj != null ? memberObj.AvatarUrl : null
+                                });
+
+                    }, new Object());
+                ConferenceId = IdentifierBuilder.WithAnotherResource(ConferenceId, newNick);
             }
+            //HANDLE NICK CHANGE (END)
+
+            if (!nickChangeAction)
+                ParticipantLeave(this, new ConferenceMemberEventArgs(memberObj));
+           
+            Members.AsInternalImpl().Remove(i => participant.NickJID == (JID) i.ConferenceUserId);
         }
 
         private void room_OnParticipantJoin(Room room, RoomParticipant participant)
         {
-            if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                Members.AsInternalImpl().Add(
-                    new ConferenceMember(session, participant, room)
-                        {
-                            AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
-                        });
+            if (!Members.Any(i => (JID)i.ConferenceUserId == participant.NickJID))
+            {
+                var member = new ConferenceMember(session, this, participant, room)
+                                 {
+                                     AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
+                                 };
+                Members.AsInternalImpl().Add(member);
+                ParticipantJoin(this, new ConferenceMemberEventArgs(member));
+            }
         }
          
         private void room_OnRoomMessage(object sender, Message msg)
@@ -239,6 +268,7 @@ namespace Cyclops.Core.Resource
 
         private void room_OnAdminMessage(object sender, Message msg)
         {
+            // CAPTCHA required
             BitmapImage captcha = null;
             if (CaptchaHelper.ExtractImage(msg, ref captcha, ref captchaChallenge))
             {
@@ -247,12 +277,21 @@ namespace Cyclops.Core.Resource
                 return;
             }
 
+            //Not allowed to change subject
             if (msg.Error != null && !string.IsNullOrEmpty(msg.Subject))
             {
                 CantChangeSubject(this, EventArgs.Empty);
                 return;
             }
 
+            //not allowed to send messages
+            if (msg.Error != null && msg.Error.Code == 403)
+            {
+                MethodNotAllowedError(this, EventArgs.Empty);
+                return;
+            }
+
+            //unknown:
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
         }
 
@@ -305,7 +344,16 @@ namespace Cyclops.Core.Resource
 
         public IAvatarsManager AvatarsManager { get; private set; }
 
-        public IEntityIdentifier ConferenceId { get; private set; }
+        private IEntityIdentifier conferenceId;
+        public IEntityIdentifier ConferenceId
+        {
+            get { return conferenceId; }
+            private set
+            {
+                conferenceId = value;
+                OnPropertyChanged("ConferenceId");
+            }
+        }
 
         public IObservableCollection<IConferenceMember> Members { get; private set; }
 
@@ -394,7 +442,10 @@ namespace Cyclops.Core.Resource
         public event EventHandler BeginJoin = delegate { };
         public event EventHandler StartReconnectTimer = delegate { };
         public event EventHandler CantChangeSubject = delegate { };
+        public event EventHandler MethodNotAllowedError = delegate { };
         public event EventHandler<SubjectChangedEventArgs> SubjectChanged = delegate { };
+        public event EventHandler<ConferenceMemberEventArgs> ParticipantLeave = delegate { };
+        public event EventHandler<ConferenceMemberEventArgs> ParticipantJoin = delegate { };
 
         #endregion
 

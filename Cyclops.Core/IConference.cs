@@ -33,6 +33,9 @@ namespace Cyclops.Core
         event EventHandler BeginJoin;
         event EventHandler StartReconnectTimer;
         event EventHandler CantChangeSubject;
+        event EventHandler MethodNotAllowedError;
         event EventHandler<SubjectChangedEventArgs> SubjectChanged;
+        event EventHandler<ConferenceMemberEventArgs> ParticipantLeave;
+        event EventHandler<ConferenceMemberEventArgs> ParticipantJoin;
     }
 }

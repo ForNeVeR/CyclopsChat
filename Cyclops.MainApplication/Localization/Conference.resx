@@ -157,6 +157,9 @@
     <value>Me</value>
     <comment>My nick in private view</comment>
   </data>
+  <data name="MethodNotAllowedError" xml:space="preserve">
+    <value>Action you tried to perform is not allowed at this conference.</value>
+  </data>
   <data name="NickConflictMessage" xml:space="preserve">
     <value>Nick conflict. Please, rejoin with another one.</value>
   </data>

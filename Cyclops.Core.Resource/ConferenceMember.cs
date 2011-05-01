@@ -1,9 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using jabber.connection;
+using jabber.protocol;
 using jabber.protocol.iq;
 
 namespace Cyclops.Core.Resource
@@ -13,16 +14,36 @@ namespace Cyclops.Core.Resource
         private readonly RoomParticipant participant;
         private readonly Room room;
         private readonly UserSession session;
+        private readonly Conference conference;
+        private string statusText;
+        private string statusType;
         private BitmapImage avatarUrl;
         private bool isSubscribed;
 
-        internal ConferenceMember(UserSession session, RoomParticipant participant, Room room)
+        internal ConferenceMember(UserSession session, Conference conference, RoomParticipant participant, Room room)
         {
             this.session = session;
+            this.conference = conference;
             this.participant = participant;
             this.room = room;
             conferenceUserId = participant.NickJID;
             room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
+            session.JabberClient.OnPresence += JabberClientOnPresence;
+            room_OnParticipantPresenceChange(room, participant); //force call
+        }
+
+        // this is workaround (because room_OnParticipantPresenceChange does not fired when current user changed his status
+        private void JabberClientOnPresence(object sender, jabber.protocol.client.Presence pres)
+        {
+            if (pres.From == pres.To && participant.NickJID.Equals(conference.ConferenceId))
+            {
+                var statusElement = pres.OfType<Element>().GetNodeByName<Element>("status");
+                if (statusElement != null)
+                {
+                    StatusText = statusElement.InnerText;
+                    UpdateProperties();
+                }
+            }
         }
 
         #region Implementation of ISessionHolder
@@ -35,8 +56,6 @@ namespace Cyclops.Core.Resource
         #endregion
 
         #region Implementation of IConferenceMember
-
-        private readonly Random random = new Random(Environment.TickCount);
 
         public string Nick
         {
@@ -60,12 +79,22 @@ namespace Cyclops.Core.Resource
 
         public string StatusText
         {
-            get { return participant.Presence.Status; }
+            get { return statusText; }
+            set
+            {
+                statusText = value;
+                OnPropertyChanged("StatusText");
+            }
         }
 
         public string StatusType
         {
-            get { return participant.Presence.Show; }
+            get { return statusType; }
+            set
+            {
+                statusType = value;
+                OnPropertyChanged("StatusType");
+            }
         }
 
         public BitmapImage AvatarUrl
@@ -98,12 +127,18 @@ namespace Cyclops.Core.Resource
 
         private void room_OnParticipantPresenceChange(Room room, RoomParticipant participant)
         {
-            if (this.participant == participant)
-            {
-                string[] props = {"StatusType", "StatusText", "IsModer"};
-                foreach (var prop in props)
-                    OnPropertyChanged(prop);
-            }
+            if (this.participant != participant)
+                return;
+            UpdateProperties();
+            StatusText = participant.Presence.Status;
+            StatusType = participant.Presence.Show;
+        }
+
+        private void UpdateProperties()
+        {
+            string[] props = { /*"StatusType", "StatusText",*/ "IsModer" };
+            foreach (var prop in props)
+                OnPropertyChanged(prop);
         }
     }
 }

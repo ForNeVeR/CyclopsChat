@@ -18,9 +18,11 @@ namespace Cyclops.MainApplication.ViewModel
         private string newNick;
         private IConferenceMember selectedMember;
         private string statusText;
+        private IChatObjectsValidator validator;
 
         public ConferenceViewModel(IConference conference)
         {
+            validator = ChatObjectFactory.GetValidator();
 
             Conference = conference;
             Conference.Joined += ConferenceJoined;
@@ -35,8 +37,10 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.CantChangeSubject += ConferenceCantChangeSubject;
             Conference.SubjectChanged += ConferenceSubjectChanged;
             Conference.CaptchaRequirment += ConferenceCaptchaRequirment;
+            Conference.MethodNotAllowedError += ConferenceMethodNotAllowedError;
+            Conference.ParticipantJoin += ConferenceParticipantJoin;
+            Conference.ParticipantLeave += ConferenceParticipantLeave;
 
-            Conference.Members.CollectionChanged += MembersCollectionChanged;
             Messages = new ObservableCollection<MessageViewModel>();
             Conference.Messages.SynchronizeWith(Messages, OnInsertMessage);
 
@@ -45,6 +49,22 @@ namespace Cyclops.MainApplication.ViewModel
                                                               SelectedMember != null &&
                                                               SelectedMember.ConferenceUserId != null);
             ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
+            newNick = conference.ConferenceId.Resource;
+        }
+
+        private void ConferenceParticipantLeave(object sender, ConferenceMemberEventArgs e)
+        {
+            AddNotifyMessage(Localization.Conference.UserLeaveMessage, e.Member.Nick);
+        }
+
+        private void ConferenceParticipantJoin(object sender, ConferenceMemberEventArgs e)
+        {
+            AddNotifyMessage(Localization.Conference.UserLeaveMessage, e.Member.Nick);
+        }
+
+        private void ConferenceMethodNotAllowedError(object sender, EventArgs e)
+        {
+            AddSystemMessage(Localization.Conference.MethodNotAllowedError);
         }
 
         private void ConferenceSubjectChanged(object sender, SubjectChangedEventArgs e)
@@ -97,23 +117,17 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
-        public string StatusText
-        {
-            get { return statusText; }
-            set
-            {
-                statusText = value;
-                ChatObjectFactory.GetSession().ChangeStatus(StatusType.Online, value);
-            }
-        }
-
         public string NewNick
         {
             get { return newNick; }
             set
             {
-                newNick = value;
-                Conference.ChangeNick(value);
+                if (Conference.IsInConference && validator.ValidateName(value))
+                {
+                    newNick = value;
+                    Conference.ChangeNick(value);
+                }
+                RaisePropertyChanged("NewNick");
             }
         }
 
@@ -156,16 +170,6 @@ namespace Cyclops.MainApplication.ViewModel
                                      Body = string.Format(Localization.Conference.CaptchaMessage + Environment.NewLine),
                                      Bitmap = e.BitmapImage
                                  }));
-        }
-
-        private void MembersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-                foreach (IConferenceMember item in e.NewItems.OfType<IConferenceMember>())
-                    AddNotifyMessage(Localization.Conference.UserJoinMessage, item.Nick);
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-                foreach (IConferenceMember item in e.OldItems.OfType<IConferenceMember>())
-                    AddNotifyMessage(Localization.Conference.UserLeaveMessage, item.Nick);
         }
 
         private void StartPrivateWithSelectedMemberAction()

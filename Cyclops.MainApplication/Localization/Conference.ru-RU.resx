@@ -162,6 +162,9 @@
     <value>Я</value>
     <comment>головка, как говорится,...</comment>
   </data>
+  <data name="MethodNotAllowedError" xml:space="preserve">
+    <value>Операция не может быть выполнена из-за недостатка прав.</value>
+  </data>
   <data name="NickConflictMessage" xml:space="preserve">
     <value>В этой комнате уже есть участник с таким же ником.</value>
     <comment>ты не оригинален</comment>

@@ -29,6 +29,7 @@ namespace Cyclops.Core.Resource
         private readonly IChatObjectsValidator commonValidator;
         private ConnectionConfig connectionConfig;
         private IEntityIdentifier currentUserId;
+        private string status;
         private bool isAuthenticated;
         private bool isAuthenticating;
 
@@ -72,6 +73,17 @@ namespace Cyclops.Core.Resource
         }
 
         public bool AutoReconnect { get; set; }
+
+        public string Status
+        {
+            get { return status; }
+            set
+            {
+                status = value;
+                ChangeStatus(StatusType.Online, value);
+                OnPropertyChanged("Status");
+            }
+        }
 
         public bool IsAuthenticating
         {
@@ -123,7 +135,6 @@ namespace Cyclops.Core.Resource
         {
             if (!IsAuthenticated)
                 return;
-
             JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), -1);
         }
 
