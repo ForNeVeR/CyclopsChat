@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Windows;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.Helpers;
@@ -14,6 +15,7 @@ namespace Cyclops.MainApplication
         public MainWindow()
         {
             InitializeComponent();
+            Title += " " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
             ThemeManager.ApplyDefault();
         }
 

@@ -557,7 +557,7 @@ namespace jabber.connection
                 m.To = m_room;
                 m.Type = MessageType.groupchat;
                 m.Subject = value;
-                m.Body = "/me has changed the subject to: " + value;
+                //m.Body = "/me has changed the subject to: " + value; - WTF? specification says that subject change message must not contains body element
                 m_manager.Write(m);
             }
         }
@@ -963,6 +963,7 @@ namespace jabber.connection
             m.To = m_room;
             m.Type = MessageType.groupchat;
             m.Body = body;
+            //m.Html = string.Format("<b>{0}</b>", body);
             m_manager.Write(m);
         }
 

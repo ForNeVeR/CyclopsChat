@@ -1,15 +1,8 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
-             xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel"
-             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" 
-             x:Class="Cyclops.MainApplication.ConferenceView" 
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel" xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" xmlns:View="clr-namespace:Cyclops.MainApplication.View" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="Cyclops.MainApplication.ConferenceView" 
              IsVisibleChanged="UserControl_IsVisibleChanged"
-             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display"
-             d:DataContext="{d:DesignInstance vm:ConferenceViewModelDesignTime, IsDesignTimeCreatable=True}">
+             d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
  
 	<UserControl.Resources>
 
@@ -88,7 +81,21 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsReadOnly="True" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" />
+		<TextBox Height="24" IsReadOnly="True" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" 
+                 VerticalAlignment="Center" Margin="0,0,24,0"  />
+        <Button x:Name="changeSubject" HorizontalAlignment="Right" Width="24" Height="24">
+            <Image Source="..\Resources\editicon.png" >
+            	<i:Interaction.Triggers>
+            		<i:EventTrigger EventName="Click" SourceObject="{Binding ElementName=changeSubject, Mode=OneWay}">
+            			<ei:ChangePropertyAction TargetObject="{Binding ElementName=subjectChanger, Mode=OneWay}" PropertyName="WindowState">
+            				<ei:ChangePropertyAction.Value>
+            					<Controls:WindowState>Open</Controls:WindowState>
+            				</ei:ChangePropertyAction.Value>
+            			</ei:ChangePropertyAction>
+            		</i:EventTrigger>
+            	</i:Interaction.Triggers>
+            </Image>
+        </Button>
     
    
 		<Controls1:ChatFlowDocumentScrollViewer Grid.Row="1" BorderThickness="1">
@@ -138,8 +145,10 @@
                 <RowDefinition Height="25"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-			<Controls1:InputBox x:Name="inputBox" Grid.Row="1" Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SendCommand="{Binding ConferenceViewModel.SendMessage}" />
-            <Button Grid.Row="1" Grid.Column="1" Content="{Binding Path=Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
+			<Controls1:InputBox x:Name="inputBox" Grid.Row="1" 
+                                Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                SendCommand="{Binding ConferenceViewModel.SendMessage}" />
+            <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
             <Button x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">
                 <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>
@@ -147,6 +156,10 @@
         </Grid>
 
 		<GridSplitter Grid.RowSpan="2" Grid.Column="1" Height="Auto" Width="2" HorizontalAlignment="Left" />
+
+        <Controls:ChildWindow IsModal="True" Caption="Subject changing" x:Name="subjectChanger" Width="380" Height="220" WindowStartupLocation="Center">
+            <View:CommonInputView DataContext="{Binding ConferenceViewModel.SubjectChangeViewModel}" />
+        </Controls:ChildWindow>
         
     </Grid>
 </UserControl>

@@ -42,8 +42,8 @@ namespace Cyclops.MainApplication.ViewModel
             Register = new RelayCommand<PasswordBox>(RegisterAction, RegisterCanExecute);
 
             //QUICK:
-            Name = "cyclops";
-            AuthenticateAction(new PasswordBox { Password = "cyclops" });
+            //Name = "cyclops";
+            //AuthenticateAction(new PasswordBox { Password = "cyclops" });
         }
 
         private bool RegisterCanExecute(PasswordBox obj)

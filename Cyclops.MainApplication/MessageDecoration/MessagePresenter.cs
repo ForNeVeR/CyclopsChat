@@ -16,7 +16,7 @@ namespace Cyclops.MainApplication.MessageDecoration
             var textInlines = new List<Inline>();
 
             // applying custom decorators
-            DecoratorsRegistry.GetDecorators().ForEach(i => textInlines = i.Decorate(message, textInlines));
+            DecoratorsRegistry.Decorators.ForEach(i => textInlines = i.Decorate(message, textInlines));
 
             paragraph.Inlines.AddRange(textInlines);
 

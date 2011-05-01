@@ -23,16 +23,6 @@ namespace Cyclops.MainApplication.ViewModel
             if (!IsActive) UnreadMessagesCount++;
         }
 
-        public string CurrentlyTypedMessage
-        {
-            get { return currentlyTypedMessage; }
-            set
-            {
-                currentlyTypedMessage = value;
-                RaisePropertyChanged("CurrentlyTypedMessage");
-            }
-        }
-
         public IEntityIdentifier Participant { get; set; }
 
         public RelayCommand SendMessage { get; private set; }

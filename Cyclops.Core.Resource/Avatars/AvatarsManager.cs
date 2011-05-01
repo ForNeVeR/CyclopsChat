@@ -88,22 +88,23 @@ namespace Cyclops.Core.Resource.Avatars
             if (iq.Query is VCard)
             {
                 BitmapImage image = defaultAvatar;
-                string file = BuildPath(iq.From);
                 VCard vcard = iq.Query as VCard;
-                if (File.Exists(file))
-                    try
-                    {
-                        File.Delete(file);
-                    }
-                    catch //file is used by another process
-                    {
-                        return;
-                    }
+
                 if (vcard.Photo != null && vcard.Photo.Image != null)
                 {
                     try
                     {
-                        vcard.Photo.Image.Save(BuildPath(CalculateSha1HashOfAnImage(vcard.Photo.Image)), ImageFormat.Png);
+                        var file = BuildPath(CalculateSha1HashOfAnImage(vcard.Photo.Image));
+                        if (File.Exists(file))
+                            try
+                            {
+                                File.Delete(file);
+                            }
+                            catch //file is used by another process
+                            {
+                                return;
+                            }
+                        vcard.Photo.Image.Save(file, ImageFormat.Png);
                         image = vcard.Photo.Image.ToBitmapImage();
                     }
                     catch

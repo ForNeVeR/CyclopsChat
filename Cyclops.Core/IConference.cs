@@ -17,6 +17,7 @@ namespace Cyclops.Core
 
         void Leave(string reason = "");
         void LeaveAndClose(string reason = "");
+        void ChangeSubject(string s);
         void SendPublicMessage(string body);
         bool ChangeNick(string value);
         void SendPrivateMessage(IEntityIdentifier target, string body);

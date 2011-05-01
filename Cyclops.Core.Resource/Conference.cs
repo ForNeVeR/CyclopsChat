@@ -223,7 +223,7 @@ namespace Cyclops.Core.Resource
                 Members.AsInternalImpl().Add(
                     new ConferenceMember(session, participant, room)
                         {
-                            AvatarUrl = AvatarsManager.GetFromCache(participant.NickJID)
+                            AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                         });
         }
          
@@ -258,7 +258,7 @@ namespace Cyclops.Core.Resource
 
         private void room_OnSubjectChange(object sender, Message msg)
         {
-            Subject = msg.Body;
+            Subject = msg.Subject;
         }
 
         #region Implementation of ISessionHolder
@@ -322,6 +322,11 @@ namespace Cyclops.Core.Resource
             room = null;
 
             Session.Conferences.AsInternalImpl().Remove(this);
+        }
+
+        public void ChangeSubject(string subj)
+        {
+            room.Subject = subj;
         }
 
         public void SendPublicMessage(string body)

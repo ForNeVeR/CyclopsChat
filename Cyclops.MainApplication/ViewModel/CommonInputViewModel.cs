@@ -9,30 +9,17 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public class CommonInputViewModel : ViewModelBase
     {
-        public CommonInputViewModel()
+        public CommonInputViewModel(String initialValue, Action<string> okAction, Func<string, bool> validator)
         {
-            Ok = new RelayCommand(OkAction, OkCanExecute);
-            Cancel = new RelayCommand(CancelAction, CancelCanExecute);
+            TextValue = string.Empty;
+            Ok = new RelayCommand(() => okAction(TextValue), () => validator(TextValue));
+            Cancel = new RelayCommand(CancelAction);
         }
-
-        private bool CancelCanExecute()
-        {
-            return true;
-        }
-
+        
         private void CancelAction()
         {
         }
-
-        private bool OkCanExecute()
-        {
-            return true;
-        }
-
-        private void OkAction()
-        {
-        }
-
+        
         public RelayCommand Ok { get; set; }
         public RelayCommand Cancel { get; set; }
 

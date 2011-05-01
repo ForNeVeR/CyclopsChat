@@ -130,8 +130,6 @@ namespace Cyclops.MainApplication.Controls
                 //RenderOptions.SetBitmapScalingMode(smileElement, BitmapScalingMode.HighQuality);
                 smileElement.Height = smile.Bitmap.Height;
                 smileElement.MouseLeftButtonDown += InlineMouseLeftButtonDown;
-                //smileElement.MouseEnter += SmileElementMouseEnter;
-                //smileElement.MouseLeave += SmileElementMouseLeave;
 
                 var border = new Border();
                 border.Child = smileElement;
