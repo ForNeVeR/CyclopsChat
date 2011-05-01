@@ -36,6 +36,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private static void OpenConferenceListAction()
         {
+            //TODO: implemnt cache
             var dlg = new ConferencesList();
             dlg.Owner = Application.Current.MainWindow;
             dlg.ShowDialog();

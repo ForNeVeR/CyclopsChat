@@ -311,7 +311,7 @@ namespace jabber.client
                         GetRoster();
                     if (AutoPresence)
                         Presence(PresenceType.available,
-                            "online", null, Priority);
+                            "cyclopschat.codeplex.com", null, Priority);
                 }
             }
         }

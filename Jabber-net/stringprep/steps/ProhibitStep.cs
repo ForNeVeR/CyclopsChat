@@ -105,8 +105,8 @@ namespace stringprep.steps
         public override void Prepare(System.Text.StringBuilder result)
         {
             int j = FindStringInTable(result);
-            if (j >= 0)
-                throw new ProhibitedCharacterException(this, result[j]);
+            //if (j >= 0)//???
+            //    throw new ProhibitedCharacterException(this, result[j]);
         }
 
         private class ProhibitComparer : IComparer

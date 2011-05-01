@@ -135,7 +135,7 @@ namespace Cyclops.Core.Resource
         {
             if (!IsAuthenticated)
                 return;
-            JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), -1);
+            JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), 30);
         }
 
         public void OpenConference(IEntityIdentifier id)
@@ -163,6 +163,7 @@ namespace Cyclops.Core.Resource
 
             // some default settings
             JabberClient.AutoReconnect = -1;
+            JabberClient.AutoPresence = false;
             JabberClient.AutoRoster = false; 
             JabberClient.Priority = -1;
             JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5;
@@ -265,6 +266,8 @@ namespace Cyclops.Core.Resource
         {
             IsAuthenticated = true;
             Authenticated(sender, new AuthenticationEventArgs());
+
+            Status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
 
         #endregion
@@ -284,8 +287,15 @@ namespace Cyclops.Core.Resource
             JabberClient.OnReadText += JabberClient_OnReadText;
 
             ConferenceManager.OnRoomMessage += ConferenceManager_OnRoomMessage;
+            ConferenceManager.OnJoin += ConferenceManager_OnJoin;
+
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
+        }
+
+        void ConferenceManager_OnJoin(Room room)
+        {
+            ChangeStatus(StatusType.Online, Status);//retranslate status to conference
         }
 
         void JabberClient_OnReadText(object sender, string txt)
