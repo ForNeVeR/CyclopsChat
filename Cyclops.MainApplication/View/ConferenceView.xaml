@@ -83,18 +83,8 @@
 
 		<TextBox Height="24" IsReadOnly="True" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" 
                  VerticalAlignment="Center" Margin="0,0,24,0"  />
-        <Button x:Name="changeSubject" HorizontalAlignment="Right" Width="24" Height="24">
-            <Image Source="..\Resources\editicon.png" >
-            	<i:Interaction.Triggers>
-            		<i:EventTrigger EventName="Click" SourceObject="{Binding ElementName=changeSubject, Mode=OneWay}">
-            			<ei:ChangePropertyAction TargetObject="{Binding ElementName=subjectChanger, Mode=OneWay}" PropertyName="WindowState">
-            				<ei:ChangePropertyAction.Value>
-            					<Controls:WindowState>Open</Controls:WindowState>
-            				</ei:ChangePropertyAction.Value>
-            			</ei:ChangePropertyAction>
-            		</i:EventTrigger>
-            	</i:Interaction.Triggers>
-            </Image>
+        <Button x:Name="changeSubject" Command="{Binding ConferenceViewModel.ChangeSubject}" HorizontalAlignment="Right" Width="24" Height="24">
+            <Image Source="..\Resources\editicon.png" />
         </Button>
     
    
@@ -156,10 +146,6 @@
         </Grid>
 
 		<GridSplitter Grid.RowSpan="2" Grid.Column="1" Height="Auto" Width="2" HorizontalAlignment="Left" />
-
-        <Controls:ChildWindow IsModal="True" Caption="Subject changing" x:Name="subjectChanger" Width="380" Height="220" WindowStartupLocation="Center">
-            <View:CommonInputView DataContext="{Binding ConferenceViewModel.SubjectChangeViewModel}" />
-        </Controls:ChildWindow>
-        
+     
     </Grid>
 </UserControl>

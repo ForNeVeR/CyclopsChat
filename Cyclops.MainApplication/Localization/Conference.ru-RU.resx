@@ -128,6 +128,15 @@
     <value>Докажите, что вы не бот:</value>
     <comment>а то я вам не верю...</comment>
   </data>
+  <data name="ChangeSubject" xml:space="preserve">
+    <value>Изменение темы</value>
+  </data>
+  <data name="ChangeSubjectByParticipant" xml:space="preserve">
+    <value>{0} изменил тему на: {1}</value>
+  </data>
+  <data name="ChangeSubjectError" xml:space="preserve">
+    <value>Вы не можете менять тему (недостаточно прав)</value>
+  </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Разрыв соединения ({0}).</value>
   </data>

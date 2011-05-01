@@ -126,6 +126,15 @@
   <data name="CaptchaMessage" xml:space="preserve">
     <value>Prove you are not a bot:</value>
   </data>
+  <data name="ChangeSubject" xml:space="preserve">
+    <value>Changing subject</value>
+  </data>
+  <data name="ChangeSubjectByParticipant" xml:space="preserve">
+    <value>{0} has changed subject to: {1}</value>
+  </data>
+  <data name="ChangeSubjectError" xml:space="preserve">
+    <value>You are not allowed to change subject.</value>
+  </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Disconnect due '{0}'.</value>
   </data>

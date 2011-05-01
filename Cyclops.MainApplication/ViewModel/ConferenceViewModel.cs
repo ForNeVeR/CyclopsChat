@@ -6,6 +6,7 @@ using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
+using Cyclops.MainApplication.View.Dialogs;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
@@ -16,7 +17,6 @@ namespace Cyclops.MainApplication.ViewModel
         private ObservableCollection<MessageViewModel> messages;
         private string newNick;
         private IConferenceMember selectedMember;
-        private CommonInputViewModel subjectChangeViewModel;
         private string statusText;
 
         public ConferenceViewModel(IConference conference)
@@ -32,7 +32,8 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.Disconnected += ConferenceDisconnected;
             Conference.BeginJoin += ConferenceBeginJoin;
             Conference.StartReconnectTimer += ConferenceStartReconnectTimer;
-
+            Conference.CantChangeSubject += ConferenceCantChangeSubject;
+            Conference.SubjectChanged += ConferenceSubjectChanged;
             Conference.CaptchaRequirment += ConferenceCaptchaRequirment;
 
             Conference.Members.CollectionChanged += MembersCollectionChanged;
@@ -43,22 +44,26 @@ namespace Cyclops.MainApplication.ViewModel
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () =>
                                                               SelectedMember != null &&
                                                               SelectedMember.ConferenceUserId != null);
-
-            SubjectChangeViewModel = new CommonInputViewModel(Conference.IsInConference ? Conference.Subject : string.Empty, 
-                ChangeTopicAction, ChangeTopicCanExecute);
+            ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
         }
 
-        private bool ChangeTopicCanExecute(string arg)
+        private void ConferenceSubjectChanged(object sender, SubjectChangedEventArgs e)
         {
-            return arg.Length < 500; //TODO: complete validator
+            AddNotifyMessage(Localization.Conference.ChangeSubjectByParticipant, e.Author, e.NewSubject);
         }
 
-        private void ChangeTopicAction(string obj)
+        private void ConferenceCantChangeSubject(object sender, EventArgs e)
         {
-            Conference.ChangeSubject(obj);
+            AddSystemMessage(Localization.Conference.ChangeSubjectError);
+        }
+
+        private void ChangeSubjectAction()
+        {
+            DialogManager.ShowStringInputDialog(Localization.Conference.ChangeSubject, Conference.Subject, subj => Conference.ChangeSubject(subj), subj => subj.Length < 1000);
         }
 
         public RelayCommand SendMessage { get; private set; }
+        public RelayCommand ChangeSubject { get; private set; }
         public RelayCommand StartPrivateWithSelectedMember { get; private set; }
 
         public IConferenceMember SelectedMember
@@ -71,18 +76,7 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
-
-        public CommonInputViewModel SubjectChangeViewModel
-        {
-            get { return subjectChangeViewModel; }
-            set
-            {
-                subjectChangeViewModel = value;
-                RaisePropertyChanged("SubjectChangeViewModel");
-            }
-        }
-
-
+        
         public IConference Conference
         {
             get { return conference; }

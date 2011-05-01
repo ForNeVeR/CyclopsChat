@@ -69,6 +69,7 @@
     <Compile Include="CustomEventArgs\StatusType.cs" />
     <Compile Include="CustomEventArgs\RegistrationEventArgs.cs" />
     <Compile Include="CustomEventArgs\RegistrationResult.cs" />
+    <Compile Include="CustomEventArgs\SubjectChangedEventArgs.cs" />
     <Compile Include="IDebugWindow.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="CustomEventArgs\ConferenceJoinErrorKind.cs" />

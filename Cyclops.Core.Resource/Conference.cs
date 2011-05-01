@@ -247,6 +247,11 @@ namespace Cyclops.Core.Resource
                 return;
             }
 
+            if (msg.Error != null && !string.IsNullOrEmpty(msg.Subject))
+            {
+                CantChangeSubject(this, EventArgs.Empty);
+                return;
+            }
 
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
         }
@@ -258,6 +263,9 @@ namespace Cyclops.Core.Resource
 
         private void room_OnSubjectChange(object sender, Message msg)
         {
+            if (msg.From != null && !string.IsNullOrEmpty(msg.From.Resource))
+                SubjectChanged(this, new SubjectChangedEventArgs(msg.From.Resource, msg.Subject));
+
             Subject = msg.Subject;
         }
 
@@ -385,6 +393,8 @@ namespace Cyclops.Core.Resource
         public event EventHandler<NickChangeEventArgs> NickChange = delegate { };
         public event EventHandler BeginJoin = delegate { };
         public event EventHandler StartReconnectTimer = delegate { };
+        public event EventHandler CantChangeSubject = delegate { };
+        public event EventHandler<SubjectChangedEventArgs> SubjectChanged = delegate { };
 
         #endregion
 

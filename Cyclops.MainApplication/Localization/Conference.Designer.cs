@@ -88,6 +88,33 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changing subject.
+        /// </summary>
+        public static string ChangeSubject {
+            get {
+                return ResourceManager.GetString("ChangeSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has changed subject to: {1}.
+        /// </summary>
+        public static string ChangeSubjectByParticipant {
+            get {
+                return ResourceManager.GetString("ChangeSubjectByParticipant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to change subject..
+        /// </summary>
+        public static string ChangeSubjectError {
+            get {
+                return ResourceManager.GetString("ChangeSubjectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnect due &apos;{0}&apos;..
         /// </summary>
         public static string DisconnectMessage {

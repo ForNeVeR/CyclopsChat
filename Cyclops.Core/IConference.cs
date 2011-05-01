@@ -32,5 +32,7 @@ namespace Cyclops.Core
         event EventHandler<NickChangeEventArgs> NickChange;
         event EventHandler BeginJoin;
         event EventHandler StartReconnectTimer;
+        event EventHandler CantChangeSubject;
+        event EventHandler<SubjectChangedEventArgs> SubjectChanged;
     }
 }

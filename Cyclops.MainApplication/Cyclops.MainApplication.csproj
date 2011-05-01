@@ -155,15 +155,11 @@
     <Compile Include="MessageDecoration\Decorators\StringEventArgs.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
-    <Compile Include="ViewModel\CommonInputViewModel.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
     <Compile Include="ViewModel\ChatAreaViewModel.cs" />
-    <Compile Include="View\CommonInputView.xaml.cs">
-      <DependentUpon>CommonInputView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ConferencesList.xaml.cs">
       <DependentUpon>ConferencesList.xaml</DependentUpon>
     </Compile>
@@ -189,6 +185,10 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="Localization\ResourceWrapper.cs" />
+    <Compile Include="View\Dialogs\DialogManager.cs" />
+    <Compile Include="View\Dialogs\InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -223,7 +223,7 @@
     </Content>
     <Resource Include="Resources\editicon.png" />
     <Resource Include="View\Localization.txt" />
-    <Page Include="View\CommonInputView.xaml">
+    <Page Include="View\Dialogs\InputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
