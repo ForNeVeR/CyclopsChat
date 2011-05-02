@@ -79,7 +79,8 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ChangeSubjectAction()
         {
-            DialogManager.ShowStringInputDialog(Localization.Conference.ChangeSubject, Conference.Subject, subj => Conference.ChangeSubject(subj), subj => subj.Length < 1000);
+            DialogManager.ShowStringInputDialog(Localization.Conference.ChangeSubject, Conference.Subject, 
+                subj => Conference.ChangeSubject(subj), subj => subj != null && subj.Length < 1000);
         }
 
         public RelayCommand SendMessage { get; private set; }

@@ -9,6 +9,7 @@ namespace Cyclops.MainApplication.Configuration
     {
         private ConnectionConfig connectionConfig;
         private List<string> rooms;
+        private bool autoLogin;
         private string name;
 
         private string theme;
@@ -16,16 +17,7 @@ namespace Cyclops.MainApplication.Configuration
         public Profile()
         {
             Theme = "Default";
-
-            //default rooms (not for "production")
-            Rooms = new List<string>
-                        {
-                            "cyclops@conference.jabber.uruchie.org",
-                            "main@conference.jabber.uruchie.org",
-                            //"dotnet@conference.jabber.ru",
-                            //"english@conference.jabber.ru",
-                        };
-
+            Rooms = new List<string>();
             ConnectionConfig = new ConnectionConfig();
         }
 
@@ -39,6 +31,16 @@ namespace Cyclops.MainApplication.Configuration
             {
                 name = value;
                 RaisePropertyChanged("Name");
+            }
+        }
+
+        public bool AutoLogin
+        {
+            get { return autoLogin; }
+            set
+            {
+                autoLogin = value;
+                RaisePropertyChanged("AutoLogin");
             }
         }
 

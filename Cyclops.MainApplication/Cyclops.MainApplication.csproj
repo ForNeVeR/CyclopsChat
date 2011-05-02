@@ -221,6 +221,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Profile.config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\editicon.png" />
     <Resource Include="View\Localization.txt" />
     <Page Include="View\Dialogs\InputDialog.xaml">

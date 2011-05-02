@@ -24,11 +24,7 @@ namespace Cyclops.Core.Configuration
         /// Physical server address
         /// </summary>
         //[RegularExpression("")]
-        public string NetworkHost
-        {
-            get { return string.IsNullOrEmpty(networkHost) ? Server : networkHost; }
-            set { networkHost = value; }
-        }
+        public string NetworkHost { get; set; }
 
         /// <summary>
         /// Port

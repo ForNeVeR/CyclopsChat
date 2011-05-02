@@ -65,13 +65,13 @@ namespace Cyclops.Core.Resource
         {
             if (!e.Success) return;
 
+            BeginJoin(this, EventArgs.Empty);
             if (room != null)
             {
                 UnSubscribeToEvents();
                 Leave("Replaced with new connection.");
             }
 
-            BeginJoin(this, EventArgs.Empty);
             room = session.ConferenceManager.GetRoom((JID)ConferenceId);
             SubscribeToEvents();
             room.Join();

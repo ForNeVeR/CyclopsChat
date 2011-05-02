@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Profile xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Default</Name> <!-- profile name-->
+  <Theme>Default</Theme>
+  
+  <AutoLogin>false</AutoLogin>
+  
+  <ConnectionConfig>
+    <Server>jabber.uruchie.org</Server>
+    <NetworkHost></NetworkHost>
+    <Port>5222</Port>
+    <User>nagg</User>
+    <EncodedPassword></EncodedPassword> <!--C4Y9MwPhlZI= = "cyclops" :) -->
+  </ConnectionConfig>
+  
+  <Rooms>
+    <!--
+    conference JID has format: %conferenceName%@%conferenceServiceAddress%/%Nick%
+    if nick was not specified default username will be used    
+    -->
+    <string>main@conference.jabber.uruchie.org</string>
+    <string>cyclops@conference.jabber.uruchie.org/cyclops</string>
+    
+    <!-- work with conference on another servers is unstable a little :(-->
+    <!--<string>dotnet@conference.jabber.ru</string>-->
+  </Rooms>
+</Profile>

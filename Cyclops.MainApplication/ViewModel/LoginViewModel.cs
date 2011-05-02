@@ -23,6 +23,8 @@ namespace Cyclops.MainApplication.ViewModel
         private string server;
         private string errorMessage;
         private IUserSession session;
+        private bool autoLogin;
+        private Profile profile;
         private readonly IRegistrationManager registrationManager;
         private string password;
 
@@ -31,8 +33,12 @@ namespace Cyclops.MainApplication.ViewModel
             if (IsInDesignMode)
                 return;
 
+            profile = ApplicationContext.Current.CurrentProfile = ProfileManager.LoadProfile();
+
             registrationManager = ChatObjectFactory.GetRegistrationManager();
-            Server = ConfigurationManager.AppSettings["DefaultServer"];
+            Server = profile.ConnectionConfig.Server;
+            Name = profile.ConnectionConfig.User;
+            AutoLogin = profile.AutoLogin;
 
             Session = ChatObjectFactory.GetSession();
             Session.AutoReconnect = false;
@@ -41,9 +47,18 @@ namespace Cyclops.MainApplication.ViewModel
             Authenticate = new RelayCommand<PasswordBox>(AuthenticateAction, AuthenticateCanExecute);
             Register = new RelayCommand<PasswordBox>(RegisterAction, RegisterCanExecute);
 
-            //QUICK:
-            //Name = "cyclops";
-            //AuthenticateAction(new PasswordBox { Password = "cyclops" });
+            if (AutoLogin)
+            {
+                try
+                {
+                    var decodedPassword = ChatObjectFactory.GetStringEncryptor().DecryptString(profile.ConnectionConfig.EncodedPassword);
+                    AuthenticateAction(new PasswordBox { Password = decodedPassword });
+                }
+                catch
+                {
+                    //TODO: log an exception
+                }
+            }
         }
 
         private bool RegisterCanExecute(PasswordBox obj)
@@ -116,6 +131,16 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 isBusy = value;
                 RaisePropertyChanged("IsBusy");
+            }
+        }
+
+        public bool AutoLogin
+        {
+            get { return autoLogin; }
+            set
+            {
+                autoLogin = value;
+                RaisePropertyChanged("AutoLogin");
             }
         }
 
@@ -192,14 +217,12 @@ namespace Cyclops.MainApplication.ViewModel
                                            EncodedPassword = encodedPsw,
                                            Server = Server,
                                            User = Name,
+                                           NetworkHost = profile.ConnectionConfig.NetworkHost,
+                                           Port = profile.ConnectionConfig.Port
                                        };
-
-            ApplicationContext.Current.CurrentProfile = new Profile
-                                                            {
-                                                                Name = Name, 
-                                                                ConnectionConfig = connectionConfig
-                                                            };
-
+            profile.AutoLogin = AutoLogin;
+            profile.ConnectionConfig = connectionConfig;
+            ProfileManager.SaveProfile(profile);
             Session.AuthenticateAsync(connectionConfig);
         }
 

@@ -10,6 +10,11 @@ namespace Cyclops.MainApplication.Controls
 {
     public class ChatFlowDocument : FlowDocument
     {
+        public ChatFlowDocument()
+        {
+            Loaded += (s, e) => ScrollToBottom();
+        }
+
         // Using a DependencyProperty as the backing store for Messages.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MessagesProperty =
             DependencyProperty.Register("Messages", typeof (ObservableCollection<MessageViewModel>),
@@ -38,6 +43,7 @@ namespace Cyclops.MainApplication.Controls
                                                           i => Blocks.Add(i.Paragraph));
                                                   ScrollToBottom();
                                               };
+            ScrollToBottom();
         }
 
         private void ScrollToBottom()

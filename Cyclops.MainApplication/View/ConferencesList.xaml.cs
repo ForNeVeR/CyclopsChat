@@ -1,4 +1,5 @@
 ﻿using Cyclops.MainApplication.ViewModel;
+using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.View
 {
@@ -9,6 +10,12 @@ namespace Cyclops.MainApplication.View
     {
         public ConferencesList()
         {
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                DataContext = new ConferenceViewModelDesignTime();
+                InitializeComponent();
+                return;
+            }
             InitializeComponent();
             ((ConferencesListViewModel) DataContext).Close += (s, e) => DialogResult = true;
         }

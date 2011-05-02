@@ -295,13 +295,16 @@ namespace Cyclops.Core.Resource
 
         void ConferenceManager_OnJoin(Room room)
         {
-            ChangeStatus(StatusType.Online, Status);//retranslate status to conference
+            //presence flood
+            //ChangeStatus(StatusType.Online, Status);//retranslate status to conference
         }
 
+        //DEBUG:
         void JabberClient_OnReadText(object sender, string txt)
         {
         }
 
+        //DEBUG:
         void JabberClient_OnWriteText(object sender, string txt)
         {
         }
