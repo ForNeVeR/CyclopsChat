@@ -328,15 +328,20 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5" Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" 
-                 VerticalAlignment="Center"  Margin="0,0,24,0" />
+		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5" 
+                 Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,24,0"
+                 TextWrapping="NoWrap" ToolTip="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}"/>
         
-        <Button Style="{StaticResource borderlessButtonStyle}" Cursor="Hand" x:Name="changeSubject" Command="{Binding ConferenceViewModel.ChangeSubject}" HorizontalAlignment="Right" >
+        <Button Style="{StaticResource borderlessButtonStyle}" Cursor="Hand" x:Name="changeSubject" 
+                Command="{Binding ConferenceViewModel.ChangeSubject}" HorizontalAlignment="Right" 
+                ToolTip="{Binding Conference.EditSubjectTooltip, Source={StaticResource ResourceWrapper}}">
             <Image Source="..\Resources\editicon.png" Width="20" Height="20"/>
         </Button>
    
 		<Controls1:ChatFlowDocumentScrollViewer Grid.Row="1" BorderThickness="1">
-			<Controls1:ChatFlowDocument TextOptions.TextFormattingMode="Display" Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" Style="{DynamicResource flowDocumentStyle}" />
+			<Controls1:ChatFlowDocument TextOptions.TextFormattingMode="Display" 
+                                        Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
+                                        Style="{DynamicResource flowDocumentStyle}" />
 		</Controls1:ChatFlowDocumentScrollViewer>
 
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >

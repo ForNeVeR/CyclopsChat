@@ -140,6 +140,9 @@
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Разрыв соединения ({0}).</value>
   </data>
+  <data name="EditSubjectTooltip" xml:space="preserve">
+    <value>Изменить тему</value>
+  </data>
   <data name="EnteredToTheRoom" xml:space="preserve">
     <value>Вход выполнен.</value>
   </data>

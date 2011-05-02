@@ -124,6 +124,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit subject.
+        /// </summary>
+        public static string EditSubjectTooltip {
+            get {
+                return ResourceManager.GetString("EditSubjectTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entered..
         /// </summary>
         public static string EnteredToTheRoom {

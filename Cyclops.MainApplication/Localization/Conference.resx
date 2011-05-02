@@ -138,6 +138,9 @@
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Disconnect due '{0}'.</value>
   </data>
+  <data name="EditSubjectTooltip" xml:space="preserve">
+    <value>Edit subject</value>
+  </data>
   <data name="EnteredToTheRoom" xml:space="preserve">
     <value>Entered.</value>
   </data>
