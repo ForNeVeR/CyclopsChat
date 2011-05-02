@@ -23,7 +23,6 @@ namespace Cyclops.MainApplication.ViewModel
         public ConferenceViewModel(IConference conference)
         {
             validator = ChatObjectFactory.GetValidator();
-
             Conference = conference;
             Conference.Joined += ConferenceJoined;
             Conference.Banned += ConferenceBanned;
@@ -50,6 +49,9 @@ namespace Cyclops.MainApplication.ViewModel
                                                               SelectedMember.ConferenceUserId != null);
             ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
             newNick = conference.ConferenceId.Resource;
+
+
+            AddNotifyMessage(Localization.Conference.Entering);
         }
 
         private void ConferenceParticipantLeave(object sender, ConferenceMemberEventArgs e)

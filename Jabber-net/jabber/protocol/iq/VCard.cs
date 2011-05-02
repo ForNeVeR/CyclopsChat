@@ -947,17 +947,31 @@ namespace jabber.protocol.iq
             {
                 get
                 {
-                    byte[] bin = this.BinVal;
-                    if (bin == null)
+                    try
+                    {
+                        byte[] bin = this.BinVal;
+                        if (bin == null)
+                            return null;
+                        System.IO.MemoryStream ms = new System.IO.MemoryStream(bin);
+                        return System.Drawing.Image.FromStream(ms);
+                    }
+                    catch
+                    {
                         return null;
-                    System.IO.MemoryStream ms = new System.IO.MemoryStream(bin);
-                    return System.Drawing.Image.FromStream(ms);
+                    }
                 }
                 set
                 {
-                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                    Image.Save(ms, this.ImageType);
-                    this.BinVal = ms.GetBuffer();
+                    try
+                    {
+                        System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                        Image.Save(ms, this.ImageType);
+                        this.BinVal = ms.GetBuffer();
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
         }

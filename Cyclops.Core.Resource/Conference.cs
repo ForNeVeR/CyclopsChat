@@ -65,7 +65,6 @@ namespace Cyclops.Core.Resource
         {
             if (!e.Success) return;
 
-            BeginJoin(this, EventArgs.Empty);
             if (room != null)
             {
                 UnSubscribeToEvents();
@@ -74,6 +73,7 @@ namespace Cyclops.Core.Resource
 
             room = session.ConferenceManager.GetRoom((JID)ConferenceId);
             SubscribeToEvents();
+            BeginJoin(this, EventArgs.Empty);
             room.Join();
         }
 
