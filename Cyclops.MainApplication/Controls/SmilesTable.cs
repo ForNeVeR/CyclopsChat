@@ -125,9 +125,9 @@ namespace Cyclops.MainApplication.Controls
                 smileElement.ToolTip = string.Join("  ", smile.Masks);
                 smileElement.Width = smile.Bitmap.Width;
                 smileElement.Tag = smile.Masks.First();
-                smileElement.Stretch = Stretch.UniformToFill;
+                smileElement.Stretch = Stretch.None;
 
-                //RenderOptions.SetBitmapScalingMode(smileElement, BitmapScalingMode.HighQuality);
+                //RenderOptions.SetBitmapScalingMode(smileElement, BitmapScalingMode.NearestNeighbor);
                 smileElement.Height = smile.Bitmap.Height;
                 smileElement.MouseLeftButtonDown += InlineMouseLeftButtonDown;
 
