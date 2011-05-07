@@ -197,7 +197,10 @@ namespace Cyclops.Core.Resource
             foreach (RoomParticipant participant in room.Participants)
             {
                 if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                    Members.AsInternalImpl().Add(new ConferenceMember(session, this, participant, room));
+                    Members.AsInternalImpl().Add(new ConferenceMember(session, this, participant, room)
+                                                     {
+                                                         AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
+                                                     });
             }
         }
 
