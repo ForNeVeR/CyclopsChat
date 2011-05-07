@@ -98,8 +98,7 @@ namespace jabber.protocol
         /// </summary>
         /// <typeparam name="T">The type of child to search for</typeparam>
         /// <returns>The first child with the given type, or null if none found</returns>
-        public T GetChildElement<T>()
-            where T : XmlElement
+        public T GetChildElement<T>() where T : XmlElement
         {
             for (XmlNode node = this.FirstChild; node != null; node = node.NextSibling)
             {
@@ -360,8 +359,7 @@ namespace jabber.protocol
         /// <typeparam name="T">The type of sub-element to find</typeparam>
         /// <param name="elem">The element to replace; if this is null, the old element is just deleted</param>
         /// <returns>The replaced element</returns>
-        protected T ReplaceChild<T>(T elem)
-            where T : Element
+        protected T ReplaceChild<T>(T elem) where T : XmlElement
         {
             T old = GetChildElement<T>();
             if (old != null)

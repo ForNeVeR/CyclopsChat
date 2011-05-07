@@ -120,6 +120,7 @@
     <Compile Include="Smiles\ISmilePack.cs" />
     <Compile Include="Smiles\ISmilePackMeta.cs" />
     <Compile Include="SystemConferenceMessage.cs" />
+    <Compile Include="Vcard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CyclopsKey.snk" />

@@ -182,7 +182,7 @@ namespace Cyclops.MainApplication.ViewModel
                 IsBusy = false;
 
 #if DEBUG
-                //ChatObjectFactory.ShowDebugWindow();
+                ChatObjectFactory.ShowDebugWindow();
 #endif
                 Authenticated(this, e);
             }

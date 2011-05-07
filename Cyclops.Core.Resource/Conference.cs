@@ -94,19 +94,21 @@ namespace Cyclops.Core.Resource
 
         void JabberClient_OnPresence(object sender, Presence pres)
         {
-            if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID))
+            if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID) && !pres.From.Equals(Session.CurrentUserId))
                 return;
 
-            var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(pres.From));
+            IEntityIdentifier from = pres.From.Equals(Session.CurrentUserId) ? ConferenceId : pres.From;
+
+            var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(from));
             if (member == null)
                 return;
 
 
-            bool successHandling = ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(pres);
+            bool successHandling = ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(pres, ConferenceId);
             if (!member.IsSubscribed)
             {
                 if (!successHandling)
-                    AvatarsManager.SendAvatarRequest(pres.From);
+                    AvatarsManager.SendAvatarRequest(from);
                 ((ConferenceMember)member).IsSubscribed = true;
             }
 

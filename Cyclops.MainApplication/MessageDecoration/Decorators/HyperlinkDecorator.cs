@@ -19,7 +19,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         public List<Inline> Decorate(IConferenceMessage msg, List<Inline> inlines)
         {
             const string pattern =
-                @"((https?|ftp|dchub|magnet|mailto|gopher|telnet|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
+                @"((https?|ftp|dchub|magnet|mailto|gopher|telnet|xmpp|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
 
             for (int i = 0; i < inlines.Count; i++)
             {
@@ -52,7 +52,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         {
             var hyperlink = new Hyperlink(new Run(text)) {NavigateUri = new Uri(text)};
             hyperlink.Click += HyperlinkClickHandler;
-            hyperlink.SetResourceReference(FrameworkContentElement.StyleProperty, "hyperlinkStyle");
+            hyperlink.SetResourceReference(FrameworkContentElement.StyleProperty, DecoratorsStyles.HyperlinkStyle);
             return hyperlink;
         }
 

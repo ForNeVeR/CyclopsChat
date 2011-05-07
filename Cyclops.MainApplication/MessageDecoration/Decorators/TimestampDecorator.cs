@@ -14,7 +14,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         /// </summary>
         public List<Inline> Decorate(IConferenceMessage msg, List<Inline> inlines)
         {
-            string style = "timestampStyle";
+            string style = DecoratorsStyles.TimestampStyle;
             var timestampInline = new RunEx(msg.Timestamp.ToString("[hh:mm:ss] "), MessagePartType.Timestamp);
             timestampInline.SetResourceReference(FrameworkContentElement.StyleProperty, style);
 

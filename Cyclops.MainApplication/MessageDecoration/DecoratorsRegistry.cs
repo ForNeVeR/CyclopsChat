@@ -6,7 +6,7 @@ namespace Cyclops.MainApplication.MessageDecoration
 {
     public static class DecoratorsRegistry
     {
-        private static readonly NickDecorator nickDecorator = new NickDecorator();
+        private static readonly NickDecorator NickDecorator = new NickDecorator();
         static DecoratorsRegistry()
         {
             Decorators = new IMessageDecorator[]
@@ -14,7 +14,7 @@ namespace Cyclops.MainApplication.MessageDecoration
                            //Order is important!
                            new CommonMessageDecorator(),
                            new HyperlinkDecorator(),
-                           nickDecorator,
+                           NickDecorator,
                            new TimestampDecorator(),
                            new SmilesDecorator(),
                        };
@@ -24,8 +24,8 @@ namespace Cyclops.MainApplication.MessageDecoration
 
         public static event EventHandler<StringEventArgs> NickClick
         {
-            add { nickDecorator.NickClick += value; }
-            remove { nickDecorator.NickClick -= value; }
+            add { NickDecorator.NickClick += value; }
+            remove { NickDecorator.NickClick -= value; }
         }
     }
 }

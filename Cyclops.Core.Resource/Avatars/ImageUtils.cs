@@ -3,9 +3,10 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows.Media.Imaging;
 
-namespace Cyclops.Core.Resource.Avatars
+namespace Cyclops.Core.Resource
 {
     /// <summary>
     /// Set of extension methods for System.Drawing.Image
@@ -26,6 +27,21 @@ namespace Cyclops.Core.Resource.Avatars
                 string base64String = Convert.ToBase64String(imageBytes);
                 return base64String;
             }
+        }
+
+
+        public static string CalculateSha1HashOfAnImage(Image image)
+        {
+            byte[] buffer = ImageToByte(image);
+            var cryptoTransformSha1 = new SHA1CryptoServiceProvider();
+            string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(buffer)).Replace("-", "").ToLower();
+            return hash;
+        }
+
+        private static byte[] ImageToByte(Image img)
+        {
+            var converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
         /// <summary>
@@ -52,20 +68,6 @@ namespace Cyclops.Core.Resource.Avatars
             var bmpImage = new Bitmap(img);
             Bitmap bmpCrop = bmpImage.Clone(new Rectangle(x, y, width, height), bmpImage.PixelFormat);
             return bmpCrop;
-        }
-
-        /// <summary>
-        /// Change size of image
-        /// </summary>
-        public static Image ResizeImage(this Image imgToResize, int width, int height)
-        {
-            var b = new Bitmap(width, height);
-            Graphics g = Graphics.FromImage(b);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.DrawImage(imgToResize, 0, 0, width, height);
-            g.Dispose();
-
-            return b;
         }
 
         /// <summary>

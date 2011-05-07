@@ -9,17 +9,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Cyclops.MainApplication.View
+namespace Cyclops.MainApplication.View.Dialogs
 {
     /// <summary>
-    /// Interaction logic for VcardView.xaml
+    /// Interaction logic for VcardDialog.xaml
     /// </summary>
-    public partial class VcardView : UserControl
+    public partial class VcardDialog : Window
     {
-        public VcardView()
+        public VcardDialog()
         {
             InitializeComponent();
         }

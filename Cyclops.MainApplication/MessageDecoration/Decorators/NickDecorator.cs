@@ -17,25 +17,25 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         /// </summary>
         public List<Inline> Decorate(IConferenceMessage msg, List<Inline> inlines)
         {
-            string style = "nickStyle";
+            string style = DecoratorsStyles.NickStyle;
             string format = "{0}: ";
             string nick = msg.AuthorNick;
             if (msg is SystemConferenceMessage)
             {
-                style = "systemNickStyle";
+                style = DecoratorsStyles.SystemNickStyle;
                 nick = msg.AuthorNick ?? "System";
             }
 
             if (msg.IsSelfMessage)
-                style = "myNickStyle";
+                style = DecoratorsStyles.MyNickStyle;
 
             if (msg.IsAuthorModer)
-                style = "moderNickStyle";
+                style = DecoratorsStyles.ModerNickStyle;
 
             if (msg.Body != null && msg.Body.StartsWith("/me", System.StringComparison.InvariantCultureIgnoreCase))
             {
-                style = "meCommandNickStyle";
-                format = "{0} ";
+                style = DecoratorsStyles.MeCommandNickStyle;
+                format = "{0}";
             }
 
             if (msg is SystemConferenceMessage && !((SystemConferenceMessage)msg).IsErrorMessage)

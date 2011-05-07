@@ -22,15 +22,15 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
 
         public static Inline Decorate(IConferenceMessage msg, string message)
         {
-            string style = "commonMessageStyle";
+            string style = DecoratorsStyles.CommonMessageStyle;
             if (msg is SystemConferenceMessage)
-                style = "systemMessageStyle";
+                style = DecoratorsStyles.SystemMessageStyle;
             if (msg is SystemConferenceMessage && ((SystemConferenceMessage) msg).IsErrorMessage)
-                style = "errorMessageStyle";
+                style = DecoratorsStyles.ErrorMessageStyle;
 
             if (msg.Body != null && msg.Body.StartsWith("/me", System.StringComparison.InvariantCultureIgnoreCase))
             {
-                style = "meCommandNickStyle";
+                style = DecoratorsStyles.MeCommandNickStyle;
                 message = msg.Body.Remove(0, 3);
             }
 

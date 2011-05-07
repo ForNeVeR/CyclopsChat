@@ -12,22 +12,25 @@ namespace Cyclops.MainApplication
     /// </summary>
     public partial class ConferenceView : UserControl
     {
-        public static readonly DependencyProperty ConferenceViewModelProperty =
-            DependencyProperty.Register("ConferenceViewModel", typeof (ConferenceViewModel), typeof (ConferenceView),
-                                        new UIPropertyMetadata(null));
-
         public ConferenceView()
         {
-            InitializeComponent();
             DataContext = this;
+            InitializeComponent();
         }
+
+
 
         public ConferenceViewModel ConferenceViewModel
         {
-            get { return (ConferenceViewModel) GetValue(ConferenceViewModelProperty); }
+            get { return (ConferenceViewModel)GetValue(ConferenceViewModelProperty); }
             set { SetValue(ConferenceViewModelProperty, value); }
         }
 
+        // Using a DependencyProperty as the backing store for ConferenceViewModel.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ConferenceViewModelProperty =
+            DependencyProperty.Register("ConferenceViewModel", typeof(ConferenceViewModel), typeof(ConferenceView), new UIPropertyMetadata(null));
+
+        
         private void SmilesButtonClick(object sender, RoutedEventArgs e)
         {
             SmilesView.OpenForChoise(smilesButton, InsertSmileAction);

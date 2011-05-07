@@ -94,7 +94,7 @@ namespace Cyclops.Core.Resource.Avatars
                 {
                     try
                     {
-                        var file = BuildPath(CalculateSha1HashOfAnImage(vcard.Photo.Image));
+                        var file = BuildPath(ImageUtils.CalculateSha1HashOfAnImage(vcard.Photo.Image));
                         if (File.Exists(file))
                             try
                             {
@@ -117,26 +117,12 @@ namespace Cyclops.Core.Resource.Avatars
             }
         }
 
-        private static byte[] ImageToByte(Image img)
-        {
-            var converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
-        }
-
-        private static string CalculateSha1HashOfAnImage(Image image)
-        {
-            byte[] buffer = ImageToByte(image);
-            var cryptoTransformSha1 =new SHA1CryptoServiceProvider();
-            string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(buffer)).Replace("-", "").ToLower();
-            return hash;
-        }
-
         private static string BuildPath(string hash)
         {
             return Path.Combine(AvatarsFolder, hash.ToLower() + ".png");
         }
 
-        internal bool ProcessAvatarChangeHash(Presence pres)
+        internal bool ProcessAvatarChangeHash(Presence pres, IEntityIdentifier conferenceId)
         {
             try
             {
@@ -144,6 +130,7 @@ namespace Cyclops.Core.Resource.Avatars
                 var photoTagParent = pres.OfType<Element>().FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
                 if (photoTagParent != null)
                 {
+                    var from = pres.From.Equals(session.CurrentUserId) ? conferenceId : pres.From;
 
                     string sha1Hash = photoTagParent["photo"].InnerText;
                     if (!string.IsNullOrWhiteSpace(sha1Hash) && sha1Hash.Length == 40)
@@ -151,10 +138,12 @@ namespace Cyclops.Core.Resource.Avatars
 
                         hasAvatar = true;
                         if (DoesCacheContain(sha1Hash))
-                            AvatarChange(this, new AvatarChangedEventArgs(pres.From, GetFromCache(sha1Hash)));
+                            AvatarChange(this, new AvatarChangedEventArgs(from, GetFromCache(sha1Hash)));
 
-                        SendAvatarRequest(pres.From);
+                        SendAvatarRequest(from);
                     }
+                    else
+                        AvatarChange(this, new AvatarChangedEventArgs(from, defaultAvatar));
                 }
 
                 return hasAvatar;

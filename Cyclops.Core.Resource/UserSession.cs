@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Threading;
 using System.Xml;
+using bedrock.util;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
 using jabber;
@@ -15,6 +18,7 @@ using jabber.client;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
+using jabber.protocol.iq;
 using jabber.protocol.stream;
 
 namespace Cyclops.Core.Resource
@@ -29,6 +33,7 @@ namespace Cyclops.Core.Resource
         private readonly IChatObjectsValidator commonValidator;
         private ConnectionConfig connectionConfig;
         private IEntityIdentifier currentUserId;
+        private CapsManager capsManager;
         private string status;
         private bool isAuthenticated;
         private bool isAuthenticating;
@@ -47,10 +52,9 @@ namespace Cyclops.Core.Resource
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
-
             SubscribeToEvents();
         }
-
+        
         internal JabberClient JabberClient { get; set; }
         internal ConferenceManager ConferenceManager { get; set; }
         internal DiscoManager DiscoManager { get; set; }
@@ -153,7 +157,7 @@ namespace Cyclops.Core.Resource
             JabberClient.User = info.User;
             JabberClient.Password = stringEncryptor.DecryptString(info.EncodedPassword);
             JabberClient.Port = info.Port;
-            JabberClient.Resource = "cyclops v." + Assembly.GetAssembly(GetType()).GetName().Version.ToString(3);
+            JabberClient.Resource = "cyclops_v." + Assembly.GetAssembly(GetType()).GetName().Version.ToString(3);
 
             if (Dispatcher != null)
                 JabberClient.InvokeControl = new SynchronizeInvokeImpl(Dispatcher);
@@ -311,7 +315,7 @@ namespace Cyclops.Core.Resource
 
         void JabberClient_OnIQ(object sender, IQ iq)
         {
-            //throw new NotImplementedException();
+            IqCommonHandler.Handle(JabberClient, iq);
         }
 
         private void JabberClient_OnMessage(object sender, Message msg)
@@ -340,6 +344,80 @@ namespace Cyclops.Core.Resource
         public void StartPrivate(IEntityIdentifier conferenceUserId)
         {
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage {AuthorId = conferenceUserId});
+        }
+
+        public void RequestVcard(IEntityIdentifier target, Action<Vcard> callback)
+        {
+            var client = JabberClient;
+            var vcardIq = new VCardIQ(client.Document)
+                                  {
+                                      To = (JID) target, 
+                                      Type = jabber.protocol.client.IQType.get
+                                  };
+            client.Tracker.BeginIQ(vcardIq, (s, iq, o) => callback(ConvertToVcard(iq)), new object());
+        }
+
+        public void UpdateVcard(Vcard vcard, Action<bool> callback)
+        {
+            try
+            {
+                VCardIQ iq = new VCardIQ(JabberClient.Document);
+                iq.Type = IQType.set;
+                VCard.VPhoto p = iq.VCard.Photo = new VCard.VPhoto(JabberClient.Document);
+                if (vcard.Photo != null)
+                    p.ImageType = vcard.Photo.RawFormat;
+                p.Image = vcard.Photo;
+                iq.VCard.Photo = p;
+                iq.VCard.Description = vcard.Comments;
+                iq.VCard.Birthday = vcard.Birthday;
+                iq.VCard.FullName = vcard.FullName;
+
+                JabberClient.Tracker.BeginIQ(iq, (s, resIq, d) =>
+                                                     {
+                                                         callback(resIq.Error == null);
+                                                         if (resIq.Error == null)
+                                                         {
+                                                             SendUpdateNotification(vcard.Photo);
+                                                         }
+                                                     }, null);
+            }
+            catch
+            {
+                callback(false);
+            }
+        }
+        
+        private void SendUpdateNotification(Image image)
+        {
+            Presence pres = new Presence(JabberClient.Document);
+            string hash = string.Empty;
+            if (image != null)
+                hash = ImageUtils.CalculateSha1HashOfAnImage(image);
+            PhotoX photo = new PhotoX(JabberClient.Document) {PhotoHash = hash};
+            pres.AddChild(photo);
+            JabberClient.Write(pres);
+        }
+
+        private static Vcard ConvertToVcard(IQ iq)
+        {
+            Vcard result = new Vcard();
+            try
+            {
+                var vcard = iq.Query as VCard;
+                if (vcard == null)
+                    return result;
+                result.Photo = vcard.Photo == null ? null : vcard.Photo.Image;
+                result.Email = vcard.Email;
+                result.FullName = vcard.FullName;
+                result.Birthday = vcard.Birthday;
+                result.Nick = vcard.Nickname ?? iq.From.Resource;
+                result.Comments = vcard.Description;
+                return result;
+            }
+            catch
+            {
+                return result;
+            }
         }
 
         void DiscoHandlerFindServiceWithFeature(DiscoManager sender, DiscoNode node, object state)

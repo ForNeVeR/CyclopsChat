@@ -124,6 +124,7 @@
     <Compile Include="Controls\AnimatedImage.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
+    <Compile Include="Helpers\ImageResizingUtility.cs" />
     <Compile Include="Localization\Common.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,16 +151,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Login.resx</DependentUpon>
     </Compile>
+    <Compile Include="MessageDecoration\DecoratorsStyles.cs" />
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="MessageDecoration\Decorators\StringEventArgs.cs" />
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
+    <Compile Include="ValueConverters\Invertor.cs" />
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
     <Compile Include="ViewModel\ChatAreaViewModel.cs" />
+    <Compile Include="ViewModel\VcardViewModel.cs" />
     <Compile Include="View\ConferencesList.xaml.cs">
       <DependentUpon>ConferencesList.xaml</DependentUpon>
     </Compile>
@@ -189,6 +194,9 @@
     <Compile Include="View\Dialogs\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Dialogs\VcardDialog.xaml.cs">
+      <DependentUpon>VcardDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -200,9 +208,6 @@
     </Compile>
     <Compile Include="View\SmilesView.xaml.cs">
       <DependentUpon>SmilesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\VcardView.xaml.cs">
-      <DependentUpon>VcardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewController.cs" />
     <Content Include="Data\Avatars\default.png">
@@ -224,13 +229,12 @@
     <Content Include="Profile.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Folder.png" />
+    <Resource Include="Resources\image.png" />
+    <Resource Include="Resources\send.png" />
     <Resource Include="Resources\editicon.png" />
     <Resource Include="View\Localization.txt" />
     <Page Include="View\Dialogs\InputDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\VcardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Page Include="View\Dialogs\VcardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SmilesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

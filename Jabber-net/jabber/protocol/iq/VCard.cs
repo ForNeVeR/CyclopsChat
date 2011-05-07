@@ -228,8 +228,13 @@ namespace jabber.protocol.iq
         /// </summary>
         public DateTime Birthday
         {
-            get { return DateTime.Parse(GetElem("BDAY")); }
-            set { SetElem("BDAY", string.Format("yyyy-MM-dd", value)); }
+            get
+            {
+                DateTime dt = DateTime.MinValue;
+                DateTime.TryParse(GetElem("BDAY"), out dt);
+                return dt;
+            }
+            set { SetElem("BDAY", value.ToString("yyyy-MM-dd")); }
         }
 
         /// <summary>
@@ -964,8 +969,13 @@ namespace jabber.protocol.iq
                 {
                     try
                     {
+                        if (value == null)
+                        {
+                            BinVal = new byte[0];
+                            return;
+                        }
                         System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                        Image.Save(ms, this.ImageType);
+                        value.Save(ms, this.ImageType);
                         this.BinVal = ms.GetBuffer();
                     }
                     catch

@@ -29,6 +29,7 @@ namespace Cyclops.MainApplication
             }
             catch(Exception exc)
             {
+                MessageBox.Show("Ошибка парсинга " + file);
                 ChatObjectFactory.GetLogger().LogError("Error while loading resource dictionary " + file, exc);
                 return new ResourceDictionary();
             }

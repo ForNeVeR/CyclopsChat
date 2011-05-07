@@ -12,7 +12,7 @@ namespace Cyclops.MainApplication.MessageDecoration
             var paragraph = new Paragraph();
             paragraph.SetResourceReference(FrameworkContentElement.StyleProperty, "parentRowStyle");
 
-            // at first, textInlines will contains only one inline - raw text
+            // at first, textInlines will contain only one inline - raw text
             var textInlines = new List<Inline>();
 
             // applying custom decorators

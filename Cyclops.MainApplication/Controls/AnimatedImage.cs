@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -108,17 +109,19 @@ namespace Cyclops.MainApplication.Controls
             RaiseEvent(args);
         }
 
-        private static readonly Guid GiffFormatId = new Guid("{B96B3CB0-0728-11D3-9D7B-0000F81EF32E}");
         private static bool IsGif(Bitmap bmp)
         {
-            return bmp.RawFormat.Guid.Equals(GiffFormatId);
+            return bmp.RawFormat.Guid.Equals(ImageFormat.Gif.Guid);
         }
 
         private void UpdateAnimatedBitmap()
         {
             if (StaticByDefault || !IsAnimated)
             {
-                Source = ToBitmapSource(AnimatedBitmap);
+                if (AnimatedBitmap == null)
+                    Source = null;
+                else
+                    Source = ToBitmapSource(AnimatedBitmap);
                 return;
             }
             
@@ -140,7 +143,7 @@ namespace Cyclops.MainApplication.Controls
         private BitmapSource ToBitmapSource(Bitmap bmp)
         {
             Bitmap bitmap = new Bitmap(bmp);
-            bitmap.MakeTransparent();
+            //bitmap.MakeTransparent();
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
                 bitmap.GetHbitmap(),
                 IntPtr.Zero,
@@ -169,7 +172,6 @@ namespace Cyclops.MainApplication.Controls
             if (!IsAnimated) return;
             if (_bIsAnimating)
             {
-                Trace.TraceInformation("Stop animate!");
                 ImageAnimator.StopAnimate(AnimatedBitmap, OnFrameChanged);
                 _bIsAnimating = false;
             }
@@ -193,7 +195,6 @@ namespace Cyclops.MainApplication.Controls
 
             if (!_bIsAnimating)
             {
-                Trace.TraceInformation("Animate!");
                 _bIsAnimating = true;
                 ImageAnimator.Animate(AnimatedBitmap, OnFrameChanged);
                 ChangeSource();
