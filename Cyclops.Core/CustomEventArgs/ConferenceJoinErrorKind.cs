@@ -6,6 +6,7 @@ namespace Cyclops.Core
         Banned,
         NickConflict,
         PasswordRequired,
+        WrongPassword,
         //CapthcaRequired
     }
 }

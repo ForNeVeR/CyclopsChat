@@ -42,6 +42,17 @@ namespace Cyclops.MainApplication.Localization
             }
         }
 
+        private Vcard vcard = new Vcard();
+        public Vcard Vcard
+        {
+            get { return vcard; }
+            set
+            {
+                vcard = value;
+                OnPropertyChanged("Vcard");
+            }
+        }
+
         private ConferenceList conferenceList = new ConferenceList();
         public Localization.ConferenceList ConferenceList
         {
@@ -71,6 +82,7 @@ namespace Cyclops.MainApplication.Localization
             Main = new Main();
             ConferenceList = new ConferenceList();
             Common = new Common();
+            Vcard = new Vcard();
         }
     }
 }

@@ -130,12 +130,13 @@ namespace Cyclops.Core.Resource
             session.JabberClient.OnPresence -= JabberClient_OnPresence;
         }
 
+        private bool waitingForPassword = false;  
         private void room_OnPresenceError(Room room, Presence pres)
         {
             if (pres.Error == null)
                 return;
 
-            if (captchaMode)
+            if (captchaMode || (waitingForPassword && pres.Error.Code != 401))
                 return;
 
             switch (pres.Error.Code)
@@ -150,9 +151,15 @@ namespace Cyclops.Core.Resource
                                                              ErrorMessageResources.BannedErrorMessage));
                     break;
 
-                case 401: //not-auth
-                    Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.PasswordRequired,
-                                                             ErrorMessageResources.PasswordRequiredErrorMessage));
+                case 401:
+                    ConferenceJoinErrorKind error;
+                    if (waitingForPassword)
+                        error = ConferenceJoinErrorKind.PasswordRequired;
+                    else
+                        error = ConferenceJoinErrorKind.PasswordRequired;
+
+                    waitingForPassword = true;
+                    Joined(this, new ConferenceJoinEventArgs(error, pres.Error.Message));
                     break;
 
                 case 407:
@@ -192,6 +199,8 @@ namespace Cyclops.Core.Resource
 
         private void room_OnJoin(Room room)
         {
+            if (waitingForPassword)
+                waitingForPassword = false;
             Joined(this, new ConferenceJoinEventArgs());
             IsInConference = true;
             foreach (RoomParticipant participant in room.Participants)
@@ -401,6 +410,14 @@ namespace Cyclops.Core.Resource
                 iq.Instruction.CaptchaAnswerX = new CaptchaAnswerX(session.JabberClient.Document);
                 iq.Instruction.CaptchaAnswerX.FillAnswer(body, (JID)ConferenceId, captchaChallenge);
                 manager.BeginIQ(iq, OnCaptchaResponse, new Object());
+                return;
+            }
+
+            if (waitingForPassword)
+            {                
+                //let's rejoin
+                room.Leave("");
+                room.Join(body);
                 return;
             }
                 

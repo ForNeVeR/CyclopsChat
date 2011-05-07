@@ -125,7 +125,7 @@
     <comment>мудак потому что.. потому и забанили...</comment>
   </data>
   <data name="CaptchaMessage" xml:space="preserve">
-    <value>Докажите, что вы не бот:</value>
+    <value>Докажите, что вы не бот (введите текст с картинки в поле ввода):</value>
     <comment>а то я вам не верю...</comment>
   </data>
   <data name="ChangeSubject" xml:space="preserve">
@@ -137,11 +137,20 @@
   <data name="ChangeSubjectError" xml:space="preserve">
     <value>Вы не можете менять тему (недостаточно прав)</value>
   </data>
+  <data name="CurrentUserNick" xml:space="preserve">
+    <value>Ваш ник:</value>
+  </data>
+  <data name="CurrentUserStatus" xml:space="preserve">
+    <value>Ваш статус:</value>
+  </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Разрыв соединения ({0}).</value>
   </data>
   <data name="EditSubjectTooltip" xml:space="preserve">
     <value>Изменить тему</value>
+  </data>
+  <data name="EditVcard" xml:space="preserve">
+    <value>Изменить инф.</value>
   </data>
   <data name="EnteredToTheRoom" xml:space="preserve">
     <value>Вход выполнен.</value>
@@ -152,6 +161,9 @@
   <data name="InvalidCaptchaCode" xml:space="preserve">
     <value>Неправильный ответ.</value>
     <comment>Дубина слепая</comment>
+  </data>
+  <data name="InvalidPasswordErrorMessage" xml:space="preserve">
+    <value>Неправильный пароль. Попробуйте ещё раз.</value>
   </data>
   <data name="IsNowKnownAs" xml:space="preserve">
     <value>{0} сменил ник на {1}.</value>
@@ -180,7 +192,7 @@
     <value>Автоматическое переподключение через {0} секунд...</value>
   </data>
   <data name="RoomHasPassword" xml:space="preserve">
-    <value>Эта комната запоролена (пока не реализован ввод пароля :()</value>
+    <value>Эта комната запоролена. Введите пароль в поле ввода.</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Отправить</value>

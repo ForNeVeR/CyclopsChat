@@ -374,15 +374,18 @@
                         <RowDefinition />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="50" />
+                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" FontWeight="Normal" VerticalAlignment="Bottom" Text="Nick:" Margin="4,0,0,-4" />
+                    <TextBlock Grid.Row="0" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserNick, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
                     <TextBox Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="1" 
                              Text="{Binding ConferenceViewModel.NewNick, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                              Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
-                    <TextBlock Grid.Row="2" FontWeight="Normal" VerticalAlignment="Bottom" Text="Status:" Margin="4,0,0,-4" />
+                    <TextBlock Grid.Row="2" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserStatus, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
                     <TextBox Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="3" 
                              Text="{Binding ConferenceViewModel.Conference.Session.Status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                              Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+					<Button Grid.Row="4" Command="{Binding ConferenceViewModel.ChangeCurrentUserVcard}" 
+                            Content="{Binding Path=Conference.EditVcard, Source={StaticResource ResourceWrapper}}" Height="22" HorizontalAlignment="Left" Margin="3,0,0,0" FontWeight="Normal" />
                 </Grid>
             </Expander>
             <ListBox Grid.Row="1"

@@ -58,6 +58,7 @@ namespace Cyclops.MainApplication.ViewModel
                         img = img.ResizeImageInProportionIfLarge(100);
                     }
                     Photo = img;
+                    avatarsChanged = true;
                 }
                 catch
                 {
@@ -85,9 +86,15 @@ namespace Cyclops.MainApplication.ViewModel
             closeAction();
         }
 
+        private bool avatarsChanged = false;
         private bool SaveCanExecute()
         {
-            return IsEditMode && session.IsAuthenticated;
+            return IsEditMode && session.IsAuthenticated && sourceVcard != null &&
+                (Birthday != sourceVcard.Birthday ||
+                 FullName != sourceVcard.FullName ||
+                 avatarsChanged ||
+                 Email != sourceVcard.Email ||
+                 Comments != sourceVcard.Comments);
         }
 
         public RelayCommand Save { get; set; }

@@ -117,83 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlreadyBannedMessage" xml:space="preserve">
-    <value>You are already banned in this conference.</value>
+  <data name="Birthday" xml:space="preserve">
+    <value>Родился:</value>
   </data>
-  <data name="BanMessage" xml:space="preserve">
-    <value>You are banned due the reason: '{0}'.</value>
+  <data name="ClearPictureTip" xml:space="preserve">
+    <value>Очистить фото</value>
   </data>
-  <data name="CaptchaMessage" xml:space="preserve">
-    <value>Prove you are not a bot:</value>
+  <data name="Comments" xml:space="preserve">
+    <value>Дополнительно:</value>
   </data>
-  <data name="ChangeSubject" xml:space="preserve">
-    <value>Changing subject</value>
+  <data name="FullName" xml:space="preserve">
+    <value>Полное имя:</value>
   </data>
-  <data name="ChangeSubjectByParticipant" xml:space="preserve">
-    <value>{0} has changed subject to: {1}</value>
+  <data name="LoadPictureTip" xml:space="preserve">
+    <value>Загрузить фото</value>
   </data>
-  <data name="ChangeSubjectError" xml:space="preserve">
-    <value>You are not allowed to change subject.</value>
+  <data name="Nick" xml:space="preserve">
+    <value>Ник:</value>
   </data>
-  <data name="CurrentUserNick" xml:space="preserve">
-    <value>Nick:</value>
-  </data>
-  <data name="CurrentUserStatus" xml:space="preserve">
-    <value>Status:</value>
-  </data>
-  <data name="DisconnectMessage" xml:space="preserve">
-    <value>Disconnect due '{0}'.</value>
-  </data>
-  <data name="EditSubjectTooltip" xml:space="preserve">
-    <value>Edit subject</value>
-  </data>
-  <data name="EditVcard" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="EnteredToTheRoom" xml:space="preserve">
-    <value>Entered.</value>
-  </data>
-  <data name="Entering" xml:space="preserve">
-    <value>Entering...</value>
-  </data>
-  <data name="InvalidCaptchaCode" xml:space="preserve">
-    <value>Invalid code.</value>
-  </data>
-  <data name="InvalidPasswordErrorMessage" xml:space="preserve">
-    <value>Wrong password.</value>
-  </data>
-  <data name="IsNowKnownAs" xml:space="preserve">
-    <value>{0} is now known as {1}.</value>
-  </data>
-  <data name="KickMessage" xml:space="preserve">
-    <value>You are kicked due the reason: '{0}'.</value>
-  </data>
-  <data name="Me" xml:space="preserve">
-    <value>Me</value>
-    <comment>My nick in private view</comment>
-  </data>
-  <data name="MethodNotAllowedError" xml:space="preserve">
-    <value>Action you tried to perform is not allowed at this conference.</value>
-  </data>
-  <data name="NickConflictMessage" xml:space="preserve">
-    <value>Nick conflict. Please, rejoin with another one.</value>
-  </data>
-  <data name="OnlyMembersAccess" xml:space="preserve">
-    <value>Only members can join to this conference.</value>
-  </data>
-  <data name="ReconnectStart" xml:space="preserve">
-    <value>Reconnect in {0} seconds...</value>
-  </data>
-  <data name="RoomHasPassword" xml:space="preserve">
-    <value>This conference has password (inputbox is not implemented yet :()</value>
-  </data>
-  <data name="Send" xml:space="preserve">
-    <value>Send</value>
-  </data>
-  <data name="UserJoinMessage" xml:space="preserve">
-    <value>{0} has joined to us.</value>
-  </data>
-  <data name="UserLeaveMessage" xml:space="preserve">
-    <value>{0} has left the conference.</value>
+  <data name="Title" xml:space="preserve">
+    <value>Информация о пользователе</value>
   </data>
 </root>

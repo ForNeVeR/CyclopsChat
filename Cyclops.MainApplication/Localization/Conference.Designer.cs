@@ -115,6 +115,24 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nick:.
+        /// </summary>
+        public static string CurrentUserNick {
+            get {
+                return ResourceManager.GetString("CurrentUserNick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status:.
+        /// </summary>
+        public static string CurrentUserStatus {
+            get {
+                return ResourceManager.GetString("CurrentUserStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnect due &apos;{0}&apos;..
         /// </summary>
         public static string DisconnectMessage {
@@ -129,6 +147,15 @@ namespace Cyclops.MainApplication.Localization {
         public static string EditSubjectTooltip {
             get {
                 return ResourceManager.GetString("EditSubjectTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string EditVcard {
+            get {
+                return ResourceManager.GetString("EditVcard", resourceCulture);
             }
         }
         
@@ -156,6 +183,15 @@ namespace Cyclops.MainApplication.Localization {
         public static string InvalidCaptchaCode {
             get {
                 return ResourceManager.GetString("InvalidCaptchaCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong password..
+        /// </summary>
+        public static string InvalidPasswordErrorMessage {
+            get {
+                return ResourceManager.GetString("InvalidPasswordErrorMessage", resourceCulture);
             }
         }
         

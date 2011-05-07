@@ -40,7 +40,7 @@ namespace Cyclops.MainApplication.Controls
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    public class AnimatedImage : System.Windows.Controls.Image
+    public class AnimatedImage : System.Windows.Controls.Image, IDisposable
     {
         private BitmapSource[] _BitmapSources = null;
         private int _nCurrentFrame = 0;
@@ -142,10 +142,9 @@ namespace Cyclops.MainApplication.Controls
 
         private BitmapSource ToBitmapSource(Bitmap bmp)
         {
-            Bitmap bitmap = new Bitmap(bmp);
             //bitmap.MakeTransparent();
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                bitmap.GetHbitmap(),
+                bmp.GetHbitmap(),
                 IntPtr.Zero,
                 Int32Rect.Empty,
                 BitmapSizeOptions.FromEmptyOptions());
@@ -201,5 +200,19 @@ namespace Cyclops.MainApplication.Controls
             }
         }
 
+        #region Implementation of IDisposable
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
+        public void Dispose()
+        {
+            //if (AnimatedBitmap != null)
+            //    AnimatedBitmap.Dispose();
+            //AnimatedBitmap = null;
+        }
+
+        #endregion
     }
 }

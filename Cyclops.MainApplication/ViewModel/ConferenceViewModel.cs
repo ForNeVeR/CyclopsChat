@@ -34,10 +34,10 @@ namespace Cyclops.MainApplication.ViewModel
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () =>
                                                               SelectedMember != null &&
                                                               SelectedMember.ConferenceUserId != null);
-            GetUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(SelectedMember.ConferenceUserId), () =>
-                                                              SelectedMember != null &&
-                                                              SelectedMember.ConferenceUserId != null);
-
+            GetUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(SelectedMember.ConferenceUserId), 
+                                            () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
+            ChangeCurrentUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(Conference.ConferenceId, false),
+                                                      () => Conference.IsInConference);
             ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
             newNick = conference.ConferenceId.Resource;
 
@@ -72,7 +72,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ConferenceParticipantJoin(object sender, ConferenceMemberEventArgs e)
         {
-            AddNotifyMessage(Localization.Conference.UserLeaveMessage, e.Member.Nick);
+            AddNotifyMessage(Localization.Conference.UserJoinMessage, e.Member.Nick);
         }
 
         private void ConferenceMethodNotAllowedError(object sender, EventArgs e)
@@ -99,6 +99,7 @@ namespace Cyclops.MainApplication.ViewModel
         public RelayCommand SendMessage { get; private set; }
         public RelayCommand GetUserVcard { get; private set; }
         public RelayCommand ChangeSubject { get; private set; }
+        public RelayCommand ChangeCurrentUserVcard { get; private set; }
         public RelayCommand StartPrivateWithSelectedMember { get; private set; }
 
         public IConferenceMember SelectedMember
@@ -216,6 +217,8 @@ namespace Cyclops.MainApplication.ViewModel
                 text = Localization.Conference.AlreadyBannedMessage;
             else if (e.ErrorKind == ConferenceJoinErrorKind.PasswordRequired)
                 text = Localization.Conference.RoomHasPassword;
+            else if (e.ErrorKind == ConferenceJoinErrorKind.WrongPassword)
+                text = Localization.Conference.InvalidPasswordErrorMessage;
 
             if (!string.IsNullOrEmpty(text))
                 AddSystemMessage(text);

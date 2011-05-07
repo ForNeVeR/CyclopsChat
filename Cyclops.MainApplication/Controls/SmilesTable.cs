@@ -16,7 +16,7 @@ using Image = System.Windows.Controls.Image;
 
 namespace Cyclops.MainApplication.Controls
 {
-    public class SmilesGrid : UniformGrid
+    public class SmilesGrid : UniformGrid, IDisposable
     {
         public ISmilePack SmilePack
         {
@@ -102,6 +102,18 @@ namespace Cyclops.MainApplication.Controls
         }
 
         public event EventHandler<SmilesPickEventArgs> SmilePick = delegate { };
+
+        #region Implementation of IDisposable
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        /// <filterpriority>2</filterpriority>
+        public void Dispose()
+        {
+        }
+
+        #endregion
     }
 
     public class SmilesPickEventArgs : EventArgs

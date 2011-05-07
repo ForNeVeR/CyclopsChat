@@ -59,18 +59,16 @@ namespace Cyclops.MainApplication.View
         public static string OpenForChoise(UIElement sender, Action<string> callback)
         {
             callbackStatic = callback;
+            var view = new SmilesView();
             if (popup == null)
-            {
-                var view = new SmilesView();
                 popup = new Popup
-                            {
-                                StaysOpen = false,
-                                Height = 320,
-                                Width = 510,
-                                Child = view,
-                                AllowsTransparency = true
-                            };
-            }
+                {
+                    StaysOpen = false,
+                    Height = 320,
+                    Width = 510,
+                    Child = view,
+                    AllowsTransparency = true
+                };
             popup.PlacementTarget = sender;
             popup.IsOpen = true;
 

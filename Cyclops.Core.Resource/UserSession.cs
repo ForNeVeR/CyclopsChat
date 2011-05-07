@@ -168,8 +168,18 @@ namespace Cyclops.Core.Resource
             // some default settings
             JabberClient.AutoReconnect = -1;
             JabberClient.AutoPresence = false;
-            JabberClient.AutoRoster = false; 
-            JabberClient.Priority = -1;
+
+            bool isVkServer = info.Server.Equals("vk.com", StringComparison.InvariantCultureIgnoreCase);
+            if (isVkServer)
+            {
+                JabberClient.AutoRoster = true; 
+            }
+            else
+            {
+                JabberClient.AutoRoster = false;
+                JabberClient.Priority = -1;
+            }
+
             JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5;
             JabberClient.KeepAlive = 20F;
 

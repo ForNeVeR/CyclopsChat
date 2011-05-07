@@ -140,6 +140,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Localization\Vcard.Designer.cs">
+      <DependentUpon>Vcard.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Localization\Main.Designer.cs">
       <DependentUpon>Main.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -327,6 +332,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\ConferenceList.ru-RU.resx" />
     <EmbeddedResource Include="Localization\Common.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Vcard.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Vcard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Vcard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localization\Main.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Main.Designer.cs</LastGenOutput>

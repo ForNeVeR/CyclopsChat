@@ -4,7 +4,10 @@
 		xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
 		xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
 		xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
-        xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" xmlns:System="clr-namespace:System;assembly=mscorlib" Title="User details" MaxHeight="261" MaxWidth="533" MinHeight="261" MinWidth="533"
+        xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" 
+        xmlns:System="clr-namespace:System;assembly=mscorlib" 
+        Title="{Binding Path=Vcard.Title, Source={StaticResource ResourceWrapper}}"
+        MaxHeight="261" MaxWidth="533" MinHeight="261" MinWidth="533"
 		WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
 	<Window.Resources>
 
@@ -21,7 +24,7 @@
 		
 	</Window.Resources>
     <Grid>
-        <Controls:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Controls:BusyIndicator IsBusy="{Binding IsBusy}" BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}">
         	<Grid>
         		<Grid.RowDefinitions>
         			<RowDefinition Height="6" />
@@ -43,10 +46,10 @@
                 	</Border.Effect>
                     <Controls1:AnimatedImage AnimatedBitmap="{Binding Photo}" />
                 </Border>
-				<TextBlock Grid.Row="1" Grid.Column="1" Text="Nick:" Style="{DynamicResource FieldNameStyle}" />
-				<TextBlock Grid.Row="2" Grid.Column="1" Text="Full name:" Style="{DynamicResource FieldNameStyle}" />
-				<TextBlock Grid.Row="3" Grid.Column="1" Text="Birthday:" Style="{DynamicResource FieldNameStyle}" />
-				<TextBlock Grid.Row="4" Grid.Column="1" Text="Comments:" Style="{DynamicResource FieldNameStyle}" />
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=Vcard.Nick, Source={StaticResource ResourceWrapper}}" Style="{DynamicResource FieldNameStyle}" />
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=Vcard.FullName, Source={StaticResource ResourceWrapper}}" Style="{DynamicResource FieldNameStyle}" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=Vcard.Birthday, Source={StaticResource ResourceWrapper}}" Style="{DynamicResource FieldNameStyle}" />
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Path=Vcard.Comments, Source={StaticResource ResourceWrapper}}" Style="{DynamicResource FieldNameStyle}" />
             	<TextBox Text="{Binding Nick, Mode=TwoWay}" Grid.Row="1" Grid.Column="2" Height="24" Margin="0,0,10,0" IsReadOnly="True"/>
                 <TextBox IsReadOnly="{Binding IsEditMode, Converter={StaticResource invertor}}" Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="2" Height="24" Margin="0,0,10,0" />
                 <DatePicker IsEnabled="{Binding IsEditMode}" DisplayDateStart="{x:Static System:DateTime.Now}"
@@ -54,17 +57,22 @@
                             Grid.Row="3" Grid.Column="2" Height="24" Margin="0,0,10,0"/>
                 <TextBox IsReadOnly="{Binding IsEditMode, Converter={StaticResource invertor}}" Text="{Binding Comments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="2" Height="78" Margin="0,3,10,0" Grid.RowSpan="2" />
 
-                <Button IsDefault="True" Visibility="{Binding IsEditMode, Converter={StaticResource falseToHideConverter}}" Command="{Binding Save}" Grid.Row="7" Grid.Column="2" Content="Ok" Width="70" Height="24"/>
-                <Button IsCancel="True" Command="{Binding Cancel}" Grid.Row="7" Grid.Column="2" Content="Cancel" Width="70" Height="24" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                <Button IsDefault="True" Visibility="{Binding IsEditMode, Converter={StaticResource falseToHideConverter}}" Command="{Binding Save}" 
+                        Grid.Row="7" Grid.Column="2" Content="{Binding Path=Common.Ok, Source={StaticResource ResourceWrapper}}" 
+                        Width="70" Height="24" Margin="0,0,20,0"/>
+                <Button IsCancel="True" Command="{Binding Cancel}" Grid.Row="7" Grid.Column="2" Content="{Binding Path=Common.Cancel, Source={StaticResource ResourceWrapper}}" 
+                        Width="70" Height="24" 
+                        HorizontalAlignment="Right" Margin="0,0,10,0"/>
 
                 <Button Visibility="{Binding IsEditMode, Converter={StaticResource falseToHideConverter}}" 
                         Command="{Binding LoadPicture}" Height="24" Width="30" Grid.Row="7"
-                        Margin="0,0,30,10">
+                        Margin="0,0,30,10" ToolTip="{Binding Path=Vcard.LoadPictureTip, Source={StaticResource ResourceWrapper}}">
                     <Image Source="..\..\Resources\Folder.png"/>
                 </Button>
                 <Button Visibility="{Binding IsEditMode, Converter={StaticResource falseToHideConverter}}" 
                         Command="{Binding ClearPicture}" Height="24" 
-                        Margin="80,0,40,10" Width="30" Grid.Row="7">
+                        Margin="80,0,40,10" Width="30" Grid.Row="7"
+                        ToolTip="{Binding Path=Vcard.ClearPictureTip, Source={StaticResource ResourceWrapper}}">
                     <Image Source="..\..\Resources\stop.png"/>
                 </Button>
 
