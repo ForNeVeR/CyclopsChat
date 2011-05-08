@@ -337,7 +337,7 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="3*" MinWidth="100" />
-			<ColumnDefinition Width="*" MinWidth="100" />
+			<ColumnDefinition Width="180" MinWidth="100" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -345,8 +345,7 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5" 
-                 Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,24,0"
+		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,24,0"
                  TextWrapping="NoWrap" ToolTip="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}"/>
         
         <Button Style="{StaticResource borderlessButtonStyle}" Cursor="Hand" x:Name="changeSubject" 

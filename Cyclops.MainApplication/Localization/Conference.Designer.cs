@@ -277,6 +277,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service unavailable..
+        /// </summary>
+        public static string ServiceUnavailableError {
+            get {
+                return ResourceManager.GetString("ServiceUnavailableError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has joined to us..
         /// </summary>
         public static string UserJoinMessage {

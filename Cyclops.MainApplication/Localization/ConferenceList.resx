@@ -120,6 +120,9 @@
   <data name="AlreadyInRoom" xml:space="preserve">
     <value>You are already in this conference</value>
   </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Create new</value>
+  </data>
   <data name="DefaultConferenceDescInList" xml:space="preserve">
     <value>Select item to get description</value>
   </data>

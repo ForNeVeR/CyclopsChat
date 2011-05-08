@@ -10,6 +10,7 @@ namespace Cyclops.Core
         bool IsAuthenticating { get; }
         bool IsAuthenticated { get; }
         IEntityIdentifier CurrentUserId { get; }
+        IEntityIdentifier ConferenceServiceId { get; }
         ConnectionConfig ConnectionConfig { get; }
         IObservableCollection<IConference> Conferences { get; }
         IObservableCollection<IConferenceMessage> PrivateMessages { get; }

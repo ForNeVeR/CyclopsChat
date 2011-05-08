@@ -41,7 +41,7 @@ namespace Cyclops.Core.Resource
         private static byte[] ImageToByte(Image img)
         {
             var converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
+            return (byte[])converter.ConvertTo(img, typeof(byte[])); //sometimes it threws an exception (i did'nt solve it yet :) i.e. on avatar of dotnet@conference.jabber.ru/Finn
         }
 
         /// <summary>

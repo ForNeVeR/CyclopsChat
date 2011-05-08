@@ -13,10 +13,7 @@ namespace Cyclops.Core
             get { return null; }
         }
 
-        public IEntityIdentifier AuthorId
-        {
-            get { return null; }
-        }
+        public IEntityIdentifier AuthorId { get; set; }
 
         public bool IsAuthorModer
         {

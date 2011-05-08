@@ -86,10 +86,16 @@ namespace Cyclops.Core.Resource
             room.OnSelfMessage += room_OnSelfMessage;
             room.OnAdminMessage += room_OnAdminMessage;
             room.OnRoomMessage += room_OnRoomMessage;
+            room.OnRoomConfig += room_OnRoomConfig;
             room.OnParticipantJoin += room_OnParticipantJoin;
             room.OnParticipantLeave += room_OnParticipantLeave;
 
             session.JabberClient.OnPresence += JabberClient_OnPresence;
+        }
+
+        private IQ room_OnRoomConfig(Room room, IQ parent)
+        {
+            return parent;
         }
 
         void JabberClient_OnPresence(object sender, Presence pres)
@@ -166,6 +172,10 @@ namespace Cyclops.Core.Resource
                     AccessDenied(this, EventArgs.Empty);
                     break;
 
+                case 503:
+                    ServiceUnavailable(this, EventArgs.Empty);
+                    break;
+
                 case 405://i.e. changing nickname if one is visitor and this action is not allowed at the conference
                     MethodNotAllowedError(this, EventArgs.Empty);
                     break;
@@ -192,7 +202,6 @@ namespace Cyclops.Core.Resource
                 }
             }
 
-            Members.ForEach(i => ParticipantLeave(this, new ConferenceMemberEventArgs(i)));
             Members.AsInternalImpl().Clear();
             IsInConference = false;
         }
@@ -220,6 +229,8 @@ namespace Cyclops.Core.Resource
             string newNick = string.Empty;
 
             var memberObj = Members.FirstOrDefault(i => i.Nick == participant.Nick);
+            if (memberObj == null)
+                return;
 
             var nickChange = participant.Presence.OfType<UserX>().FirstOrDefault(i => i.Status != null && i.Status.Any(s => s == RoomStatus.NEW_NICK));
             if (nickChange != null && nickChange.OfType<AdminItem>().Any(i => !string.IsNullOrEmpty(i.Nick)))
@@ -455,6 +466,7 @@ namespace Cyclops.Core.Resource
             room.PrivateMessage(target.Resource, body);
         }
 
+        public event EventHandler ServiceUnavailable = delegate { };
         public event EventHandler<ConferenceJoinEventArgs> Joined = delegate { };
         public event EventHandler<KickedEventArgs> Kicked = delegate { };
         public event EventHandler<BannedEventArgs> Banned = delegate { };

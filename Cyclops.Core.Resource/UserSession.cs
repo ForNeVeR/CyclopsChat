@@ -330,6 +330,18 @@ namespace Cyclops.Core.Resource
 
         private void JabberClient_OnMessage(object sender, Message msg)
         {
+            //some conferences are not allowed to send privates
+            if (msg.Error != null)
+            {
+                PrivateMessages.AsInternalImpl().Add(new PrivateMessage
+                                                     {
+                                                         AuthorId = msg.From,
+                                                         AuthorNick = "System",
+                                                         Body = msg.Error.Message,
+                                                     });
+                return;
+            }
+
             if (msg.Type != MessageType.chat)
                 return;
 
@@ -430,8 +442,12 @@ namespace Cyclops.Core.Resource
             }
         }
 
+        public IEntityIdentifier ConferenceServiceId { get; private set; }
+
         void DiscoHandlerFindServiceWithFeature(DiscoManager sender, DiscoNode node, object state)
         {
+            if (node != null)
+                ConferenceServiceId = node.JID;
             DiscoManager.BeginGetItems(node, DiscoHandlerGetItems, state);
         }
         

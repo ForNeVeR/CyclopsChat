@@ -56,6 +56,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.InvalidCaptchaCode += ConferenceInvalidCaptchaCode;
             Conference.Disconnected += ConferenceDisconnected;
             Conference.BeginJoin += ConferenceBeginJoin;
+            Conference.ServiceUnavailable += ConferenceServiceUnavailable;
             Conference.StartReconnectTimer += ConferenceStartReconnectTimer;
             Conference.CantChangeSubject += ConferenceCantChangeSubject;
             Conference.SubjectChanged += ConferenceSubjectChanged;
@@ -63,6 +64,11 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.MethodNotAllowedError += ConferenceMethodNotAllowedError;
             Conference.ParticipantJoin += ConferenceParticipantJoin;
             Conference.ParticipantLeave += ConferenceParticipantLeave;
+        }
+
+        private void ConferenceServiceUnavailable(object sender, EventArgs e)
+        {
+            AddSystemMessage(Localization.Conference.ServiceUnavailableError);
         }
 
         private void ConferenceParticipantLeave(object sender, ConferenceMemberEventArgs e)
@@ -200,10 +206,10 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void StartPrivateWithSelectedMemberAction()
         {
-            DialogManager.ShowUsersVcard(SelectedMember.ConferenceUserId, 
-                !SelectedMember.ConferenceUserId.Equals(Conference.ConferenceId));
-            //if (SelectedMember != null)
-            //    ChatObjectFactory.GetSession().StartPrivate(SelectedMember.ConferenceUserId);
+            //DialogManager.ShowUsersVcard(SelectedMember.ConferenceUserId, 
+            //    !SelectedMember.ConferenceUserId.Equals(Conference.ConferenceId));
+            if (SelectedMember != null)
+                ChatObjectFactory.GetSession().StartPrivate(SelectedMember.ConferenceUserId);
         }
 
         private void ConferenceJoined(object sender, ConferenceJoinEventArgs e)

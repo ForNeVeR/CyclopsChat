@@ -121,6 +121,9 @@
     <value>Вы и так уже в этой комнате</value>
     <comment>Мудак</comment>
   </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Создать новую</value>
+  </data>
   <data name="DefaultConferenceDescInList" xml:space="preserve">
     <value>...</value>
   </data>

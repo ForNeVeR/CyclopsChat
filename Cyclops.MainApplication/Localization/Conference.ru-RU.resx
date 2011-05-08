@@ -197,6 +197,9 @@
   <data name="Send" xml:space="preserve">
     <value>Отправить</value>
   </data>
+  <data name="ServiceUnavailableError" xml:space="preserve">
+    <value>Сервис недоступен (возможно, в данной комнате выставлен лимит на кол-во участников).</value>
+  </data>
   <data name="UserJoinMessage" xml:space="preserve">
     <value>В комнату входит {0}.</value>
     <comment>инвариантый по отношеню к полу вариант :)</comment>

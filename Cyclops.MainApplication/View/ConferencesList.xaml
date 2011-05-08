@@ -45,8 +45,11 @@
                 <TextBlock Text="{Binding Path=ConferenceList.Nick, Source={StaticResource ResourceWrapper}}" VerticalAlignment="Center" Margin="10,0,8,0" />
 				<TextBox Text="{Binding OpenWithNick, Mode=TwoWay}" Width="120" Height="22" />
 			</StackPanel>
+            
+            
+            <Button Command="{Binding CreateNewConference}" Grid.Row="0" Content="{Binding Path=ConferenceList.CreateNew, Source={StaticResource ResourceWrapper}}" Width="90" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
 
-            <Button IsDefault="True" Command="{Binding OpenConference}" Grid.Row="3" Content="{Binding Path=ConferenceList.Join, Source={StaticResource ResourceWrapper}}" Width="80" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
+            <Button IsDefault="True" Command="{Binding OpenConference}" Grid.Row="3" Content="{Binding Path=ConferenceList.Join, Source={StaticResource ResourceWrapper}}" Width="90" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
 
 			<ListBox x:Name="listBox" Grid.Row="1" ItemsSource="{Binding Conferences}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="False" SelectedItem="{Binding SelectedConference, Mode=TwoWay}" ItemTemplate="{DynamicResource ConferenceDataTemplate}">
 				<i:Interaction.Triggers>

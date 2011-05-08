@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource;
+using Cyclops.MainApplication.View.Dialogs;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -22,7 +23,9 @@ namespace Cyclops.MainApplication.ViewModel
 
         public ConferencesListViewModel()
         {
-            OpenConference = new RelayCommand(OpenConferenceAction, OpenConferenceCanExecute);
+            OpenConference = new RelayCommand(() => OpenConferenceAction(SelectedConference.Id), OpenConferenceCanExecute);
+            CreateNewConference = new RelayCommand(CreateNewConferenceAction, CreateNewConferenceCanExecute);
+            Session = ChatObjectFactory.GetSession();
 
             if (IsInDesignMode)
             {
@@ -40,6 +43,44 @@ namespace Cyclops.MainApplication.ViewModel
             OpenWithNick = session.CurrentUserId.User;
             session.ConferencesListReceived += ConferencesListReceived;
             session.GetConferenceListAsync();
+        }
+
+        public IUserSession Session { get; private set; }
+
+        private bool CreateNewConferenceCanExecute()
+        {
+            return Session.IsAuthenticated && Session.ConferenceServiceId != null;
+        }
+
+        private void CreateNewConferenceAction()
+        {
+            DialogManager.ShowStringInputDialog(Localization.ConferenceList.CreateNew,
+                string.Empty, CreateConferenceSubmit, CreateConferenceValidator);
+        }
+
+        private void CreateConferenceSubmit(string arg)
+        {
+            IEntityIdentifier id = null;
+            try
+            {
+                if (arg.Contains("@"))
+                    id = IdentifierBuilder.Create(arg);
+                else
+                    id = IdentifierBuilder.Create(arg, Session.ConferenceServiceId.Server, OpenWithNick);
+                OpenConferenceAction(id);
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show("Can't create conference (wrong name)", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private static bool CreateConferenceValidator(string arg)
+        {
+            return !string.IsNullOrWhiteSpace(arg) 
+                && arg.Length < 100 
+                && arg.Count(i => i == '@') < 2 
+                && arg.Count(i => i == '/') < 2;
         }
 
         public bool IsBusy
@@ -101,6 +142,7 @@ namespace Cyclops.MainApplication.ViewModel
         }
 
         public RelayCommand OpenConference { get; set; }
+        public RelayCommand CreateNewConference { get; set; }
 
         private Dictionary<IEntityIdentifier, Func<string>> conferenceCache =
             new Dictionary<IEntityIdentifier, Func<string>>();
@@ -120,14 +162,14 @@ namespace Cyclops.MainApplication.ViewModel
             return SelectedConference != null;
         }
 
-        private void OpenConferenceAction()
+        private void OpenConferenceAction(IEntityIdentifier id)
         {
-            if (SelectedConference == null)
+            if (id == null)
                 return;
 
             IUserSession session = ChatObjectFactory.GetSession();
 
-            IConference existsConference = session.Conferences.FirstOrDefault(i => IsEqual(i.ConferenceId, SelectedConference.Id));
+            IConference existsConference = session.Conferences.FirstOrDefault(i => IsEqual(i.ConferenceId, id));
             if (existsConference != null)
             {
                 if (existsConference.IsInConference)
@@ -139,7 +181,7 @@ namespace Cyclops.MainApplication.ViewModel
             }
 
             string nick = string.IsNullOrWhiteSpace(OpenWithNick) ? session.CurrentUserId.User : OpenWithNick;
-            session.OpenConference(IdentifierBuilder.Create(SelectedConference.Id.User, SelectedConference.Id.Server, nick));
+            session.OpenConference(IdentifierBuilder.Create(id.User, id.Server, nick));
             Close(this, EventArgs.Empty);
         }
 

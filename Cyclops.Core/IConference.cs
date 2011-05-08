@@ -32,6 +32,7 @@ namespace Cyclops.Core
         event EventHandler<NickChangeEventArgs> NickChange;
         event EventHandler BeginJoin;
         event EventHandler StartReconnectTimer;
+        event EventHandler ServiceUnavailable;
         event EventHandler CantChangeSubject;
         event EventHandler MethodNotAllowedError;
         event EventHandler<SubjectChangedEventArgs> SubjectChanged;
