@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -24,22 +25,8 @@ namespace Cyclops.ConsoleForTests
 
         static void Main(string[] args)
         {
-            var c = Thread.CurrentThread.CurrentCulture;
-            var encryptor = new TripleDesStringEncryptor();
-            manager.RegisterNewUserAsync(new ConnectionConfig
-                                             {
-                                                 EncodedPassword = encryptor.EncryptString("testpassword"),
-                                                 Server = "jabber.uruchie.org",
-                                                 User = "testaccount",
-                                             }, OnResult);
-
-
-            Console.ReadKey();
-        }
-
-        private static void OnResult(RegistrationEventArgs obj)
-        {
-            
+            DateTime date;
+            bool success = DateTime.TryParseExact("20110507T10:43:00", "yyyyMMddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
         }
     }
 }

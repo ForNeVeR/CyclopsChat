@@ -160,7 +160,7 @@
     <Compile Include="MessageDecoration\DecoratorsStyles.cs" />
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
-    <Compile Include="MessageDecoration\Decorators\StringEventArgs.cs" />
+    <Compile Include="MessageDecoration\Decorators\NickEventArgs.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\Invertor.cs" />

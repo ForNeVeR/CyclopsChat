@@ -283,7 +283,13 @@ namespace Cyclops.Core.Resource
          
         private void room_OnRoomMessage(object sender, Message msg)
         {
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
+            DateTime stamp = DateTime.Now;
+            var delay = msg.OfType<Delay>().FirstOrDefault();
+            if (delay != null && delay.Stamp != DateTime.MinValue)
+                stamp = delay.Stamp;
+
+
+            Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg) { Timestamp = stamp });
         }
 
         public event EventHandler<CaptchaEventArgs> CaptchaRequirment = delegate { };

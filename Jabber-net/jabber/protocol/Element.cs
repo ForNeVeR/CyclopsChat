@@ -14,6 +14,7 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -713,21 +714,12 @@ namespace jabber.protocol
         /// <returns>A (usually UTC) DateTime</returns>
         public static DateTime JabberDate(string dt)
         {
-            if ((dt == null) || (dt == ""))
-                return DateTime.MinValue;
-            try
-            {
-                return new DateTime(int.Parse(dt.Substring(0, 4)),
-                                    int.Parse(dt.Substring(4, 2)),
-                                    int.Parse(dt.Substring(6, 2)),
-                                    int.Parse(dt.Substring(9,2)),
-                                    int.Parse(dt.Substring(12,2)),
-                                    int.Parse(dt.Substring(15,2)));
-            }
-            catch
-            {
-                return DateTime.MinValue;
-            }
+            DateTime date = DateTime.MinValue;
+            if (string.IsNullOrWhiteSpace(dt))
+                return date;
+            DateTime.TryParseExact(dt, "yyyyMMddTHH:mm:ss", CultureInfo.InvariantCulture, 
+                DateTimeStyles.None, out date);
+            return date;
         }
         /// <summary>
         /// Get a jabber-formated date for the DateTime.   Example date: 20020504T20:39:42

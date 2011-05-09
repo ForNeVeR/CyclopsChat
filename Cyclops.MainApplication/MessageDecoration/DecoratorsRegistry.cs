@@ -22,7 +22,7 @@ namespace Cyclops.MainApplication.MessageDecoration
 
         public static IEnumerable<IMessageDecorator> Decorators { get; private set; }
 
-        public static event EventHandler<StringEventArgs> NickClick
+        public static event EventHandler<NickEventArgs> NickClick
         {
             add { NickDecorator.NickClick += value; }
             remove { NickDecorator.NickClick -= value; }

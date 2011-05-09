@@ -60,9 +60,16 @@ namespace Cyclops.Core.Resource
             get { return msg.Body; }
         }
 
+        private DateTime timestamp = DateTime.MinValue;
         public DateTime Timestamp
         {
-            get { return DateTime.Now; } //TODO:
+            get
+            {
+                if (timestamp == DateTime.MinValue)
+                    return DateTime.Now;
+                return timestamp;
+            }
+            set { timestamp = value; }
         }
 
         public bool IsCustom

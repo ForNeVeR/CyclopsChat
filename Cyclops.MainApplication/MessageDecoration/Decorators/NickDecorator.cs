@@ -8,7 +8,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
 {
     public class NickDecorator : IMessageDecorator
     {
-        public event EventHandler<StringEventArgs> NickClick = delegate { }; 
+        public event EventHandler<NickEventArgs> NickClick = delegate { }; 
 
         #region Implementation of IMessageDecorator
 
@@ -55,7 +55,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             var msg = ((IConferenceMessage) ((RunEx) sender).Tag);
             if (msg is SystemConferenceMessage)
                 return;
-            NickClick(this, new StringEventArgs(msg.AuthorNick));
+            NickClick(this, new NickEventArgs(msg.AuthorId, msg.AuthorNick));
         }
 
         #endregion

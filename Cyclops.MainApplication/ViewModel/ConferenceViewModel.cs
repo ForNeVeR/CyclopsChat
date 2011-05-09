@@ -36,6 +36,10 @@ namespace Cyclops.MainApplication.ViewModel
             AddNotifyMessage(Localization.Conference.Entering);
         }
 
+        protected override void OnNickClick(IEntityIdentifier id)
+        {
+            SelectedMember = Conference.Members.FirstOrDefault(i => i.ConferenceUserId.Equals(id));
+        }
 
         private void SubscribeToEvents()
         {

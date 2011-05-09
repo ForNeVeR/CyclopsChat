@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using GalaSoft.MvvmLight;
@@ -24,12 +25,18 @@ namespace Cyclops.MainApplication.ViewModel
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
         }
 
-        private void DecoratorsRegistryNickClick(object sender, StringEventArgs e)
+        private void DecoratorsRegistryNickClick(object sender, NickEventArgs e)
         {
-            if (!IsActive || string.IsNullOrEmpty(e.String))
+            if (!IsActive || string.IsNullOrEmpty(e.Nick))
                 return;
 
-            SendPublicMessageToUser(e.String + ": ");
+            SendPublicMessageToUser(e.Nick + ": ");
+            if (e.Id != null)
+                OnNickClick(e.Id);
+        }
+
+        protected virtual void OnNickClick(IEntityIdentifier id)
+        {
         }
 
         protected void SendPublicMessageToUser(string nick)
