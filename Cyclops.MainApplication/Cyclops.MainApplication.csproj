@@ -124,6 +124,7 @@
     <Compile Include="Controls\AnimatedImage.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
+    <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
     <Compile Include="Helpers\ImageResizingUtility.cs" />
     <Compile Include="Localization\Common.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -164,8 +165,11 @@
     <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\Invertor.cs" />
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
+    <Compile Include="ValueConverters\SumConverter.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
+    <Compile Include="ViewModel\ConferenceViewModel.Commands.cs" />
+    <Compile Include="ViewModel\IChatAreaView.cs" />
     <Compile Include="ViewModel\MainViewModel.Commands.cs" />
     <Compile Include="ViewModel\PrivateViewModel.cs" />
     <Compile Include="ViewModel\ChatAreaViewModel.cs" />
@@ -222,11 +226,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Themes\Default\OutputAreaStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Themes\Default\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

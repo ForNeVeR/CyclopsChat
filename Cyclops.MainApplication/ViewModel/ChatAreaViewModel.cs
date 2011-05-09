@@ -16,8 +16,11 @@ namespace Cyclops.MainApplication.ViewModel
             get { return false; }
         }
 
-        protected ChatAreaViewModel()
+        public IChatAreaView View { get; set; }
+
+        protected ChatAreaViewModel(IChatAreaView view)
         {
+            View = view;
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
         }
 
@@ -26,7 +29,21 @@ namespace Cyclops.MainApplication.ViewModel
             if (!IsActive || string.IsNullOrEmpty(e.String))
                 return;
 
-            CurrentlyTypedMessage = e.String + ": " + CurrentlyTypedMessage;
+            SendPublicMessageToUser(e.String + ": ");
+        }
+
+        protected void SendPublicMessageToUser(string nick)
+        {
+            if (CurrentlyTypedMessage == null)
+                CurrentlyTypedMessage = string.Empty;
+
+            if (View.InputBoxSelectionLength == 0)
+                CurrentlyTypedMessage = CurrentlyTypedMessage.Insert(View.InputBoxSelectionStart, nick);
+            else
+                CurrentlyTypedMessage = CurrentlyTypedMessage.Remove(0, View.InputBoxSelectionLength).Insert(View.InputBoxSelectionStart, nick);
+            View.InputBoxSelectionLength = 0;
+            View.InputBoxSelectionStart = CurrentlyTypedMessage.Length;
+            View.InputboxFocus();
         }
 
         public bool IsActive

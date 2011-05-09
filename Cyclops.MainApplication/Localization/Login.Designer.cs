@@ -70,6 +70,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remember.
+        /// </summary>
+        public static string AutoLogin {
+            get {
+                return ResourceManager.GetString("AutoLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string Connect {

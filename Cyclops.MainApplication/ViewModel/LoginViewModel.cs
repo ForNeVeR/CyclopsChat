@@ -123,7 +123,7 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("Server");
             }
         }
-
+        
         public bool IsBusy
         {
             get { return isBusy; }

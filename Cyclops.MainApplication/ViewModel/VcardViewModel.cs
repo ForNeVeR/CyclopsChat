@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using Cyclops.Core;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -33,7 +24,13 @@ namespace Cyclops.MainApplication.ViewModel
             Save = new RelayCommand(SaveAction, SaveCanExecute);
             Cancel = new RelayCommand(closeAction);
             LoadPicture = new RelayCommand(LoadPictureAction, () => IsEditMode);
-            ClearPicture = new RelayCommand(() => Photo = null, () => IsEditMode && Photo != null);
+            ClearPicture = new RelayCommand(ClearPictureAction, () => IsEditMode && Photo != null);
+        }
+
+        private void ClearPictureAction()
+        {
+            avatarsChanged = true;
+            Photo = null;
         }
 
         private void LoadPictureAction()

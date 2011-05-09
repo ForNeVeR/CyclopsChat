@@ -19,7 +19,7 @@
 
 
         <Button Height="20" Visibility="Visible" Width="60" Content="Rooms" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding OpenConferenceList}" />
-        <Button Margin="0,0,60,0" Visibility="Visible" Height="20" Width="60" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding UpdateStyles}" />
+        <Button x:Name="refreshButton" Margin="0,0,60,0" Visibility="Visible" Height="20" Width="60" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding UpdateStyles}" />
 		
 	</Grid>
 </UserControl>

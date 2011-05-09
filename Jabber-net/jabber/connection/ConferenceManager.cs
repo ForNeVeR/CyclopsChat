@@ -1168,6 +1168,8 @@ namespace jabber.connection
                 pres.From = new JID(m_jid.User, m_jid.Server, item.Nick);
                 UserX x = new UserX(m_manager.Stream.Document);
                 RoomItem xi = x.RoomItem;
+                if (xi == null)
+                    continue;
                 xi.Role = item.Role;
                 xi.Affiliation = item.Affiliation;
                 xi.Nick = item.Nick;

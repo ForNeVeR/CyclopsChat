@@ -7,15 +7,12 @@
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" 
-             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
-             xmlns:View="clr-namespace:Cyclops.MainApplication.View" 
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
              xmlns:MainApplication="clr-namespace:Cyclops.MainApplication" 
+             xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
              x:Class="Cyclops.MainApplication.ConferenceView" 
-             IsVisibleChanged="UserControl_IsVisibleChanged"
+             IsVisibleChanged="UserControlIsVisibleChanged"
              d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display"
-             mc:Ignorable="d"
-             x:Name="mainControl"
+             mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
  
 	<UserControl.Resources>
@@ -259,9 +256,11 @@
             </Setter>
         </Style>
 
+        <ValueConverters:SumConverter x:Key="sumConverter" />
 
         <DataTemplate x:Key="MemberInfoTemplate">
-			<Grid Height="32" Background="White">
+            <Grid Height="32" Background="White" x:Name="rootGrid"
+                  MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="40" />
 					<ColumnDefinition />
@@ -277,8 +276,10 @@
 					<Image Source="{Binding AvatarUrl}" 
 						Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
 				</Border>
-				<TextBlock x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" Foreground="#FF565656" />
-				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
+                <TextBlock Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
+                           TextTrimming="CharacterEllipsis" Foreground="#FF565656" />
+                <TextBlock Width="{Binding ActualWidth, ElementName=nickTextBlock}" Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis" 
+                           Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
 			
 				<Border x:Name="awayMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
 					<Border.RenderTransform>
@@ -304,8 +305,22 @@
 				</Border>
                 
                 <Grid.ContextMenu>
-                    <ContextMenu ItemsSource="{Binding Path=ConferenceViewModel.MembersCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-                                 DisplayMemberPath="Item1">
+                    <ContextMenu>
+                        <MenuItem Header="{Binding Path=Conference.SendPrivateMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding StartPrivateWithSelectedMember}">
+                            <MenuItem.Icon>
+                                <Image Source="..\..\Resources\send.png" Height="18" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{Binding Path=Conference.SendPublicMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding SendPublicMessageToSelectedMember}">
+                        <MenuItem.Icon>
+                            <Image Source="" Height="18" />
+                        </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{Binding Path=Conference.ViewVcard, Source={StaticResource ResourceWrapper}}" Command="{Binding GetUserVcard}">
+                        <MenuItem.Icon>
+                            <Image Source="..\..\Resources\image.png" Height="18" />
+                        </MenuItem.Icon>
+                        </MenuItem>
                     </ContextMenu>
                 </Grid.ContextMenu>
                 
@@ -322,6 +337,9 @@
                 </DataTrigger>
                 <DataTrigger Binding="{Binding StatusType}" Value="away">
                     <Setter TargetName="awayMark" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                    <Setter TargetName="rootGrid" Property="Background" Value="LightGray" />
                 </DataTrigger>
             </DataTemplate.Triggers>
 		</DataTemplate>
@@ -376,11 +394,11 @@
                         <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserNick, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
-                    <TextBox Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="1" 
+                    <TextBox x:Name="nickBox" Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="1" 
                              Text="{Binding ConferenceViewModel.NewNick, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                              Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
                     <TextBlock Grid.Row="2" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserStatus, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
-                    <TextBox Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="3" 
+                    <TextBox x:Name="statusBox" Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="3" 
                              Text="{Binding ConferenceViewModel.Conference.Session.Status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                              Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 					<Button Grid.Row="4" Command="{Binding ConferenceViewModel.ChangeCurrentUserVcard}" 

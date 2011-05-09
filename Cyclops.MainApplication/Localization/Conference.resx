@@ -190,6 +190,12 @@
   <data name="Send" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="SendPrivateMessage" xml:space="preserve">
+    <value>Send private message</value>
+  </data>
+  <data name="SendPublicMessage" xml:space="preserve">
+    <value>Send public message</value>
+  </data>
   <data name="ServiceUnavailableError" xml:space="preserve">
     <value>Service unavailable.</value>
   </data>
@@ -198,5 +204,8 @@
   </data>
   <data name="UserLeaveMessage" xml:space="preserve">
     <value>{0} has left the conference.</value>
+  </data>
+  <data name="ViewVcard" xml:space="preserve">
+    <value>View details</value>
   </data>
 </root>

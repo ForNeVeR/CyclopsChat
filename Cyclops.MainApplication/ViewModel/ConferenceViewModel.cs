@@ -11,7 +11,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public class ConferenceViewModel : ChatAreaViewModel
+    public partial class ConferenceViewModel : ChatAreaViewModel
     {
         private IConference conference;
         private ObservableCollection<MessageViewModel> messages;
@@ -20,7 +20,7 @@ namespace Cyclops.MainApplication.ViewModel
         private string statusText;
         private IChatObjectsValidator validator;
 
-        public ConferenceViewModel(IConference conference)
+        public ConferenceViewModel(IChatAreaView view, IConference conference) : base(view)
         {
             validator = ChatObjectFactory.GetValidator();
             Conference = conference;
@@ -30,17 +30,8 @@ namespace Cyclops.MainApplication.ViewModel
             Messages = new ObservableCollection<MessageViewModel>();
             Conference.Messages.SynchronizeWith(Messages, OnInsertMessage);
 
-            SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
-            StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, () =>
-                                                              SelectedMember != null &&
-                                                              SelectedMember.ConferenceUserId != null);
-            GetUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(SelectedMember.ConferenceUserId), 
-                                            () => SelectedMember != null && SelectedMember.ConferenceUserId != null);
-            ChangeCurrentUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(Conference.ConferenceId, false),
-                                                      () => Conference.IsInConference);
-            ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
+            InitializeCommands();
             newNick = conference.ConferenceId.Resource;
-
 
             AddNotifyMessage(Localization.Conference.Entering);
         }
@@ -96,18 +87,6 @@ namespace Cyclops.MainApplication.ViewModel
             AddSystemMessage(Localization.Conference.ChangeSubjectError);
         }
 
-        private void ChangeSubjectAction()
-        {
-            DialogManager.ShowStringInputDialog(Localization.Conference.ChangeSubject, Conference.Subject, 
-                subj => Conference.ChangeSubject(subj), subj => subj != null && subj.Length < 1000);
-        }
-
-        public RelayCommand SendMessage { get; private set; }
-        public RelayCommand GetUserVcard { get; private set; }
-        public RelayCommand ChangeSubject { get; private set; }
-        public RelayCommand ChangeCurrentUserVcard { get; private set; }
-        public RelayCommand StartPrivateWithSelectedMember { get; private set; }
-
         public IConferenceMember SelectedMember
         {
             get { return selectedMember; }
@@ -117,17 +96,6 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("SelectedMember");
             }
         }
-
-        //public ObservableCollection<Tuple<string, RelayCommand>> MembersCommands
-        //{
-        //    get
-        //    {
-        //        var commands = new ObservableCollection<Tuple<string, RelayCommand>>();
-        //        commands.Add(new Tuple<string, RelayCommand>("11111", StartPrivateWithSelectedMember));
-        //        commands.Add(new Tuple<string, RelayCommand>("22222", GetUserVcard));
-        //        return commands;
-        //    }
-        //}
 
         public IConference Conference
         {
@@ -202,14 +170,6 @@ namespace Cyclops.MainApplication.ViewModel
                                      Body = string.Format(Localization.Conference.CaptchaMessage + Environment.NewLine),
                                      Bitmap = e.BitmapImage
                                  }));
-        }
-
-        private void StartPrivateWithSelectedMemberAction()
-        {
-            //DialogManager.ShowUsersVcard(SelectedMember.ConferenceUserId, 
-            //    !SelectedMember.ConferenceUserId.Equals(Conference.ConferenceId));
-            if (SelectedMember != null)
-                ChatObjectFactory.GetSession().StartPrivate(SelectedMember.ConferenceUserId);
         }
 
         private void ConferenceJoined(object sender, ConferenceJoinEventArgs e)

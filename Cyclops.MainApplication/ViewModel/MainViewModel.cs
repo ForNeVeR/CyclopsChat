@@ -51,7 +51,7 @@ namespace Cyclops.MainApplication.ViewModel
 
 
             Session.Conferences.SynchronizeWith(ConferencesModels, 
-                conference => new ConferenceViewModel(conference), i => i, i => i.Conference);
+                conference => new ConferenceViewModel(null, conference), i => i, i => i.Conference);
             
             SubscribeToEvents();
             IsApplicationInActiveState = Application.Current.MainWindow.IsActive;
@@ -156,7 +156,7 @@ namespace Cyclops.MainApplication.ViewModel
                     }
                     else
                     {
-                        var newPrivate = new PrivateViewModel {Participant = msg.AuthorId};
+                        var newPrivate = new PrivateViewModel(null) {Participant = msg.AuthorId};
                         newPrivate.Conference = msg.Conference;
                         if (msg.Body != null)
                             newPrivate.Messages.Add(new MessageViewModel(msg));

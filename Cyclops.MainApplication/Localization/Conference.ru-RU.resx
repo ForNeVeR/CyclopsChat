@@ -197,6 +197,12 @@
   <data name="Send" xml:space="preserve">
     <value>Отправить</value>
   </data>
+  <data name="SendPrivateMessage" xml:space="preserve">
+    <value>Отправить приват</value>
+  </data>
+  <data name="SendPublicMessage" xml:space="preserve">
+    <value>Обратиться в чате</value>
+  </data>
   <data name="ServiceUnavailableError" xml:space="preserve">
     <value>Сервис недоступен (возможно, в данной комнате выставлен лимит на кол-во участников).</value>
   </data>
@@ -206,5 +212,8 @@
   </data>
   <data name="UserLeaveMessage" xml:space="preserve">
     <value>Комнату покидает {0}.</value>
+  </data>
+  <data name="ViewVcard" xml:space="preserve">
+    <value>Информация</value>
   </data>
 </root>

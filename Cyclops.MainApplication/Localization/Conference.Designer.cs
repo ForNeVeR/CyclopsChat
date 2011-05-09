@@ -277,6 +277,24 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send private message.
+        /// </summary>
+        public static string SendPrivateMessage {
+            get {
+                return ResourceManager.GetString("SendPrivateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send public message.
+        /// </summary>
+        public static string SendPublicMessage {
+            get {
+                return ResourceManager.GetString("SendPublicMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service unavailable..
         /// </summary>
         public static string ServiceUnavailableError {
@@ -300,6 +318,15 @@ namespace Cyclops.MainApplication.Localization {
         public static string UserLeaveMessage {
             get {
                 return ResourceManager.GetString("UserLeaveMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View details.
+        /// </summary>
+        public static string ViewVcard {
+            get {
+                return ResourceManager.GetString("ViewVcard", resourceCulture);
             }
         }
     }

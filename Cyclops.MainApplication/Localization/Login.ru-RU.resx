@@ -120,6 +120,9 @@
   <data name="AdvancedSettings" xml:space="preserve">
     <value>Настройки:</value>
   </data>
+  <data name="AutoLogin" xml:space="preserve">
+    <value>Запомнить</value>
+  </data>
   <data name="Connect" xml:space="preserve">
     <value>Соединить</value>
   </data>

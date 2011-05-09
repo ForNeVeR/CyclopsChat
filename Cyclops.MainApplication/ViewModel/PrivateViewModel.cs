@@ -11,7 +11,7 @@ namespace Cyclops.MainApplication.ViewModel
         private string currentlyTypedMessage;
         private ObservableCollection<MessageViewModel> messages;
 
-        public PrivateViewModel()
+        public PrivateViewModel(IChatAreaView view) : base(view)
         {
             Messages = new ObservableCollection<MessageViewModel>();
             Messages.CollectionChanged += MessagesCollectionChanged;

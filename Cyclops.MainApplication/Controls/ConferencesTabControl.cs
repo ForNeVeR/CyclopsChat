@@ -129,9 +129,11 @@ namespace Cyclops.MainApplication.Controls
 
         private void AddConference(ConferenceViewModel conference)
         {
+            var view = new ConferenceView {ConferenceViewModel = conference};
+            conference.View = view;
             var tab = new TabItem
                           {
-                              Content = new ConferenceView {ConferenceViewModel = conference},
+                              Content = view,
                               DataContext = conference,
                           };
 
@@ -147,9 +149,11 @@ namespace Cyclops.MainApplication.Controls
 
         private void AddPrivate(PrivateViewModel privateModel)
         {
+            var view = new PrivateView {PrivateViewModel = privateModel};
+            privateModel.View = view;
             var tab = new TabItem
                           {
-                              Content = new PrivateView {PrivateViewModel = privateModel},
+                              Content = view,
                               DataContext = privateModel,
                           };
 

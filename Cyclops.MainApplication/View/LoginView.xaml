@@ -87,6 +87,7 @@
                             <TextBlock VerticalAlignment="Bottom" Margin="3,0,3,0" Grid.Row="1" TextWrapping="Wrap" LineStackingStrategy="BlockLineHeight" LineHeight="11" Grid.ColumnSpan="2" Text="{Binding Path=Login.Tip, Source={StaticResource ResourceWrapper}}" />
                         </Grid>
                     </Expander>
+                    <CheckBox Grid.Row="2" Content="{Binding Path=Login.AutoLogin, Source={StaticResource ResourceWrapper}}" IsChecked="{Binding AutoLogin, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,4,8,0" />
 				</Grid>
         </Border>
 
