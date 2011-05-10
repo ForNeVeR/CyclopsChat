@@ -66,6 +66,7 @@
     <Compile Include="CustomEventArgs\AvatarChangedEventArgs.cs" />
     <Compile Include="CustomEventArgs\CaptchaEventArgs.cs" />
     <Compile Include="CustomEventArgs\ConferenceMemberEventArgs.cs" />
+    <Compile Include="CustomEventArgs\ErrorEventArgs.cs" />
     <Compile Include="CustomEventArgs\NickChangeEventArgs.cs" />
     <Compile Include="CustomEventArgs\StatusType.cs" />
     <Compile Include="CustomEventArgs\RegistrationEventArgs.cs" />

@@ -36,6 +36,8 @@ namespace Cyclops.MainApplication.ViewModel
 
             TrayController.Instance.ShowDefaultIcon();
             Session = ChatObjectFactory.GetSession();
+            Session.ErrorMessageRecieved += SessionCommonError;
+
             ConferencesModels = new ObservableCollection<ConferenceViewModel>();
             PrivateViewModels = new ObservableCollection<PrivateViewModel>();
 
@@ -56,6 +58,11 @@ namespace Cyclops.MainApplication.ViewModel
             
             SubscribeToEvents();
             IsApplicationInActiveState = Application.Current.MainWindow.IsActive;
+        }
+
+        private static void SessionCommonError(object sender, Core.CustomEventArgs.ErrorEventArgs e)
+        {
+            NotificationManager.NotifyError(e.From.ToString(), e.Message);
         }
 
         private void SubscribeToEvents()

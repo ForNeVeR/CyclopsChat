@@ -213,6 +213,7 @@
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Popups\ErrorNotificationViewModel.cs" />
     <Compile Include="View\Popups\ErrorNotification.xaml.cs">
       <DependentUpon>ErrorNotification.xaml</DependentUpon>
     </Compile>
@@ -242,6 +243,8 @@
     <Content Include="Profile.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\warning.png" />
+    <Resource Include="Resources\error.png" />
     <Resource Include="Resources\Folder.png" />
     <Resource Include="Resources\image.png" />
     <Resource Include="Resources\send.png" />

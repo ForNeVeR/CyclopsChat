@@ -9,20 +9,36 @@ namespace Cyclops.MainApplication.View.Popups
 {
     public static class NotificationManager
     {
-        
+        public const int StaysOpen = 10000;
+
         public static void NotifyPrivate(PrivateMessage privateMessage, BitmapImage bitmapImage)
         {
-            var privateNotification = new PrivateNotification
-                                          {
-                                              StayOpenMilliseconds = 10000,
-                                              DataContext = new PrivateNotificationViewModel
-                                                                {
-                                                                    //Avatar = bitmapImage,
-                                                                    PrivateMessage = privateMessage
-                                                                }
-                                          };
-            privateNotification.Show();
-            privateNotification.Notify();
+            var notification = new PrivateNotification
+                                   {
+                                       StayOpenMilliseconds = StaysOpen,
+                                       DataContext = new PrivateNotificationViewModel
+                                                         {
+                                                             //Avatar = bitmapImage,
+                                                             PrivateMessage = privateMessage
+                                                         }
+                                   };
+            notification.Show();
+            notification.Notify();
+        }
+
+        public static void NotifyError(string title, string body)
+        {
+            var notification = new ErrorNotification
+                                   {
+                                       StayOpenMilliseconds = StaysOpen,
+                                       DataContext = new ErrorNotificationViewModel
+                                                         {
+                                                             Body = body,
+                                                             Title = title
+                                                         },
+                                   };
+            notification.Show();
+            notification.Notify();
         }
     }
 }

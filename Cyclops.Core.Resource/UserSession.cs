@@ -225,6 +225,7 @@ namespace Cyclops.Core.Resource
         public event EventHandler<AuthenticationEventArgs> ConnectionDropped = delegate { };
 
         public event EventHandler PublicMessage = delegate { };
+        public event EventHandler<ErrorEventArgs> ErrorMessageRecieved = delegate { };
 
         #endregion
 
@@ -333,12 +334,7 @@ namespace Cyclops.Core.Resource
             //some conferences are not allowed to send privates
             if (msg.Error != null)
             {
-                PrivateMessages.AsInternalImpl().Add(new PrivateMessage
-                                                     {
-                                                         AuthorId = msg.From,
-                                                         AuthorNick = "System",
-                                                         Body = msg.Error.Message,
-                                                     });
+                ErrorMessageRecieved(this, new ErrorEventArgs(msg.From, msg.Error.Message));
                 return;
             }
 

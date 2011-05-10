@@ -32,5 +32,6 @@ namespace Cyclops.Core
         event EventHandler<AuthenticationEventArgs> Authenticated;
         event EventHandler<AuthenticationEventArgs> ConnectionDropped;
         event EventHandler PublicMessage;
+        event EventHandler<ErrorEventArgs> ErrorMessageRecieved;
     }
 }
