@@ -161,6 +161,7 @@
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="MessageDecoration\Decorators\NickEventArgs.cs" />
+    <Compile Include="Notifications\TaskbarNotifier.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\Invertor.cs" />
@@ -184,7 +185,7 @@
     <Compile Include="Controls\ChatScrollViewer.cs" />
     <Compile Include="Controls\ConferencesTabControl.cs" />
     <Compile Include="Controls\InputBox.cs" />
-    <Compile Include="Controls\TrayController.cs" />
+    <Compile Include="Notifications\TrayController.cs" />
     <Compile Include="Helpers\GlassEffectHelper.cs" />
     <Compile Include="MessageDecoration\DecoratorsRegistry.cs" />
     <Compile Include="MessageDecoration\Decorators\CommonMessageDecorator.cs" />
@@ -212,6 +213,14 @@
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Popups\ErrorNotification.xaml.cs">
+      <DependentUpon>ErrorNotification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Popups\NotificationManager.cs" />
+    <Compile Include="View\Popups\PrivateNotification.xaml.cs">
+      <DependentUpon>PrivateNotification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Popups\PrivateNotificationViewModel.cs" />
     <Compile Include="View\PrivateView.xaml.cs">
       <DependentUpon>PrivateView.xaml</DependentUpon>
     </Compile>
@@ -255,6 +264,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Page Include="View\Dialogs\VcardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Popups\ErrorNotification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Popups\PrivateNotification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

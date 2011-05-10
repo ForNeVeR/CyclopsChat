@@ -7,6 +7,7 @@ using Cyclops.Core;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Configuration;
 using Cyclops.MainApplication.Localization;
+using Cyclops.MainApplication.View.Popups;
 
 namespace Cyclops.MainApplication
 {
@@ -27,7 +28,7 @@ namespace Cyclops.MainApplication
             base.OnStartup(e);
         }
 
-        void DispatchernhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        static void DispatchernhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             var logger = ChatObjectFactory.GetLogger();
             logger.LogError("Unhandled exception", e.Exception);
@@ -40,15 +41,12 @@ namespace Cyclops.MainApplication
                 logger.LogError("Unhandled exception", e.ExceptionObject as Exception);
         }
 
-        void WindowLoaded(object sender, RoutedEventArgs e)
+        static void WindowLoaded(object sender, RoutedEventArgs e)
         {
             var window = e.Source as Window;
             System.Threading.Thread.Sleep(100);
             window.Dispatcher.Invoke(
-            new Action(() =>
-            {
-                window.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
-            }));
+            new Action(() => window.MoveFocus(new TraversalRequest(FocusNavigationDirection.First))));
         }
     }
 }

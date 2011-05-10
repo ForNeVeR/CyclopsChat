@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Cyclops.Core;
 using Cyclops.Core.Resource;
+using Cyclops.MainApplication.View.Popups;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -20,7 +21,12 @@ namespace Cyclops.MainApplication.ViewModel
 
         void MessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (!IsActive) UnreadMessagesCount++;
+            if (!IsActive)
+            {
+                UnreadMessagesCount++;
+                var message = ((MessageViewModel)e.NewItems[0]).RawMessage as PrivateMessage;
+                NotificationManager.NotifyPrivate(message, null);
+            }
         }
 
         public IEntityIdentifier Participant { get; set; }

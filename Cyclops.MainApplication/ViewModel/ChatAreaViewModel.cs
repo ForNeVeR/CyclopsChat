@@ -3,6 +3,7 @@ using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -18,10 +19,12 @@ namespace Cyclops.MainApplication.ViewModel
         }
 
         public IChatAreaView View { get; set; }
+        public RelayCommand ClearOutputArea { get; private set; }
 
         protected ChatAreaViewModel(IChatAreaView view)
         {
             View = view;
+            ClearOutputArea = new RelayCommand(() => View.ClearOutputArea());
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
         }
 

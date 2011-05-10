@@ -7,6 +7,7 @@ using Cyclops.Core;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.View;
+using Cyclops.MainApplication.View.Popups;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -162,10 +163,13 @@ namespace Cyclops.MainApplication.ViewModel
                             newPrivate.Messages.Add(new MessageViewModel(msg));
                         PrivateViewModels.Add(newPrivate);
                     }
-                }
 
-                if (!IsApplicationInActiveState)
-                    TrayController.Instance.StartBlink();
+                    if (!IsApplicationInActiveState)
+                    {
+                        TrayController.Instance.StartBlink();
+                        NotificationManager.NotifyPrivate(msg, null);
+                    }
+                }
             }
         }
 

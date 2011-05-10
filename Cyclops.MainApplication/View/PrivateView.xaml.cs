@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cyclops.MainApplication.ViewModel;
@@ -28,7 +29,7 @@ namespace Cyclops.MainApplication.View
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            if (!(e.OriginalSource is IInputElement))
+            if (!(e.OriginalSource is TextBox))
                 InputboxFocus();
             base.OnPreviewKeyDown(e);
         }
@@ -50,7 +51,12 @@ namespace Cyclops.MainApplication.View
         {
             get { return inputBox.SelectionStart; }
             set { inputBox.SelectionStart = value; }
-        } 
+        }
+
+        public void ClearOutputArea()
+        {
+            chatFlowDocument.Blocks.Clear();
+        }
 
         #endregion
     }

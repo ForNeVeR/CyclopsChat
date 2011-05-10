@@ -1,0 +1,51 @@
+﻿<n:TaskbarNotifier x:Class="Cyclops.MainApplication.View.Popups.PrivateNotification"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:n="clr-namespace:Cyclops.MainApplication.Notifications" 
+        xmlns:Popups="clr-namespace:Cyclops.MainApplication.View.Popups" 
+        Title="PrivateNotification" Height="105" Width="330"
+        WindowStyle="None" ResizeMode="NoResize" 
+        AllowsTransparency="True" Background="Transparent">
+    <n:TaskbarNotifier.DataContext>
+        <Popups:PrivateNotificationViewModel/>
+    </n:TaskbarNotifier.DataContext>
+    <Border Margin="10" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="0"/>
+        </Border.Effect>
+		<Border.Background>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FF606060" Offset="0"/>
+				<GradientStop Color="#FF434343" Offset="1"/>
+				<GradientStop Color="#FF3D3D3D" Offset="0.484"/>
+			</LinearGradientBrush>
+		</Border.Background>
+	    <Grid Background="Transparent">
+	        <Grid.ColumnDefinitions>
+	            <ColumnDefinition Width="Auto" />
+	            <ColumnDefinition Width="0.759*" />
+	        </Grid.ColumnDefinitions>
+	        <Grid.RowDefinitions>
+	            <RowDefinition Height="20" />
+	            <RowDefinition Height="0.753*" />
+	        </Grid.RowDefinitions>
+
+			<!-- Nick -->
+	        <TextBlock Grid.ColumnSpan="2" Text="{Binding PrivateMessage.AuthorNick}" 
+					   VerticalAlignment="Center" Margin="6,2,6,0" FontWeight="Bold" 
+					   Foreground="White" FontSize="14.667" >
+	        	<TextBlock.Effect>
+	        		<DropShadowEffect BlurRadius="6" ShadowDepth="0"/>
+	        	</TextBlock.Effect>
+	        </TextBlock>
+			
+			<!-- Body -->
+	        <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" 
+					   Grid.Row="1" Grid.Column="1" Text="{Binding PrivateMessage.Body}" 
+					   Foreground="White" Margin="0,4,6,6" />
+					   
+			<!-- Avatar -->
+            <Image Grid.Row="1" VerticalAlignment="Top"  Source="{Binding Avatar}" Margin="6"/>
+	    </Grid>
+	</Border>
+</n:TaskbarNotifier>

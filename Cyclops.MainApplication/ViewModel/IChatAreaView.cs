@@ -10,5 +10,6 @@ namespace Cyclops.MainApplication.ViewModel
         void InputboxFocus();
         int InputBoxSelectionLength { get; set; }
         int InputBoxSelectionStart { get; set; }
+        void ClearOutputArea();
     }
 }

@@ -14,9 +14,15 @@
              d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display"
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
- 
+    
 	<UserControl.Resources>
 
+        <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                             Color="Transparent"/>
+            </Style.Resources>
+        </Style>
         <Style x:Key="borderlessButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -259,72 +265,75 @@
         <ValueConverters:SumConverter x:Key="sumConverter" />
 
         <DataTemplate x:Key="MemberInfoTemplate">
-            <Grid Height="32" Background="White" x:Name="rootGrid"
-                  MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="40" />
-					<ColumnDefinition />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition />
-					<RowDefinition />
-				</Grid.RowDefinitions>
-				<Border Height="27" Grid.RowSpan="2" Width="29">
-					<Border.Effect>
-						<DropShadowEffect ShadowDepth="0" BlurRadius="4" Color="#FF646464"/>
-					</Border.Effect>
-					<Image Source="{Binding AvatarUrl}" 
-						Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
-				</Border>
-                <TextBlock Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
-                           TextTrimming="CharacterEllipsis" Foreground="#FF565656" />
-                <TextBlock Width="{Binding ActualWidth, ElementName=nickTextBlock}" Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis" 
-                           Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
+        	<Border Height="32" Background="White" x:Name="rootGrid">
+            
+                <Grid MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+				    <Grid.ColumnDefinitions>
+					    <ColumnDefinition Width="40" />
+					    <ColumnDefinition />
+				    </Grid.ColumnDefinitions>
+				    <Grid.RowDefinitions>
+					    <RowDefinition />
+					    <RowDefinition />
+				    </Grid.RowDefinitions>
+				    <Border Height="27" Grid.RowSpan="2" Width="29">
+					    <Border.Effect>
+						    <DropShadowEffect ShadowDepth="0" BlurRadius="4" Color="#FF646464"/>
+					    </Border.Effect>
+					    <Image Source="{Binding AvatarUrl}" 
+						       Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
+				    </Border>
+                    <TextBlock Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
+                               TextTrimming="CharacterEllipsis" Foreground="#FF565656" />
+                    <TextBlock Width="{Binding ActualWidth, ElementName=nickTextBlock}" Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis" 
+                               Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
 			
-				<Border x:Name="awayMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
-					<Border.RenderTransform>
-						<TransformGroup>
-							<ScaleTransform/>
-							<SkewTransform AngleX="-18"/>
-							<RotateTransform Angle="-17.859"/>
-							<TranslateTransform X="-1"/>
-						</TransformGroup>
-					</Border.RenderTransform>
-				</Border>
+				    <Border x:Name="awayMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
+					    <Border.RenderTransform>
+						    <TransformGroup>
+							    <ScaleTransform/>
+							    <SkewTransform AngleX="-18"/>
+							    <RotateTransform Angle="-17.859"/>
+							    <TranslateTransform X="-1"/>
+						    </TransformGroup>
+					    </Border.RenderTransform>
+				    </Border>
 			
-				<Border x:Name="naMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
-					<Border.RenderTransform>
-						<TransformGroup>
-							<ScaleTransform/>
-							<SkewTransform AngleX="-18"/>
-							<RotateTransform Angle="-17.859"/>
-							<TranslateTransform X="-1"/>
-						</TransformGroup>
-					</Border.RenderTransform>
-					<TextBlock Text="NA" FontWeight="Bold" Margin="2,-1,0,0" Foreground="#FFBC2E2E" FontSize="10.667"/>
-				</Border>
+				    <Border x:Name="naMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
+					    <Border.RenderTransform>
+						    <TransformGroup>
+							    <ScaleTransform/>
+							    <SkewTransform AngleX="-18"/>
+							    <RotateTransform Angle="-17.859"/>
+							    <TranslateTransform X="-1"/>
+						    </TransformGroup>
+					    </Border.RenderTransform>
+					    <TextBlock Text="NA" FontWeight="Bold" Margin="2,-1,0,0" Foreground="#FFBC2E2E" FontSize="10.667"/>
+				    </Border>
                 
-                <Grid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="{Binding Path=Conference.SendPrivateMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding StartPrivateWithSelectedMember}">
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{Binding Path=Conference.SendPrivateMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding StartPrivateWithSelectedMember}">
+                                <MenuItem.Icon>
+                                    <Image Source="..\..\Resources\send.png" Height="18" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{Binding Path=Conference.SendPublicMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding SendPublicMessageToSelectedMember}">
                             <MenuItem.Icon>
-                                <Image Source="..\..\Resources\send.png" Height="18" />
+                                <Image Source="" Height="18" />
                             </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{Binding Path=Conference.SendPublicMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding SendPublicMessageToSelectedMember}">
-                        <MenuItem.Icon>
-                            <Image Source="" Height="18" />
-                        </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="{Binding Path=Conference.ViewVcard, Source={StaticResource ResourceWrapper}}" Command="{Binding GetUserVcard}">
-                        <MenuItem.Icon>
-                            <Image Source="..\..\Resources\image.png" Height="18" />
-                        </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </Grid.ContextMenu>
+                            </MenuItem>
+                            <MenuItem Header="{Binding Path=Conference.ViewVcard, Source={StaticResource ResourceWrapper}}" Command="{Binding GetUserVcard}">
+                            <MenuItem.Icon>
+                                <Image Source="..\..\Resources\image.png" Height="18" />
+                            </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
                 
-			</Grid>
+			    </Grid>
+        		     	
+			</Border>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsModer}" Value="True">
                     <Setter TargetName="nickTextBlock" Property="Foreground" Value="Green" />
@@ -339,7 +348,17 @@
                     <Setter TargetName="awayMark" Property="Visibility" Value="Visible" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                    <Setter TargetName="rootGrid" Property="Background" Value="LightGray" />
+                    <Setter TargetName="rootGrid" Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White" Offset="0"/>
+                                <GradientStop Color="White" Offset="0.828"/>
+                                <GradientStop Color="#FFE9E9E9" Offset="0.527"/>
+                                <GradientStop Color="#FFE9E9E9" Offset="0.634"/>
+                                <GradientStop Color="#FFF1F1F1" Offset="0.407"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
                 </DataTrigger>
             </DataTemplate.Triggers>
 		</DataTemplate>
@@ -373,7 +392,8 @@
         </Button>
 
         <Controls1:ChatFlowDocumentScrollViewer Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
-			<Controls1:ChatFlowDocument TextOptions.TextFormattingMode="Display" 
+			<Controls1:ChatFlowDocument x:Name="chatFlowDocument"
+                                        TextOptions.TextFormattingMode="Display" 
                                         Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
                                         Style="{DynamicResource flowDocumentStyle}" />
 		</Controls1:ChatFlowDocumentScrollViewer>
@@ -410,7 +430,8 @@
                  ItemsSource="{Binding Source={StaticResource membersSource}}" 
                  ItemTemplate="{StaticResource MemberInfoTemplate}" ScrollViewer.CanContentScroll="False" 
                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                 SelectedItem="{Binding ConferenceViewModel.SelectedMember, Mode=TwoWay}">
+                 SelectedItem="{Binding ConferenceViewModel.SelectedMember, Mode=TwoWay}"
+                 ItemContainerStyle="{StaticResource ListBoxItemStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
                         <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ConferenceViewModel.StartPrivateWithSelectedMember}"/>

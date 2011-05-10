@@ -3,23 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls" xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
+             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls" 
+             xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
 	<UserControl.DataContext>
 		<ViewModel:MainViewModel />
 	</UserControl.DataContext>
+    
 	<UserControl.Resources>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
         <Controls:ConferencesTabControl SelectedConferenceViewModel="{Binding SelectedConference, Mode=OneWayToSource}" 
                                         SelectedPrivateViewModel="{Binding SelectedPrivate, Mode=OneWayToSource}" 
-                                        ConferencesSource="{Binding ConferencesModels}" PrivatesSource="{Binding PrivateViewModels}">
-        </Controls:ConferencesTabControl>
+                                        ConferencesSource="{Binding ConferencesModels}" PrivatesSource="{Binding PrivateViewModels}"/>
 
 
-        <Button Height="20" Visibility="Visible" Width="60" Content="Rooms" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding OpenConferenceList}" />
-        <Button x:Name="refreshButton" Margin="0,0,60,0" Visibility="Visible" Height="20" Width="60" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding UpdateStyles}" />
+        <Button Height="20" Visibility="Visible" Width="60" Content="Rooms" 
+                HorizontalAlignment="Right" VerticalAlignment="Top" 
+                Command="{Binding OpenConferenceList}" />
+        
+        <Button x:Name="refreshButton" Margin="0,0,60,0" Visibility="Visible" 
+                Height="20" Width="60" Content="Refresh" HorizontalAlignment="Right" 
+                VerticalAlignment="Top" Command="{Binding UpdateStyles}" />
 		
 	</Grid>
 </UserControl>
