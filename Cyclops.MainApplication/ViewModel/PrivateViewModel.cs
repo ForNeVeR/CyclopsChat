@@ -24,8 +24,6 @@ namespace Cyclops.MainApplication.ViewModel
             if (!IsActive)
             {
                 UnreadMessagesCount++;
-                var message = ((MessageViewModel)e.NewItems[0]).RawMessage as PrivateMessage;
-                NotificationManager.NotifyPrivate(message, null);
             }
         }
 

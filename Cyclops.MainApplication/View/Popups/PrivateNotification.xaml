@@ -43,9 +43,15 @@
 	        <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" 
 					   Grid.Row="1" Grid.Column="1" Text="{Binding PrivateMessage.Body}" 
 					   Foreground="White" Margin="0,4,6,6" />
+	        <Border Margin="6" Grid.Row="1" VerticalAlignment="Top" BorderThickness="2" BorderBrush="White" CornerRadius="3" Background="White"  >
+	        	<Border.Effect>
+	        		<DropShadowEffect ShadowDepth="2" Color="#FF525252"/>
+	        	</Border.Effect>
+<!-- Avatar -->
+	        	<Image  Source="{Binding Avatar}" Height="53"/>
+	        </Border>
 					   
 			<!-- Avatar -->
-            <Image Grid.Row="1" VerticalAlignment="Top"  Source="{Binding Avatar}" Margin="6"/>
 	    </Grid>
 	</Border>
 </n:TaskbarNotifier>
