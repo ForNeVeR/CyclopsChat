@@ -7,10 +7,11 @@ namespace Cyclops.Core.CustomEventArgs
 {
     public enum StatusType
     {
-        Online,
+        Online = 0,
         Busy,
         Away,
         ExtendedAway,
+
         Chat,
     }
 }

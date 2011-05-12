@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Cyclops.Core;
@@ -27,6 +29,10 @@ namespace Cyclops.ConsoleForTests
         {
             DateTime date;
             bool success = DateTime.TryParseExact("20110507T10:43:00", "yyyyMMddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
         }
+
+
+
     }
 }

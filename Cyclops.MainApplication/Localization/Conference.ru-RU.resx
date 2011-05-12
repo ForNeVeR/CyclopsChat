@@ -143,6 +143,9 @@
   <data name="CurrentUserStatus" xml:space="preserve">
     <value>Ваш статус:</value>
   </data>
+  <data name="CurrentUserStatusText" xml:space="preserve">
+    <value>Текст статуса:</value>
+  </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Разрыв соединения ({0}).</value>
   </data>

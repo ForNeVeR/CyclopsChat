@@ -13,15 +13,28 @@ namespace Cyclops.MainApplication.View.Popups
 
         public static void NotifyPrivate(PrivateMessage privateMessage, BitmapImage bitmapImage)
         {
+            var session = ChatObjectFactory.GetSession();
+            var fromConference = session.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(privateMessage.AuthorId));
+            BitmapImage avatar = null;
+            if (fromConference != null)
+            {
+                var member = fromConference.Members.FirstOrDefault(i => i.ConferenceUserId.Equals(privateMessage.AuthorId));
+                if (member != null)
+                    avatar = member.AvatarUrl;
+            }
+
+            var privateNotificationViewModel = new PrivateNotificationViewModel();
+            privateNotificationViewModel.PrivateMessage = privateMessage;
+            if (avatar != null)
+                privateNotificationViewModel.Avatar = avatar;
+
+
             var notification = new PrivateNotification
                                    {
                                        StayOpenMilliseconds = StaysOpen,
-                                       DataContext = new PrivateNotificationViewModel
-                                                         {
-                                                             //Avatar = bitmapImage,
-                                                             PrivateMessage = privateMessage
-                                                         }
+                                       DataContext = privateNotificationViewModel
                                    };
+
             notification.Show();
             notification.Notify();
         }

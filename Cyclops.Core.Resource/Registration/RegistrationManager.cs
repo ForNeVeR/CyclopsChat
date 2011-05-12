@@ -89,6 +89,9 @@ namespace Cyclops.Core.Resource.Registration
                 string message = "";
                 switch (iq.Error.Code)
                 {
+                    case 409:
+                        message = "This name is already registered.";
+                        break;
                     case 500:
                         message = "You can't register accounts within small time interval";
                         break;

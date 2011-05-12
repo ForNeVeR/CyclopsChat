@@ -141,6 +141,9 @@
   <data name="CurrentUserStatus" xml:space="preserve">
     <value>Status:</value>
   </data>
+  <data name="CurrentUserStatusText" xml:space="preserve">
+    <value>Status text:</value>
+  </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Disconnect due '{0}'.</value>
   </data>

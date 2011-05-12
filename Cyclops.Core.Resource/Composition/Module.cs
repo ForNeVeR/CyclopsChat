@@ -1,6 +1,5 @@
 ﻿using Cyclops.Core.Modularity;
 using Cyclops.Core.Registration;
-using Cyclops.Core.Resource.Debug;
 using Cyclops.Core.Resource.Registration;
 using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;
@@ -22,7 +21,7 @@ namespace Cyclops.Core.Resource.Composition
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()
                 .RegisterType<IEntityIdentifier, JID>()
-                .RegisterType<IDebugWindow, RawXmppViewer>()
+                //.RegisterType<IDebugWindow, RawXmppViewer>()
                 .RegisterType<IUserSession, UserSession>();
         }
     }

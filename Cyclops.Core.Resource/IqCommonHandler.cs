@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using bedrock.util;
 using jabber.client;
 using jabber.protocol.client;
@@ -59,12 +61,62 @@ namespace Cyclops.Core.Resource
             var ver = iq.Query as jabber.protocol.iq.Version;
             if (ver != null)
             {
-                ver.OS = Environment.OSVersion.ToString();
+                ver.OS = GetOsVersion();
                 ver.EntityName = ConfigurationManager.AppSettings["ApplicationName"];
                 ver.Ver = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
             }
             jc.Write(iq);
             return;
+        } 
+
+        #endregion
+
+
+        #region Get OS version
+        private static string GetOsVersion()
+        {
+            var os = Environment.OSVersion;
+            string result = "";
+            if (os.Version.Major == 6)
+            {
+                if (os.Version.Minor == 0)
+                    result = "Windows Vista";
+                else if (os.Version.Minor == 1)
+                    result = "Windows 7";
+                else if (os.Version.Minor == 3)
+                    result = "Windows Server 2008";
+            }
+            else if (os.Version.Major == 5)
+            {
+                if (os.Version.Minor == 0)
+                    result = "Windows 2000";
+                else if (os.Version.Minor == 1)
+                    result = "Windows XP";
+                else if (os.Version.Minor == 2)
+                    result = "Windows Server 2003";
+            }
+            if (string.IsNullOrEmpty(result))
+                return os.ToString();
+
+            var platform = Is64Bit() ? "64bit" : "32bit";
+
+            return string.Format("{0} {1} {2}", result, platform, os.ServicePack);
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWow64Process([In] IntPtr hProcess, [Out] out bool lpSystemInfo);
+
+        private static bool Is64Bit()
+        {
+            return IntPtr.Size == 8 || (IntPtr.Size == 4 && Is32BitProcessOn64BitProcessor());
+        }
+
+        private static bool Is32BitProcessOn64BitProcessor()
+        {
+            bool retVal;
+            IsWow64Process(Process.GetCurrentProcess().Handle, out retVal);
+            return retVal;
         } 
         #endregion
     }

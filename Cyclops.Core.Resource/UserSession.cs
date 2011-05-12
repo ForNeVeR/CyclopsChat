@@ -34,6 +34,7 @@ namespace Cyclops.Core.Resource
         private ConnectionConfig connectionConfig;
         private IEntityIdentifier currentUserId;
         private CapsManager capsManager;
+        private StatusType statusType;
         private string status;
         private bool isAuthenticated;
         private bool isAuthenticating;
@@ -84,8 +85,19 @@ namespace Cyclops.Core.Resource
             set
             {
                 status = value;
-                ChangeStatus(StatusType.Online, value);
+                ChangeStatus(StatusType, value);
                 OnPropertyChanged("Status");
+            }
+        }
+
+        public StatusType StatusType
+        {
+            get { return statusType; }
+            set
+            {
+                statusType = value;
+                ChangeStatus(value, Status);
+                OnPropertyChanged("StatusType");
             }
         }
 
@@ -282,6 +294,7 @@ namespace Cyclops.Core.Resource
             IsAuthenticated = true;
             Authenticated(sender, new AuthenticationEventArgs());
 
+            statusType = StatusType.Online;
             Status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
 

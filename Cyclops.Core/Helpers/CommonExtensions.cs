@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 
 namespace Cyclops
@@ -57,6 +58,12 @@ namespace Cyclops
                 default:
                     throw new ArgumentOutOfRangeException("type");
             }
+        }
+
+        public static bool BaresEqual(this IEntityIdentifier x, IEntityIdentifier y)
+        {
+            return x.User.Equals(y.User, StringComparison.InvariantCultureIgnoreCase) &&
+                   x.Server.Equals(y.Server, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

@@ -3,15 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:n="clr-namespace:Cyclops.MainApplication.Notifications" 
         xmlns:Popups="clr-namespace:Cyclops.MainApplication.View.Popups" 
-        Title="PrivateNotification" Height="105" Width="330"
+        Title="PrivateNotification" Width="330"
         WindowStyle="None" ResizeMode="NoResize" 
         AllowsTransparency="True" Background="Transparent">
     <n:TaskbarNotifier.DataContext>
         <Popups:PrivateNotificationViewModel/>
     </n:TaskbarNotifier.DataContext>
-    <Border Margin="10" CornerRadius="10">
+    <Border Margin="10" CornerRadius="10" Height="86">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="20" ShadowDepth="7"/>
+            <DropShadowEffect BlurRadius="20" ShadowDepth="6"/>
         </Border.Effect>
 		<Border.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

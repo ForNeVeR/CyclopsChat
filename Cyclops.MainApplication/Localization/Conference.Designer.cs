@@ -133,6 +133,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status text:.
+        /// </summary>
+        public static string CurrentUserStatusText {
+            get {
+                return ResourceManager.GetString("CurrentUserStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnect due &apos;{0}&apos;..
         /// </summary>
         public static string DisconnectMessage {
