@@ -7,6 +7,6 @@ namespace Cyclops.Core
 {
     public interface IDebugWindow
     {
-        void ShowWindow(IUserSession session);
+        void ShowConsole(IUserSession session);
     }
 }

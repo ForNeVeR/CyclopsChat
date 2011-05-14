@@ -30,13 +30,13 @@ namespace Cyclops.MainApplication
 
         static void DispatchernhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            var logger = ChatObjectFactory.GetLogger();
+            var logger = ChatObjectFactory.GetDebugLogger();
             logger.LogError("Unhandled exception", e.Exception);
         }
 
         private static void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            var logger = ChatObjectFactory.GetLogger();
+            var logger = ChatObjectFactory.GetDebugLogger();
             if (e.ExceptionObject is Exception) //actually it always is of exception type
                 logger.LogError("Unhandled exception", e.ExceptionObject as Exception);
         }

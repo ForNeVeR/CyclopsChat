@@ -32,7 +32,7 @@ namespace Cyclops.MainApplication
 //#if DEBUG
                 MessageBox.Show("Parse error: " + exc.Message + "; in file: " + file);
 //#endif
-                ChatObjectFactory.GetLogger().LogError("Error while loading resource dictionary " + file, exc);
+                ChatObjectFactory.GetDebugLogger().LogError("Error while loading resource dictionary " + file, exc);
                 return new ResourceDictionary();
             }
         }

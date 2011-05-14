@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -40,8 +41,8 @@ namespace Cyclops.Core.Resource
                 var statusElement = pres.OfType<Element>().GetNodeByName<Element>("status");
                 if (statusElement != null)
                 {
-                    StatusText = statusElement.InnerText;
-                    UpdateProperties();
+                    StatusText = pres.Status;
+                    StatusType = pres.Show;
                 }
             }
         }
@@ -65,6 +66,11 @@ namespace Cyclops.Core.Resource
         public bool IsModer
         {
             get { return participant.IsModer(); }
+        }
+
+        public bool IsMe
+        {
+            get { return ConferenceUserId.Equals(conference.ConferenceId); }
         }
 
         public bool IsSubscribed

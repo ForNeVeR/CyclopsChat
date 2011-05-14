@@ -79,6 +79,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current server.
+        /// </summary>
+        public static string CurrentRoomsServer {
+            get {
+                return ResourceManager.GetString("CurrentRoomsServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select item to get description.
         /// </summary>
         public static string DefaultConferenceDescInList {
@@ -120,6 +129,15 @@ namespace Cyclops.MainApplication.Localization {
         public static string RoomList {
             get {
                 return ResourceManager.GetString("RoomList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rooms&apos; server:.
+        /// </summary>
+        public static string RoomsServer {
+            get {
+                return ResourceManager.GetString("RoomsServer", resourceCulture);
             }
         }
     }

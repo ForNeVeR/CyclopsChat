@@ -35,9 +35,14 @@ namespace Cyclops.MainApplication
             return session;
         }
 
-        public static ILogger GetLogger()
+        public static ILogger GetDebugLogger()
         {
             return serviceLocator.GetInstance<ILogger>();
+        }
+
+        public static IChatLogger GetChatLogger()
+        {
+            return serviceLocator.GetInstance<IChatLogger>();
         }
 
         public static ISmilesManager GetSmilesManager()
@@ -57,7 +62,7 @@ namespace Cyclops.MainApplication
 
         public static void ShowDebugWindow()
         {
-            //serviceLocator.GetInstance<IDebugWindow>().ShowWindow(GetSession());
+            //serviceLocator.GetInstance<IDebugWindow>().ShowConsole(GetSession());
         }
 
         public static IChatObjectsValidator GetValidator()

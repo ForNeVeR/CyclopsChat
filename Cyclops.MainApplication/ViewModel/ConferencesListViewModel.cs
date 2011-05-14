@@ -20,29 +20,41 @@ namespace Cyclops.MainApplication.ViewModel
         private string openWithNick;
         private ConferenceInfo selectedConference;
         private IEnumerable<ConferenceInfo> sourceConferences;
+        private ConferencesServiceItem selectedService;
+        private IEnumerable<ConferencesServiceItem> conferenceServices;
 
         public ConferencesListViewModel()
         {
             OpenConference = new RelayCommand(() => OpenConferenceAction(SelectedConference.Id), OpenConferenceCanExecute);
             CreateNewConference = new RelayCommand(CreateNewConferenceAction, CreateNewConferenceCanExecute);
             Session = ChatObjectFactory.GetSession();
+            Session.ConferencesListReceived += ConferencesListReceived;
+
 
             if (IsInDesignMode)
             {
                 Conferences = new[] 
                                   {
-                                      new ConferenceInfo {Id = new FakeId {User = "cyclops"}, Name = "Cyclops development test"},
-                                      new ConferenceInfo {Id = new FakeId {User = "main"}, Name = "Main (5)"},
+                                      new ConferenceInfo {Id = new FakeId {User = "cyclops"}, Name = "Cyclops development test", IsOpened = true},
+                                      new ConferenceInfo {Id = new FakeId {User = "main"}, Name = "Main (5)", IsOpened = true},
                                       new ConferenceInfo {Id = new FakeId {User = "anime"}, Name = "Anime"},
                                   };
                 return;
             }
 
-            IsBusy = true;
-            IUserSession session = ChatObjectFactory.GetSession();
-            OpenWithNick = session.CurrentUserId.User;
-            session.ConferencesListReceived += ConferencesListReceived;
-            session.GetConferenceListAsync();
+
+            ConferencesServiceItem currentService = new ConferencesServiceItem
+            {
+                ConferenceService = null,
+                DisplayName = Localization.ConferenceList.CurrentRoomsServer
+            };
+
+            var services = ApplicationContext.Current.CurrentProfile.FriendlyConferencesServices.ToList();
+            services.Add(currentService);
+            ConferenceServices = services;
+            SelectedService = currentService;
+
+            OpenWithNick = Session.CurrentUserId.User;
         }
 
         public IUserSession Session { get; private set; }
@@ -103,6 +115,29 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
+        public IEnumerable<ConferencesServiceItem> ConferenceServices
+        {
+            get { return conferenceServices; }
+            set
+            {
+                conferenceServices = value;
+                RaisePropertyChanged("Conferences");
+            }
+        }
+
+        public ConferencesServiceItem SelectedService
+        {
+            get { return selectedService; }
+            set
+            {
+                selectedService = value;
+                RaisePropertyChanged("Conferences");
+
+                IsBusy = true;
+                Session.GetConferenceListAsync(value.ConferenceService);
+            }
+        }
+
         public ConferenceInfo SelectedConference
         {
             get { return selectedConference; }
@@ -152,8 +187,17 @@ namespace Cyclops.MainApplication.ViewModel
             IsBusy = false;
             if (!e.Success)
                 return;
+
+            var conferenceIds = ChatObjectFactory.GetSession().Conferences.Select(i => i.ConferenceId);
+
             sourceConferences = Conferences = e.Result.Select(i => 
-                new ConferenceInfo {Id = i.Item1, Name = Localization.ConferenceList.DefaultConferenceDescInList}).OrderBy(i => i.Id.User).ToList();
+                new ConferenceInfo
+                    {
+                        Id = i.Item1, 
+                        Name = Localization.ConferenceList.DefaultConferenceDescInList,
+                        IsOpened = conferenceIds.Any(c => i.Item1.BaresEqual(c))
+                    }).OrderBy(i => i.Id.User).ToList();
+
             conferenceCache = e.Result.ToDictionary(i => i.Item1, i => (Func<string>)(() => i.Item2));
         }
 
@@ -217,6 +261,8 @@ namespace Cyclops.MainApplication.ViewModel
                 OnPropertyChanged("Name");
             }
         }
+
+        public bool IsOpened { get; set; }
     }
 
     public class FakeId : IEntityIdentifier

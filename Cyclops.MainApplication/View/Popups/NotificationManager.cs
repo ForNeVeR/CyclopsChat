@@ -9,7 +9,7 @@ namespace Cyclops.MainApplication.View.Popups
 {
     public static class NotificationManager
     {
-        public const int StaysOpen = 10000;
+        public const int StaysOpen = 4000;
 
         public static void NotifyPrivate(PrivateMessage privateMessage, BitmapImage bitmapImage)
         {

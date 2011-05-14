@@ -32,6 +32,12 @@ namespace Cyclops.MainApplication.View.Popups
                 e.Handled = true;
                 Close();
             }
+            else if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                ((PrivateNotificationViewModel)DataContext).OnRequestActivate();
+                e.Handled = true;
+                Close();
+            }
             base.OnMouseDown(e);
         }
     }

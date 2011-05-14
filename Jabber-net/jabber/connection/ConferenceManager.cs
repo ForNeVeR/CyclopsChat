@@ -415,6 +415,18 @@ namespace jabber.connection
             Room r = GetRoom(new JID(unique.RoomNode, iq.From.Server, us.Nick));
             us.Callback(r, us.State);
         }
+
+        ///<summary>
+        ///</summary>
+        public event EventHandler<RoomPresenceEventArgs> BeforeRoomPresenceOut = delegate { }; 
+
+        ///<summary>
+        ///</summary>
+        ///<param name="pres"></param>
+        public void OnBeforeRoomPresenceOut(RoomPresence pres)
+        {
+            BeforeRoomPresenceOut(this, new RoomPresenceEventArgs {RoomPresence = pres});
+        }
     }
 
     /// <summary>
@@ -632,6 +644,7 @@ namespace jabber.connection
             p.To = m_room;
             m_manager.Write(p);
         }
+
 
         private void m_stream_OnProtocol(object sender, System.Xml.XmlElement rp)
         {
@@ -910,8 +923,11 @@ namespace jabber.connection
 
             m_state = STATE.join;
             RoomPresence pres = new RoomPresence(m_manager.Stream.Document, m_jid);
+            
             if (password != null)
                 pres.X.Password = password;
+
+            m_manager.OnBeforeRoomPresenceOut(pres);
 
             m_manager.Write(pres);
         }
@@ -1658,5 +1674,16 @@ namespace jabber.connection
                 return string.Format("{0} ({1})", nick, real);
             return nick;
         }
+    }
+
+    /// <summary>
+    /// bla bla
+    /// </summary>
+    public class RoomPresenceEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Presence to modify
+        /// </summary>
+        public RoomPresence RoomPresence { get; set; }
     }
 }

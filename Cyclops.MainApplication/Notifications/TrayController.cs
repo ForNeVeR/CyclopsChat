@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -87,6 +88,9 @@ namespace Cyclops.MainApplication.Controls
 
         public void StartBlink()
         {
+            string arg = ConfigurationManager.AppSettings["DisableTrayBlinking"];
+            if (arg != null && arg.ToLower().Equals("true"))
+                return;
             timer.Start();
         }
 

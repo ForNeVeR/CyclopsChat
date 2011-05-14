@@ -470,9 +470,13 @@
                                 SendCommand="{Binding ConferenceViewModel.SendMessage}" />
             <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
-            <Button x:Name="smilesButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Left" Click="SmilesButtonClick">
-                <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>
-            </Button>
+
+            <Controls1:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
+                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Left" Click="SmilesButtonClick">
+                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\Smile.gif"/>
+                </Button>
+            </Controls1:ToolBarEx>
+            
         </Grid>
 
 		<GridSplitter Grid.RowSpan="2" Grid.Column="1" Height="Auto" Width="2" HorizontalAlignment="Left" />

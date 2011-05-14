@@ -24,7 +24,7 @@ namespace Cyclops.Core
         void Close();
         void Reconnect();
         void SendPrivate(IEntityIdentifier target, string body);
-        void GetConferenceListAsync();
+        void GetConferenceListAsync(string conferenceService = null);
         void StartPrivate(IEntityIdentifier conferenceUserId);
         void RequestVcard(IEntityIdentifier target, Action<Vcard> callback);
         void UpdateVcard(Vcard vcard, Action<bool> callback);

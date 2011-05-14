@@ -124,6 +124,9 @@
   <data name="CreateNew" xml:space="preserve">
     <value>Создать новую</value>
   </data>
+  <data name="CurrentRoomsServer" xml:space="preserve">
+    <value>Этот сервер</value>
+  </data>
   <data name="DefaultConferenceDescInList" xml:space="preserve">
     <value>...</value>
   </data>
@@ -138,5 +141,8 @@
   </data>
   <data name="RoomList" xml:space="preserve">
     <value>Комнаты</value>
+  </data>
+  <data name="RoomsServer" xml:space="preserve">
+    <value>Сервер комнат:</value>
   </data>
 </root>

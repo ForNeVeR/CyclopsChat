@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Avatars\IAvatarsManager.cs" />
     <Compile Include="CaptchaSystemMessage.cs" />
+    <Compile Include="IChatLogger.cs" />
     <Compile Include="CustomEventArgs\AvatarChangedEventArgs.cs" />
     <Compile Include="CustomEventArgs\CaptchaEventArgs.cs" />
     <Compile Include="CustomEventArgs\ConferenceMemberEventArgs.cs" />

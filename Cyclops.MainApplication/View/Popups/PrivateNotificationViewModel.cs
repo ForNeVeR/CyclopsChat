@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Cyclops.Core;
 using GalaSoft.MvvmLight;
@@ -47,6 +48,21 @@ namespace Cyclops.MainApplication.View.Popups
                 avatar = value;
                 RaisePropertyChanged("Avatar");
             }
+        }
+
+        public void OnRequestActivate()
+        {
+            var main = ApplicationContext.Current.MainViewModel;
+            main.SelectedPrivate = main.PrivateViewModels.FirstOrDefault(i => i.Participant != null && i.Participant.Equals(PrivateMessage.AuthorId));
+
+            Window window = Application.Current.MainWindow;
+            window.Show();
+            window.WindowState = WindowState.Normal;
+            //workaround:)
+            window.Activate();
+            window.Topmost = true;  // important
+            window.Topmost = false; // important
+            window.Focus();   
         }
     }
 }

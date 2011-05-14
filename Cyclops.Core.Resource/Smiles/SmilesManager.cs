@@ -30,7 +30,7 @@ namespace Cyclops.Core.Resource.Smiles
 
         private static ISmilePack Deserialize(string jispFile)
         {
-            ISmilePack smilePack = null;
+            SmilePack smilePack = null;
             try
             {
                 //*.JISP file is an 7-zip archive
@@ -66,6 +66,8 @@ namespace Cyclops.Core.Resource.Smiles
             {
                 return null;
             }
+            if (smilePack != null)
+                smilePack.SmilesForDeserialization = smilePack.SmilesForDeserialization.Where(i => i != null && i.Bitmap != null && i.Masks.Any()).ToArray();
             return smilePack;
         }
     }

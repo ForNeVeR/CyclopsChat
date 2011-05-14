@@ -9,7 +9,7 @@
     <n:TaskbarNotifier.DataContext>
         <Popups:PrivateNotificationViewModel/>
     </n:TaskbarNotifier.DataContext>
-    <Border Margin="10" CornerRadius="10" Height="86">
+    <Border Margin="10" CornerRadius="10" Height="86" Cursor="Hand">
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" ShadowDepth="6"/>
         </Border.Effect>

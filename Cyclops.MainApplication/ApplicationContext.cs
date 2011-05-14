@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Cyclops.Core.Smiles;
 using Cyclops.MainApplication.Configuration;
+using Cyclops.MainApplication.ViewModel;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication
@@ -55,6 +56,18 @@ namespace Cyclops.MainApplication
             {
                 currentProfile = value;
                 RaisePropertyChanged("CurrentProfile");
+            }
+        }
+
+        private MainViewModel mainViewModel;
+
+        public MainViewModel MainViewModel
+        {
+            get { return mainViewModel; }
+            set
+            {
+                mainViewModel = value;
+                RaisePropertyChanged("MainViewModel");
             }
         }
     }

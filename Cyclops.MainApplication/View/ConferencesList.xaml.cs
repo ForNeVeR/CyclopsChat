@@ -19,5 +19,12 @@ namespace Cyclops.MainApplication.View
             InitializeComponent();
             ((ConferencesListViewModel) DataContext).Close += (s, e) => DialogResult = true;
         }
+
+        protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+                Close();
+            base.OnKeyDown(e);
+        }
     }
 }

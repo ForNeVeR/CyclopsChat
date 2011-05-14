@@ -6,6 +6,7 @@ namespace Cyclops.Core
     {
         string Nick { get; }
         bool IsModer { get; }
+        bool IsMe { get; }
         string StatusText { get; }
         string StatusType { get; }
         bool IsSubscribed { get; }

@@ -81,7 +81,10 @@ namespace Cyclops.Core.Resource
 
         public string Status
         {
-            get { return status; }
+            get
+            {
+                return status;
+            }
             set
             {
                 status = value;
@@ -149,7 +152,7 @@ namespace Cyclops.Core.Resource
 
         public void ChangeStatus(StatusType type, string status)
         {
-            if (!IsAuthenticated)
+            if (!IsAuthenticated || !JabberClient.IsAuthenticated)
                 return;
             JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), 30);
         }
@@ -179,7 +182,7 @@ namespace Cyclops.Core.Resource
 
             // some default settings
             JabberClient.AutoReconnect = -1;
-            JabberClient.AutoPresence = false;
+            JabberClient.AutoPresence = true;
 
             bool isVkServer = info.Server.Equals("vk.com", StringComparison.InvariantCultureIgnoreCase);
             if (isVkServer)
@@ -295,7 +298,11 @@ namespace Cyclops.Core.Resource
             Authenticated(sender, new AuthenticationEventArgs());
 
             statusType = StatusType.Online;
-            Status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+            status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+
+            //TODO: remove this shit:)
+            OnPropertyChanged("Status");
+            OnPropertyChanged("StatusType");
         }
 
         #endregion
@@ -315,18 +322,19 @@ namespace Cyclops.Core.Resource
             JabberClient.OnReadText += JabberClient_OnReadText;
 
             ConferenceManager.OnRoomMessage += ConferenceManager_OnRoomMessage;
-            ConferenceManager.OnJoin += ConferenceManager_OnJoin;
+            ConferenceManager.BeforeRoomPresenceOut += ConferenceManager_BeforeRoomPresenceOut;
 
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
         }
 
-        void ConferenceManager_OnJoin(Room room)
+        void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
         {
-            //presence flood
-            //ChangeStatus(StatusType.Online, Status);//retranslate status to conference
+            RoomPresence pres = e.RoomPresence;
+            pres.Status = Status;
+            pres.Show = StatusType.StatusTypeToString();
         }
-
+        
         //DEBUG:
         void JabberClient_OnReadText(object sender, string txt)
         {
@@ -367,9 +375,12 @@ namespace Cyclops.Core.Resource
             PublicMessage(this, EventArgs.Empty);
         }
 
-        public void GetConferenceListAsync()
+        public void GetConferenceListAsync(string service = null)
         {
-            DiscoManager.BeginFindServiceWithFeature(URI.MUC, DiscoHandlerFindServiceWithFeature, new object());
+            if (!string.IsNullOrEmpty(service))
+                DiscoManager.BeginGetItems(new DiscoNode(new JID(service), URI.MUC), DiscoHandlerFindServiceWithFeature, new object());
+            else
+                DiscoManager.BeginFindServiceWithFeature(URI.MUC, DiscoHandlerFindServiceWithFeature, new object());
         }
 
         public void StartPrivate(IEntityIdentifier conferenceUserId)

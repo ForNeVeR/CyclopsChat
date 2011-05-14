@@ -11,10 +11,16 @@
     <EncodedPassword>C4Y9MwPhlZI=</EncodedPassword><!--C4Y9MwPhlZI= is for cyclops-->
   </ConnectionConfig>
   <Rooms>
-    <string>cyclops@conference.jabber.uruchie.org</string>
+    <string>main@conference.jabber.uruchie.org</string>
 
     <!--<string>dotnet@conference.jabber.ru/cyclops</string>
     <string>programming@conference.jabber.ru/cyclops</string>
     <string>belarus@conference.jabber.ru/cyclops</string>-->
   </Rooms>
+
+  <FriendlyConferencesServices>
+    <!--<ConferencesServiceItem DisplayName="Uruchie server (jabber.uruchie.org)" ConferenceService="conference.jabber.uruchie.org"/>-->
+    <ConferencesServiceItem DisplayName="jabber.ru" ConferenceService="conference.jabber.ru"/>
+    <ConferencesServiceItem DisplayName="QIP (qip.ru)" ConferenceService="conference.qip.ru"/>
+  </FriendlyConferencesServices>
 </Profile>

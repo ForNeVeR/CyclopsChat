@@ -387,7 +387,7 @@ namespace jabber.client
         public void Presence(PresenceType t,
             string status,
             string show,
-            int priority)
+            int priority, JID target = null, JID author = null)
         {
             if (IsAuthenticated)
             {
@@ -397,6 +397,10 @@ namespace jabber.client
                 }
 
                 Presence p = new Presence(Document);
+                if (target != null)
+                    p.To = target;
+                if (target != null)
+                    p.From = JID;
                 if (status != null)
                     p.Status = status;
                 if (t != PresenceType.available)

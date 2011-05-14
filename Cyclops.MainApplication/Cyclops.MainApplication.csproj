@@ -125,6 +125,7 @@
     <Compile Include="Configuration\Profile.cs" />
     <Compile Include="Configuration\ProfileManager.cs" />
     <Compile Include="Controls\AnimatedImage.cs" />
+    <Compile Include="Controls\ToolBarEx.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
     <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\StatusTypeToIntegerConverter.cs" />
     <Compile Include="ValueConverters\SumConverter.cs" />
+    <Compile Include="ViewModel\ConferencesServiceItem.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.Commands.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -27,9 +28,7 @@ namespace Cyclops.ConsoleForTests
 
         static void Main(string[] args)
         {
-            DateTime date;
-            bool success = DateTime.TryParseExact("20110507T10:43:00", "yyyyMMddTHH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
+            var illegalChars = Path.GetInvalidFileNameChars();
         }
 
 

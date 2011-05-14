@@ -102,7 +102,7 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
                     try
                     {
                         var captchaInBase64 = element.FirstChild.Value;
-                        image = ImageUtils.Base64ToBitmapImage(captchaInBase64); //TODO: create method Base64ToBitmapImage
+                        image = ImageUtils.Base64ToBitmapImage(captchaInBase64); 
                         return true;
                     }
                     catch

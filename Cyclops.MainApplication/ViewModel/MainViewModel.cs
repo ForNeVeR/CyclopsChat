@@ -32,6 +32,8 @@ namespace Cyclops.MainApplication.ViewModel
             if (IsInDesignMode)
                 return;
 
+            ApplicationContext.Current.MainViewModel = this;
+
             InitializeCommands();
 
             TrayController.Instance.ShowDefaultIcon();

@@ -210,6 +210,7 @@ namespace Cyclops.Core.Resource
         {
             if (waitingForPassword)
                 waitingForPassword = false;
+            
             Joined(this, new ConferenceJoinEventArgs());
             IsInConference = true;
             foreach (RoomParticipant participant in room.Participants)

@@ -59,8 +59,15 @@
     <Compile Include="Avatars\AvatarsManager.cs" />
     <Compile Include="Avatars\ImageUtils.cs" />
     <Compile Include="ChatObjectsValidator.cs" />
+    <Compile Include="Debug\XmppConsole.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debug\XmppConsole.Designer.cs">
+      <DependentUpon>XmppConsole.cs</DependentUpon>
+    </Compile>
     <Compile Include="IqCommonHandler.cs" />
     <Compile Include="JabberNetExtensions\PhotoX.cs" />
+    <Compile Include="ChatLogger.cs" />
     <Compile Include="ResourceLocator.cs" />
     <Compile Include="FileLogger.cs" />
     <Compile Include="Helpers\ZipStorer.cs" />
@@ -96,7 +103,9 @@
     <Content Include="Smiles\note.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Debug\" />
+    <EmbeddedResource Include="Debug\XmppConsole.resx">
+      <DependentUpon>XmppConsole.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
