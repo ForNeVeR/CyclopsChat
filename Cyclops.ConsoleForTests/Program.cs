@@ -28,10 +28,21 @@ namespace Cyclops.ConsoleForTests
 
         static void Main(string[] args)
         {
-            var illegalChars = Path.GetInvalidFileNameChars();
+            A a = 10;
+            Program p = new Program();
+            p.GetType().GetProperty("A").SetValue(p, 10, null);
         }
 
+        public A A { get; set; }
+    }
 
+    public class A
+    {
+        public int Int { get; set; }
 
+        public static implicit operator A(int a)
+        {
+            return new A {Int = a};
+        }
     }
 }

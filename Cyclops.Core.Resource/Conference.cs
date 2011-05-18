@@ -278,7 +278,8 @@ namespace Cyclops.Core.Resource
                                      AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                                  };
                 Members.AsInternalImpl().Add(member);
-                ParticipantJoin(this, new ConferenceMemberEventArgs(member));
+                if (IsInConference) //hack :)
+                    ParticipantJoin(this, new ConferenceMemberEventArgs(member));
             }
         }
          
@@ -473,6 +474,12 @@ namespace Cyclops.Core.Resource
             room.PrivateMessage(target.Resource, body);
         }
 
+        internal void RaiseSomebodyChangedHisStatusEvent(IConferenceMember member)
+        {
+            SomebodyChangedHisStatus(this, new ConferenceMemberEventArgs(member));
+        }
+
+        public event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus = delegate { }; 
         public event EventHandler ServiceUnavailable = delegate { };
         public event EventHandler<ConferenceJoinEventArgs> Joined = delegate { };
         public event EventHandler<KickedEventArgs> Kicked = delegate { };

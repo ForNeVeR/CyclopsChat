@@ -3,4 +3,4 @@
 Text="{Binding Path=%resourceName%.%field%, Source={StaticResource ResourceWrapper}}"
 
 i.e:
-Text="{Binding Path=Login.UserName, Source={StaticResource ResourceWrapper}}"
+Text="{Binding Path=Settings., Source={StaticResource ResourceWrapper}}"

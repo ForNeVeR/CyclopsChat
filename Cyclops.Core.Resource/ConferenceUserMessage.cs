@@ -2,6 +2,7 @@
 using System.Linq;
 using jabber.connection;
 using jabber.protocol.client;
+using jabber.protocol.x;
 
 namespace Cyclops.Core.Resource
 {
@@ -16,6 +17,8 @@ namespace Cyclops.Core.Resource
             this.userSession = userSession;
             this.room = room;
             this.msg = msg;
+
+            IsFromHistory = msg.OfType<Delay>().Any();
         }
 
         internal ConferenceUserMessage(UserSession userSession, Message msg, bool selfMessage)
@@ -23,6 +26,8 @@ namespace Cyclops.Core.Resource
             this.userSession = userSession;
             this.msg = msg;
             this.IsSelfMessage = selfMessage;
+
+            IsFromHistory = msg.OfType<Delay>().Any();
         }
 
         #region IConferenceMessage Members
@@ -33,6 +38,8 @@ namespace Cyclops.Core.Resource
         }
 
         public bool IsSelfMessage { get; private set; }
+
+        public bool IsFromHistory { get; private set; }
 
         public IEntityIdentifier AuthorId
         {

@@ -9,45 +9,23 @@ namespace Cyclops.MainApplication.Configuration
 {
     public static class ProfileManager
     {
-        private const string ProfileFile = "Profile.config.xml";
-        private static readonly XmlSerializer XmlSerializer = new XmlSerializer(typeof(Profile));
+        private static readonly Serializer<Profile> Serializer = new Serializer<Profile>();
+        private const string ProfileFile = @"Data\Profiles\Profile.config.xml";
 
         /// <summary>
         /// Get all saved profiles
         /// </summary>
         public static Profile LoadProfile()
         {
-            return DeserializeProfile(ProfileFile) ?? new Profile();
+            return Serializer.Deserialize(ProfileFile) ?? new Profile();
         }
-
-        private static Profile DeserializeProfile(string path)
-        {
-            Stream stream = null;
-            try
-            {
-                stream = File.OpenRead(path);
-                return XmlSerializer.Deserialize(stream) as Profile;
-            }
-            catch
-            {
-                return null;
-            }
-            finally
-            {
-                stream.Close();
-            }
-        }
-
+        
         /// <summary>
         /// Save new or changed profile to the specific folder
         /// </summary>
         public static void SaveProfile(Profile profile)
         {
-            if (File.Exists(ProfileFile))
-                File.Delete(ProfileFile);
-
-            using (FileStream stream = File.Create(ProfileFile))
-                XmlSerializer.Serialize(stream, profile);
+            Serializer.Serialize(profile, ProfileFile);
         }
     }
 

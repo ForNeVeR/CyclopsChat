@@ -11,5 +11,6 @@ namespace Cyclops.Core
         DateTime Timestamp { get; }
         bool IsCustom { get; }
         bool IsSelfMessage { get; }
+        bool IsFromHistory { get; }
     }
 }

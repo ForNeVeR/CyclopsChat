@@ -22,6 +22,7 @@ namespace Cyclops.Core
         bool ChangeNick(string value);
         void SendPrivateMessage(IEntityIdentifier target, string body);
 
+        event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus;
         event EventHandler<DisconnectEventArgs> Disconnected;
         event EventHandler<ConferenceJoinEventArgs> Joined;
         event EventHandler<CaptchaEventArgs> CaptchaRequirment;

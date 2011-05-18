@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cyclops.MainApplication.View;
+using Cyclops.MainApplication.View.Options;
 using Cyclops.MainApplication.ViewModel;
 
 namespace Cyclops.MainApplication
@@ -83,5 +84,10 @@ namespace Cyclops.MainApplication
         }
 
         #endregion
+
+        private void SettingsButtonClick(object sender, RoutedEventArgs e)
+        {
+            SettingsView.ShowSettings();
+        }
     }
 }

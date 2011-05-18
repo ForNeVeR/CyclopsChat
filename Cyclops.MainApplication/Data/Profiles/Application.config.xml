@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ApplicationSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AutoAwayAfter>15</AutoAwayAfter>
+  <AutoExtendedAwayAfter>60</AutoExtendedAwayAfter>
+  <ShowStatusChangingMessages>false</ShowStatusChangingMessages>
+  <SelectedLanguage>ru-RU</SelectedLanguage>
+  <SmilesLimitInMessage>10</SmilesLimitInMessage>
+  <EnablePrivatePopups>true</EnablePrivatePopups>
+  <EnableErrorPopups>true</EnableErrorPopups>
+  <PopupStaysOpenning>3</PopupStaysOpenning>
+  <DisableBlinking>false</DisableBlinking>
+  <BlinkOnlyOnPrivates>false</BlinkOnlyOnPrivates>
+  <StartWithWindows>false</StartWithWindows>
+  <HideOnWindowClosing>false</HideOnWindowClosing>
+  <DisableAllSounds>false</DisableAllSounds>
+  <SoundEvenIfActive>true</SoundEvenIfActive>
+</ApplicationSettings>

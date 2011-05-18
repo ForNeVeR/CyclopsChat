@@ -209,6 +209,9 @@
   <data name="ServiceUnavailableError" xml:space="preserve">
     <value>Сервис недоступен (возможно, в данной комнате выставлен лимит на кол-во участников).</value>
   </data>
+  <data name="StatusChangingFormat" xml:space="preserve">
+    <value>{0} изменяет статус на "{1}" - "{2}"</value>
+  </data>
   <data name="UserJoinMessage" xml:space="preserve">
     <value>В комнату входит {0}.</value>
     <comment>инвариантый по отношеню к полу вариант :)</comment>

@@ -13,6 +13,8 @@ namespace Cyclops.Core
             get { return null; }
         }
 
+        public bool IsFromHistory { get; private set; }
+
         public IEntityIdentifier AuthorId { get; set; }
 
         public bool IsAuthorModer

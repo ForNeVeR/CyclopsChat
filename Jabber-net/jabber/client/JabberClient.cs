@@ -309,9 +309,8 @@ namespace jabber.client
                 {
                     if (AutoRoster)
                         GetRoster();
-                    if (AutoPresence)
-                        Presence(PresenceType.available,
-                            "cyclopschat.codeplex.com", null, Priority);
+                    //if (AutoPresence)
+                    //    Presence(PresenceType.available, "cyclopschat.codeplex.com", null, Priority);
                 }
             }
         }

@@ -475,6 +475,11 @@
                 <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Left" Click="SmilesButtonClick">
                     <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\Smile.gif"/>
                 </Button>
+
+                <Separator/>
+                <Button Cursor="Hand" Margin="0,0,0,-2" x:Name="configButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Right" Click="SettingsButtonClick">
+                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\tools.png"/>
+                </Button>
             </Controls1:ToolBarEx>
             
         </Grid>

@@ -12,9 +12,8 @@
   </ConnectionConfig>
   <Rooms>
     <string>main@conference.jabber.uruchie.org</string>
-
-    <!--<string>dotnet@conference.jabber.ru/cyclops</string>
-    <string>programming@conference.jabber.ru/cyclops</string>
+    <!--<string>cyclops@conference.jabber.uruchie.org</string>-->
+    <!--<string>programming@conference.jabber.ru/cyclops</string>
     <string>belarus@conference.jabber.ru/cyclops</string>-->
   </Rooms>
 

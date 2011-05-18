@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Cyclops.MainApplication.Controls.NamedSeparator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="18" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Foreground="Gray" Text="{Binding Text}" VerticalAlignment="Center" FontWeight="Bold" 
+                   Margin="3,0,6,0"/>
+        <Separator Margin="0,3,3,0" Grid.Column="1" />
+    </Grid>
+</UserControl>

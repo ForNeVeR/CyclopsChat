@@ -25,6 +25,16 @@ namespace Cyclops.MainApplication
             base.OnSourceInitialized(e);
         }
 
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            if (ApplicationContext.Current.Settings.HideOnWindowClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+            base.OnClosing(e);
+        }
+
         private void WindowClosed(object sender, EventArgs e)
         {
             TrayController.Instance.Dispose();

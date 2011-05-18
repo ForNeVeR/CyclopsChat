@@ -313,6 +313,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} has changed his status to &quot;{1}&quot; - &quot;{2}&quot;.
+        /// </summary>
+        public static string StatusChangingFormat {
+            get {
+                return ResourceManager.GetString("StatusChangingFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has joined to us..
         /// </summary>
         public static string UserJoinMessage {

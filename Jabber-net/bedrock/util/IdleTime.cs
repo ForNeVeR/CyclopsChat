@@ -13,6 +13,7 @@
  * --------------------------------------------------------------------------*/
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design;
@@ -46,13 +47,13 @@ namespace bedrock.util
         /// Get the lapse time between user input (mouse or keyboard) system-wide.
         /// </summary>
         /// <returns>Lapse time in seconds.</returns>
-        public static double GetIdleTime()
+        public static long GetIdleTime()
         {
             LASTINPUTINFO lii = new LASTINPUTINFO();
             lii.cbSize = Marshal.SizeOf(lii.GetType());
             if (!GetLastInputInfo(ref lii))
                 throw new ApplicationException("Error executing GetLastInputInfo");
-            return (Environment.TickCount - lii.dwTime) / 1000.0;
+            return Environment.TickCount - lii.dwTime;
         }
 
         /// <summary>
@@ -94,6 +95,7 @@ namespace bedrock.util
                 throw new ArgumentException("Poll more often than you notify.");
             PollInterval = pollSecs;
             IdleLength = notifySecs;
+            m_timer.Start();
         }
 
         /// <summary>
@@ -173,7 +175,8 @@ namespace bedrock.util
 
         private void m_timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            double idle = GetIdleTime();
+            long idle = GetIdleTime() / 1000;
+            
             if (m_idle)
             {
                 if (idle < PollInterval)
@@ -191,27 +194,27 @@ namespace bedrock.util
                             OnUnIdle(this, span);
                     }
                     m_idleStart = DateTime.MinValue;
+                    return;
                 }
             }
-            else
+
+            if (idle > m_notifySecs)
             {
-                if (idle > m_notifySecs)
+                m_idle = true;
+                m_idleStart = DateTime.Now;
+                if (OnIdle != null)
                 {
-                    m_idle = true;
-                    m_idleStart = DateTime.Now;
-                    if (OnIdle != null)
+                    TimeSpan span = TimeSpan.FromSeconds(idle);
+                    if ((m_invoker != null) &&
+                        (m_invoker.InvokeRequired))
                     {
-                        TimeSpan span = new TimeSpan((long)(idle * 1000L));
-                        if ((m_invoker != null) &&
-                            (m_invoker.InvokeRequired))
-                        {
-                            m_invoker.Invoke(OnIdle, new object[] { this, span });
-                        }
-                        else
-                            OnIdle(this, span);
+                        m_invoker.Invoke(OnIdle, new object[] { this, span });
                     }
+                    else
+                        OnIdle(this, span);
                 }
             }
+            
         }
     }
 }

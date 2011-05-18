@@ -60,7 +60,7 @@
         <ViewExperimentations:TestViewModel/>
     </Window.DataContext>
 	<Grid>
-        <TabControl Style="{DynamicResource CustomTabControlStyle}">
+        <TabControl Margin="0,-20,0,0" Style="{DynamicResource CustomTabControlStyle}">
             <TabItem Header="support">
 
             </TabItem>

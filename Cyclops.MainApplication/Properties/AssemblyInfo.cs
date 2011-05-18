@@ -6,8 +6,8 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Beta 6")]
-[assembly: AssemblyDescription("Beta 6")]
+[assembly: AssemblyTitle("Beta 7")]
+[assembly: AssemblyDescription("Beta 7")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CyclopsChat Team")]
 [assembly: AssemblyProduct("Cyclops.MainApplication")]
@@ -52,5 +52,5 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.6.0")]
-[assembly: AssemblyFileVersion("1.0.6.0")]
+[assembly: AssemblyVersion("1.0.7.0")]
+[assembly: AssemblyFileVersion("1.0.7.0")]

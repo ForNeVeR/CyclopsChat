@@ -18,6 +18,7 @@ namespace Cyclops.MainApplication
 
             dictionaries.Add(LoadDictionary(@"Data\Themes\Default\OutputAreaStyles.xaml"));
             dictionaries.Add(LoadDictionary(@"Data\Themes\Default\General.xaml"));
+            dictionaries.Add(LoadDictionary(@"Data\Themes\Default\SettingsViewStyles.xaml"));
         }
 
         private static ResourceDictionary LoadDictionary(string file)

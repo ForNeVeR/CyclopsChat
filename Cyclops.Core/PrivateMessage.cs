@@ -19,6 +19,8 @@ namespace Cyclops.Core
         {
             get { return false; }
         }
+        
+        public bool IsFromHistory { get; private set; }
 
         public string AuthorNick { get; set; }
 

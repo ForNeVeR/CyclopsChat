@@ -12,7 +12,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public class ConferencesListViewModel : ViewModelBase
+    public class ConferencesListViewModel : ViewModelBaseEx
     {
         private IEnumerable<ConferenceInfo> conferences;
         private string filter;

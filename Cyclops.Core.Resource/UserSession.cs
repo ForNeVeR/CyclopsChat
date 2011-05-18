@@ -54,6 +54,9 @@ namespace Cyclops.Core.Resource
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
             SubscribeToEvents();
+            
+            statusType = StatusType.Online;
+            status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
         
         internal JabberClient JabberClient { get; set; }
@@ -296,10 +299,7 @@ namespace Cyclops.Core.Resource
         {
             IsAuthenticated = true;
             Authenticated(sender, new AuthenticationEventArgs());
-
-            statusType = StatusType.Online;
-            status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
-
+            
             //TODO: remove this shit:)
             OnPropertyChanged("Status");
             OnPropertyChanged("StatusType");

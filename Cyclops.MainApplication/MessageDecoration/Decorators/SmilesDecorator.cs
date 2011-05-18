@@ -20,6 +20,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         {
             var smiles = ApplicationContext.Current.SmilePacks.SelectMany(i => i.Smiles);
             List<Inline> result = new List<Inline>();
+            int smilesInsertedCount = 0;
             foreach (var inline in inlines)
             {
                 if (!(inline is RunEx) || ((RunEx)inline).MessagePartType != MessagePartType.Body)
@@ -31,14 +32,17 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
                 var parts = run.Text.SplitAndIncludeDelimiters(smiles.SelectMany(i => i.Masks).Distinct().ToArray()).ToArray();
                 foreach (var resultPair in parts)
                 {
-                    if (!resultPair.IsDelimiter)
+                    if (!resultPair.IsDelimiter || smilesInsertedCount >= ApplicationContext.Current.Settings.SmilesLimitInMessage)
                     {
                         var runex = new RunEx(resultPair.String, MessagePartType.Body);
                         runex.Style = run.Style;
                         result.Add(runex);
                     }
                     else
+                    {
                         result.Add(CreateSmileInline(smiles.First(i => i.Masks.Any(mask => mask == resultPair.String))));
+                        smilesInsertedCount++;
+                    }
                 }
             }
 

@@ -131,6 +131,8 @@ namespace Cyclops.Core.Resource
 
         #endregion
 
+        private bool isFirstPresence = true;
+
         private void room_OnParticipantPresenceChange(Room room, RoomParticipant participant)
         {
             if (this.participant != participant)
@@ -138,6 +140,9 @@ namespace Cyclops.Core.Resource
             UpdateProperties();
             StatusText = participant.Presence.Status;
             StatusType = participant.Presence.Show;
+            if (!isFirstPresence)
+                conference.RaiseSomebodyChangedHisStatusEvent(this);
+            else isFirstPresence = false;
         }
 
         private void UpdateProperties()

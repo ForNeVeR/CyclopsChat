@@ -13,6 +13,9 @@ namespace Cyclops.MainApplication.View.Popups
 
         public static void NotifyPrivate(PrivateMessage privateMessage, BitmapImage bitmapImage)
         {
+            if (!ApplicationContext.Current.Settings.EnablePrivatePopups)
+                return;
+
             var session = ChatObjectFactory.GetSession();
             var fromConference = session.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(privateMessage.AuthorId));
             BitmapImage avatar = null;
@@ -31,7 +34,7 @@ namespace Cyclops.MainApplication.View.Popups
 
             var notification = new PrivateNotification
                                    {
-                                       StayOpenMilliseconds = StaysOpen,
+                                       StayOpenMilliseconds = ApplicationContext.Current.Settings.PopupStaysOpenning * 1000,
                                        DataContext = privateNotificationViewModel
                                    };
 
@@ -41,9 +44,12 @@ namespace Cyclops.MainApplication.View.Popups
 
         public static void NotifyError(string title, string body)
         {
+            if (!ApplicationContext.Current.Settings.EnableErrorPopups)
+                return;
+
             var notification = new ErrorNotification
                                    {
-                                       StayOpenMilliseconds = StaysOpen,
+                                       StayOpenMilliseconds = ApplicationContext.Current.Settings.PopupStaysOpenning * 1000,
                                        DataContext = new ErrorNotificationViewModel
                                                          {
                                                              Body = body,

@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using Cyclops.MainApplication.View.Dialogs;
@@ -58,36 +59,65 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.CaptchaRequirment += ConferenceCaptchaRequirment;
             Conference.MethodNotAllowedError += ConferenceMethodNotAllowedError;
             Conference.ParticipantJoin += ConferenceParticipantJoin;
+            Conference.SomebodyChangedHisStatus += ConferenceSomebodyChangedHisStatus;
             Conference.ParticipantLeave += ConferenceParticipantLeave;
+            Conference.Messages.CollectionChanged += ConferenceMessagesCollectionChanged;
+        }
+
+        private void ConferenceMessagesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems.OfType<IConferenceMessage>().Any(i => !i.IsFromHistory))
+                ApplicationSounds.PlayOnIcomingPublic(this);
+        }
+
+        private void ConferenceSomebodyChangedHisStatus(object sender, ConferenceMemberEventArgs e)
+        {
+            if (Settings.ShowStatusChangingMessages)
+            {
+                ApplicationSounds.PlayOnStatusChanging(this);
+                AddNotifyMessage(Localization.Conference.StatusChangingFormat, 
+                    e.Member.Nick, e.Member.StatusType, e.Member.StatusText);
+            }
         }
 
         private void ConferenceServiceUnavailable(object sender, EventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.ServiceUnavailableError);
         }
 
         private void ConferenceParticipantLeave(object sender, ConferenceMemberEventArgs e)
         {
+            ApplicationSounds.PlayOnUserLeave(this);
             AddNotifyMessage(Localization.Conference.UserLeaveMessage, e.Member.Nick);
         }
 
         private void ConferenceParticipantJoin(object sender, ConferenceMemberEventArgs e)
         {
+            ApplicationSounds.PlayOnUserJoin(this);
             AddNotifyMessage(Localization.Conference.UserJoinMessage, e.Member.Nick);
+        }
+
+        private void SoundOnSystemMessage()
+        {
+            ApplicationSounds.PlayOnSystemMessage(this);
         }
 
         private void ConferenceMethodNotAllowedError(object sender, EventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.MethodNotAllowedError);
         }
 
         private void ConferenceSubjectChanged(object sender, SubjectChangedEventArgs e)
         {
+            SoundOnSystemMessage();
             AddNotifyMessage(Localization.Conference.ChangeSubjectByParticipant, e.Author, e.NewSubject);
         }
 
         private void ConferenceCantChangeSubject(object sender, EventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.ChangeSubjectError);
         }
 
@@ -147,11 +177,13 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ConferenceNickChange(object sender, NickChangeEventArgs e)
         {
+            SoundOnSystemMessage();
             AddNotifyMessage(Localization.Conference.IsNowKnownAs, e.OldNick, e.NewNick);
         }
 
         private void ConferenceAccessDenied(object sender, EventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.OnlyMembersAccess);
         }
 
@@ -163,11 +195,13 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ConferenceInvalidCaptchaCode(object sender, EventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.InvalidCaptchaCode);
         }
 
         private void ConferenceCaptchaRequirment(object sender, CaptchaEventArgs e)
         {
+            SoundOnSystemMessage();
             Messages.Add(new MessageViewModel(
                              new CaptchaSystemMessage
                                  {
@@ -198,16 +232,19 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ConferenceDisconnected(object sender, DisconnectEventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.DisconnectMessage, e.ErrorMessage);
         }
 
         private void ConferenceKicked(object sender, KickedEventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.KickMessage, e.Reason);
         }
 
         private void ConferenceBanned(object sender, BannedEventArgs e)
         {
+            SoundOnSystemMessage();
             AddSystemMessage(Localization.Conference.BanMessage, e.Reason);
         }
 

@@ -15,7 +15,7 @@ namespace Cyclops.MainApplication.ViewModel
 {
     /// <summary>
     /// </summary>
-    public partial class MainViewModel : ViewModelBase, ISessionHolder
+    public partial class MainViewModel : ViewModelBaseEx, ISessionHolder
     {
         private ObservableCollection<ConferenceViewModel> conferencesModels;
         private bool isApplicationInActiveState;
@@ -184,7 +184,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void SessionPublicMessage(object sender, EventArgs e)
         {
-            if (!IsApplicationInActiveState)
+            if (!IsApplicationInActiveState && !Settings.BlinkOnlyOnPrivates)
                 TrayController.Instance.StartBlink();
         }
     }

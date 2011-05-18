@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
 using Cyclops.Core;
+using Cyclops.MainApplication.ViewModel;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.View.Popups
 {
-    public class ErrorNotificationViewModel : ViewModelBase
+    public class ErrorNotificationViewModel : ViewModelBaseEx
     {
         public ErrorNotificationViewModel()
         {

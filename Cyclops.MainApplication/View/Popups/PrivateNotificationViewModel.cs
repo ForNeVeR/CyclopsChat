@@ -5,11 +5,12 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Cyclops.Core;
+using Cyclops.MainApplication.ViewModel;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.View.Popups
 {
-    public class PrivateNotificationViewModel : ViewModelBase
+    public class PrivateNotificationViewModel : ViewModelBaseEx
     {
         public PrivateNotificationViewModel()
         {

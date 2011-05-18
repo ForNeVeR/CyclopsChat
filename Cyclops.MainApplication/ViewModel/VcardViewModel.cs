@@ -8,7 +8,7 @@ using Microsoft.Win32;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public class VcardViewModel : ViewModelBase
+    public class VcardViewModel : ViewModelBaseEx
     {
         private readonly Action closeAction;
         private IUserSession session;

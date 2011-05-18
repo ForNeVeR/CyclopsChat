@@ -124,12 +124,30 @@
     <Compile Include="Composition\Module.cs" />
     <Compile Include="Configuration\Profile.cs" />
     <Compile Include="Configuration\ProfileManager.cs" />
+    <Compile Include="Configuration\ApplicationSettings.Common.cs" />
+    <Compile Include="Configuration\ApplicationSettings.cs" />
+    <Compile Include="Configuration\ApplicationSettings.Interface.cs" />
+    <Compile Include="Configuration\ApplicationSettings.Sounds.cs" />
+    <Compile Include="Configuration\ApplicationSettings.Status.cs" />
+    <Compile Include="Configuration\Serializer.cs" />
     <Compile Include="Controls\AnimatedImage.cs" />
+    <Compile Include="Controls\ApplicationSounds.cs" />
+    <Compile Include="Controls\NamedSeparator.xaml.cs">
+      <DependentUpon>NamedSeparator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Selector.xaml.cs">
+      <DependentUpon>Selector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SoundPlayer.cs" />
+    <Compile Include="Controls\SoundSelector.xaml.cs">
+      <DependentUpon>SoundSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToolBarEx.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
     <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
     <Compile Include="Helpers\ImageResizingUtility.cs" />
+    <Compile Include="Helpers\SystemHelper.cs" />
     <Compile Include="Localization\Common.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -142,6 +160,11 @@
     </Compile>
     <Compile Include="Localization\ConferenceList.Designer.cs">
       <DependentUpon>ConferenceList.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Localization\Settings.Designer.cs">
+      <DependentUpon>Settings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -172,6 +195,7 @@
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\StatusTypeToIntegerConverter.cs" />
     <Compile Include="ValueConverters\SumConverter.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ConferencesServiceItem.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
     <Compile Include="ViewModel\ConferencesListViewModel.cs" />
@@ -181,6 +205,7 @@
     <Compile Include="ViewModel\PrivateViewModel.cs" />
     <Compile Include="ViewModel\ChatAreaViewModel.cs" />
     <Compile Include="ViewModel\VcardViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBaseEx.cs" />
     <Compile Include="View\ConferencesList.xaml.cs">
       <DependentUpon>ConferencesList.xaml</DependentUpon>
     </Compile>
@@ -219,6 +244,27 @@
     <Compile Include="View\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Options\CommonSettings.xaml.cs">
+      <DependentUpon>CommonSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\HotkeysSettings.xaml.cs">
+      <DependentUpon>HotkeysSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\InterfaceSettings.xaml.cs">
+      <DependentUpon>InterfaceSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\SoundsSettings.xaml.cs">
+      <DependentUpon>SoundsSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\StatusSettings.xaml.cs">
+      <DependentUpon>StatusSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\StyleSettings.xaml.cs">
+      <DependentUpon>StyleSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Popups\ErrorNotificationViewModel.cs" />
     <Compile Include="View\Popups\ErrorNotification.xaml.cs">
       <DependentUpon>ErrorNotification.xaml</DependentUpon>
@@ -235,10 +281,22 @@
       <DependentUpon>SmilesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewController.cs" />
+    <Content Include="Data\Profiles\Application.config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Avatars\default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Smiles\kolobok.jisp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sounds\3.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sounds\2.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\Sounds\1.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Themes\Default\OutputAreaStyles.xaml">
@@ -246,9 +304,20 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Profile.config.xml">
+    <Content Include="Data\Profiles\Profile.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Options\stop.png" />
+    <Resource Include="Resources\tools.png" />
+    <Resource Include="Resources\Options\user1_time.png" />
+    <Resource Include="Resources\Options\text_rich_colored.png" />
+    <Resource Include="Resources\Options\sound.png" />
+    <Resource Include="Resources\Options\keyboard_key.png" />
+    <Resource Include="Resources\Options\window_preferences.png" />
+    <Resource Include="Resources\Options\info.png" />
+    <Resource Include="Resources\Options\uses.png" />
+    <Resource Include="Resources\Options\web.png" />
+    <Resource Include="Resources\Options\connect.png" />
     <Resource Include="Resources\warning.png" />
     <Resource Include="Resources\error.png" />
     <Resource Include="Resources\Folder.png" />
@@ -256,6 +325,23 @@
     <Resource Include="Resources\send.png" />
     <Resource Include="Resources\editicon.png" />
     <Resource Include="View\Localization.txt" />
+    <Page Include="Controls\NamedSeparator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Selector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SoundSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Content Include="Data\Themes\Default\SettingsViewStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Page Include="View\Dialogs\InputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -273,6 +359,34 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Page Include="View\Dialogs\VcardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\CommonSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\HotkeysSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\InterfaceSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\SoundsSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\StatusSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\StyleSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -357,6 +471,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\ConferenceList.ru-RU.resx" />
     <EmbeddedResource Include="Localization\Common.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Settings.ru-RU.resx" />
+    <EmbeddedResource Include="Localization\Settings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localization\Vcard.ru-RU.resx" />
     <EmbeddedResource Include="Localization\Vcard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -391,6 +510,10 @@
       <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
       <Name>Cyclops.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj">
+      <Project>{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}</Project>
+      <Name>2005-jabber-net</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -414,9 +537,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\Profiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

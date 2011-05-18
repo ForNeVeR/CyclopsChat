@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.Configuration
 {
-    public class Profile : ViewModelBase
+    public class Profile : ViewModelBaseEx
     {
         private List<ConferencesServiceItem> friendlyConferencesServices;
         private ConnectionConfig connectionConfig;

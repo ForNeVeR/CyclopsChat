@@ -34,7 +34,8 @@ namespace Cyclops.MainApplication.Controls
 
         void WindowStateChanged(object sender, EventArgs e)
         {
-            if (window.WindowState == WindowState.Minimized)
+            if (window.WindowState == WindowState.Minimized &&
+                !ApplicationContext.Current.Settings.HideOnWindowClosing)
                 window.Hide();
         }
 
@@ -88,9 +89,9 @@ namespace Cyclops.MainApplication.Controls
 
         public void StartBlink()
         {
-            string arg = ConfigurationManager.AppSettings["DisableTrayBlinking"];
-            if (arg != null && arg.ToLower().Equals("true"))
+            if (ApplicationContext.Current.Settings.DisableBlinking)
                 return;
+            
             timer.Start();
         }
 

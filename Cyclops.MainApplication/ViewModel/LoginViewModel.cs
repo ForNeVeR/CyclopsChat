@@ -16,7 +16,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBaseEx
     {
         private bool isBusy;
         private string name;

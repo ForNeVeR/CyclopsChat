@@ -8,7 +8,7 @@ namespace Cyclops.MainApplication.ViewModel
     /// <summary>
     /// View model for message
     /// </summary>
-    public class MessageViewModel : ViewModelBase
+    public class MessageViewModel : ViewModelBaseEx
     {
         public MessageViewModel(IConferenceMessage msg)
         {

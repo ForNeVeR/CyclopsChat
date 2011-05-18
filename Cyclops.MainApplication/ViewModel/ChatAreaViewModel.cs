@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
-    public abstract class ChatAreaViewModel : ViewModelBase
+    public abstract class ChatAreaViewModel : ViewModelBaseEx
     {
         private int unreadMessagesCount;
         private string currentlyTypedMessage;

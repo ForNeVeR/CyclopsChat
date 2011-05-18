@@ -53,6 +53,17 @@ namespace Cyclops.MainApplication.Localization
             }
         }
 
+        private Settings settings = new Settings();
+        public Settings Settings
+        {
+            get { return settings; }
+            set
+            {
+                settings = value;
+                OnPropertyChanged("Settings");
+            }
+        }
+
         private ConferenceList conferenceList = new ConferenceList();
         public Localization.ConferenceList ConferenceList
         {
@@ -83,6 +94,7 @@ namespace Cyclops.MainApplication.Localization
             ConferenceList = new ConferenceList();
             Common = new Common();
             Vcard = new Vcard();
+            Settings = new Settings();
         }
     }
 }

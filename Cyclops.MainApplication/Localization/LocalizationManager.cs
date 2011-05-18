@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,6 +12,12 @@ namespace Cyclops.MainApplication.Localization
     {
         public static void ChangeLanguage(string culture)
         {
+            if (string.IsNullOrWhiteSpace(culture))
+                culture = CultureInfo.CurrentCulture.Name;
+
+            if (Thread.CurrentThread.CurrentUICulture.Name.Equals(culture))
+                return;
+
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
             var rw = Application.Current.Resources["ResourceWrapper"] as ResourceWrapper;
