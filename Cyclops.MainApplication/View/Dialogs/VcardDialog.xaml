@@ -8,7 +8,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" 
         Title="{Binding Path=Vcard.Title, Source={StaticResource ResourceWrapper}}"
         MaxHeight="261" MaxWidth="533" MinHeight="261" MinWidth="533"
-		WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow">
+		WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
 	<Window.Resources>
 
         <ValueConverters:FalseToCollapsedValueConverter x:Key="falseToHideConverter"/>

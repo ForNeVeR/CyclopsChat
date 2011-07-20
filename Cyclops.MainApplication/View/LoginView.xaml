@@ -8,7 +8,8 @@
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" 
              xmlns:Localization="clr-namespace:Cyclops.MainApplication.Localization" 
              mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" 
-             FocusManager.FocusedElement="{Binding ElementName=userName}" Loaded="UserControlLoaded">
+             FocusManager.FocusedElement="{Binding ElementName=userName}" Loaded="UserControlLoaded"
+              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
 	<UserControl.DataContext>
 		<ViewModel:LoginViewModel />
 	</UserControl.DataContext>

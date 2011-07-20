@@ -11,7 +11,7 @@
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
              x:Class="Cyclops.MainApplication.ConferenceView" 
              IsVisibleChanged="UserControlIsVisibleChanged"
-             d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display"
+             d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
     
@@ -33,7 +33,6 @@
                   Margin="{TemplateBinding Control.Padding}"
                   HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
                   VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                  SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
                   ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
                   RecognizesAccessKey="True"
                   Content="{TemplateBinding ContentControl.Content}" />
@@ -46,7 +45,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent" SnapsToDevicePixels="False">
+                        <Grid Background="Transparent" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="19"/>
                                 <RowDefinition Height="*"/>
@@ -62,9 +61,9 @@
                                     </TransformGroup>
                                 </Grid.LayoutTransform>
                                 <Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
                             </Grid>
-                            <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
+                            <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" VerticalAlignment="Top"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -90,7 +89,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border Padding="{TemplateBinding Padding}">
-                            <Grid Background="Transparent" SnapsToDevicePixels="False">
+                            <Grid Background="Transparent">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="19"/>
                                     <ColumnDefinition Width="*"/>
@@ -106,9 +105,9 @@
                                         </TransformGroup>
                                     </Grid.LayoutTransform>
                                     <Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
                                 </Grid>
-                                <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                                <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -134,7 +133,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border Padding="{TemplateBinding Padding}">
-                            <Grid Background="Transparent" SnapsToDevicePixels="False">
+                            <Grid Background="Transparent">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="19"/>
                                     <RowDefinition Height="*"/>
@@ -150,9 +149,9 @@
                                         </TransformGroup>
                                     </Grid.LayoutTransform>
                                     <Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
                                 </Grid>
-                                <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
+                                <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" VerticalAlignment="Top"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -178,7 +177,7 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <Border>
-                            <Rectangle Margin="0" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                            <Rectangle Margin="0" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -190,15 +189,15 @@
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border Padding="{TemplateBinding Padding}">
                             <Border Cursor="Hand" BorderThickness="1" CornerRadius="2" BorderBrush="#FFEBEBEB" Background="White">
-                                <Grid Background="#009B5151" SnapsToDevicePixels="False" Height="19">
+                                <Grid Background="#009B5151" Height="19">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="19"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Border BorderThickness="0,0,1,0" BorderBrush="#FFEBEBEB"></Border>
                                     <Ellipse x:Name="circle" Visibility="Hidden" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="false" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
-                                    <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
+                                    <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>
                         </Border>
@@ -230,7 +229,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Expander}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="true">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3">
                             <DockPanel>
                                 <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Bottom" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
@@ -395,8 +394,7 @@
 
         <Controls1:ChatFlowDocumentScrollViewer Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
 			<Controls1:ChatFlowDocument x:Name="chatFlowDocument"
-                                        TextOptions.TextFormattingMode="Display" 
-                                        Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
+                                       Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
                                         Style="{DynamicResource flowDocumentStyle}" />
 		</Controls1:ChatFlowDocumentScrollViewer>
 

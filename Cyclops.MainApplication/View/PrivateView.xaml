@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+              TextOptions.TextRenderingMode="ClearType"
              TextOptions.TextFormattingMode="Display">
 	<UserControl.Resources>
     </UserControl.Resources>
@@ -20,8 +21,7 @@
 		</Grid.RowDefinitions>
 
 		<Controls1:ChatFlowDocumentScrollViewer>
-			<Controls1:ChatFlowDocument x:Name="chatFlowDocument" TextOptions.TextFormattingMode="Display" 
-                                        TextOptions.TextRenderingMode="Grayscale" 
+			<Controls1:ChatFlowDocument x:Name="chatFlowDocument"  
                                         Messages="{Binding PrivateViewModel.Messages}" 
                                         LineHeight="1" Style="{DynamicResource flowDocumentStyle}" />
 		</Controls1:ChatFlowDocumentScrollViewer>

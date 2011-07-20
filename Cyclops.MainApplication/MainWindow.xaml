@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         Title="Cyclops chat" Height="600" Width="1000" 
         TextOptions.TextFormattingMode="Display" 
+        TextOptions.TextRenderingMode="ClearType"
         Closed="WindowClosed" Loaded="WindowLoaded">
 	<Grid x:Name="LayoutRoot"></Grid>
 </Window>

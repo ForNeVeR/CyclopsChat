@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:my="clr-namespace:Cyclops.MainApplication.Controls" xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="300" d:DesignWidth="500"
+              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
     <UserControl.Resources>
         <ValueConverters:Invertor x:Key="invertor"/>
     </UserControl.Resources>

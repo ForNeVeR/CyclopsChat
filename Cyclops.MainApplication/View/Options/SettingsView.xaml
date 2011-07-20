@@ -2,8 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:Options="clr-namespace:Cyclops.MainApplication.View.Options" xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" Title="Settings" Height="518" Width="470" UseLayoutRounding="True"
-        WindowStartupLocation="CenterOwner" TextOptions.TextFormattingMode="Display"
-        ResizeMode="NoResize">
+        WindowStartupLocation="CenterOwner" TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+        ResizeMode="NoResize"
+        >
     <Window.Resources>
        
         <Style TargetType="TabItem">

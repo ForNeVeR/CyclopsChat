@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls" 
              xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
 	<UserControl.DataContext>
 		<ViewModel:MainViewModel />
 	</UserControl.DataContext>
