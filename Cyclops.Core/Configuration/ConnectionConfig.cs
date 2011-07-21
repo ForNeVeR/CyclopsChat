@@ -7,8 +7,6 @@ namespace Cyclops.Core.Configuration
     /// </summary>
     public class ConnectionConfig
     {
-        private string networkHost = string.Empty;
-
         public ConnectionConfig()
         {
             Port = 5222;
@@ -51,7 +49,7 @@ namespace Cyclops.Core.Configuration
 
         public override string ToString()
         {
-            return string.Format("Server: {0}; NetworkHost: {1}; User: {2}; Port: {3};", Server, NetworkHost, User, Port);
+            return string.Format("Server: {0}; NetworkHost: {1}; User: {2}; Port: {3}; Is password set: {4}", Server, NetworkHost, User, Port, !string.IsNullOrEmpty(EncodedPassword));
         }
     }
 }

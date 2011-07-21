@@ -17,6 +17,7 @@ namespace Cyclops.MainApplication.ViewModel
     /// </summary>
     public partial class MainViewModel : ViewModelBaseEx, ISessionHolder
     {
+        private readonly IMainView mainView;
         private ObservableCollection<ConferenceViewModel> conferencesModels;
         private bool isApplicationInActiveState;
         private ObservableCollection<PrivateViewModel> privateViewModels;
@@ -27,8 +28,9 @@ namespace Cyclops.MainApplication.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(IMainView mainView)
         {
+            this.mainView = mainView;
             if (IsInDesignMode)
                 return;
 
@@ -66,7 +68,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             NotificationManager.NotifyError(e.From.ToString(), e.Message);
         }
-
+        
         private void SubscribeToEvents()
         {
             Session.PrivateMessages.CollectionChanged += PrivateMessagesCollectionChanged;
@@ -75,7 +77,11 @@ namespace Cyclops.MainApplication.ViewModel
             Application.Current.MainWindow.Deactivated += (s, e) => IsApplicationInActiveState = false;
         }
 
-
+        public void ShowSettings()
+        {
+            mainView.ShowSettings();
+        }
+    
         public ConferenceViewModel SelectedConference
         {
             get { return selectedConference; }

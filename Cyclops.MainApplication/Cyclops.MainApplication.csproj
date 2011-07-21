@@ -16,6 +16,8 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <IsWebBootstrapper>true</IsWebBootstrapper>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -37,8 +39,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -72,7 +72,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
@@ -89,6 +89,9 @@
       <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReuxablesLegacy">
+      <HintPath>..\Libraries\ReuxablesLegacy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -119,6 +122,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Cyclops.Core\Properties\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
     <Compile Include="ApplicationContext.cs" />
     <Compile Include="ChatObjectFactory.cs" />
     <Compile Include="Composition\Module.cs" />
@@ -148,6 +154,7 @@
     <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
     <Compile Include="Helpers\ImageResizingUtility.cs" />
     <Compile Include="Helpers\SystemHelper.cs" />
+    <Compile Include="Helpers\UIHelper.cs" />
     <Compile Include="Localization\Common.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -184,6 +191,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Login.resx</DependentUpon>
     </Compile>
+    <Compile Include="MessageDecoration\ChatCommands.cs" />
     <Compile Include="MessageDecoration\DecoratorsStyles.cs" />
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
@@ -195,6 +203,7 @@
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\StatusTypeToIntegerConverter.cs" />
     <Compile Include="ValueConverters\SumConverter.cs" />
+    <Compile Include="ViewModel\IMainView.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ConferencesServiceItem.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
@@ -283,6 +292,7 @@
     <Compile Include="View\ViewController.cs" />
     <Content Include="Data\Profiles\Application.config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Data\Avatars\default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -306,6 +316,7 @@
     </Content>
     <Content Include="Data\Profiles\Profile.config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Resource Include="Resources\Options\stop.png" />
     <Resource Include="Resources\tools.png" />
@@ -340,7 +351,7 @@
     <Content Include="Data\Themes\Default\SettingsViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="View\Dialogs\InputDialog.xaml">
       <SubType>Designer</SubType>
@@ -356,7 +367,7 @@
     <Content Include="Data\Themes\Default\General.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Page Include="View\Dialogs\VcardDialog.xaml">
       <SubType>Designer</SubType>
@@ -423,7 +434,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Cyclops.MainApplication_TemporaryKey.pfx" />
     <None Include="Resources\ligth-off.ico" />
     <None Include="Resources\ligth-on.ico" />
     <None Include="Resources\EmptyIcon.ico" />

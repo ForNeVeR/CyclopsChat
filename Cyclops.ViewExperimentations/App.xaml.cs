@@ -12,5 +12,10 @@ namespace Cyclops.ViewExperimentations
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            string a = "3r3r";
+            bool isc = a is IEnumerable<char>;
+        }
     }
 }

@@ -11,6 +11,7 @@
                 </ResourceDictionary>
                 <ResourceDictionary Source="Data/Themes/Default/SettingsViewStyles.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/General.xaml"/>
+                <ResourceDictionary Source="/ReuxablesLegacy;component/mercury.xaml" />
             </ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 </Application.Resources>

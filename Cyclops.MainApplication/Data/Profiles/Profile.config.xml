@@ -13,12 +13,13 @@
   <Rooms>
     <string>main@conference.jabber.uruchie.org</string>
     <!--<string>cyclops@conference.jabber.uruchie.org</string>-->
-    <!--<string>programming@conference.jabber.ru/cyclops</string>
-    <string>belarus@conference.jabber.ru/cyclops</string>-->
+    <!--<string>programming@conference.jabber.ru/cyclops</string>-->
+    <!--<string>belarus@conference.jabber.ru/nagg</string>
+    <string>programming@conference.jabber.ru/nagg</string>-->
   </Rooms>
 
   <FriendlyConferencesServices>
-    <!--<ConferencesServiceItem DisplayName="Uruchie server (jabber.uruchie.org)" ConferenceService="conference.jabber.uruchie.org"/>-->
+    <ConferencesServiceItem DisplayName="Uruchie server (jabber.uruchie.org)" ConferenceService="conference.jabber.uruchie.org"/>
     <ConferencesServiceItem DisplayName="Bookmarks" ConferenceService="storage:bookmarks"/>
     <ConferencesServiceItem DisplayName="jabber.ru" ConferenceService="conference.jabber.ru"/>
     <ConferencesServiceItem DisplayName="QIP (qip.ru)" ConferenceService="conference.qip.ru"/>

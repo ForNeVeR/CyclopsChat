@@ -53,7 +53,8 @@ namespace Cyclops.Core.Resource.Smiles
                             {
                                 var ms = new MemoryStream();
                                 zip.ExtractFile(item.ZipEntry, ms);
-                                ((Smile) item.Smile).Bitmap = (Bitmap) Image.FromStream(ms);
+                                ((Smile) item.Smile).Bitmap = (Bitmap)Image.FromStream(ms);
+                                ((Smile)item.Smile).Stream = ms;
                             }
                             catch
                             {

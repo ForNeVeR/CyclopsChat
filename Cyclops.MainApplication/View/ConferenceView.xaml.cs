@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 using Cyclops.MainApplication.View;
 using Cyclops.MainApplication.View.Options;
 using Cyclops.MainApplication.ViewModel;
@@ -87,7 +88,7 @@ namespace Cyclops.MainApplication
 
         private void SettingsButtonClick(object sender, RoutedEventArgs e)
         {
-            SettingsView.ShowSettings();
+            ApplicationContext.Current.MainViewModel.ShowSettings();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Cyclops.Core;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.ViewExperimentations
@@ -19,11 +20,15 @@ namespace Cyclops.ViewExperimentations
                 {
                     Nick = "Some_nick " + i,
                     StatusText = "Some stupid meanless status text",
-                    AvatarUrl = @"C:\Avatars\" + random.Next(1, 8) + ".jpg"
                 });
             }
+
+            Messages = new ObservableCollection<IConferenceMessage>();
+            Messages.Add(new SystemConferenceMessage {Body = "Test"});
         }
         
         public ObservableCollection<Member> Members { get; set; }
+
+        public ObservableCollection<IConferenceMessage> Messages { get; set; }
     }
 }

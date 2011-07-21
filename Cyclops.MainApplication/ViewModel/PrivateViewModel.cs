@@ -70,6 +70,8 @@ namespace Cyclops.MainApplication.ViewModel
 
         public override string ToString()
         {
+            if (string.IsNullOrEmpty(Participant.Resource))
+                return Participant.User;
             return string.Format("{0} ({1})", Participant.Resource, Participant.User);
         }
     }

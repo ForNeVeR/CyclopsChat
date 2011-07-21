@@ -7,15 +7,13 @@
              xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
               TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
-	<UserControl.DataContext>
-		<ViewModel:MainViewModel />
-	</UserControl.DataContext>
     
 	<UserControl.Resources>
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
-        <Controls:ConferencesTabControl SelectedConferenceViewModel="{Binding SelectedConference, Mode=OneWayToSource}" 
+        <Controls:ConferencesTabControl x:Name="chatTabControl"
+                                        SelectedConferenceViewModel="{Binding SelectedConference, Mode=OneWayToSource}" 
                                         SelectedPrivateViewModel="{Binding SelectedPrivate, Mode=OneWayToSource}" 
                                         ConferencesSource="{Binding ConferencesModels}" PrivatesSource="{Binding PrivateViewModels}"/>
 

@@ -12,6 +12,7 @@ namespace Cyclops.MainApplication.Configuration
         private bool disableBlinking;
         private bool enableErrorPopups;
         private bool enablePrivatePopups;
+        private bool isSmilesAnimated;
         private string selectedLanguage;
         private int smilesLimitInMessage;
         private int popupStaysOpenning;
@@ -95,6 +96,16 @@ namespace Cyclops.MainApplication.Configuration
             }
         }
 
+        public bool IsSmilesAnimated
+        {
+            get { return isSmilesAnimated; }
+            set
+            {
+                isSmilesAnimated = value;
+                RaisePropertyChanged("IsSmilesAnimated");
+            }
+        }
+
         private void CloneInterfaceProperties(ApplicationSettings cloneObj)
         {
             cloneObj.SelectedLanguage = SelectedLanguage;
@@ -104,6 +115,7 @@ namespace Cyclops.MainApplication.Configuration
             cloneObj.PopupStaysOpenning = PopupStaysOpenning;
             cloneObj.DisableBlinking = DisableBlinking;
             cloneObj.BlinkOnlyOnPrivates = BlinkOnlyOnPrivates;
+            cloneObj.IsSmilesAnimated = IsSmilesAnimated;
         }
 
         private void SetInterfaceDefaultValues()
@@ -115,6 +127,7 @@ namespace Cyclops.MainApplication.Configuration
             PopupStaysOpenning = 3;
             DisableBlinking = false;
             BlinkOnlyOnPrivates = false;
+            IsSmilesAnimated = false;
         }
     }
 }

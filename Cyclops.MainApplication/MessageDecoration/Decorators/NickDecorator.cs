@@ -32,7 +32,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             if (msg.IsAuthorModer)
                 style = DecoratorsStyles.ModerNickStyle;
 
-            if (msg.Body != null && msg.Body.StartsWith("/me", System.StringComparison.InvariantCultureIgnoreCase))
+            if (msg.Body != null && msg.Body.StartsWith(ChatCommands.MeAction, System.StringComparison.InvariantCultureIgnoreCase))
             {
                 style = DecoratorsStyles.MeCommandNickStyle;
                 format = "{0}";

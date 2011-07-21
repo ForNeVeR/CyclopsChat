@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Xml.Serialization;
 using Cyclops.Core.Smiles;
 
@@ -14,5 +16,8 @@ namespace Cyclops.Core.Resource.Smiles
 
         [XmlIgnore]
         public Bitmap Bitmap { get; set; }
+
+        [XmlIgnore]
+        public MemoryStream Stream { get; set; }
     }
 }

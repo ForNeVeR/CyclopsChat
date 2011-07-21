@@ -17,19 +17,16 @@ namespace Cyclops.MainApplication.View.Options
     /// <summary>
     /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class SettingsView : Window
+    public partial class SettingsView 
     {
         public SettingsView()
         {
-            DataContext = new SettingsViewModel(() => DialogResult = true, () => DialogResult = false);
+            DataContext = new SettingsViewModel(() => { }, () => { });
             InitializeComponent();
         }
 
         public static void ShowSettings()
         {
-            SettingsView view = new SettingsView();
-            view.Owner = App.Current.MainWindow;
-            view.ShowDialog();
         }
     }
 }

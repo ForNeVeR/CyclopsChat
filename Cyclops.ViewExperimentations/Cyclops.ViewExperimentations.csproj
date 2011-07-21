@@ -118,20 +118,34 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="error.png" />
+    <Resource Include="Images\error.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="stop-error.png" />
+    <Resource Include="Images\stop-error.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="mail.png" />
+    <Resource Include="Images\mail.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="add window.png" />
-    <Resource Include="add-window.png" />
-    <Resource Include="add.png" />
-    <Resource Include="document_add.png" />
-    <Resource Include="window_add.png" />
+    <Resource Include="Images\add window.png" />
+    <Resource Include="Images\add-window.png" />
+    <Resource Include="Images\add.png" />
+    <Resource Include="Images\document_add.png" />
+    <Resource Include="Images\window_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj">
+      <Project>{3D3E964F-34F2-423B-B22D-865DFE640182}</Project>
+      <Name>Cyclops.Core.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj">
+      <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
+      <Name>Cyclops.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cyclops.MainApplication\Cyclops.MainApplication.csproj">
+      <Project>{08CEBA92-6628-4818-85EB-7C24C531F1D2}</Project>
+      <Name>Cyclops.MainApplication</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

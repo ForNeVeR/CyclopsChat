@@ -98,8 +98,7 @@ namespace Cyclops.Core.Resource.Avatars
                         if (File.Exists(file))
                             try
                             {
-                                File.Delete(file);
-                            }
+                                File.Delete(file);}
                             catch //file is used by another process
                             {
                                 return;

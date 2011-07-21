@@ -1,10 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Cyclops.MainApplication.View;
+using Cyclops.MainApplication.View.Options;
 using Cyclops.MainApplication.ViewModel;
 
 namespace Cyclops.MainApplication.Controls
@@ -110,6 +112,7 @@ namespace Cyclops.MainApplication.Controls
                         Items.OfType<TabItem>().FirstOrDefault(
                             i => i.Content is ConferenceView && ((ConferenceView) i.Content).ConferenceViewModel == item);
                     Items.Remove(oldItem);
+                    Cleanup();
                 }
         }
 
@@ -124,7 +127,16 @@ namespace Cyclops.MainApplication.Controls
                         Items.OfType<TabItem>().FirstOrDefault(
                             i => i.Content is PrivateView && ((PrivateView)i.Content).PrivateViewModel == item);
                     Items.Remove(oldItem);
+                    Cleanup();
                 }
+        }
+
+        private void Cleanup()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         private void AddConference(ConferenceViewModel conference)
@@ -165,6 +177,17 @@ namespace Cyclops.MainApplication.Controls
             tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
             Items.Add(tab);
             SelectedItem = tab;
+        }
+
+        public void AddConfigPage()
+        {
+            var view = new SettingsView();
+            var tab = new TabItem
+                          {
+                              Content = view,
+                              Header = "Config"
+                          };
+            Items.Add(tab);
         }
 
         // Using a DependencyProperty as the backing store for ConferencesSource.  This enables animation, styling, binding, etc...

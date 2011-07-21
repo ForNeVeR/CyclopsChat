@@ -89,6 +89,7 @@ namespace Cyclops.Core.Resource.Registration
                 string message = "";
                 switch (iq.Error.Code)
                 {
+                        //TODO: replace with events (move to presentation layer)
                     case 409:
                         message = "This name is already registered.";
                         break;

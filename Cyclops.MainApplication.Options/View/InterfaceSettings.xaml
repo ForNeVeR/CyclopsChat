@@ -1,0 +1,62 @@
+﻿<UserControl xmlns:my="clr-namespace:Cyclops.MainApplication.Controls"  x:Class="Cyclops.MainApplication.Options.View.InterfaceSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended"
+             xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls;assembly=Cyclops.MainApplication"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>      
+        
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+            <RowDefinition Height="28" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Controls1:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
+
+        <TextBlock Grid.Row="1" Text="{Binding Path=Settings.Language, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Settings.Languages}" SelectedItem="{Binding Settings.SelectedLanguage, Mode=TwoWay}" Width="110" Style="{StaticResource valueStyle}"/>
+
+        <TextBlock Grid.Row="2" Text="{Binding Path=Settings.SmileLimit, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <Controls:IntegerUpDown Grid.Row="2" Value="{Binding Settings.SmilesLimitInMessage, Mode=TwoWay}" FontSize="12" Width="50" Minimum="0" Maximum="999"
+                                Grid.Column="1" Style="{StaticResource valueStyle}"/>
+
+        <Controls1:NamedSeparator Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Path=Settings.NotificationsGroup, Source={StaticResource ResourceWrapper}}" />
+
+        <TextBlock Grid.Row="4" Text="{Binding Path=Settings.EnablePrivatesPopups, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Settings.EnablePrivatePopups, Mode=TwoWay}"  Style="{StaticResource valueStyle}"/>
+
+        <TextBlock Grid.Row="5" Text="{Binding Path=Settings.EnableErrorsPopups, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <CheckBox Grid.Column="1" Grid.Row="5" IsChecked="{Binding Settings.EnableErrorPopups, Mode=TwoWay}" Style="{StaticResource valueStyle}"/>
+
+        <TextBlock Grid.Row="6" Text="{Binding Path=Settings.PopupStaysOpenning, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <Controls:IntegerUpDown Grid.Row="6" Value="{Binding Settings.PopupStaysOpenning, Mode=TwoWay}" FontSize="12" Width="50" Minimum="1" Maximum="999"
+                                Grid.Column="1" Style="{StaticResource valueStyle}"/>
+
+        <Controls1:NamedSeparator Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding Path=Settings.TrayGroup, Source={StaticResource ResourceWrapper}}" />
+        <TextBlock Grid.Row="8" Text="{Binding Path=Settings.DisableBlinking, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Settings.DisableBlinking, Mode=TwoWay}" Style="{StaticResource valueStyle}"/>
+
+        <TextBlock Grid.Row="9" Text="{Binding Path=Settings.BlinkOnlyOnPrivates, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <CheckBox Grid.Column="1" Grid.Row="9" IsChecked="{Binding Settings.BlinkOnlyOnPrivates, Mode=TwoWay}" Style="{StaticResource valueStyle}"/>
+
+
+    </Grid>
+</UserControl>

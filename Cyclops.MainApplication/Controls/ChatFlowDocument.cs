@@ -31,8 +31,7 @@ namespace Cyclops.MainApplication.Controls
             if (d is ChatFlowDocument)
                 ((ChatFlowDocument) d).OnInitializeMessages();
         }
-
-
+        
         private void OnInitializeMessages()
         {
             Messages.ForEach(msg => Blocks.Add(msg.Paragraph));

@@ -8,7 +8,7 @@ namespace Cyclops.Core.Helpers
     public static class ReflectionHelper
     {
         /// <summary>
-        /// Create a shallow copy of an obect 
+        /// Creates a shallow copy of an obect 
         /// </summary>
         public static TNew ShallowCopyTo<TOld, TNew>(TOld old) where TNew : new()
         {

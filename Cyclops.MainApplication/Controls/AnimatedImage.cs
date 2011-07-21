@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Windows.Interop;
+using Cyclops.MainApplication.Helpers;
+using Point = System.Windows.Point;
 
 namespace Cyclops.MainApplication.Controls
 {
@@ -44,13 +53,29 @@ namespace Cyclops.MainApplication.Controls
     {
         private BitmapSource[] _BitmapSources = null;
         private int _nCurrentFrame = 0;
-
-
         private bool _bIsAnimating = false;
+
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteObject(IntPtr hObject);
 
         public bool IsAnimating
         {
             get { return _bIsAnimating; }
+        }
+
+        public AnimatedImage()
+        {
+            IsVisibleChanged += new DependencyPropertyChangedEventHandler(AnimatedImage_IsVisibleChanged);
+            Loaded += new RoutedEventHandler(AnimatedImage_Loaded);
+        }
+
+        void AnimatedImage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var scrollViewer = this.TryFindParent<ChatFlowDocumentScrollViewer>();
+            if (scrollViewer != null)
+            {
+                scrollViewer.ScrollViewer.ScrollChanged += new ScrollChangedEventHandler(ScrollViewerScrollChanged);
+            }
         }
 
         static AnimatedImage()
@@ -62,6 +87,8 @@ namespace Cyclops.MainApplication.Controls
             get { return (Bitmap)GetValue(AnimatedBitmapProperty); }
             set { StopAnimate(); SetValue(AnimatedBitmapProperty, value); }
         }
+
+        private static Dictionary<int, BitmapSource[]> cache = new Dictionary<int, BitmapSource[]>(20);
 
         public bool StaticByDefault { get; set; }
 
@@ -114,6 +141,18 @@ namespace Cyclops.MainApplication.Controls
             return bmp.RawFormat.Guid.Equals(ImageFormat.Gif.Guid);
         }
 
+        private void ScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            var scroll = ((ScrollViewer)sender);
+            // position of your visual inside the scrollviewer    
+            GeneralTransform childTransform = this.TransformToAncestor(scroll);
+            Rect rectangle = childTransform.TransformBounds(new Rect(new Point(0, 0), this.RenderSize));
+            //Check if the elements Rect intersects with that of the scrollviewer's
+            Rect result = Rect.Intersect(new Rect(new Point(0, 0), scroll.RenderSize), rectangle);
+            //if result is Empty then the element is not in view
+            StopAnimationIfInvisible(result != Rect.Empty);
+        }
+
         private void UpdateAnimatedBitmap()
         {
             if (StaticByDefault || !IsAnimated)
@@ -129,20 +168,28 @@ namespace Cyclops.MainApplication.Controls
             _nCurrentFrame = 0;
             if (nTimeFrames > 0)
             {
-                _BitmapSources = new BitmapSource[nTimeFrames];
-
-                for (int i = 0; i < nTimeFrames; i++)
+                int hash = AnimatedBitmap.GetHashCode();
+                if (cache.ContainsKey(hash))
                 {
-                    AnimatedBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Time, i);
-                    _BitmapSources[i] = ToBitmapSource(AnimatedBitmap);
+                    _BitmapSources = cache[hash];
+                }
+                else
+                {
+                    _BitmapSources = new BitmapSource[nTimeFrames];
+
+                    for (int i = 0; i < nTimeFrames; i++)
+                    {
+                        AnimatedBitmap.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Time, i);
+                        _BitmapSources[i] = ToBitmapSource(AnimatedBitmap);
+                    }
+                    cache[hash] = _BitmapSources;
                 }
                 StartAnimate();
             }
         }
-
-        private BitmapSource ToBitmapSource(Bitmap bmp)
+        
+        private static BitmapSource ToBitmapSource(Bitmap bmp)
         {
-            //bitmap.MakeTransparent();
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
                 bmp.GetHbitmap(),
                 IntPtr.Zero,
@@ -154,20 +201,52 @@ namespace Cyclops.MainApplication.Controls
 
         private void OnFrameChanged(object o, EventArgs e)
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Render, new VoidDelegate(ChangeSource));
+            if (!IsVisible)
+            {
+                return;
+            }
 
+            Dispatcher.BeginInvoke(DispatcherPriority.Background, new VoidDelegate(ChangeSource));
         }
+
+        private bool isPaused = false;
+        void AnimatedImage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            StopAnimationIfInvisible(IsVisible);
+        }
+
+        private void StopAnimationIfInvisible(bool isVisible)
+        {
+            if (isVisible)
+            {
+                if (isPaused)
+                {
+                    isPaused = false;
+                    StartAnimate();
+                }
+            }
+            else
+            {
+                if (IsAnimating)
+                {
+                    isPaused = true;
+                    StopAnimate();
+                }
+            }
+        }
+
         void ChangeSource()
         {
             if (!_bIsAnimating)
                 return;
             Source = _BitmapSources[_nCurrentFrame++];
             _nCurrentFrame = _nCurrentFrame % _BitmapSources.Length;
-            ImageAnimator.UpdateFrames();
+            ImageAnimator.UpdateFrames(AnimatedBitmap);
         }
 
         public void StopAnimate()
         {
+            _nCurrentFrame = 0;   
             if (!IsAnimated) return;
             if (_bIsAnimating)
             {

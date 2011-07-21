@@ -23,26 +23,8 @@ namespace Cyclops.ConsoleForTests
 {
     class Program
     {
-        private static IUserSession session;
-        private static readonly RegistrationManager manager = new RegistrationManager(new TripleDesStringEncryptor(), null);
-
         static void Main(string[] args)
         {
-            A a = 10;
-            Program p = new Program();
-            p.GetType().GetProperty("A").SetValue(p, 10, null);
-        }
-
-        public A A { get; set; }
-    }
-
-    public class A
-    {
-        public int Int { get; set; }
-
-        public static implicit operator A(int a)
-        {
-            return new A {Int = a};
         }
     }
 }

@@ -18,5 +18,16 @@ namespace Cyclops.MainApplication.ViewModel
         {
             get { return ApplicationContext.Current.MainViewModel; }
         }
+
+        //private bool isBusy;
+        //public bool IsBusy
+        //{
+        //    get { return isBusy; }
+        //    set
+        //    {
+        //        isBusy = value;
+        //        RaisePropertyChanged("IsBusy");
+        //    }
+        //}
     }
 }

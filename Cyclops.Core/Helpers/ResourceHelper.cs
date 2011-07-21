@@ -7,7 +7,7 @@ namespace Cyclops.Core.Helpers
     public static class ResourceHelper
     {
         /// <summary>
-        /// Read a content from resource file in specific assembly 
+        /// Reads a content from resource file in specific assembly 
         /// </summary>
         public static string ReadFromResource(string path, Assembly assembly = null)
         {

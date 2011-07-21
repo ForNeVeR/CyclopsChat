@@ -56,6 +56,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Cyclops.Core\Properties\AssemblyInfo.Shared.cs">
+      <Link>Properties\AssemblyInfo.Shared.cs</Link>
+    </Compile>
     <Compile Include="Avatars\AvatarsManager.cs" />
     <Compile Include="Avatars\ImageUtils.cs" />
     <Compile Include="ChatObjectsValidator.cs" />

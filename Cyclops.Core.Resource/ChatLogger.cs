@@ -26,7 +26,7 @@ namespace Cyclops.Core.Resource
                 return;
             try
             {
-                string file = BuildPath(id);
+                string file = BuildPath(id, isPrivate);
                 using (var ws = File.AppendText(file))
                     ws.WriteLine(message ?? string.Empty);
             }
@@ -37,11 +37,19 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        private string BuildPath(IEntityIdentifier id)
+        private string BuildPath(IEntityIdentifier id, bool isPrivate)
         {
             string jid = string.Format("{0}@{1}", id.User, id.Server);
             foreach (var c in Path.GetInvalidFileNameChars())
                 jid = jid.Replace(c, ' ');
+
+            if (isPrivate)
+            {
+                var dir = Path.Combine(chatDirectory, "Privates");
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+                return Path.Combine(dir, jid);
+            }
 
             return Path.Combine(chatDirectory, jid);
         }
