@@ -51,6 +51,9 @@ namespace Cyclops.Core.Resource
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
+            UserBookmarks = new List<Tuple<IEntityIdentifier, string>>();
+            BookmarkManager = new BookmarkManager { Stream = JabberClient, AutoPrivate = true, ConferenceManager = ConferenceManager };
+
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
             SubscribeToEvents();
@@ -62,6 +65,7 @@ namespace Cyclops.Core.Resource
         internal JabberClient JabberClient { get; set; }
         internal ConferenceManager ConferenceManager { get; set; }
         internal DiscoManager DiscoManager { get; set; }
+        internal BookmarkManager BookmarkManager { get; set; }
 
         #region IUserSession Members
 
@@ -324,8 +328,16 @@ namespace Cyclops.Core.Resource
             ConferenceManager.OnRoomMessage += ConferenceManager_OnRoomMessage;
             ConferenceManager.BeforeRoomPresenceOut += ConferenceManager_BeforeRoomPresenceOut;
 
+            BookmarkManager.OnConferenceAdd += BookmarkManager_OnConferenceAdd;
+
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
+        }
+
+        void BookmarkManager_OnConferenceAdd(BookmarkManager manager, BookmarkConference conference)
+        {
+
+            UserBookmarks.Add(new Tuple<IEntityIdentifier, string>(conference.JID, conference.Name));
         }
 
         void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
@@ -478,6 +490,14 @@ namespace Cyclops.Core.Resource
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
 
+        public List<Tuple<IEntityIdentifier, string>>  UserBookmarks;
+
+        public void GetBookmarks()
+        {
+            ConferencesListReceived(null, new ConferencesListEventArgs(UserBookmarks));
+        }
+
+        
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { }; 
         
         private void ReconnectTimerTick(object sender, EventArgs e)

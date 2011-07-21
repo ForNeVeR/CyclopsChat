@@ -9,6 +9,7 @@ using Cyclops.Core.Resource;
 using Cyclops.MainApplication.View.Dialogs;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using jabber.protocol;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -134,7 +135,14 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("Conferences");
 
                 IsBusy = true;
-                Session.GetConferenceListAsync(value.ConferenceService);
+                if (selectedService.ConferenceService != null && selectedService.ConferenceService.Equals(URI.BOOKMARKS))
+                {
+                    Session.GetBookmarks();
+                } else
+                {
+                    Session.GetConferenceListAsync(value.ConferenceService);    
+                }
+                
             }
         }
 

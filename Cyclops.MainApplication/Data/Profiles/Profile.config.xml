@@ -19,6 +19,7 @@
 
   <FriendlyConferencesServices>
     <!--<ConferencesServiceItem DisplayName="Uruchie server (jabber.uruchie.org)" ConferenceService="conference.jabber.uruchie.org"/>-->
+    <ConferencesServiceItem DisplayName="Bookmarks" ConferenceService="storage:bookmarks"/>
     <ConferencesServiceItem DisplayName="jabber.ru" ConferenceService="conference.jabber.ru"/>
     <ConferencesServiceItem DisplayName="QIP (qip.ru)" ConferenceService="conference.qip.ru"/>
   </FriendlyConferencesServices>
