@@ -13,10 +13,10 @@ namespace Cyclops.MainApplication.MessageDecoration
                        {
                            //Order is important!
                            new CommonMessageDecorator(),
-                           //new HyperlinkDecorator(),
+                           new HyperlinkDecorator(),
                            NickDecorator,
                            new TimestampDecorator(),
-                           //new SmilesDecorator(),
+                           new SmilesDecorator(),
                        };
         }
 

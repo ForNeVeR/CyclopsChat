@@ -33,7 +33,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             if (IsPublicMessageToMe(msg))
             {
                 string nick = msg.Conference.ConferenceId.Resource + ":";
-                var nickInline = new Run(nick);
+                var nickInline = new RunEx(nick, MessagePartType.Nick);
                 nickInline.SetResourceReference(FrameworkContentElement.StyleProperty, DecoratorsStyles.PublicMessageToMeStyle);
 
                 Span span = new Span();
