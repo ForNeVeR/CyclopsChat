@@ -18,5 +18,6 @@ namespace Cyclops.MainApplication.MessageDecoration
         public const string CommonMessageStyle = "commonMessageStyle";
         public const string SystemMessageStyle = "systemMessageStyle";
         public const string ErrorMessageStyle = "errorMessageStyle";
+        public const string PublicMessageToMeStyle = "publicMessageToMeStyle";
     }
 }

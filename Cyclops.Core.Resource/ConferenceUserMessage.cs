@@ -17,7 +17,7 @@ namespace Cyclops.Core.Resource
             this.userSession = userSession;
             this.room = room;
             this.msg = msg;
-
+            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(room.JID));
             IsFromHistory = msg.OfType<Delay>().Any();
         }
 
@@ -26,7 +26,7 @@ namespace Cyclops.Core.Resource
             this.userSession = userSession;
             this.msg = msg;
             this.IsSelfMessage = selfMessage;
-
+            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(msg.From));
             IsFromHistory = msg.OfType<Delay>().Any();
         }
 
@@ -40,6 +40,8 @@ namespace Cyclops.Core.Resource
         public bool IsSelfMessage { get; private set; }
 
         public bool IsFromHistory { get; private set; }
+
+        public IConference Conference { get; private set; }
 
         public IEntityIdentifier AuthorId
         {

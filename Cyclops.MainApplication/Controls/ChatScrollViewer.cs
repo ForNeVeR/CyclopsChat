@@ -21,7 +21,6 @@ namespace Cyclops.MainApplication.Controls
                 if (scrollViewer == null)
                 {
                     DependencyObject obj = this;
-
                     do
                     {
                         if (VisualTreeHelper.GetChildrenCount(obj) > 0)
@@ -29,10 +28,8 @@ namespace Cyclops.MainApplication.Controls
                         else
                             return null;
                     } while (!(obj is ScrollViewer));
-
                     scrollViewer = obj as ScrollViewer;
                 }
-
                 return scrollViewer;
             }
         }

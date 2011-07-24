@@ -15,6 +15,11 @@ namespace Cyclops.Core
 
         public bool IsFromHistory { get; private set; }
 
+        public IConference Conference
+        {
+            get { return null; }
+        }
+
         public IEntityIdentifier AuthorId { get; set; }
 
         public bool IsAuthorModer

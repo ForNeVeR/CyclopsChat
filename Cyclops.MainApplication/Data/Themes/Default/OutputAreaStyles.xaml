@@ -37,6 +37,11 @@
         <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
     </Style>
 
+    <!-- Nick in /me command style -->
+    <Style x:Key="publicMessageToMeStyle" BasedOn="{StaticResource nickStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="#696DC7" />
+    </Style>
+    
     <!-- common message style -->
     <Style x:Key="commonMessageStyle">
         <Setter Property="ex:RunEx.FontFamily" Value="Segoe UI" />

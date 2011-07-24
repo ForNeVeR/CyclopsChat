@@ -12,5 +12,7 @@ namespace Cyclops.Core
         bool IsCustom { get; }
         bool IsSelfMessage { get; }
         bool IsFromHistory { get; }
+
+        IConference Conference { get; }
     }
 }

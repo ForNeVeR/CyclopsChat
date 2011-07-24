@@ -16,7 +16,7 @@ namespace Cyclops.MainApplication.MessageDecoration
                            //new HyperlinkDecorator(),
                            NickDecorator,
                            new TimestampDecorator(),
-                           new SmilesDecorator(),
+                           //new SmilesDecorator(),
                        };
         }
 

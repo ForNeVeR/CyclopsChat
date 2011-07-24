@@ -28,14 +28,28 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             if (msg is SystemConferenceMessage && ((SystemConferenceMessage) msg).IsErrorMessage)
                 style = DecoratorsStyles.ErrorMessageStyle;
 
+            //TODO: needed refactor
+
+            if (IsPublicMessageToMe(msg))
+            {
+                string nick = msg.Conference.ConferenceId.Resource + ":";
+                var nickInline = new Run(nick);
+                nickInline.SetResourceReference(FrameworkContentElement.StyleProperty, DecoratorsStyles.PublicMessageToMeStyle);
+
+                Span span = new Span();
+                span.Inlines.Add(nickInline);
+                span.Inlines.Add(CreateMessageInline(message.Remove(0, nick.Length), style));
+
+                return span;
+            }
+            
             if (msg.Body != null && msg.Body.StartsWith("/me", System.StringComparison.InvariantCultureIgnoreCase))
             {
                 style = DecoratorsStyles.MeCommandNickStyle;
                 message = msg.Body.Remove(0, 3);
             }
 
-            var messageInline = new RunEx(message, MessagePartType.Body);
-            messageInline.SetResourceReference(FrameworkContentElement.StyleProperty, style);
+            var messageInline = CreateMessageInline(message, style);
 
             if (msg is CaptchaSystemMessage)
             {
@@ -51,6 +65,20 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             }
 
             return messageInline;
+        }
+
+        private static Inline CreateMessageInline(string message, string style)
+        {
+            var messageInline = new RunEx(message, MessagePartType.Body);
+            messageInline.SetResourceReference(FrameworkContentElement.StyleProperty, style);
+            return messageInline;
+        }
+
+        private static bool IsPublicMessageToMe(IConferenceMessage msg)
+        {
+            if (msg == null || msg.Conference == null || msg.Conference.ConferenceId == null || msg.Body == null || string.IsNullOrEmpty(msg.Conference.ConferenceId.Resource))
+                return false;
+            return msg.Body.StartsWith(msg.Conference.ConferenceId.Resource + ":");
         }
 
         #endregion
