@@ -3,78 +3,76 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ex="clr-namespace:Cyclops.MainApplication.MessageDecoration.Decorators;assembly=Cyclops.MainApplication">
 
-  <Style x:Key="parentRowStyle">
-    <Setter Property="Paragraph.TextAlignment" Value="Left" />
-    <Setter Property="Paragraph.LineHeight" Value="0.01" />
-  </Style>
+    <Style x:Key="parentRowStyle">
+        <Setter Property="Paragraph.TextAlignment" Value="Left" />
+        <Setter Property="Paragraph.LineHeight" Value="0.2" />
+    </Style>
 
-  <!-- common nick style-->
-  <Style x:Key="nickStyle">
-    <Setter Property="ex:RunEx.FontFamily" Value="Calibri" />
-    <Setter Property="ex:RunEx.FontWeight" Value="Bold" />
-    <Setter Property="ex:RunEx.FontSize" Value="15" />
-    <Setter Property="ex:RunEx.Foreground" Value="Gray" />
-    <Setter Property="ex:RunEx.Cursor" Value="Hand" />
-  </Style>
+    <!-- common nick style-->
+    <Style x:Key="nickStyle">
+        <Setter Property="ex:RunEx.FontFamily" Value="Segoe UI" />
+        <Setter Property="ex:RunEx.FontWeight" Value="Bold" />
+        <Setter Property="ex:RunEx.FontSize" Value="15" />
+        <Setter Property="ex:RunEx.Foreground" Value="Gray" />
+        <Setter Property="ex:RunEx.Cursor" Value="Hand" />
+    </Style>
 
-  <!-- system nick -->
-  <Style x:Key="systemNickStyle" BasedOn="{StaticResource nickStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="Gray" />
-  </Style>
+    <!-- system nick -->
+    <Style x:Key="systemNickStyle" BasedOn="{StaticResource nickStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="Gray" />
+    </Style>
 
-  <!-- current user nick style -->
-  <Style x:Key="myNickStyle" BasedOn="{StaticResource nickStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="Blue" />
-  </Style>
+    <!-- current user nick style -->
+    <Style x:Key="myNickStyle" BasedOn="{StaticResource nickStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="Blue" />
+    </Style>
 
-  <!-- style for moderator's nick -->
-  <Style x:Key="moderNickStyle" BasedOn="{StaticResource nickStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="Green" />
-  </Style>
-    
-  <!-- Nick in /me command style -->
-  <Style x:Key="meCommandNickStyle" BasedOn="{StaticResource nickStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
-  </Style>
+    <!-- style for moderator's nick -->
+    <Style x:Key="moderNickStyle" BasedOn="{StaticResource nickStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="Green" />
+    </Style>
 
-  <!-- common message style -->
-  <Style x:Key="commonMessageStyle">
-    <Setter Property="ex:RunEx.FontFamily" Value="Calibri" />
-    <Setter Property="ex:RunEx.FontSize" Value="15" />
-    <Setter Property="ex:RunEx.Foreground" Value="Black" />
-    <Setter Property="ex:RunEx.Cursor" Value="Hand" />
-  </Style>
+    <!-- Nick in /me command style -->
+    <Style x:Key="meCommandNickStyle" BasedOn="{StaticResource nickStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
+    </Style>
 
-  <Style x:Key="systemMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="LightGray" />
-  </Style>
+    <!-- common message style -->
+    <Style x:Key="commonMessageStyle">
+        <Setter Property="ex:RunEx.FontFamily" Value="Segoe UI" />
+        <Setter Property="ex:RunEx.FontSize" Value="15" />
+        <Setter Property="ex:RunEx.Foreground" Value="#1a1a1a" />
+    </Style>
 
-  <Style x:Key="meCommandMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
-  </Style>
-    
-  <Style x:Key="errorMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="DarkRed" />
-  </Style>
+    <Style x:Key="systemMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="#A0A3A1" />
+    </Style>
 
-  <Style x:Key="timestampStyle">
-    <Setter Property="ex:RunEx.FontFamily" Value="Calibri" />
-    <Setter Property="ex:RunEx.FontSize" Value="14" />
-    <Setter Property="ex:RunEx.Foreground" Value="LightGray" />
-    <Setter Property="ex:RunEx.Cursor" Value="Hand" />
-  </Style>
+    <Style x:Key="meCommandMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="DarkMagenta" />
+    </Style>
 
-  <Style x:Key="flowDocumentStyle">
-    <Setter Property="FlowDocument.Background" Value="White" />
-    <Setter Property="FlowDocument.LineHeight" Value="0.1" />
-  </Style>
+    <Style x:Key="errorMessageStyle" BasedOn="{StaticResource commonMessageStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="DarkRed" />
+    </Style>
 
-  <Style x:Key="hyperlinkStyle" BasedOn="{StaticResource commonMessageStyle}">
-    <Setter Property="ex:RunEx.Foreground" Value="Blue" />
-  </Style>
+    <Style x:Key="timestampStyle">
+        <Setter Property="ex:RunEx.FontFamily" Value="Segoe UI" />
+        <Setter Property="ex:RunEx.FontSize" Value="15" />
+        <Setter Property="ex:RunEx.Foreground" Value="#A0A3A1" />
+    </Style>
 
-  <Style TargetType="{x:Type Paragraph}">
-    <Setter Property="LineHeight" Value="0.2" />
-  </Style>
+    <Style x:Key="flowDocumentStyle">
+        <Setter Property="FlowDocument.Background" Value="White" />
+        <Setter Property="FlowDocument.LineHeight" Value="0.1" />
+    </Style>
+
+    <Style x:Key="hyperlinkStyle" BasedOn="{StaticResource commonMessageStyle}">
+        <Setter Property="ex:RunEx.Foreground" Value="Blue" />
+    </Style>
+
+    <Style TargetType="{x:Type Paragraph}">
+        <Setter Property="LineHeight" Value="0.2" />
+    </Style>
 
 </ResourceDictionary>

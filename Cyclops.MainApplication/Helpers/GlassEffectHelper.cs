@@ -16,6 +16,7 @@ namespace Cyclops.MainApplication.Helpers
 
         public static bool ExtendGlassFrame(Window window)
         {
+            return true;
             if (Environment.OSVersion.Version.Major < 6 || !DwmIsCompositionEnabled())
                 return false;
 

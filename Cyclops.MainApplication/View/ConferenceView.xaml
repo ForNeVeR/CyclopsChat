@@ -394,7 +394,7 @@
 
         <Controls1:ChatFlowDocumentScrollViewer Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
 			<Controls1:ChatFlowDocument x:Name="chatFlowDocument"
-                                       Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
+                                        Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
                                         Style="{DynamicResource flowDocumentStyle}" />
 		</Controls1:ChatFlowDocumentScrollViewer>
 

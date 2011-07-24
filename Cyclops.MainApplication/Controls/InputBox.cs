@@ -13,6 +13,8 @@ namespace Cyclops.MainApplication.Controls
         public InputBox()
         {
             this.TextWrapping = TextWrapping.Wrap;
+            AcceptsReturn = true;
+            VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
         }
 
         public static readonly DependencyProperty SendCommandProperty =
@@ -25,7 +27,7 @@ namespace Cyclops.MainApplication.Controls
             set { SetValue(SendCommandProperty, value); }
         }
 
-        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             //Ctrl + Enter handle
             if (e.Key == Key.Enter && Keyboard.IsKeyDown(Key.LeftCtrl))
@@ -41,9 +43,15 @@ namespace Cyclops.MainApplication.Controls
                 return;
             }
 
-            
-            if (SendCommand != null && SendCommand.CanExecute(null) && e.Key == Key.Enter)
+            bool enterPressed = e.Key == Key.Return || e.Key == Key.Enter;
+
+            if (SendCommand != null && SendCommand.CanExecute(null) && enterPressed)
+            {
                 SendCommand.Execute(null);
+                e.Handled = true;
+            }
+            else if (enterPressed)
+                e.Handled = true;
 
             base.OnPreviewKeyDown(e);
         }

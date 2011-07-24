@@ -18,8 +18,8 @@
                 Content="{Binding Path=Common.Ok, Source={StaticResource ResourceWrapper}}" 
                 HorizontalAlignment="Right" Command="{Binding Ok}" />
         
-        <Button Grid.Row="1" IsCancel="True" Width="70" Height="24" Margin="0,0,90,0" 
+        <Button Grid.Row="1" IsCancel="True" Width="70" Height="24" Margin="218,0,0,0" 
                 Content="{Binding Path=Common.Cancel, Source={StaticResource ResourceWrapper}}" 
-                HorizontalAlignment="Right" Command="{Binding Cancel}"/>
+                HorizontalAlignment="Left" Command="{Binding Cancel}"/>
     </Grid>
 </Window>

@@ -28,8 +28,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
                 if (inline == null)
                     continue;
 
-                string[] matches =
-                    Regex.Matches(inline.Text, pattern).OfType<Match>().Select(item => item.Value).ToArray();
+                string[] matches = Regex.Matches(inline.Text, pattern).OfType<Match>().Select(item => item.Value).ToArray();
                 if (matches.Length < 1)
                     continue;
 

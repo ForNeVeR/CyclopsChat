@@ -19,8 +19,13 @@
         </Grid.ColumnDefinitions>
         <Controls1:ChatFlowDocumentScrollViewer>
             <Controls1:ChatFlowDocument LineHeight="1" Messages="{Binding Messages}">
-
+                <Paragraph>
+                    Some test
+                    swdw 
+                    efwefwefwefwef wef wefwe fwef we
+                </Paragraph>
             </Controls1:ChatFlowDocument>
         </Controls1:ChatFlowDocumentScrollViewer>
+        <TextBox Grid.Column="1"/>
     </Grid>
 </Window>

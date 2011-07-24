@@ -35,7 +35,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
                     if (!resultPair.IsDelimiter || smilesInsertedCount >= ApplicationContext.Current.Settings.SmilesLimitInMessage)
                     {
                         var runex = new RunEx(resultPair.String, MessagePartType.Body);
-                        runex.Style = run.Style;
+                        runex.SetResourceReference(FrameworkContentElement.StyleProperty, DecoratorsStyles.CommonMessageStyle);
                         result.Add(runex);
                     }
                     else

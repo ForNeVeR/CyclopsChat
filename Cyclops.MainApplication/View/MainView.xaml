@@ -15,6 +15,7 @@
         <Controls:ConferencesTabControl x:Name="chatTabControl"
                                         SelectedConferenceViewModel="{Binding SelectedConference, Mode=OneWayToSource}" 
                                         SelectedPrivateViewModel="{Binding SelectedPrivate, Mode=OneWayToSource}" 
+                                        UseLayoutRounding="True" TextOptions.TextRenderingMode="ClearType"
                                         ConferencesSource="{Binding ConferencesModels}" PrivatesSource="{Binding PrivateViewModels}"/>
 
 

@@ -14,8 +14,11 @@ namespace Cyclops.ViewExperimentations
     {
         public App()
         {
-            string a = "3r3r";
-            bool isc = a is IEnumerable<char>;
+            double a = 1;
+            double result = a / 0;
+
+            a = 0;
+            result = a / 0;
         }
     }
 }

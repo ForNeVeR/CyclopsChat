@@ -9,9 +9,10 @@ namespace Cyclops.MainApplication.MessageDecoration
     {
         public static Paragraph Present(IConferenceMessage message)
         {
-            ChatObjectFactory.GetChatLogger().AddRecord(message.AuthorId, 
-                string.Format("[{0:s}] {1}: {2}", message.Timestamp, message.AuthorNick, message.Body),
-                message is PrivateMessage);
+            if (!message.IsFromHistory)
+                ChatObjectFactory.GetChatLogger().AddRecord(message.AuthorId, 
+                    string.Format("[{0:s}] {1}: {2}", message.Timestamp, message.AuthorNick, message.Body),
+                    message is PrivateMessage);
 
             var paragraph = new Paragraph();
             //paragraph.Inlines.Add(new Run(string.Format("[{0:s}] {1}: {2}", message.Timestamp, message.AuthorNick, message.Body)));

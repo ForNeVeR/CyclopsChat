@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Default</Name>
-  <AutoLogin>false</AutoLogin>
+  <AutoLogin>true</AutoLogin>
   <Theme>Default</Theme>
   <ConnectionConfig>
     <Server>jabber.uruchie.org</Server>
@@ -12,7 +12,7 @@
   </ConnectionConfig>
   <Rooms>
     <string>main@conference.jabber.uruchie.org</string>
-    <!--<string>cyclops@conference.jabber.uruchie.org</string>-->
+    <string>cyclops@conference.jabber.uruchie.org</string>
     <!--<string>programming@conference.jabber.ru/cyclops</string>-->
     <!--<string>belarus@conference.jabber.ru/nagg</string>
     <string>programming@conference.jabber.ru/nagg</string>-->

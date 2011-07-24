@@ -44,7 +44,7 @@ namespace Cyclops.MainApplication.Controls
                                               };
             ScrollToBottom();
         }
-
+        
         private void ScrollToBottom()
         {
             if (Parent is ChatFlowDocumentScrollViewer)

@@ -42,6 +42,15 @@ namespace Cyclops.MainApplication.ViewModel
         {
         }
 
+        protected string RemoveEndNewLineSymblo(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+                return string.Empty;
+            if (message.EndsWith("\r\n"))
+                return message.Remove(message.Length - 2);
+            return message;
+        }
+
         protected void SendPublicMessageToUser(string nick)
         {
             if (CurrentlyTypedMessage == null)

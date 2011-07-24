@@ -72,7 +72,7 @@ namespace Cyclops.MainApplication.Controls
         void AnimatedImage_Loaded(object sender, RoutedEventArgs e)
         {
             var scrollViewer = this.TryFindParent<ChatFlowDocumentScrollViewer>();
-            if (scrollViewer != null)
+            if (scrollViewer != null && scrollViewer.ScrollViewer != null)
             {
                 scrollViewer.ScrollViewer.ScrollChanged += new ScrollChangedEventHandler(ScrollViewerScrollChanged);
             }

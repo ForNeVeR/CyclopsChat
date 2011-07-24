@@ -18,22 +18,27 @@ namespace Cyclops.Core.Resource
                 Directory.CreateDirectory(chatDirectory);
         }
 
+        private static readonly object SyncObject = new object();
+
         #region Implementation of IChatLogManager
 
         public void AddRecord(IEntityIdentifier id, string message, bool isPrivate = false)
         {
-            if (id == null)
-                return;
-            try
+            lock (SyncObject)
             {
-                string file = BuildPath(id, isPrivate);
-                using (var ws = File.AppendText(file))
-                    ws.WriteLine(message ?? string.Empty);
-            }
-// ReSharper disable EmptyGeneralCatchClause
-            catch
-// ReSharper restore EmptyGeneralCatchClause
-            {
+                if (id == null)
+                    return;
+                try
+                {
+                    string file = BuildPath(id, isPrivate);
+                    using (var ws = File.AppendText(file))
+                        ws.WriteLine(message ?? string.Empty);
+                }
+                    // ReSharper disable EmptyGeneralCatchClause
+                catch
+                    // ReSharper restore EmptyGeneralCatchClause
+                {
+                }
             }
         }
 
@@ -41,7 +46,7 @@ namespace Cyclops.Core.Resource
         {
             string jid = string.Format("{0}@{1}", id.User, id.Server);
             foreach (var c in Path.GetInvalidFileNameChars())
-                jid = jid.Replace(c, ' ');
+                jid = jid.Replace(c, '_');
 
             if (isPrivate)
             {
