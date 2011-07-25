@@ -11,7 +11,8 @@
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
              x:Class="Cyclops.MainApplication.ConferenceView" 
              IsVisibleChanged="UserControlIsVisibleChanged"
-             d:DesignHeight="400" d:DesignWidth="500" TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
+             d:DesignHeight="400" d:DesignWidth="500" 
+             TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
     
@@ -392,7 +393,7 @@
             <Image Source="..\Resources\editicon.png" Width="20" Height="20"/>
         </Button>
 
-        <Controls1:ChatFlowDocumentScrollViewer Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
+        <Controls1:ChatFlowDocumentScrollViewer UseLayoutRounding="True" Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
 			<Controls1:ChatFlowDocument x:Name="chatFlowDocument"
                                         Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
                                         Style="{DynamicResource flowDocumentStyle}" />

@@ -342,11 +342,12 @@ namespace Cyclops.Core.Resource
 
         void BookmarkManager_OnConferenceAdd(BookmarkManager manager, BookmarkConference conference)
         {
-            conference.AutoJoin = false; //let's do it usself 
             JID conferenceJid = conference.JID;
             conferenceJid.Resource = conference.Nick;
             UserBookmarks.Add(new Tuple<IEntityIdentifier, string>(conferenceJid, conference.ConferenceName));
-            OpenConference(conferenceJid);
+            if (conference.AutoJoin)
+                OpenConference(conferenceJid);
+            conference.AutoJoin = false; 
         }
 
         void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
