@@ -92,6 +92,10 @@ namespace Cyclops.MainApplication
             chatFlowDocument.Blocks.Clear();
         }
 
+        public void OpenMenuOnHyperlink(Uri uri)
+        {
+        }
+
         #endregion
 
         private void SettingsButtonClick(object sender, RoutedEventArgs e)

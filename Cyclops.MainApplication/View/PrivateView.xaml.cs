@@ -58,6 +58,10 @@ namespace Cyclops.MainApplication.View
             chatFlowDocument.Blocks.Clear();
         }
 
+        public void OpenMenuOnHyperlink(Uri uri)
+        {
+        }
+
         #endregion
     }
 }

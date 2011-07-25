@@ -441,6 +441,7 @@
                             Content="{Binding Path=Conference.EditVcard, Source={StaticResource ResourceWrapper}}" Height="22" HorizontalAlignment="Left" Margin="3,0,0,0" FontWeight="Normal" />
                 </Grid>
             </Expander>
+                      
             <ListBox Grid.Row="1"
                  BorderThickness="0"
                  ItemsSource="{Binding Source={StaticResource membersSource}}" 

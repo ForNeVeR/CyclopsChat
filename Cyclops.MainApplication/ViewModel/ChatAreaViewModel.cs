@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using System.Windows.Controls;
 using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
@@ -27,7 +28,7 @@ namespace Cyclops.MainApplication.ViewModel
             ClearOutputArea = new RelayCommand(() => View.ClearOutputArea());
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
         }
-
+        
         private void DecoratorsRegistryNickClick(object sender, NickEventArgs e)
         {
             if (!IsActive || string.IsNullOrEmpty(e.Nick))

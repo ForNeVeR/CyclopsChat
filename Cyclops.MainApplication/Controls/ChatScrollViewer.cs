@@ -9,8 +9,27 @@ namespace Cyclops.MainApplication.Controls
     {
         public ChatFlowDocumentScrollViewer()
         {
+            Loaded += ChatFlowDocumentScrollViewerLoaded;
         }
-        
+
+        void ChatFlowDocumentScrollViewerLoaded(object sender, RoutedEventArgs e)
+        {
+            if (ScrollViewer != null)
+                ScrollViewer.ScrollChanged += ScrollViewerScrollChanged;
+        }
+
+        #region Workaround for keeping selection
+        void ScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (!IsFocused && Selection != null && !Selection.IsEmpty)
+                Focus();
+        }
+        protected override void OnLostFocus(RoutedEventArgs e)
+        {
+            //do not call base!
+        } 
+        #endregion
+
         /// <summary>
         /// Backing store for the <see cref="ScrollViewer"/> property.
         /// </summary>

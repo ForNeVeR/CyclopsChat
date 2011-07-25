@@ -159,6 +159,15 @@
   <data name="Entering" xml:space="preserve">
     <value>Entering...</value>
   </data>
+  <data name="HyperlinkMenuCopy" xml:space="preserve">
+    <value>Copy link</value>
+  </data>
+  <data name="HyperlinkMenuOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="HyperlinkMenuOpenInIe" xml:space="preserve">
+    <value>Open in ie</value>
+  </data>
   <data name="InvalidCaptchaCode" xml:space="preserve">
     <value>Invalid code.</value>
   </data>

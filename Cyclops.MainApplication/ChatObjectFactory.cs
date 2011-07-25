@@ -59,7 +59,8 @@ namespace Cyclops.MainApplication
 
         public static void ShowDebugWindow()
         {
-            //serviceLocator.GetInstance<IDebugWindow>().ShowConsole(GetSession());
+            return;
+            serviceLocator.GetInstance<IDebugWindow>().ShowConsole(GetSession());
         }
 
         public static IChatObjectsValidator GetValidator()

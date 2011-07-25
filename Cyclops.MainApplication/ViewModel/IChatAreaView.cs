@@ -11,5 +11,6 @@ namespace Cyclops.MainApplication.ViewModel
         int InputBoxSelectionLength { get; set; }
         int InputBoxSelectionStart { get; set; }
         void ClearOutputArea();
+        void OpenMenuOnHyperlink(Uri uri);
     }
 }

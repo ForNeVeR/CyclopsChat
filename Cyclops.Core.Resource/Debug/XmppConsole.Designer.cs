@@ -33,6 +33,7 @@
             this.clearButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.hideButton = new System.Windows.Forms.ToolStripButton();
+            this.panel = new System.Windows.Forms.Panel();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,11 +74,20 @@
             this.hideButton.Text = "Hide";
             this.hideButton.Click += new System.EventHandler(this.hideButton_Click);
             // 
+            // panel
+            // 
+            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel.Location = new System.Drawing.Point(0, 25);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(761, 576);
+            this.panel.TabIndex = 1;
+            // 
             // XmppConsole
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 601);
+            this.Controls.Add(this.panel);
             this.Controls.Add(this.toolStrip);
             this.Name = "XmppConsole";
             this.Text = "DebugView";
@@ -94,5 +104,6 @@
         private System.Windows.Forms.ToolStripButton clearButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton hideButton;
+        private System.Windows.Forms.Panel panel;
     }
 }

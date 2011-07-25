@@ -161,6 +161,15 @@
   <data name="Entering" xml:space="preserve">
     <value>Вход в комнату...</value>
   </data>
+  <data name="HyperlinkMenuCopy" xml:space="preserve">
+    <value>Копировать ссылку</value>
+  </data>
+  <data name="HyperlinkMenuOpen" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="HyperlinkMenuOpenInIe" xml:space="preserve">
+    <value>Открыть в ie</value>
+  </data>
   <data name="InvalidCaptchaCode" xml:space="preserve">
     <value>Неправильный ответ.</value>
     <comment>Дубина слепая</comment>

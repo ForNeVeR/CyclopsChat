@@ -20,7 +20,8 @@ namespace Cyclops.Core.Resource.Debug
         public XmppConsole()
         {
             InitializeComponent();
-            //Controls.Add(xmppDebugger = new XmppDebugger {Dock = DockStyle.Fill});
+            //panel.Controls.Add(xmppDebugger = new XmppDebugger());
+            //xmppDebugger.Dock = DockStyle.Fill;
         }
 
         private void clearButton_Click(object sender, EventArgs e)

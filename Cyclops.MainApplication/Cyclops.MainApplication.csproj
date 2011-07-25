@@ -196,6 +196,7 @@
     <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
     <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
     <Compile Include="MessageDecoration\Decorators\NickEventArgs.cs" />
+    <Compile Include="MessageDecoration\Decorators\UrlEventArgs.cs" />
     <Compile Include="Notifications\TaskbarNotifier.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />

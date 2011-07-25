@@ -337,7 +337,6 @@ namespace Cyclops.Core.Resource
 
         void ConferenceManager_OnJoin(Room room)
         {
-            //throw new NotImplementedException();
         }
 
         void BookmarkManager_OnConferenceAdd(BookmarkManager manager, BookmarkConference conference)
