@@ -1,11 +1,16 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Cyclops.MainApplication.Controls
 {
     public class ChatFlowDocumentScrollViewer : FlowDocumentScrollViewer
     {
+        public ChatFlowDocumentScrollViewer()
+        {
+        }
+        
         /// <summary>
         /// Backing store for the <see cref="ScrollViewer"/> property.
         /// </summary>
@@ -33,5 +38,6 @@ namespace Cyclops.MainApplication.Controls
                 return scrollViewer;
             }
         }
+
     }
 }

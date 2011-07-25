@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using Cyclops.MainApplication.ViewModel;
 
 namespace Cyclops.MainApplication.Controls
@@ -12,14 +13,15 @@ namespace Cyclops.MainApplication.Controls
     {
         public ChatFlowDocument()
         {
+            FocusManager.SetIsFocusScope(this, true);
             Loaded += (s, e) => ScrollToBottom();
         }
-
+        
         // Using a DependencyProperty as the backing store for Messages.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MessagesProperty =
             DependencyProperty.Register("Messages", typeof (ObservableCollection<MessageViewModel>),
                                         typeof (ChatFlowDocument), new UIPropertyMetadata(OnInitializeMessagesStatic));
-
+        
         public ObservableCollection<MessageViewModel> Messages
         {
             get { return (ObservableCollection<MessageViewModel>) GetValue(MessagesProperty); }
@@ -54,5 +56,6 @@ namespace Cyclops.MainApplication.Controls
                     scrollViewer.ScrollToBottom();
             }
         }
+
     }
 }

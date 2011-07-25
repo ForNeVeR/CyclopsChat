@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace Cyclops.MainApplication
             DataContext = this;
             InitializeComponent();
         }
-        
+
         public ConferenceViewModel ConferenceViewModel
         {
             get { return (ConferenceViewModel)GetValue(ConferenceViewModelProperty); }
@@ -31,11 +32,18 @@ namespace Cyclops.MainApplication
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
+            if (e.OriginalSource is FlowDocumentScrollViewer)
+                if (e.Key == Key.LeftCtrl || Keyboard.IsKeyDown(Key.LeftCtrl))
+                {
+                    base.OnPreviewKeyDown(e);
+                    return;
+                }
+
             if (!(e.OriginalSource is TextBox))
                 InputboxFocus();
             base.OnPreviewKeyDown(e);
         }
-        
+
         private void SmilesButtonClick(object sender, RoutedEventArgs e)
         {
             SmilesView.OpenForChoise(smilesButton, InsertSmileAction);

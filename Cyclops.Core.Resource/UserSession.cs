@@ -59,7 +59,7 @@ namespace Cyclops.Core.Resource
             SubscribeToEvents();
             
             statusType = StatusType.Online;
-            status = "cyclopschat.codeplex.com " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+            status = "CyclopsChat " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
         
         internal JabberClient JabberClient { get; set; }
