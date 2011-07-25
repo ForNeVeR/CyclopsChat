@@ -263,7 +263,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             if (string.IsNullOrEmpty(CurrentlyTypedMessage))
                 return;
-            Conference.SendPublicMessage(RemoveEndNewLineSymblo(CurrentlyTypedMessage));
+            Conference.SendPublicMessage(RemoveEndNewLineSymbol(CurrentlyTypedMessage));
             CurrentlyTypedMessage = string.Empty;
         }
 

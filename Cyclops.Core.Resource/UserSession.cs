@@ -52,7 +52,7 @@ namespace Cyclops.Core.Resource
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
             UserBookmarks = new List<Tuple<IEntityIdentifier, string>>();
-            BookmarkManager = new BookmarkManager { Stream = JabberClient, AutoPrivate = true, ConferenceManager = ConferenceManager };
+            BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = true, ConferenceManager = ConferenceManager };
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
@@ -325,6 +325,7 @@ namespace Cyclops.Core.Resource
             JabberClient.OnWriteText += JabberClient_OnWriteText;
             JabberClient.OnReadText += JabberClient_OnReadText;
 
+            ConferenceManager.OnJoin += ConferenceManager_OnJoin;
             ConferenceManager.OnRoomMessage += ConferenceManager_OnRoomMessage;
             ConferenceManager.BeforeRoomPresenceOut += ConferenceManager_BeforeRoomPresenceOut;
 
@@ -334,10 +335,18 @@ namespace Cyclops.Core.Resource
             reconnectTimer.Tick += ReconnectTimerTick;
         }
 
+        void ConferenceManager_OnJoin(Room room)
+        {
+            //throw new NotImplementedException();
+        }
+
         void BookmarkManager_OnConferenceAdd(BookmarkManager manager, BookmarkConference conference)
         {
-
-            UserBookmarks.Add(new Tuple<IEntityIdentifier, string>(conference.JID, conference.Name));
+            conference.AutoJoin = false; //let's do it usself 
+            JID conferenceJid = conference.JID;
+            conferenceJid.Resource = conference.Nick;
+            UserBookmarks.Add(new Tuple<IEntityIdentifier, string>(conferenceJid, conference.ConferenceName));
+            OpenConference(conferenceJid);
         }
 
         void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
@@ -490,13 +499,12 @@ namespace Cyclops.Core.Resource
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
 
-        public List<Tuple<IEntityIdentifier, string>>  UserBookmarks;
+        public List<Tuple<IEntityIdentifier, string>> UserBookmarks { get; private set; }
 
         public void GetBookmarks()
         {
             ConferencesListReceived(null, new ConferencesListEventArgs(UserBookmarks));
         }
-
         
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { }; 
         

@@ -138,7 +138,8 @@ namespace Cyclops.MainApplication.ViewModel
                 if (selectedService.ConferenceService != null && selectedService.ConferenceService.Equals(URI.BOOKMARKS))
                 {
                     Session.GetBookmarks();
-                } else
+                } 
+                else
                 {
                     Session.GetConferenceListAsync(value.ConferenceService);    
                 }

@@ -47,14 +47,14 @@ namespace Cyclops.MainApplication.ViewModel
 
             string defaultNick = Session.CurrentUserId.User;
 
-            foreach (var room in ApplicationContext.Current.CurrentProfile.Rooms)
-            {
-                var identity = IdentifierBuilder.Create(room);
-                if (string.IsNullOrEmpty(identity.Resource))
-                    identity = IdentifierBuilder.WithAnotherResource(identity, defaultNick);
+            //foreach (var room in ApplicationContext.Current.CurrentProfile.Rooms)
+            //{
+            //    var identity = IdentifierBuilder.Create(room);
+            //    if (string.IsNullOrEmpty(identity.Resource))
+            //        identity = IdentifierBuilder.WithAnotherResource(identity, defaultNick);
 
-                Session.OpenConference(identity);
-            }
+            //    Session.OpenConference(identity);
+            //}
 
 
             Session.Conferences.SynchronizeWith(ConferencesModels, 

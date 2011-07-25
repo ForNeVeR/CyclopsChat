@@ -1,22 +1,19 @@
 <?xml version="1.0"?>
 <Profile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Default</Name>
-  <AutoLogin>true</AutoLogin>
+  <AutoLogin>false</AutoLogin>
   <Theme>Default</Theme>
   <ConnectionConfig>
-    <Server>jabber.uruchie.org</Server>
+    <Server>jabber.ru</Server>
     <NetworkHost />
     <Port>5222</Port>
-    <User>cyclops</User>
+    <User>Nagg</User>
     <EncodedPassword>C4Y9MwPhlZI=</EncodedPassword><!--C4Y9MwPhlZI= is for cyclops-->
   </ConnectionConfig>
-  <Rooms>
-    <string>main@conference.jabber.uruchie.org</string>
-    <string>cyclops@conference.jabber.uruchie.org</string>
-    <!--<string>programming@conference.jabber.ru/cyclops</string>-->
-    <!--<string>belarus@conference.jabber.ru/nagg</string>
-    <string>programming@conference.jabber.ru/nagg</string>-->
-  </Rooms>
+  
+  <!--<Rooms> Obsoletted because of usage of bookmarks!
+    <string>dotnet@conference.jabber.ru</string>
+  </Rooms>-->
 
   <FriendlyConferencesServices>
     <ConferencesServiceItem DisplayName="Uruchie server (jabber.uruchie.org)" ConferenceService="conference.jabber.uruchie.org"/>

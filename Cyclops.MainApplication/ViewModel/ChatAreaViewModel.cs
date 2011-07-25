@@ -42,7 +42,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
         }
 
-        protected string RemoveEndNewLineSymblo(string message)
+        protected string RemoveEndNewLineSymbol(string message)
         {
             if (string.IsNullOrEmpty(message))
                 return string.Empty;

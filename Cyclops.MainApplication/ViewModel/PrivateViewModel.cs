@@ -58,7 +58,7 @@ namespace Cyclops.MainApplication.ViewModel
                                                   {
                                                       AuthorNick = Localization.Conference.Me, 
                                                       IsSelfMessage = true,
-                                                      Body = RemoveEndNewLineSymblo(CurrentlyTypedMessage)
+                                                      Body = RemoveEndNewLineSymbol(CurrentlyTypedMessage)
                                                   }));
             CurrentlyTypedMessage = string.Empty;
         }

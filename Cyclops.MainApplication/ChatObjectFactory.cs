@@ -29,10 +29,7 @@ namespace Cyclops.MainApplication
 
         public static IUserSession GetSession()
         {
-            if (session == null)
-                session = ServiceLocator.GetInstance<IUserSession>();
-
-            return session;
+            return session ?? (session = ServiceLocator.GetInstance<IUserSession>());
         }
 
         public static ILogger GetDebugLogger()
