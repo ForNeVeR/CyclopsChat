@@ -10,7 +10,6 @@ namespace Cyclops.MainApplication.Configuration
     {
         private List<ConferencesServiceItem> friendlyConferencesServices;
         private ConnectionConfig connectionConfig;
-        private List<string> rooms;
         private bool autoLogin;
         private string name;
 
@@ -19,7 +18,6 @@ namespace Cyclops.MainApplication.Configuration
         public Profile()
         {
             Theme = "Default";
-            Rooms = new List<string>();
             ConnectionConfig = new ConnectionConfig();
             FriendlyConferencesServices = new List<ConferencesServiceItem>();
         }
@@ -72,17 +70,7 @@ namespace Cyclops.MainApplication.Configuration
                 RaisePropertyChanged("ConnectionConfig");
             }
         }
-
-        public List<string> Rooms
-        {
-            get { return rooms; }
-            set
-            {
-                rooms = value;
-                RaisePropertyChanged("Rooms");
-            }
-        }
-
+        
         public List<ConferencesServiceItem> FriendlyConferencesServices
         {
             get { return friendlyConferencesServices; }

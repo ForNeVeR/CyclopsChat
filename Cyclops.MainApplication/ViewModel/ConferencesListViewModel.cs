@@ -137,7 +137,7 @@ namespace Cyclops.MainApplication.ViewModel
                 IsBusy = true;
                 if (selectedService.ConferenceService != null && selectedService.ConferenceService.Equals(URI.BOOKMARKS))
                 {
-                    Session.GetBookmarks();
+                    Session.RaiseBookmarksReceived();
                 } 
                 else
                 {

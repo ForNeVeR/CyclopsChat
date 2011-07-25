@@ -11,10 +11,6 @@
     <EncodedPassword>C4Y9MwPhlZI=</EncodedPassword><!--C4Y9MwPhlZI= is for cyclops-->
   </ConnectionConfig>
   
-  <!--<Rooms> Obsoletted because of usage of bookmarks!
-    <string>dotnet@conference.jabber.ru</string>
-  </Rooms>-->
-
   <FriendlyConferencesServices>
     <ConferencesServiceItem DisplayName="Uruchie server (jabber.uruchie.org)" ConferenceService="conference.jabber.uruchie.org"/>
     <ConferencesServiceItem DisplayName="Bookmarks" ConferenceService="storage:bookmarks"/>

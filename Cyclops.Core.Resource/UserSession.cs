@@ -501,7 +501,7 @@ namespace Cyclops.Core.Resource
 
         public List<Tuple<IEntityIdentifier, string>> UserBookmarks { get; private set; }
 
-        public void GetBookmarks()
+        public void RaiseBookmarksReceived()
         {
             ConferencesListReceived(null, new ConferencesListEventArgs(UserBookmarks));
         }

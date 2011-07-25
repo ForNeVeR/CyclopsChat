@@ -45,18 +45,6 @@ namespace Cyclops.MainApplication.ViewModel
             ConferencesModels = new ObservableCollection<ConferenceViewModel>();
             PrivateViewModels = new ObservableCollection<PrivateViewModel>();
 
-            string defaultNick = Session.CurrentUserId.User;
-
-            //foreach (var room in ApplicationContext.Current.CurrentProfile.Rooms)
-            //{
-            //    var identity = IdentifierBuilder.Create(room);
-            //    if (string.IsNullOrEmpty(identity.Resource))
-            //        identity = IdentifierBuilder.WithAnotherResource(identity, defaultNick);
-
-            //    Session.OpenConference(identity);
-            //}
-
-
             Session.Conferences.SynchronizeWith(ConferencesModels, 
                 conference => new ConferenceViewModel(null, conference), i => i, i => i.Conference);
             
