@@ -199,6 +199,7 @@
     <Compile Include="MessageDecoration\Decorators\UrlEventArgs.cs" />
     <Compile Include="Notifications\TaskbarNotifier.cs" />
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="ValueConverters\SubjectConverter.cs" />
     <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\Invertor.cs" />
     <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />

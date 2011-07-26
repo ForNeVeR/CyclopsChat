@@ -19,6 +19,7 @@
 	<UserControl.Resources>
 
         <ValueConverters:StatusTypeToIntegerConverter x:Key="statusTypeConverter"/>
+        <ValueConverters:SubjectConverter x:Key="subjectConverter"/>
 
         <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
             <Style.Resources>
@@ -384,7 +385,8 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}" VerticalAlignment="Center" Margin="0,0,24,0"
+		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
+                 Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay, Converter={StaticResource subjectConverter}}" VerticalAlignment="Center" Margin="0,0,24,0"
                  TextWrapping="NoWrap" ToolTip="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}"/>
         
         <Button Style="{StaticResource borderlessButtonStyle}" Cursor="Hand" x:Name="changeSubject" 
