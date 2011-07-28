@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Cyclops.MainApplication.Options.Helpers;
 
 namespace Cyclops.MainApplication.Configuration
 {

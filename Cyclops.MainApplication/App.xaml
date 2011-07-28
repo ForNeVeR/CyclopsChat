@@ -1,17 +1,17 @@
 ﻿<Application x:Class="Cyclops.MainApplication.App" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:Localization="clr-namespace:Cyclops.MainApplication.Localization" 
+             xmlns:Localization1="clr-namespace:Cyclops.MainApplication.Localization;assembly=Cyclops.MainApplication.Localization"
              StartupUri="MainWindow.xaml">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="fixed">
-                    <Localization:ResourceWrapper x:Key="ResourceWrapper"/>
+                    <Localization1:ResourceWrapper x:Key="ResourceWrapper"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="Data/Themes/Default/SettingsViewStyles.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/General.xaml"/>
-                <ResourceDictionary Source="/ReuxablesLegacy;component/mercury.xaml" />
+                <!--<ResourceDictionary Source="/ReuxablesLegacy;component/mercury.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 </Application.Resources>

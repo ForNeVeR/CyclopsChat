@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cyclops.MainApplication.Configuration;
+using Cyclops.MainApplication.Options.Model;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.ViewModel

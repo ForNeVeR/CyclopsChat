@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Threading;
+using Cyclops.MainApplication.Options.Model;
 using bedrock.util;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;

@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{57602637-288C-4870-B1C4-3242C8ACC165}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Cyclops.MainApplication.Options</RootNamespace>
     <AssemblyName>Cyclops.MainApplication.Options</AssemblyName>
@@ -17,7 +17,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -34,6 +34,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight.WPF4">
@@ -64,55 +67,56 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="View\CommonSettings.xaml.cs">
+    <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ValueConverters\Invertor.cs" />
+    <Compile Include="View\StyleSettings.xaml.cs" >
+      <DependentUpon>StyleSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CommonSettings.xaml.cs" >
       <DependentUpon>CommonSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HotkeysSettings.xaml.cs">
+    <Compile Include="View\HotkeysSettings.xaml.cs" >
       <DependentUpon>HotkeysSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InterfaceSettings.xaml.cs">
+    <Compile Include="View\InterfaceSettings.xaml.cs" >
       <DependentUpon>InterfaceSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SoundsSettings.xaml.cs">
       <DependentUpon>SoundsSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StatusSettings.xaml.cs">
+    <Compile Include="View\StatusSettings.xaml.cs" >
       <DependentUpon>StatusSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StyleSettings.xaml.cs">
-      <DependentUpon>StyleSettings.xaml</DependentUpon>
-    </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Controls\NamedSeparator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="..\Cyclops.MainApplication\Configuration\ApplicationSettings.Common.cs">
-      <Link>Model\ApplicationSettings.Common.cs</Link>
+    <Page Include="Controls\Selector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SoundSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Controls\NamedSeparator.xaml.cs">
+      <DependentUpon>NamedSeparator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\Cyclops.MainApplication\Configuration\ApplicationSettings.cs">
-      <Link>Model\ApplicationSettings.cs</Link>
+    <Compile Include="Controls\Selector.xaml.cs">
+      <DependentUpon>Selector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\Cyclops.MainApplication\Configuration\ApplicationSettings.Interface.cs">
-      <Link>Model\ApplicationSettings.Interface.cs</Link>
+    <Compile Include="Controls\SoundPlayer.cs" />
+    <Compile Include="Controls\SoundSelector.xaml.cs">
+      <DependentUpon>SoundSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\Cyclops.MainApplication\Configuration\ApplicationSettings.Sounds.cs">
-      <Link>Model\ApplicationSettings.Sounds.cs</Link>
-    </Compile>
-    <Compile Include="..\Cyclops.MainApplication\Configuration\ApplicationSettings.Status.cs">
-      <Link>Model\ApplicationSettings.Status.cs</Link>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="View\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\StyleSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +143,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ApplicationSettings.Common.cs" />
+    <Compile Include="Model\ApplicationSettings.cs" />
+    <Compile Include="Model\ApplicationSettings.Interface.cs" />
+    <Compile Include="Model\ApplicationSettings.Sounds.cs" />
+    <Compile Include="Model\ApplicationSettings.Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -167,10 +176,41 @@
       <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
       <Name>Cyclops.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cyclops.MainApplication\Cyclops.MainApplication.csproj">
-      <Project>{08CEBA92-6628-4818-85EB-7C24C531F1D2}</Project>
-      <Name>Cyclops.MainApplication</Name>
+    <ProjectReference Include="..\Cyclops.MainApplication.Localization\Cyclops.MainApplication.Localization.csproj">
+      <Project>{D142085E-7C6A-4F26-8F53-623BD89BBB4E}</Project>
+      <Name>Cyclops.MainApplication.Localization</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\connect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\window_preferences.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\keyboard_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\sound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\text_rich_colored.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\user1_time.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\uses.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\web.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

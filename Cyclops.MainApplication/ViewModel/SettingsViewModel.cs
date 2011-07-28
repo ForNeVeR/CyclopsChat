@@ -1,5 +1,6 @@
 ﻿using System;
 using Cyclops.MainApplication.Configuration;
+using Cyclops.MainApplication.Options.Model;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel

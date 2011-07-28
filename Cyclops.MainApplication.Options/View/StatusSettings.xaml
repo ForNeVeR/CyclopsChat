@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Cyclops.MainApplication.View.Options.StatusSettings"
+﻿<UserControl x:Class="Cyclops.MainApplication.Options.View.StatusSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:my="clr-namespace:Cyclops.MainApplication.Controls;assembly=Cyclops.MainApplication" 
+             xmlns:my="clr-namespace:Cyclops.MainApplication.Options.Controls" 
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 

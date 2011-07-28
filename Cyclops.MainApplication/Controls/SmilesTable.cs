@@ -59,9 +59,11 @@ namespace Cyclops.MainApplication.Controls
                 smileElement.Tag = smile.Masks.First();
                 smileElement.Stretch = Stretch.None;
 
-                //RenderOptions.SetBitmapScalingMode(smileElement, BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(smileElement, BitmapScalingMode.LowQuality);
                 smileElement.Height = smile.Bitmap.Height;
                 smileElement.MouseLeftButtonDown += InlineMouseLeftButtonDown;
+
+
 
                 var border = new Border();
                 border.Child = smileElement;

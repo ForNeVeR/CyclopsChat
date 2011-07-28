@@ -4,7 +4,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Brushes = System.Drawing.Brushes;
 
 namespace Cyclops.Core.Resource
 {
@@ -99,6 +101,8 @@ namespace Cyclops.Core.Resource
             ms.Seek(0, SeekOrigin.Begin);
             bi.StreamSource = ms;
             bi.EndInit();
+            RenderOptions.SetBitmapScalingMode(bi, BitmapScalingMode.LowQuality);
+            bi.Freeze();
             return bi;
         }
 
@@ -115,6 +119,8 @@ namespace Cyclops.Core.Resource
             bi.BeginInit();
             bi.StreamSource = ms;
             bi.EndInit();
+            RenderOptions.SetBitmapScalingMode(bi, BitmapScalingMode.LowQuality);
+            bi.Freeze();
             return bi;
         }
     }

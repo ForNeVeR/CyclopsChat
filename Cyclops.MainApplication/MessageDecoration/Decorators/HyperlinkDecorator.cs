@@ -22,8 +22,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         /// </summary>
         public List<Inline> Decorate(IConferenceMessage msg, List<Inline> inlines)
         {
-            const string pattern =
-                @"((https?|ftp|dchub|magnet|mailto|gopher|telnet|xmpp|file|notes|ms-help):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*)";
+            const string pattern = "(http|https|ftp|dchub|mailto|xmpp)://([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?";
 
             for (int i = 0; i < inlines.Count; i++)
             {

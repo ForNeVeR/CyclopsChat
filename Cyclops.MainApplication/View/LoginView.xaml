@@ -6,7 +6,7 @@
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
              xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" 
-             xmlns:Localization="clr-namespace:Cyclops.MainApplication.Localization" 
+             xmlns:Localization1="clr-namespace:Cyclops.MainApplication.Localization;assembly=Cyclops.MainApplication.Localization"
              mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" 
              FocusManager.FocusedElement="{Binding ElementName=userName}" Loaded="UserControlLoaded"
               TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
@@ -154,8 +154,8 @@
             <StackPanel Grid.Row="0" Height="21" Orientation="Horizontal" VerticalAlignment="Top" Margin="5">
                 <TextBlock Text="Language: " VerticalAlignment="Center"/>
                 <ComboBox Margin="5,0,0,0" Width="75"
-                          ItemsSource="{Binding Source={x:Static Localization:LocalizationManager.Instance}, Path=Languages}"
-                          SelectedItem="{Binding Source={x:Static Localization:LocalizationManager.Instance}, Path=SelectedLanguage, Mode=TwoWay}" />
+                          ItemsSource="{Binding Source={x:Static Localization1:LocalizationManager.Instance}, Path=Languages}"
+                          SelectedItem="{Binding Source={x:Static Localization1:LocalizationManager.Instance}, Path=SelectedLanguage, Mode=TwoWay}" />
             </StackPanel>
 
         </Grid>

@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Cyclops.MainApplication.Options.View
 {
-    /// <summary>
-    /// Interaction logic for StyleSettings.xaml
-    /// </summary>
-    public partial class StyleSettings : UserControl
+    public partial class StyleSettings
     {
         public StyleSettings()
         {

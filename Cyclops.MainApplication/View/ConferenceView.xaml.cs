@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using Cyclops.MainApplication.View;
-using Cyclops.MainApplication.View.Options;
 using Cyclops.MainApplication.ViewModel;
 
 namespace Cyclops.MainApplication

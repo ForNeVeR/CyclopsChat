@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Media;
 using Cyclops.Core;
 using Cyclops.Core.Smiles;
 using Cyclops.MainApplication.Controls;
@@ -55,10 +56,11 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         {
             var smileImage = new AnimatedImage();
             smileImage.AnimatedBitmap = smile.Bitmap;
-            smileImage.Stretch = System.Windows.Media.Stretch.None;
+            smileImage.Stretch = Stretch.None;
             smileImage.Width = smileImage.AnimatedBitmap.Width;
             smileImage.Height = smileImage.AnimatedBitmap.Height;
             smileImage.ToolTip = smile.Masks.First();
+            RenderOptions.SetBitmapScalingMode(smileImage, BitmapScalingMode.LowQuality);
             smileImage.StaticByDefault = ApplicationContext.Current.Settings.IsSmilesAnimated;
             var inline = new InlineUIContainer(smileImage);
             return inline;

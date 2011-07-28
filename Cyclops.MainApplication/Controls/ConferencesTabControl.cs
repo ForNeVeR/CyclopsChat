@@ -5,8 +5,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Cyclops.MainApplication.Options.View;
 using Cyclops.MainApplication.View;
-using Cyclops.MainApplication.View.Options;
 using Cyclops.MainApplication.ViewModel;
 
 namespace Cyclops.MainApplication.Controls
