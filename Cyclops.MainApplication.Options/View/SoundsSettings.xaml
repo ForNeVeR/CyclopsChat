@@ -10,7 +10,6 @@
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
         <ValueConverters:Invertor x:Key="invertor"/>
-        <Localization:ResourceWrapper x:Key="ResourceWrapper"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -31,30 +30,30 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <my:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Localization:Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
+        <my:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
 
-        <TextBlock Grid.Row="1" Text="{Binding Path=Localization:Settings.DisableAllSounds, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="1" Text="{Binding Path=Settings.DisableAllSounds, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <CheckBox x:Name="disableSounds" IsChecked="{Binding Settings.DisableAllSounds, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Style="{StaticResource valueStyle}" />
 
-        <TextBlock Grid.Row="2" Text="{Binding Path=Localization:Settings.SoundOnIncomingPrivate, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="2" Text="{Binding Path=Settings.SoundOnIncomingPrivate, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <my:SoundSelector Grid.Row="2" Grid.Column="1" Margin="10,0,5,0" Text="{Binding Settings.SoundOnIncomingPrivate, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=disableSounds, Converter={StaticResource invertor}}"/>
 
-        <TextBlock Grid.Row="3" Text="{Binding Path=Localization:Settings.SoundOnIncomingPublic, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="3" Text="{Binding Path=Settings.SoundOnIncomingPublic, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <my:SoundSelector Grid.Row="3" Grid.Column="2" Margin="10,0,5,0" Text="{Binding Settings.SoundOnIncomingPublic, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=disableSounds, Converter={StaticResource invertor}}"/>
 
-        <TextBlock Grid.Row="4" Text="{Binding Path=Localization:Settings.SoundOnUserJoin, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="4" Text="{Binding Path=Settings.SoundOnUserJoin, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <my:SoundSelector Grid.Row="4" Grid.Column="3" Margin="10,0,5,0" Text="{Binding Settings.SoundOnUserJoin, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=disableSounds, Converter={StaticResource invertor}}"/>
 
-        <TextBlock Grid.Row="5" Text="{Binding Path=Localization:Settings.SoundOnUserLeave, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="5" Text="{Binding Path=Settings.SoundOnUserLeave, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <my:SoundSelector Grid.Row="5" Grid.Column="4" Margin="10,0,5,0" Text="{Binding Settings.SoundOnUserLeave, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=disableSounds, Converter={StaticResource invertor}}"/>
 
-        <TextBlock Grid.Row="6" Text="{Binding Path=Localization:Settings.SoundOnSystemMessage, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="6" Text="{Binding Path=Settings.SoundOnSystemMessage, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <my:SoundSelector Grid.Row="6" Grid.Column="4" Margin="10,0,5,0" Text="{Binding Settings.SoundOnSystemMessage, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=disableSounds, Converter={StaticResource invertor}}"/>
 
-        <TextBlock Grid.Row="7" Text="{Binding Path=Localization:Settings.SoundOnStatusChange, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="7" Text="{Binding Path=Settings.SoundOnStatusChange, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <my:SoundSelector Grid.Row="7" Grid.Column="4" Margin="10,0,5,0" Text="{Binding Settings.SoundOnStatusChange, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="{Binding IsChecked, ElementName=disableSounds, Converter={StaticResource invertor}}"/>
 
-        <TextBlock Grid.Row="8" Text="{Binding Path=Localization:Settings.SoundEvenIfActive, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
+        <TextBlock Grid.Row="8" Text="{Binding Path=Settings.SoundEvenIfActive, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <CheckBox IsChecked="{Binding Settings.SoundEvenIfActive, Mode=TwoWay}" Grid.Row="8" Grid.Column="1" Style="{StaticResource valueStyle}" />
 
     </Grid>

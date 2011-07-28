@@ -16,10 +16,10 @@
             <TextBox ToolTip="{Binding Tex, ElementName=controlt}" IsReadOnly="True" VerticalAlignment="Center" Text="{Binding Text, ElementName=control, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0"/>
             <Button Command="{Binding Browse, ElementName=control}" Grid.Column="1" Content=" ... " Margin="2"/>
             <Button Command="{Binding PlaySound, ElementName=control}" Grid.Column="2" Margin="0,2,2,2">
-                <Image Source="..\Resources\Options\sound.png" Margin="-2"/>
+                <Image Source="..\Resources\sound.png" Margin="-2"/>
             </Button>
             <Button Command="{Binding Clear, ElementName=control}" Grid.Column="3" Margin="0,2,2,2">
-                <Image Source="..\Resources\Options\stop.png" Margin="-1"/>
+                <Image Source="..\Resources\stop.png" Margin="-1"/>
             </Button>
         </Grid>
     </Border>

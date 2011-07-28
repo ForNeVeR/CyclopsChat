@@ -70,16 +70,16 @@
     <Compile Include="Helpers\Serializer.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ValueConverters\Invertor.cs" />
-    <Compile Include="View\StyleSettings.xaml.cs" >
+    <Compile Include="View\StyleSettings.xaml.cs">
       <DependentUpon>StyleSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CommonSettings.xaml.cs" >
+    <Compile Include="View\CommonSettings.xaml.cs">
       <DependentUpon>CommonSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HotkeysSettings.xaml.cs" >
+    <Compile Include="View\HotkeysSettings.xaml.cs">
       <DependentUpon>HotkeysSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InterfaceSettings.xaml.cs" >
+    <Compile Include="View\InterfaceSettings.xaml.cs">
       <DependentUpon>InterfaceSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
@@ -88,9 +88,13 @@
     <Compile Include="View\SoundsSettings.xaml.cs">
       <DependentUpon>SoundsSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StatusSettings.xaml.cs" >
+    <Compile Include="View\StatusSettings.xaml.cs">
       <DependentUpon>StatusSettings.xaml</DependentUpon>
     </Compile>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\NamedSeparator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

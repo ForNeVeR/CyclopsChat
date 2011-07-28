@@ -75,6 +75,17 @@ namespace Cyclops.MainApplication.Localization
             }
         }
 
+        private Settings settings = new Settings();
+        public Localization.Settings Settings
+        {
+            get { return settings; }
+            set
+            {
+                settings = value;
+                OnPropertyChanged("Settings");
+            }
+        }
+
         public void Refresh()
         {
             Login = new Login();
@@ -83,6 +94,7 @@ namespace Cyclops.MainApplication.Localization
             ConferenceList = new ConferenceList();
             Common = new Common();
             Vcard = new Vcard();
+            Settings = new Settings();
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

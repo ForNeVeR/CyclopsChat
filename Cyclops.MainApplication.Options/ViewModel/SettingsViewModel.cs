@@ -1,4 +1,5 @@
 ﻿using System;
+using Cyclops.MainApplication.Localization;
 using Cyclops.MainApplication.Options.Model;
 using GalaSoft.MvvmLight.Command;
 

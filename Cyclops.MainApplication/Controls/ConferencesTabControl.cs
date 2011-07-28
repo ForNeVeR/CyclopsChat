@@ -179,17 +179,6 @@ namespace Cyclops.MainApplication.Controls
             SelectedItem = tab;
         }
 
-        public void AddConfigPage()
-        {
-            var view = new SettingsView();
-            var tab = new TabItem
-                          {
-                              Content = view,
-                              Header = "Config"
-                          };
-            Items.Add(tab);
-        }
-
         // Using a DependencyProperty as the backing store for ConferencesSource.  This enables animation, styling, binding, etc...
 
         private static void ConferencesSourceCollectionChangedStatic(DependencyObject d,

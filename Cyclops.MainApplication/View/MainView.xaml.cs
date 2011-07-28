@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows.Controls;
+using Cyclops.MainApplication.Options.View;
 using Cyclops.MainApplication.ViewModel;
 
 namespace Cyclops.MainApplication.View
@@ -27,7 +28,8 @@ namespace Cyclops.MainApplication.View
 
         public void ShowSettings()
         {
-            chatTabControl.AddConfigPage();
+            SettingsView view = new SettingsView();
+            view.Show();
         }
 
         #endregion
