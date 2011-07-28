@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended"
              xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Options.Controls"
-             mc:Ignorable="d" 
+             xmlns:Controls2="clr-namespace:Cyclops.MainApplication.Options.Controls" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>      
         
@@ -29,7 +29,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Controls1:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
+        <Controls2:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
 
         <TextBlock Grid.Row="1" Text="{Binding Path=Settings.Language, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Settings.Languages}" SelectedItem="{Binding Settings.SelectedLanguage, Mode=TwoWay}" Width="110" Style="{StaticResource valueStyle}"/>
@@ -38,7 +38,7 @@
         <Controls:IntegerUpDown Grid.Row="2" Value="{Binding Settings.SmilesLimitInMessage, Mode=TwoWay}" FontSize="12" Width="50" Minimum="0" Maximum="999"
                                 Grid.Column="1" Style="{StaticResource valueStyle}"/>
 
-        <Controls1:NamedSeparator Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Path=Settings.NotificationsGroup, Source={StaticResource ResourceWrapper}}" />
+        <Controls2:NamedSeparator Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Path=Settings.NotificationsGroup, Source={StaticResource ResourceWrapper}}" />
 
         <TextBlock Grid.Row="4" Text="{Binding Path=Settings.EnablePrivatesPopups, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Settings.EnablePrivatePopups, Mode=TwoWay}"  Style="{StaticResource valueStyle}"/>
@@ -50,7 +50,7 @@
         <Controls:IntegerUpDown Grid.Row="6" Value="{Binding Settings.PopupStaysOpenning, Mode=TwoWay}" FontSize="12" Width="50" Minimum="1" Maximum="999"
                                 Grid.Column="1" Style="{StaticResource valueStyle}"/>
 
-        <Controls1:NamedSeparator Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding Path=Settings.TrayGroup, Source={StaticResource ResourceWrapper}}" />
+        <Controls2:NamedSeparator Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding Path=Settings.TrayGroup, Source={StaticResource ResourceWrapper}}" />
         <TextBlock Grid.Row="8" Text="{Binding Path=Settings.DisableBlinking, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <CheckBox Grid.Column="1" Grid.Row="8" IsChecked="{Binding Settings.DisableBlinking, Mode=TwoWay}" Style="{StaticResource valueStyle}"/>
 

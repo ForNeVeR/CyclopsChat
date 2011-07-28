@@ -35,7 +35,7 @@ namespace Cyclops.MainApplication.Options.ViewModel
 
         private void CommitAction()
         {
-            if (SaveSettings())
+            //if (SaveSettings())
                 acceptAction();
         }
 

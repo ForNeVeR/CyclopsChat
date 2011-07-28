@@ -30,7 +30,7 @@ namespace Cyclops.MainApplication.Options.Controls
         private void BrowseAction()
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.InitialDirectory = System.IO.Path.Combine(
+            dlg.InitialDirectory = Path.Combine(
 // ReSharper disable AssignNullToNotNullAttribute
                 System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
 // ReSharper restore AssignNullToNotNullAttribute

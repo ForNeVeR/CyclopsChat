@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:my="clr-namespace:Cyclops.MainApplication.Options.Controls" 
-             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" mc:Ignorable="d" 
+             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended"
+             xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Options.Controls" mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
     <Grid>
@@ -26,7 +27,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <my:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
+        <Controls1:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
 
         <TextBlock Grid.Row="1" Text="{Binding Path=Settings.AutoAway, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <Controls:IntegerUpDown Grid.Row="1" Value="{Binding Settings.AutoAwayAfter, Mode=TwoWay}" FontSize="12" Width="50" Minimum="0" Maximum="999"

@@ -28,8 +28,13 @@ namespace Cyclops.MainApplication.View
 
         public void ShowSettings()
         {
-            SettingsView view = new SettingsView();
-            view.Show();
+            ApplicationContext.Current.ReloadApplicationSettings();
+            SettingsView.ShowSettings(ApplicationContext.Current.ApplicationSettings, s =>
+                {
+                    ApplicationContext.Current.ApplicationSettings = s.CreateCopy();
+                    ApplicationContext.Current.ApplicationSettings.Save();
+                    ApplicationContext.Current.ReloadApplicationSettings();
+                });
         }
 
         #endregion

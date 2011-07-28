@@ -12,7 +12,7 @@
 	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
-        <Controls:ConferencesTabControl x:Name="chatTabControl"
+        <Controls:ConferencesTabControl x:Name="chatTabControl" Style="{x:Null}"
                                         SelectedConferenceViewModel="{Binding SelectedConference, Mode=OneWayToSource}" 
                                         SelectedPrivateViewModel="{Binding SelectedPrivate, Mode=OneWayToSource}" 
                                         UseLayoutRounding="True" TextOptions.TextRenderingMode="ClearType"
