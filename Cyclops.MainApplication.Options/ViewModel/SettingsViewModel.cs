@@ -24,8 +24,6 @@ namespace Cyclops.MainApplication.Options.ViewModel
 
             Commit = new RelayCommand(CommitAction);
             Cancel = new RelayCommand(CancelAction);
-
-            LoadSettings();
         }
         
         private void CancelAction()
@@ -35,22 +33,7 @@ namespace Cyclops.MainApplication.Options.ViewModel
 
         private void CommitAction()
         {
-            //if (SaveSettings())
-                acceptAction();
-        }
-
-        private void LoadSettings()
-        {
-            //ApplicationContext.Current.ReloadApplicationSettings();
-            //Settings = ApplicationContext.Current.ApplicationSettings.CreateCopy();
-        }
-
-        private bool SaveSettings()
-        {
-            //ApplicationContext.Current.ApplicationSettings = Settings.CreateCopy();
-            //ApplicationContext.Current.ApplicationSettings.Save();
-            //ApplicationContext.Current.ReloadApplicationSettings();
-            return true;
+            acceptAction();
         }
 
         public RelayCommand Commit { get; set; }

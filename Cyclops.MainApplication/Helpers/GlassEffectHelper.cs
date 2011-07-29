@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -16,7 +17,9 @@ namespace Cyclops.MainApplication.Helpers
 
         public static bool ExtendGlassFrame(Window window)
         {
-            return true;
+            if (!ConfigurationManager.AppSettings["AllowGlassFrame"].StringToBool())
+                return false;
+
             if (Environment.OSVersion.Version.Major < 6 || !DwmIsCompositionEnabled())
                 return false;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using Cyclops.MainApplication.Options.Model;
 using Cyclops.MainApplication.Options.ViewModel;
 
@@ -9,7 +10,7 @@ namespace Cyclops.MainApplication.Options.View
     /// </summary>
     public partial class SettingsView
     {
-        private SettingsViewModel viewModel = null;
+        private readonly SettingsViewModel viewModel = null;
         private bool okResult = false;
         private Action<ApplicationSettings> commiter = null;
 
@@ -41,6 +42,7 @@ namespace Cyclops.MainApplication.Options.View
         public static void ShowSettings(ApplicationSettings settingsToLoad, Action<ApplicationSettings> commiter)
         {
             SettingsView view = new SettingsView();
+            view.Owner = Application.Current.MainWindow;
             view.viewModel.Settings = settingsToLoad.CreateCopy();
             view.commiter = commiter;
             view.Show();

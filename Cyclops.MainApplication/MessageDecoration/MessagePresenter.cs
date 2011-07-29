@@ -18,7 +18,7 @@ namespace Cyclops.MainApplication.MessageDecoration
             //paragraph.Inlines.Add(new Run(string.Format("[{0:s}] {1}: {2}", message.Timestamp, message.AuthorNick, message.Body)));
             //return paragraph;
 
-            paragraph.SetResourceReference(FrameworkContentElement.StyleProperty, "parentRowStyle");
+            paragraph.SetResourceReference(FrameworkContentElement.StyleProperty, DecoratorsStyles.ParentRowStyle);
 
             // at first, textInlines will contain only one inline - raw text
             var textInlines = new List<Inline>();

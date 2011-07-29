@@ -132,16 +132,6 @@
     <Compile Include="Configuration\ProfileManager.cs" />
     <Compile Include="Controls\AnimatedImage.cs" />
     <Compile Include="Controls\ApplicationSounds.cs" />
-    <Compile Include="Controls\NamedSeparator.xaml.cs">
-      <DependentUpon>NamedSeparator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Selector.xaml.cs">
-      <DependentUpon>Selector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SoundPlayer.cs" />
-    <Compile Include="Controls\SoundSelector.xaml.cs">
-      <DependentUpon>SoundSelector.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ToolBarEx.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
@@ -263,18 +253,6 @@
     <Resource Include="Resources\image.png" />
     <Resource Include="Resources\send.png" />
     <Resource Include="Resources\editicon.png" />
-    <Page Include="Controls\NamedSeparator.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Selector.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SoundSelector.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Content Include="Data\Themes\Default\SettingsViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

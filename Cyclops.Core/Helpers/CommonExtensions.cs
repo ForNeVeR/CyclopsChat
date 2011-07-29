@@ -65,5 +65,12 @@ namespace Cyclops
             return x.User.Equals(y.User, StringComparison.InvariantCultureIgnoreCase) &&
                    x.Server.Equals(y.Server, StringComparison.InvariantCultureIgnoreCase);
         }
+
+        public static bool StringToBool(this string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return false;
+            return str.ToLower().Equals("true");
+        }
     }
 }

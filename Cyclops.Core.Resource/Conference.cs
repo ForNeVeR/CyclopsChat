@@ -122,6 +122,11 @@ namespace Cyclops.Core.Resource
 
         private void UnSubscribeToEvents()
         {
+            session.JabberClient.OnPresence -= JabberClient_OnPresence;
+
+            if (room == null)
+                return;
+
             room.OnJoin -= room_OnJoin;
             room.OnLeave -= room_OnLeave;
             room.OnSubjectChange -= room_OnSubjectChange;
@@ -133,7 +138,6 @@ namespace Cyclops.Core.Resource
             room.OnParticipantJoin -= room_OnParticipantJoin;
             room.OnParticipantLeave -= room_OnParticipantLeave;
 
-            session.JabberClient.OnPresence -= JabberClient_OnPresence;
         }
 
         private bool waitingForPassword = false;  

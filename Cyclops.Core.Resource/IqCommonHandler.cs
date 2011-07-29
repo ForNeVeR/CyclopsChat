@@ -61,7 +61,7 @@ namespace Cyclops.Core.Resource
             var ver = iq.Query as jabber.protocol.iq.Version;
             if (ver != null)
             {
-                ver.OS = GetOsVersion(); //"Fedora 14 64bit";
+                ver.OS = GetOsVersion(); //"Fedora 14 64bit"; //:D
                 ver.EntityName = ConfigurationManager.AppSettings["ApplicationName"];
                 ver.Ver = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
             }

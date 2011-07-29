@@ -134,11 +134,17 @@ namespace jabber.client
         private void cli_OnAuthenticate(object sender)
         {
             if (AutoPrivate)
-            {
-                BookmarksIQ biq = new BookmarksIQ(m_stream.Document);
-                biq.Type = IQType.get;
-                m_stream.Tracker.BeginIQ(biq, GotBookmarks, null);
-            }
+                RequestBookmarks();
+        }
+
+        /// <summary>
+        /// Requests the bookmarks
+        /// </summary>
+        public void RequestBookmarks()
+        {
+            BookmarksIQ biq = new BookmarksIQ(m_stream.Document);
+            biq.Type = IQType.get;
+            m_stream.Tracker.BeginIQ(biq, GotBookmarks, null);
         }
 
         private void GotBookmarks(object sender, IQ iq, object state)
@@ -162,13 +168,13 @@ namespace jabber.client
                 m_conferences[conf.JID] = conf;
                 if (OnConferenceAdd != null)
                     OnConferenceAdd(this, conf);
-                if (conf.AutoJoin && (m_confManager != null))
-                {
-                    JID rJID = conf.JID;
-                    JID roomAndNick = new JID(rJID.User, rJID.Server, conf.Nick);
-                    Room r = m_confManager.GetRoom(roomAndNick);
-                    r.Join(conf.Password);
-                }
+                //if (conf.AutoJoin && (m_confManager != null)) //DONT NEED THIS FUNCTIONALITY
+                //{
+                //    JID rJID = conf.JID;
+                //    JID roomAndNick = new JID(rJID.User, rJID.Server, conf.Nick);
+                //    Room r = m_confManager.GetRoom(roomAndNick);
+                //    r.Join(conf.Password);
+                //}
             }
         }
 

@@ -52,7 +52,7 @@ namespace Cyclops.Core.Resource
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
             UserBookmarks = new List<Tuple<IEntityIdentifier, string>>();
-            BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = true, ConferenceManager = ConferenceManager };
+            BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = false, ConferenceManager = ConferenceManager };
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
@@ -299,11 +299,19 @@ namespace Cyclops.Core.Resource
                                                       ErrorMessageResources.InvalidLoginOrPasswordMessage));
         }
 
+        private bool firstAuthentigation = true;
+
         private void jabberClient_OnAuthenticate(object sender)
         {
             IsAuthenticated = true;
             Authenticated(sender, new AuthenticationEventArgs());
-            
+
+            if (firstAuthentigation)
+            {
+                BookmarkManager.RequestBookmarks();
+                firstAuthentigation = false;
+            }
+
             //TODO: remove this shit:)
             OnPropertyChanged("Status");
             OnPropertyChanged("StatusType");
