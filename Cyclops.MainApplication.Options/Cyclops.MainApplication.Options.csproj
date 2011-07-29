@@ -191,11 +191,6 @@
       <Project>{D142085E-7C6A-4F26-8F53-623BD89BBB4E}</Project>
       <Name>Cyclops.MainApplication.Localization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cyclops.MainApplication\Cyclops.MainApplication.csproj" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
-      <Project>{08CEBA92-6628-4818-85EB-7C24C531F1D2}</Project>
-      <Name>Cyclops.MainApplication</Name>
-      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
