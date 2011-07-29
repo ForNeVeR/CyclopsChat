@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:n="clr-namespace:Cyclops.MainApplication.Notifications" 
         xmlns:Popups="clr-namespace:Cyclops.MainApplication.View.Popups" 
-        Title="PrivateNotification" Width="330"
+        Title="PrivateNotification" Width="330" Height="105"
         WindowStyle="None" ResizeMode="NoResize" 
         AllowsTransparency="True" Background="Transparent">
     <n:TaskbarNotifier.DataContext>

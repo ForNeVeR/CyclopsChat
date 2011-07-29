@@ -5,13 +5,13 @@
   <ShowStatusChangingMessages>false</ShowStatusChangingMessages>
   <SelectedLanguage>ru-RU</SelectedLanguage>
   <SmilesLimitInMessage>1000</SmilesLimitInMessage>
-  <EnablePrivatePopups>false</EnablePrivatePopups>
-  <EnableErrorPopups>false</EnableErrorPopups>
+  <EnablePrivatePopups>true</EnablePrivatePopups>
+  <EnableErrorPopups>true</EnableErrorPopups>
   <PopupStaysOpenning>3</PopupStaysOpenning>
   <DisableBlinking>false</DisableBlinking>
   <BlinkOnlyOnPrivates>false</BlinkOnlyOnPrivates>
   <StartWithWindows>false</StartWithWindows>
-  <HideOnWindowClosing>false</HideOnWindowClosing>
+  <HideOnWindowClosing>true</HideOnWindowClosing>
   <DisableAllSounds>false</DisableAllSounds>
   <SoundEvenIfActive>true</SoundEvenIfActive>
 </ApplicationSettings>

@@ -60,7 +60,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             smileImage.Width = smileImage.AnimatedBitmap.Width;
             smileImage.Height = smileImage.AnimatedBitmap.Height;
             smileImage.ToolTip = smile.Masks.First();
-            RenderOptions.SetBitmapScalingMode(smileImage, BitmapScalingMode.LowQuality);
+            RenderOptions.SetBitmapScalingMode(smileImage, BitmapScalingMode.NearestNeighbor);
             smileImage.StaticByDefault = ApplicationContext.Current.Settings.IsSmilesAnimated;
             var inline = new InlineUIContainer(smileImage);
             return inline;

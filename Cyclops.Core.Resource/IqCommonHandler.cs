@@ -103,6 +103,7 @@ namespace Cyclops.Core.Resource
             return string.Format("{0} {1} {2}", result, platform, os.ServicePack);
         }
 
+
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWow64Process([In] IntPtr hProcess, [Out] out bool lpSystemInfo);

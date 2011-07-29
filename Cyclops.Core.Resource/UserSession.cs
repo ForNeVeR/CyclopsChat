@@ -33,7 +33,6 @@ namespace Cyclops.Core.Resource
         private readonly IChatObjectsValidator commonValidator;
         private ConnectionConfig connectionConfig;
         private IEntityIdentifier currentUserId;
-        private CapsManager capsManager;
         private StatusType statusType;
         private string status;
         private bool isAuthenticated;
