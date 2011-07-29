@@ -11,7 +11,7 @@
   <DisableBlinking>false</DisableBlinking>
   <BlinkOnlyOnPrivates>false</BlinkOnlyOnPrivates>
   <StartWithWindows>false</StartWithWindows>
-  <HideOnWindowClosing>true</HideOnWindowClosing>
+  <HideOnWindowClosing>false</HideOnWindowClosing>
   <DisableAllSounds>false</DisableAllSounds>
   <SoundEvenIfActive>true</SoundEvenIfActive>
 </ApplicationSettings>

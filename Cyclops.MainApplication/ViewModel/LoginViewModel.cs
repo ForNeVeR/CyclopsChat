@@ -181,9 +181,8 @@ namespace Cyclops.MainApplication.ViewModel
                 ApplicationContext.Current.SmilePacks = ChatObjectFactory.GetSmilesManager().GetSmilePacks();
                 IsBusy = false;
 
-#if DEBUG
-                ChatObjectFactory.ShowDebugWindow();
-#endif
+                if (ConfigurationManager.AppSettings["ShowXmppConsole"].StringToBool())
+                    ChatObjectFactory.ShowDebugWindow();
                 Authenticated(this, e);
             }
             else

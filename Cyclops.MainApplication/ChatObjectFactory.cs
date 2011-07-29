@@ -59,7 +59,6 @@ namespace Cyclops.MainApplication
 
         public static void ShowDebugWindow()
         {
-            return;
             serviceLocator.GetInstance<IDebugWindow>().ShowConsole(GetSession());
         }
 
