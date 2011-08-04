@@ -154,8 +154,6 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 selectedConference = value;
                 RaisePropertyChanged("SelectedConference");
-                if (value != null)
-                    value.Name = conferenceCache[value.Id]();
             }
         }
 
@@ -187,10 +185,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         public RelayCommand OpenConference { get; set; }
         public RelayCommand CreateNewConference { get; set; }
-
-        private Dictionary<IEntityIdentifier, Func<string>> conferenceCache =
-            new Dictionary<IEntityIdentifier, Func<string>>();
-
+        
         private void ConferencesListReceived(object sender, ConferencesListEventArgs e)
         {
             IsBusy = false;
@@ -203,11 +198,9 @@ namespace Cyclops.MainApplication.ViewModel
                 new ConferenceInfo
                     {
                         Id = i.Item1, 
-                        Name = Localization.ConferenceList.DefaultConferenceDescInList,
+                        Name = i.Item2,
                         IsOpened = conferenceIds.Any(c => i.Item1.BaresEqual(c))
                     }).OrderBy(i => i.Id.User).ToList();
-
-            conferenceCache = e.Result.ToDictionary(i => i.Item1, i => (Func<string>)(() => i.Item2));
         }
 
         private bool OpenConferenceCanExecute()

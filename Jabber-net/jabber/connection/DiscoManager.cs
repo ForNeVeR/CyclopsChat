@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections;
 using System.Diagnostics;
+using System.IO;
 using System.Xml;
 using System.Threading;
 
@@ -453,6 +454,8 @@ namespace jabber.connection
             }
         }
 
+        private static object SyncRoot = new object();
+
         /// <summary>
         /// Gets or sets the string representation of the first identity.
         /// </summary>
@@ -463,21 +466,37 @@ namespace jabber.connection
             get
             {
                 if (m_name != null)
-                    return m_name;
+                {
+                    return CutText(m_name, 200);
+                }
                 if (Identity != null)
                 {
                     foreach (Ident id in Identity)
                     {
-                        if ((id.Name != null) && (id.Name != ""))
+                        if (!string.IsNullOrEmpty(id.Name))
                             m_name = id.Name;
                     }
-                    return m_name;
+                    return CutText(m_name, 200);
                 }
                 string n = JID;
                 if (Node != null)
                     n += "/" + Node;
                 return n;
             }
+        }
+
+        /// <summary>
+        /// See my report at https://connect.microsoft.com/WPF/feedback/details/682446/wpf-apps-i-e-vs2010-crashes-on-specific-symbols
+        /// </summary>
+        private static readonly string BugSymbols = new string(new[] { (char)65248, (char)769, (char)64337 });
+
+        private string CutText(string text, int length)
+        {
+            if (string.IsNullOrEmpty(text))
+                return string.Empty;
+            if (text.Length > length)
+                return text.Remove(length - 1).Replace(BugSymbols, "");
+            return text;
         }
 
         /// <summary>

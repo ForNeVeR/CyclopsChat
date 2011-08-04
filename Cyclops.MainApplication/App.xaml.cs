@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Cyclops.Core;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Configuration;
+using Cyclops.MainApplication.Helpers;
 using Cyclops.MainApplication.Localization;
 using Cyclops.MainApplication.View.Popups;
 

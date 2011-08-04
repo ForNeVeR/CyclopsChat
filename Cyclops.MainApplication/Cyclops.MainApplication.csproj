@@ -138,6 +138,7 @@
     <Compile Include="Controls\ToolBarEx.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
+    <Compile Include="Helpers\StartupLinkUtil.cs" />
     <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
     <Compile Include="Helpers\ImageResizingUtility.cs" />
     <Compile Include="Helpers\SystemHelper.cs" />
@@ -246,9 +247,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\Profiles\Profile.config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Resource Include="Resources\note_delete.ico" />
+    <Resource Include="Resources\clean.ico" />
     <Resource Include="Resources\tools.png" />
     <Resource Include="Resources\warning.png" />
     <Resource Include="Resources\error.png" />

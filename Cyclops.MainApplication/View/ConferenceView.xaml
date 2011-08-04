@@ -482,6 +482,12 @@
                 <Button Cursor="Hand" Margin="0,0,0,-2" x:Name="configButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Right" Click="SettingsButtonClick">
                     <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\tools.png"/>
                 </Button>
+                
+                <Separator/>
+
+                <Button Cursor="Hand" Margin="0,0,0,-2" x:Name="clearButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ClearOutputArea}">
+                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\note_delete.ico"/>
+                </Button>
             </Controls1:ToolBarEx>
             
         </Grid>

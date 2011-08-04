@@ -66,7 +66,7 @@ namespace Cyclops.MainApplication.Controls
         public AnimatedImage()
         {
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(AnimatedImage_IsVisibleChanged);
-            Loaded += new RoutedEventHandler(AnimatedImage_Loaded);
+            //Loaded += new RoutedEventHandler(AnimatedImage_Loaded);
         }
 
         void AnimatedImage_Loaded(object sender, RoutedEventArgs e)
