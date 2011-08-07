@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
@@ -7,7 +6,7 @@ using System.Windows.Threading;
 using Cyclops.MainApplication.Properties;
 using Application = System.Windows.Application;
 
-namespace Cyclops.MainApplication.Controls
+namespace Cyclops.MainApplication.Notifications
 {
     public class TrayController : IDisposable
     {

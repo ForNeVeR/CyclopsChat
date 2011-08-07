@@ -396,9 +396,20 @@
         </Button>
 
         <Controls1:ChatFlowDocumentScrollViewer UseLayoutRounding="True" Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
-			<Controls1:ChatFlowDocument x:Name="chatFlowDocument"
+            <Controls1:ChatFlowDocument x:Name="chatFlowDocument"
                                         Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
-                                        Style="{DynamicResource flowDocumentStyle}" />
+                                        Style="{DynamicResource flowDocumentStyle}" >
+                <Controls1:ChatFlowDocument.ContextMenu>
+
+                    <ContextMenu>
+                        <MenuItem Header="Copy (Ctrl + C)" Command="ApplicationCommands.Copy" CommandTarget="{Binding ElementName=chatFlowDocument}"/>
+                        <MenuItem Header="Select all (Ctrl + A)" Command="ApplicationCommands.SelectAll" CommandTarget="{Binding ElementName=chatFlowDocument}"/>
+                        <MenuItem Header="Find (Ctrl + F)" Command="ApplicationCommands.Find" CommandTarget="{Binding ElementName=chatFlowDocument}"/>
+                        <MenuItem Header="Clear" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
+                    </ContextMenu>
+                    
+                </Controls1:ChatFlowDocument.ContextMenu>
+            </Controls1:ChatFlowDocument>
 		</Controls1:ChatFlowDocumentScrollViewer>
 
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >

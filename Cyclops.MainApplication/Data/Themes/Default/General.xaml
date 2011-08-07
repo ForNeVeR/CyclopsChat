@@ -21,7 +21,7 @@
         </Style.Triggers>
     </Style>
 
-
+    
     <!-- data template for the chat tab (conferences and privates)-->
     <DataTemplate x:Key="chatTabTemplate">
         <Grid x:Name="rootGrid" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Margin="-5,0,-3,-3" Height="18">

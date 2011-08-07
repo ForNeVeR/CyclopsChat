@@ -6,6 +6,7 @@ using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Controls;
+using Cyclops.MainApplication.Notifications;
 using Cyclops.MainApplication.View;
 using Cyclops.MainApplication.View.Popups;
 using GalaSoft.MvvmLight;

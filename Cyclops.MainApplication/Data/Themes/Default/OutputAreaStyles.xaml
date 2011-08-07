@@ -67,9 +67,9 @@
         <Setter Property="ex:RunEx.Foreground" Value="#A0A3A1" />
     </Style>
 
-    <Style x:Key="flowDocumentStyle">
-        <Setter Property="FlowDocument.Background" Value="White" />
-        <Setter Property="FlowDocument.LineHeight" Value="0.1" />
+    <Style x:Key="flowDocumentStyle" TargetType="FlowDocument">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="LineHeight" Value="0.1" />
     </Style>
 
     <Style x:Key="hyperlinkStyle" BasedOn="{StaticResource commonMessageStyle}">

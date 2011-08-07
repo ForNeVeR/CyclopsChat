@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.Helpers;
+using Cyclops.MainApplication.Notifications;
 using Cyclops.MainApplication.View;
 
 namespace Cyclops.MainApplication

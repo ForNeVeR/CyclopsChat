@@ -135,6 +135,12 @@
   <data name="ChangeSubjectError" xml:space="preserve">
     <value>You are not allowed to change subject.</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="CopyText" xml:space="preserve">
+    <value>Copy (Ctrl+C)</value>
+  </data>
   <data name="CurrentUserNick" xml:space="preserve">
     <value>Nick:</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="Entering" xml:space="preserve">
     <value>Entering...</value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>Find text</value>
   </data>
   <data name="HyperlinkMenuCopy" xml:space="preserve">
     <value>Copy link</value>
@@ -198,6 +207,9 @@
   </data>
   <data name="RoomHasPassword" xml:space="preserve">
     <value>This conference has password (inputbox is not implemented yet :()</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all (Ctrl+A)</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
