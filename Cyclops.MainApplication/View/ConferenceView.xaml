@@ -235,18 +235,19 @@
             <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
 
-            <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
+            <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
                 <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">
-                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\Smile.gif"/>
+                    <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>
                 </Button>
-                <Separator/>
                 <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="clearButton" HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ClearOutputArea}">
-                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\note_delete.ico"/>
+                    <Image  Height="20" Width="20" Source="..\Resources\note_delete.ico"/>
                 </Button>
-                <Separator/>
                 <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="configButton" HorizontalAlignment="Right" Click="SettingsButtonClick">
-                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\tools.png"/>
+                    <Image Height="20" Width="20" Source="..\Resources\tools.png"/>
                 </Button>
+                <ToggleButton Margin="10,0,0,-2" IsChecked="{Binding Source={x:Static MainApplication:ApplicationContext.Current}, Path=DisableAllSounds}">
+                    <Image  Height="20" Width="20" Source="..\Resources\noSound.png"/>
+                </ToggleButton>
             </Controls:ToolBarEx>
             
         </Grid>

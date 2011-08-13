@@ -26,6 +26,8 @@ namespace Cyclops.MainApplication
         {
             SmilePacks = new ISmilePack[0];
             ReloadApplicationSettings();
+            DisableAllSounds = ApplicationSettings.DisableAllSounds;
+
             idleTime = new IdleTime(2, 60);
             idleTime.InvokeControl = new SynchronizeInvokeImpl(Dispatcher.CurrentDispatcher);
             idleTime.OnIdle += IdleTimeOnIdle;
@@ -85,6 +87,7 @@ namespace Cyclops.MainApplication
                 return instance;
             }
         } 
+
         #endregion
 
         private ISmilePack[] smilePacks;
@@ -147,8 +150,23 @@ namespace Cyclops.MainApplication
         public void ReloadApplicationSettings()
         {
             ApplicationSettings = ApplicationSettings.Load();
-            SystemHelper.StartAppWithWindows(ApplicationSettings.StartWithWindows);
+            SystemHelper.SetStartup(ApplicationSettings.StartWithWindows);
             Localization.LocalizationManager.ChangeLanguage(ApplicationSettings.SelectedLanguage);
         }
+
+        #region Global nonsavable options
+
+        private bool disableAllSounds;
+        public bool DisableAllSounds
+        {
+            get { return disableAllSounds; }
+            set
+            {
+                disableAllSounds = value;
+                RaisePropertyChanged("DisableAllSounds");
+            }
+        }
+
+        #endregion
     }
 }

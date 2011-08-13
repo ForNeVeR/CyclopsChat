@@ -48,7 +48,7 @@ namespace Cyclops.MainApplication.Controls
 
         private static void PlaySound(ChatAreaViewModel viewModel, string file)
         {
-            if (Context.Settings.DisableAllSounds)
+            if (Context.Settings.DisableAllSounds || Context.DisableAllSounds)
                 return;
 
             if (Context.Settings.SoundEvenIfActive 

@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Windows;
-using System.Windows.Input;
-using Cyclops.Core;
-using Cyclops.Core.Resource;
-using Cyclops.MainApplication.Configuration;
 using Cyclops.MainApplication.Helpers;
-using Cyclops.MainApplication.Localization;
-using Cyclops.MainApplication.View.Popups;
 
 namespace Cyclops.MainApplication
 {
@@ -27,6 +19,7 @@ namespace Cyclops.MainApplication
         {
             EventManager.RegisterClassHandler(typeof(Window), Window.LoadedEvent, new RoutedEventHandler(WindowLoaded));
             base.OnStartup(e);
+            SystemHelper.SetStartup(true);
         }
 
         static void DispatchernhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

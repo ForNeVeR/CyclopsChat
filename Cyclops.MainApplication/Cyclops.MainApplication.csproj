@@ -250,6 +250,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Resource Include="Resources\noSound.png" />
+    <Resource Include="Resources\sound.png" />
     <Resource Include="Resources\DefaultBackground.jpg" />
     <Resource Include="Resources\note_delete.ico" />
     <Resource Include="Resources\clean.ico" />
@@ -415,7 +417,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

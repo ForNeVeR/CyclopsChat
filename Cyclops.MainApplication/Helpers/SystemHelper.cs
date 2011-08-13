@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Security;
 using System.Text;
 using System.Windows;
 using Microsoft.Win32;
@@ -10,21 +11,43 @@ namespace Cyclops.MainApplication.Helpers
 {
     public static class SystemHelper
     {
-        public static void StartAppWithWindows(bool enable)
+        /// <summary>
+        /// Add/Remove registry entries for windows startup.
+        /// </summary>
+        /// <param name="appName">Name of the application.</param>
+        /// <param name="enable">if set to <c>true</c> [enable].</param>
+        public static void SetStartup(bool enable, string appName = "CyclopsChat")
         {
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
-                if (key == null)
-                    return;
+                const string runKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
+
+                RegistryKey startupKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(runKey);
 
                 if (enable)
-                    key.SetValue("CyclopsChat", "\"" + Assembly.GetExecutingAssembly().Location + "\"");
-                else if (key.GetValue("CyclopsChat") != null)
-                    key.DeleteValue("CyclopsChat");
-                key.Close();
+                {
+                    if (startupKey.GetValue(appName) == null)
+                    {
+                        startupKey.Close();
+                        startupKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(runKey, true);
+                        // Add startup reg key
+                        startupKey.SetValue(appName, Assembly.GetExecutingAssembly().Location, RegistryValueKind.String);
+                        startupKey.Close();
+                    }
+                }
+                else
+                {
+                    // remove startup
+                    startupKey = Registry.CurrentUser.OpenSubKey(runKey, true);
+                    startupKey.DeleteValue(appName, false);
+                    startupKey.Close();
+                }
             }
-            catch
+            catch (SecurityException)
+            {
+                //TODO: LOG it!
+            }
+            catch (Exception)
             {
             }
         }
