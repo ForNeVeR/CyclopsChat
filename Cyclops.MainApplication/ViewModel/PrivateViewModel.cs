@@ -17,7 +17,6 @@ namespace Cyclops.MainApplication.ViewModel
         {
             Messages = new ObservableCollection<MessageViewModel>();
             Messages.CollectionChanged += MessagesCollectionChanged;
-            SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
         }
 
         void MessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -32,7 +31,6 @@ namespace Cyclops.MainApplication.ViewModel
 
         public IEntityIdentifier Participant { get; set; }
 
-        public RelayCommand SendMessage { get; private set; }
 
         public IConference Conference { get; set; }
 
@@ -45,8 +43,8 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("Messages");
             }
         }
-
-        private void OnSendMessage()
+        
+        protected override void OnSendMessage()
         {
             if (string.IsNullOrEmpty(CurrentlyTypedMessage))
                 return;

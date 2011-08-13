@@ -78,7 +78,7 @@ namespace Cyclops.MainApplication.Controls
             var privateView = item.Content as PrivateView;
             if (privateView != null)
             {
-                SelectedPrivateViewModel = privateView.PrivateViewModel;
+                SelectedPrivateViewModel = privateView.ConferenceViewModel;
                 return;
             }
         }
@@ -125,7 +125,7 @@ namespace Cyclops.MainApplication.Controls
                 {
                     TabItem oldItem =
                         Items.OfType<TabItem>().FirstOrDefault(
-                            i => i.Content is PrivateView && ((PrivateView)i.Content).PrivateViewModel == item);
+                            i => i.Content is PrivateView && ((PrivateView)i.Content).ConferenceViewModel == item);
                     Items.Remove(oldItem);
                     Cleanup();
                 }
@@ -161,7 +161,7 @@ namespace Cyclops.MainApplication.Controls
 
         private void AddPrivate(PrivateViewModel privateModel)
         {
-            var view = new PrivateView {PrivateViewModel = privateModel};
+            var view = new PrivateView {ConferenceViewModel = privateModel};
             privateModel.View = view;
             var tab = new TabItem
                           {

@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using System.Windows;
 using System.Windows.Controls;
 using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
@@ -21,20 +22,45 @@ namespace Cyclops.MainApplication.ViewModel
 
         public IChatAreaView View { get; set; }
         public RelayCommand ClearOutputArea { get; private set; }
+        public RelayCommand PasteAndSend { get; private set; }
+        public RelayCommand SendMessage { get; private set; }
 
         protected ChatAreaViewModel(IChatAreaView view)
         {
             View = view;
             ClearOutputArea = new RelayCommand(() => View.ClearOutputArea());
+            PasteAndSend = new RelayCommand(PasteAndSendAction, PasteAndSendCanExecute);
+            SendMessage = new RelayCommand(OnSendMessage, OnSendMessageCanExecute);
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
         }
-        
+
+        protected virtual void OnSendMessage()
+        {
+        }
+
+        protected virtual bool OnSendMessageCanExecute()
+        {
+            return !string.IsNullOrEmpty(CurrentlyTypedMessage);
+        }
+
+        private void PasteAndSendAction()
+        {
+            AppendText(Clipboard.GetText(TextDataFormat.Text));
+            OnSendMessage();
+        }
+
+        private bool PasteAndSendCanExecute()
+        {
+            string text = Clipboard.GetText(TextDataFormat.Text);
+            return !string.IsNullOrEmpty(text);
+        }
+
         private void DecoratorsRegistryNickClick(object sender, NickEventArgs e)
         {
             if (!IsActive || string.IsNullOrEmpty(e.Nick))
                 return;
 
-            SendPublicMessageToUser(e.Nick + ": ");
+            AppendText(e.Nick + ": ");
             if (e.Id != null)
                 OnNickClick(e.Id);
         }
@@ -52,7 +78,7 @@ namespace Cyclops.MainApplication.ViewModel
             return message;
         }
 
-        protected void SendPublicMessageToUser(string nick)
+        protected void AppendText(string nick)
         {
             if (CurrentlyTypedMessage == null)
                 CurrentlyTypedMessage = string.Empty;

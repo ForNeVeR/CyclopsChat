@@ -13,7 +13,7 @@ namespace Cyclops.MainApplication
             var dictionaries = Application.Current.Resources.MergedDictionaries;
             
             //i don't want to remove "fixed" RD, but how can i determinate it in the code??
-            for (int i = 1; i < dictionaries.Count; i++)
+            for (int i = 2; i < dictionaries.Count; i++)
                 dictionaries.Remove(dictionaries[i]); 
 
             dictionaries.Add(LoadDictionary(@"Data\Themes\Default\OutputAreaStyles.xaml"));

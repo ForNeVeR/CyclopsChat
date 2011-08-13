@@ -259,7 +259,7 @@ namespace Cyclops.MainApplication.ViewModel
             Messages.Add(new MessageViewModel(new SystemConferenceMessage {Body = string.Format(messageFormat, args)}));
         }
 
-        private void OnSendMessage()
+        protected override void OnSendMessage()
         {
             if (string.IsNullOrEmpty(CurrentlyTypedMessage))
                 return;

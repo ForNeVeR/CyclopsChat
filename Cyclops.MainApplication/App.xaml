@@ -9,6 +9,7 @@
                 <ResourceDictionary x:Name="fixed">
                     <Localization1:ResourceWrapper x:Key="ResourceWrapper"/>
                 </ResourceDictionary>
+                <ResourceDictionary Source="View/ContextMenus.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/SettingsViewStyles.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/General.xaml"/>
                 <!--<ResourceDictionary Source="/ReuxablesLegacy;component/mercury.xaml" />-->

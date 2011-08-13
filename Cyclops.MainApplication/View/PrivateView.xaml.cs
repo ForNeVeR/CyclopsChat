@@ -21,7 +21,7 @@ namespace Cyclops.MainApplication.View
             DataContext = this;
         }
 
-        public PrivateViewModel PrivateViewModel
+        public PrivateViewModel ConferenceViewModel
         {
             get { return (PrivateViewModel) GetValue(PrivateViewModelProperty); }
             set { SetValue(PrivateViewModelProperty, value); }

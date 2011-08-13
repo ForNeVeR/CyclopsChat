@@ -6,7 +6,6 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public partial class ConferenceViewModel
     {
-        public RelayCommand SendMessage { get; private set; }
         public RelayCommand GetUserVcard { get; private set; }
         public RelayCommand ChangeSubject { get; private set; }
         public RelayCommand ChangeCurrentUserVcard { get; private set; }
@@ -15,7 +14,6 @@ namespace Cyclops.MainApplication.ViewModel
 
         public void InitializeCommands()
         {
-            SendMessage = new RelayCommand(OnSendMessage, () => !string.IsNullOrEmpty(CurrentlyTypedMessage));
             StartPrivateWithSelectedMember = new RelayCommand(StartPrivateWithSelectedMemberAction, DefaultCanExecuteMethod);
             GetUserVcard = new RelayCommand(GetUserVcardAction, DefaultCanExecuteMethod);
             ChangeCurrentUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(Conference.ConferenceId, false), () => Conference.IsInConference);
@@ -30,7 +28,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void SendPublicMessageToMemberAction()
         {
-            SendPublicMessageToUser(SelectedMember.Nick + ": ");
+            AppendText(SelectedMember.Nick + ": ");
         }
 
         private void ChangeSubjectAction()

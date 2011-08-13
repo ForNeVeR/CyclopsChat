@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Controls" 
+             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls" 
              xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel" 
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
@@ -15,256 +15,15 @@
              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
-    
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Control+Shift"
+                        Key="V"
+                        Command="{Binding ConferenceViewModel.PasteAndSend}" />
+    </UserControl.InputBindings>
 	<UserControl.Resources>
-
+        
         <ValueConverters:StatusTypeToIntegerConverter x:Key="statusTypeConverter"/>
         <ValueConverters:SubjectConverter x:Key="subjectConverter"/>
-
-        <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
-            <Style.Resources>
-                <!--SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
-                             Color="Transparent"/-->
-            </Style.Resources>
-        </Style>
-        <Style x:Key="borderlessButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter
-                  Margin="{TemplateBinding Control.Padding}"
-                  HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                  VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
-                  ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}"
-                  RecognizesAccessKey="True"
-                  Content="{TemplateBinding ContentControl.Content}" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Padding="{TemplateBinding Padding}">
-                        <Grid Background="Transparent" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="19"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid>
-                                <Grid.LayoutTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <TransformCollection>
-                                                <RotateTransform Angle="-90"/>
-                                            </TransformCollection>
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Grid.LayoutTransform>
-                                <Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
-                            </Grid>
-                            <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" VerticalAlignment="Top"/>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
-                            <Setter Property="Stroke" TargetName="arrow" Value="#222"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
-                            <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                            <Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        </Style>
-        <Style x:Key="ExpanderUpHeaderStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Padding="{TemplateBinding Padding}">
-                            <Grid Background="Transparent">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="19"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid>
-                                    <Grid.LayoutTransform>
-                                        <TransformGroup>
-                                            <TransformGroup.Children>
-                                                <TransformCollection>
-                                                    <RotateTransform Angle="180"/>
-                                                </TransformCollection>
-                                            </TransformGroup.Children>
-                                        </TransformGroup>
-                                    </Grid.LayoutTransform>
-                                    <Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
-                                </Grid>
-                                <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
-                                <Setter Property="Stroke" TargetName="arrow" Value="#222"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
-                                <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                <Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ExpanderLeftHeaderStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Padding="{TemplateBinding Padding}">
-                            <Grid Background="Transparent">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="19"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid>
-                                    <Grid.LayoutTransform>
-                                        <TransformGroup>
-                                            <TransformGroup.Children>
-                                                <TransformCollection>
-                                                    <RotateTransform Angle="90"/>
-                                                </TransformCollection>
-                                            </TransformGroup.Children>
-                                        </TransformGroup>
-                                    </Grid.LayoutTransform>
-                                    <Ellipse x:Name="circle" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
-                                </Grid>
-                                <ContentPresenter HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" VerticalAlignment="Top"/>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
-                                <Setter Property="Stroke" TargetName="arrow" Value="#222"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
-                                <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                <Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ExpanderHeaderFocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Border>
-                            <Rectangle Margin="0" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Padding="{TemplateBinding Padding}">
-                            <Border Cursor="Hand" BorderThickness="1" CornerRadius="2" BorderBrush="#FFEBEBEB" Background="White">
-                                <Grid Background="#009B5151" Height="19">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="19"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border BorderThickness="0,0,1,0" BorderBrush="#FFEBEBEB"></Border>
-                                    <Ellipse x:Name="circle" Visibility="Hidden" HorizontalAlignment="Center" Height="19" Stroke="DarkGray" VerticalAlignment="Center" Width="19"/>
-                                    <Path x:Name="arrow" Data="M 1,1.5 L 4.5,5 L 8,1.5" HorizontalAlignment="Center" Stroke="#666" StrokeThickness="2" VerticalAlignment="Center"/>
-                                    <ContentPresenter Grid.Column="1" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" VerticalAlignment="Center"/>
-                                </Grid>
-                            </Border>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Data" TargetName="arrow" Value="M 1,4.5  L 4.5,1  L 8,4.5"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Stroke" TargetName="circle" Value="#FF3C7FB1"/>
-                                <Setter Property="Stroke" TargetName="arrow" Value="#222"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Stroke" TargetName="circle" Value="#FF526C7B"/>
-                                <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                <Setter Property="Stroke" TargetName="arrow" Value="#FF003366"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ExpanderStyle" TargetType="{x:Type Expander}">
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Expander}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3">
-                            <DockPanel>
-                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ExpanderDownHeaderStyle}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Bottom" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </DockPanel>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsExpanded" Value="true">
-                                <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
-                            </Trigger>
-                            <Trigger Property="ExpandDirection" Value="Right">
-                                <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
-                                <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
-                                <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderRightHeaderStyle}"/>
-                            </Trigger>
-                            <Trigger Property="ExpandDirection" Value="Up">
-                                <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
-                                <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
-                                <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderUpHeaderStyle}"/>
-                            </Trigger>
-                            <Trigger Property="ExpandDirection" Value="Left">
-                                <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
-                                <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
-                                <Setter Property="Style" TargetName="HeaderSite" Value="{StaticResource ExpanderLeftHeaderStyle}"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <ValueConverters:SumConverter x:Key="sumConverter" />
 
         <DataTemplate x:Key="MemberInfoTemplate">
@@ -382,7 +141,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
-			<RowDefinition Height="60" />
+			<RowDefinition Height="65" />
 		</Grid.RowDefinitions>
 
 		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
@@ -395,22 +154,12 @@
             <Image Source="..\Resources\editicon.png" Width="20" Height="20"/>
         </Button>
 
-        <Controls1:ChatFlowDocumentScrollViewer UseLayoutRounding="True" Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
-            <Controls1:ChatFlowDocument x:Name="chatFlowDocument"
+        <Controls:ChatFlowDocumentScrollViewer UseLayoutRounding="True" Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
+            <Controls:ChatFlowDocument x:Name="chatFlowDocument"
                                         Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
-                                        Style="{DynamicResource flowDocumentStyle}" >
-                <Controls1:ChatFlowDocument.ContextMenu>
-
-                    <ContextMenu>
-                        <MenuItem Header="Copy (Ctrl + C)" Command="ApplicationCommands.Copy" CommandTarget="{Binding ElementName=chatFlowDocument}"/>
-                        <MenuItem Header="Select all (Ctrl + A)" Command="ApplicationCommands.SelectAll" CommandTarget="{Binding ElementName=chatFlowDocument}"/>
-                        <MenuItem Header="Find (Ctrl + F)" Command="ApplicationCommands.Find" CommandTarget="{Binding ElementName=chatFlowDocument}"/>
-                        <MenuItem Header="Clear" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
-                    </ContextMenu>
-                    
-                </Controls1:ChatFlowDocument.ContextMenu>
-            </Controls1:ChatFlowDocument>
-		</Controls1:ChatFlowDocumentScrollViewer>
+                                        Style="{DynamicResource flowDocumentStyle}" ContextMenu="{StaticResource chatFlowDocumentMenu}">
+            </Controls:ChatFlowDocument>
+		</Controls:ChatFlowDocumentScrollViewer>
 
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
             <Grid.RowDefinitions>
@@ -432,7 +181,7 @@
                     <TextBlock Grid.Row="0" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserNick, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
                     <TextBox x:Name="nickBox" Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="1" 
                              Text="{Binding ConferenceViewModel.NewNick, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                             Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
+                             Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
                     
 					
                     <TextBlock Grid.Row="2" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserStatus, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
@@ -449,7 +198,7 @@
                     <TextBox x:Name="statusBox" Margin="4,4,1,4" TextWrapping="Wrap"
 							 IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="5" 
                              Text="{Binding ConferenceViewModel.Conference.Session.Status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                             Controls1:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
+                             Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
 					<Button Grid.Row="6" Command="{Binding ConferenceViewModel.ChangeCurrentUserVcard}" 
                             Content="{Binding Path=Conference.EditVcard, Source={StaticResource ResourceWrapper}}" Height="22" HorizontalAlignment="Left" Margin="3,0,0,0" FontWeight="Normal" />
                 </Grid>
@@ -472,38 +221,37 @@
 		<Grid Grid.Row="2" Grid.ColumnSpan="2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition  />
-				<ColumnDefinition Width="65" />
+				<ColumnDefinition Width="70" />
 			</Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="28"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-			<Controls1:InputBox x:Name="inputBox" Grid.Row="1" 
+            <Controls:InputBox x:Name="inputBox" Grid.Row="1" FontSize="14" TextBlock.LineHeight="15" 
+                                TextBlock.LineStackingStrategy="BlockLineHeight"
                                 Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                SendCommand="{Binding ConferenceViewModel.SendMessage}" />
+                                SendCommand="{Binding ConferenceViewModel.SendMessage}"
+                                ContextMenu="{StaticResource inputMenu}"/>
             <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
 
-            <Controls1:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
-                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Left" Click="SmilesButtonClick">
+            <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True">
+                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">
                     <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\Smile.gif"/>
                 </Button>
-
                 <Separator/>
-                <Button Cursor="Hand" Margin="0,0,0,-2" x:Name="configButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Right" Click="SettingsButtonClick">
-                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\tools.png"/>
-                </Button>
-                
-                <Separator/>
-
-                <Button Cursor="Hand" Margin="0,0,0,-2" x:Name="clearButton" Style="{StaticResource borderlessButtonStyle}"  HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ClearOutputArea}">
+                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="clearButton" HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ClearOutputArea}">
                     <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\note_delete.ico"/>
                 </Button>
-            </Controls1:ToolBarEx>
+                <Separator/>
+                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="configButton" HorizontalAlignment="Right" Click="SettingsButtonClick">
+                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Height="20" Width="20" Source="..\Resources\tools.png"/>
+                </Button>
+            </Controls:ToolBarEx>
             
         </Grid>
 
 		<GridSplitter Grid.RowSpan="2" Grid.Column="1" Height="Auto" Width="2" HorizontalAlignment="Left" />
-        <Controls1:AnimatedImage Grid.Row="1" Height="4" HorizontalAlignment="Left" Margin="-204,3,0,0" x:Name="animatedImage1" Stretch="Fill" VerticalAlignment="Top" Width="1" />
+        <Controls:AnimatedImage Grid.Row="1" Height="4" HorizontalAlignment="Left" Margin="-204,3,0,0" x:Name="animatedImage1" Stretch="Fill" VerticalAlignment="Top" Width="1" />
     </Grid>
 </UserControl>
