@@ -1,10 +1,15 @@
 ﻿<Window x:Class="Cyclops.MainApplication.MainWindow" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        Title="Cyclops chat" Height="485" Width="1065" 
+        Title="Cyclops chat" Height="685" Width="1065" 
+        MinWidth="620" MinHeight="495"
         TextOptions.TextFormattingMode="Display" 
         TextOptions.TextRenderingMode="ClearType"
         UseLayoutRounding="True" SnapsToDevicePixels="True"
         Closed="WindowClosed" Loaded="WindowLoaded">
-	<Grid x:Name="LayoutRoot"></Grid>
+    <Window.Background>
+        <ImageBrush ImageSource="Resources\DefaultBackground.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+	<Grid x:Name="LayoutRoot">
+    </Grid>
 </Window>

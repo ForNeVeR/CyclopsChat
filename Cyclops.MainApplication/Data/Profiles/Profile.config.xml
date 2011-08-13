@@ -4,7 +4,7 @@
   <AutoLogin>false</AutoLogin>
   <Theme>Default</Theme>
   <ConnectionConfig>
-    <Server>jabber.ru</Server>
+    <Server>jabber.uruchie.org</Server>
     <NetworkHost />
     <Port>5222</Port>
     <User>Nagg</User>

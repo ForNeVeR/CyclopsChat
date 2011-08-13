@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdvancedSettings" xml:space="preserve">
-    <value>Настройки:</value>
+    <value>Дополнительные настройки:</value>
   </data>
   <data name="AutoLogin" xml:space="preserve">
-    <value>Запомнить</value>
+    <value>Запомнить меня</value>
   </data>
   <data name="Connect" xml:space="preserve">
     <value>Соединить</value>

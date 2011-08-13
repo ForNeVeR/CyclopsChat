@@ -7,157 +7,106 @@
              xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" 
              xmlns:Localization1="clr-namespace:Cyclops.MainApplication.Localization;assembly=Cyclops.MainApplication.Localization"
-             mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" 
+             mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" UseLayoutRounding="True"
              FocusManager.FocusedElement="{Binding ElementName=userName}" Loaded="UserControlLoaded"
-              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
-	<UserControl.DataContext>
-		<ViewModel:LoginViewModel />
-	</UserControl.DataContext>
-    
+             TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
+    <UserControl.DataContext>
+        <ViewModel:LoginViewModel />
+    </UserControl.DataContext>
+
     <UserControl.Resources>
         <ValueConverters:IsNullToCollapsedValueConverter x:Key="isNullConverter"/>
+        <Style x:Key="FieldNameStyle">
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Right"/>
+            <Setter Property="TextBlock.Margin" Value="0,0,10,0"/>
+            <Setter Property="TextBlock.Foreground" Value="White"/>
+            <Setter Property="TextBlock.FontSize" Value="15"/>
+        </Style>
+        <Style x:Key="FieldValueStyle">
+            <Setter Property="TextBox.VerticalAlignment" Value="Center"/>
+            <Setter Property="TextBox.HorizontalAlignment" Value="Left"/>
+            <Setter Property="TextBox.Margin" Value="3"/>
+            <Setter Property="TextBox.FontSize" Value="14"/>
+            <Setter Property="TextBox.SelectionBrush" Value="#FF0B5299"/>
+            <Setter Property="TextBox.Height" Value="26"/>
+            <Setter Property="TextBox.Width" Value="170"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="26"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
     </UserControl.Resources>
+
 
     <Controls:BusyIndicator x:Name="busyIndicator" 
                             BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}" 
                             IsBusy="{Binding IsBusy}" Focusable="False">
-        <Grid>
-            
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid x:Name="LayoutRoot">
 
-            <Border Grid.Row="1" HorizontalAlignment="Center" Focusable="False" VerticalAlignment="Center" 
-                    Width="279" Background="White" CornerRadius="8">
-			<Border.Effect>
-				<DropShadowEffect BlurRadius="23" ShadowDepth="0" Opacity="0.4" />
-			</Border.Effect>
-                
-				<Grid Background="White" Margin="4,3,4,5" Focusable="False">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="100" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="32" />
-                        <RowDefinition Height="32" />
-                        <RowDefinition Height="Auto" />
+            <Grid VerticalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70" />
+                    <RowDefinition />
+                    <RowDefinition Height="70" />
+                </Grid.RowDefinitions>
+                <TextBlock TextOptions.TextFormattingMode="Ideal" Text="Cyclops Chat" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="48" Margin="10,-5,0,0">
+					<TextBlock.Effect>
+						<DropShadowEffect ShadowDepth="0" BlurRadius="7"/>
+					</TextBlock.Effect>
+                </TextBlock>
+                <TextBlock Text="1.0.8 Beta" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="18.667" Margin="312,8,-312,0"/>
+                <TextBlock Grid.Row="2" Foreground="#FFFF7E7E" Text="{Binding ErrorMessage}" FontSize="15"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource isNullConverter}}"
+				       TextWrapping="Wrap" Margin="5,5,5,0"/>
+
+
+                <Grid Grid.Row="1" Height="Auto" Background="#3B000000" VerticalAlignment="Top" Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition MinHeight="38"/>
                     </Grid.RowDefinitions>
-                    
-                    <TextBlock Text="{Binding Path=Login.UserName, Source={StaticResource ResourceWrapper}}" 
-                               HorizontalAlignment="Right" VerticalAlignment="Center" 
-                               Margin="0,0,10,0" FontWeight="Bold" Foreground="#FF313131" />
-                    <TextBlock Text="{Binding Path=Login.Password, Source={StaticResource ResourceWrapper}}" 
-                               Grid.Row="1" HorizontalAlignment="Right" 
-                               VerticalAlignment="Center" Margin="0,2,10,0" FontWeight="Bold" Foreground="#FF313131" />
-                    
-					<TextBox x:Name="userName" Grid.Column="1" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             Margin="0,6,6,3" BorderThickness="2">
-						<TextBox.Background>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="White" Offset="0" />
-								<GradientStop Color="White" Offset="1" />
-								<GradientStop Color="White" Offset="0.478" />
-							</LinearGradientBrush>
-						</TextBox.Background>
-					</TextBox>
-                    
-					<PasswordBox x:Name="passwordBox" Grid.Column="1" 
-                                 Grid.Row="1" Margin="0,6,6,3" BorderThickness="2" />
-
-                    <Expander Grid.Row="3" Grid.ColumnSpan="2" Foreground="Gray"
-                              Header="{Binding Path=Login.AdvancedSettings, Source={StaticResource ResourceWrapper}}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="32" />
-                                <RowDefinition Height="32" />
-                            </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding Path=Login.UserName, Source={StaticResource ResourceWrapper}}" Style="{StaticResource FieldNameStyle}"/>
+                    <TextBlock Grid.Row="2" Text="{Binding Path=Login.Password, Source={StaticResource ResourceWrapper}}" Style="{StaticResource FieldNameStyle}"/>
+                    <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Margin="178,0,0,0" Command="{Binding Authenticate}" CommandParameter="{Binding ElementName=passwordBox}" 
+                            IsDefault="True" Content="{Binding Path=Login.Connect, Source={StaticResource ResourceWrapper}}" />
+                    <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Command="{Binding Register}" CommandParameter="{Binding ElementName=passwordBox}" 
+                            Content="{Binding Path=Login.RegisterAccount, Source={StaticResource ResourceWrapper}}" Margin="282,2,0,2" Width="155"/>
+                    <Expander Grid.Row="3" Grid.Column="1" x:Name="expander" Header="{Binding Path=Login.AdvancedSettings, Source={StaticResource ResourceWrapper}}" 
+							  VerticalAlignment="Top" Foreground="White" FontSize="15" Margin="3,4,0,6" >
+                        <Grid Background="#2E000000" Margin="-165,0,0,0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="162" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="{Binding Path=Login.Server, Source={StaticResource ResourceWrapper}}" 
-                                       Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                                       Margin="0,0,10,0" FontWeight="Bold" Foreground="#FF313131" />
-                            <TextBox Grid.Column="1" Text="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                     Margin="0,6,6,3" BorderThickness="2"/>
-                            <TextBlock VerticalAlignment="Bottom" Margin="3,0,3,0" Grid.Row="1" TextWrapping="Wrap" 
-                                       LineStackingStrategy="BlockLineHeight" LineHeight="11" Grid.ColumnSpan="2" 
-                                       Text="{Binding Path=Login.Tip, Source={StaticResource ResourceWrapper}}" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="25" />
+                            </Grid.RowDefinitions>
+                            <CheckBox Grid.Row="1" Style="{StaticResource FieldNameStyle}" IsChecked="{Binding AutoLogin, Mode=TwoWay}" Content="{Binding Path=Login.AutoLogin, Source={StaticResource ResourceWrapper}}" HorizontalAlignment="Left" Margin="3,6,0,0" Grid.Column="1" VerticalAlignment="Top"/>
+                            <TextBlock Grid.Row="2" Style="{StaticResource FieldNameStyle}" Text="{Binding Path=Login.Server, Source={StaticResource ResourceWrapper}}"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldValueStyle}" Margin="3,3,0,3" Width="181"/>
                         </Grid>
                     </Expander>
-                    
-                    <CheckBox Grid.Row="2" Content="{Binding Path=Login.AutoLogin, Source={StaticResource ResourceWrapper}}" 
-                              IsChecked="{Binding AutoLogin, Mode=TwoWay}" Grid.Column="1" VerticalAlignment="Top" 
-                              HorizontalAlignment="Right" Margin="0,4,8,0" />
-				</Grid>
-        </Border>
-
-            <TextBlock Grid.Row="2" HorizontalAlignment="Center" TextAlignment="Center" 
-                       TextWrapping="Wrap" Margin="0,10,0,10" Width="400" Foreground="Red"
-                       Text="{Binding ErrorMessage}" FontWeight="Bold"
-                       Visibility="{Binding ErrorMessage, Converter={StaticResource isNullConverter}}">
-            </TextBlock>
-        
-        <Button x:Name="buttonOk" Grid.Row="3" Height="24" Width="90" Margin="180,10,0,0"
-                            Command="{Binding Authenticate}" CommandParameter="{Binding ElementName=passwordBox}" 
-                            IsDefault="True" HorizontalAlignment="Center" Content="{Binding Path=Login.Connect, Source={StaticResource ResourceWrapper}}" 
-                            Grid.Column="1" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
-
-            
-        <Button x:Name="buttonRegister" Grid.Row="3" Height="24" Width="125" Margin="-60,10,0,0"
-                            Command="{Binding Register}" CommandParameter="{Binding ElementName=passwordBox}" 
-                            HorizontalAlignment="Center" Content="{Binding Path=Login.RegisterAccount, Source={StaticResource ResourceWrapper}}" 
-                            Grid.Column="1" VerticalAlignment="Top" d:LayoutOverrides="GridBox" />
-            
-        <!--Logo:-->
-		<Border x:Name="logoBorder" HorizontalAlignment="Center" 
-                VerticalAlignment="Bottom" Margin="0,0,0,23">
-			<TextBlock Text="Cyclops chat" FontSize="21.333" 
-                       FontWeight="Bold" Foreground="White" 
-                       Height="28.373" Width="126.263">
-				<TextBlock.Effect>
-					<DropShadowEffect ShadowDepth="0" BlurRadius="4" />
-				</TextBlock.Effect>
-			</TextBlock>
-		</Border>
-            
-        <!--Reflection:-->
-		<Border HorizontalAlignment="Center" 
-                Width="{Binding ElementName=logoBorder, Path=ActualWidth}" 
-                Height="{Binding ElementName=logoBorder, Path=ActualHeight}" 
-                VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5">
-			<Border.OpacityMask>
-				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-					<GradientStop Color="#00000000" Offset="0" />
-					<GradientStop Color="#A3FFFFFF" Offset="1" />
-					<GradientStop Color="#006B6B6B" Offset="0.293" />
-				</LinearGradientBrush>
-			</Border.OpacityMask>
-			<Border.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleY="-1" />
-					<SkewTransform />
-					<RotateTransform />
-					<TranslateTransform />
-				</TransformGroup>
-			</Border.RenderTransform>
-			<Border.Background>
-				<VisualBrush Visual="{Binding ElementName=logoBorder}" />
-			</Border.Background>
-		</Border>
-
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="userName" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource FieldValueStyle}"/>
+                    <PasswordBox Grid.Row="2" Grid.Column="1" x:Name="passwordBox" Style="{StaticResource FieldValueStyle}"/>
+                </Grid>
+            </Grid>
             <StackPanel Grid.Row="0" Height="21" Orientation="Horizontal" VerticalAlignment="Top" Margin="5">
-                <TextBlock Text="Language: " VerticalAlignment="Center"/>
+                <!--<TextBlock Foreground="White" Text="Language: " VerticalAlignment="Center"/>-->
                 <ComboBox Margin="5,0,0,0" Width="75"
                           ItemsSource="{Binding Source={x:Static Localization1:LocalizationManager.Instance}, Path=Languages}"
                           SelectedItem="{Binding Source={x:Static Localization1:LocalizationManager.Instance}, Path=SelectedLanguage, Mode=TwoWay}" />
             </StackPanel>
-
         </Grid>
     </Controls:BusyIndicator>
 </UserControl>

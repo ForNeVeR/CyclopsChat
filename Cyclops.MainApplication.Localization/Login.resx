@@ -121,7 +121,7 @@
     <value>Advanced settings:</value>
   </data>
   <data name="AutoLogin" xml:space="preserve">
-    <value>Remember</value>
+    <value>Remember me</value>
   </data>
   <data name="Connect" xml:space="preserve">
     <value>Connect</value>
