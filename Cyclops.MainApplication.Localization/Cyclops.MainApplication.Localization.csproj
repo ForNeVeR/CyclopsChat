@@ -64,6 +64,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ContextMenus.Designer.cs">
+      <DependentUpon>ContextMenus.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Language.cs" />
     <Compile Include="LocalizationManager.cs" />
     <Compile Include="Login.Designer.cs">
@@ -115,6 +120,11 @@
       <LastGenOutput>ConferenceList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="ConferenceList.ru-RU.resx" />
+    <EmbeddedResource Include="ContextMenus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContextMenus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContextMenus.ru-RU.resx" />
     <EmbeddedResource Include="Login.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Login.Designer.cs</LastGenOutput>

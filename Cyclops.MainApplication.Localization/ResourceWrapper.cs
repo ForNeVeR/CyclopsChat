@@ -31,6 +31,17 @@ namespace Cyclops.MainApplication.Localization
             }
         }
 
+        private ContextMenus contextMenu = new ContextMenus();
+        public Localization.ContextMenus ContextMenus
+        {
+            get { return contextMenu; }
+            set
+            {
+                contextMenu = value;
+                OnPropertyChanged("ContextMenus");
+            }
+        }
+
         private Common common = new Common();
         public Common Common
         {
@@ -95,6 +106,7 @@ namespace Cyclops.MainApplication.Localization
             Common = new Common();
             Vcard = new Vcard();
             Settings = new Settings();
+            ContextMenus = new ContextMenus();
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

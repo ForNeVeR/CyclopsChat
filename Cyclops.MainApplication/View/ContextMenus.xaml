@@ -24,43 +24,43 @@
     </ContextMenu>
 
     <ContextMenu x:Key="chatFlowDocumentMenu">
-        <MenuItem Header="Copy (Ctrl + C)" Command="ApplicationCommands.Copy" />
-        <MenuItem Header="Select all (Ctrl + A)" Command="ApplicationCommands.SelectAll" />
-        <MenuItem Header="Find (Ctrl + F)" Command="ApplicationCommands.Find" />
-        <MenuItem Header="Clear" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
+        <MenuItem Header="{Binding Path=ContextMenus.Copy, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Copy" />
+        <MenuItem Header="{Binding Path=ContextMenus.SelectAll, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.SelectAll" />
+        <MenuItem Header="{Binding Path=ContextMenus.Find, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Find" />
+        <MenuItem Header="{Binding Path=ContextMenus.Clear, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
     </ContextMenu>
 
     <ContextMenu x:Key="privateFlowDocumentMenu">
-        <MenuItem Header="Copy (Ctrl + C)" Command="ApplicationCommands.Copy" />
-        <MenuItem Header="Select all (Ctrl + A)" Command="ApplicationCommands.SelectAll" />
-        <MenuItem Header="Find (Ctrl + F)" Command="ApplicationCommands.Find"/>
-        <MenuItem Header="Clear" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
+        <MenuItem Header="{Binding Path=ContextMenus.Copy, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Copy" />
+        <MenuItem Header="{Binding Path=ContextMenus.SelectAll, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.SelectAll" />
+        <MenuItem Header="{Binding Path=ContextMenus.Find, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Find"/>
+        <MenuItem Header="{Binding Path=ContextMenus.Clear, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
     </ContextMenu>
 
     <ContextMenu x:Key="inputMenu">
-        <MenuItem Header="Copy (Ctrl + C)" Command="ApplicationCommands.Copy"/>
-        <MenuItem Header="Paste (Ctrl + P)" Command="ApplicationCommands.Paste"/>
-        <MenuItem Header="Cut (Ctrl + X)" Command="ApplicationCommands.Cut"/>
-        <MenuItem Header="Select all (Ctrl + A)" Command="ApplicationCommands.SelectAll"/>
+        <MenuItem Header="{Binding Path=ContextMenus.Copy, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Copy"/>
+        <MenuItem Header="{Binding Path=ContextMenus.Paste, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Paste"/>
+        <MenuItem Header="{Binding Path=ContextMenus.Cut, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Cut"/>
+        <MenuItem Header="{Binding Path=ContextMenus.SelectAll, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.SelectAll"/>
         <Separator/>
-        <MenuItem Header="Paste and send (Ctrl+Shift+V)" Command="{Binding ConferenceViewModel.PasteAndSend}" />
+        <MenuItem Header="{Binding Path=ContextMenus.PasteAndSend, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.PasteAndSend}" />
     </ContextMenu>
 
     <ContextMenu x:Key="conferenceMenu">
-        <MenuItem Header="Add to bookmarks"  
+        <MenuItem Header="{Binding Path=ContextMenus.AddToBookmarks, Source={StaticResource ResourceWrapper}}"  
                   Command="{Binding AddToBookmarks}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\favorite.png" Height="18"/>
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="Remove form bookmaks" 
+        <MenuItem Header="{Binding Path=ContextMenus.RemoveFromBookmarks, Source={StaticResource ResourceWrapper}}" 
                   Command="{Binding RemoveFromBookmarks}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\remove.png" Height="18"/>
             </MenuItem.Icon>
         </MenuItem>
         <Separator/>
-        <MenuItem Header="Close" 
+        <MenuItem Header="{Binding Path=ContextMenus.Close, Source={StaticResource ResourceWrapper}}" 
                   Command="{Binding Close}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\stop.png" Height="18"/>
@@ -69,7 +69,7 @@
     </ContextMenu>
 
     <ContextMenu x:Key="privateMenu">
-        <MenuItem Header="Close" 
+        <MenuItem Header="{Binding Path=ContextMenus.Close, Source={StaticResource ResourceWrapper}}" 
                   Command="{Binding Close}" />
     </ContextMenu>
 

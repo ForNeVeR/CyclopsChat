@@ -124,7 +124,7 @@
 			<RowDefinition Height="65" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
+		<TextBox Height="24" IsHitTestVisible="False" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
                  Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay, Converter={StaticResource subjectConverter}}" VerticalAlignment="Center" Margin="0,0,24,0"
                  TextWrapping="NoWrap" ToolTip="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}"/>
         
@@ -215,7 +215,7 @@
             <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
 
-            <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
+            <Controls:ToolBarEx IsHitTestVisible="False" Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
                 <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">
                     <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>
                 </Button>
