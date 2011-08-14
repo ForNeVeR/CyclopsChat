@@ -26,9 +26,19 @@ namespace Cyclops.MainApplication.Notifications
             notifyIcon.BalloonTipTitle = "CyclopsChat";
             notifyIcon.Text = notifyIcon.BalloonTipText = "Cyclops chat (double-click to show/hide)";
             notifyIcon.Visible = false;
+            notifyIcon.MouseDown += NotifyIconMouseDown;
             notifyIcon.MouseDoubleClick += NotifyIconMouseDoubleClick;
             if (window != null)
                 window.StateChanged += WindowStateChanged;
+        }
+
+        void NotifyIconMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var menu = (System.Windows.Controls.ContextMenu)window.FindResource("trayMenu");
+                menu.IsOpen = true;
+            }
         }
 
         void WindowStateChanged(object sender, EventArgs e)
@@ -63,18 +73,23 @@ namespace Cyclops.MainApplication.Notifications
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (window.IsVisible)
-                    window.Hide();
-                else
-                {
-                    window.Show();
-                    window.WindowState = WindowState.Normal;
-                    //workaround:)
-                    window.Activate();
-                    window.Topmost = true;  // important
-                    window.Topmost = false; // important
-                    window.Focus();    
-                }
+                HideOrShowWindow(window);
+            }
+        }
+
+        public static void HideOrShowWindow(Window window)
+        {
+            if (window.IsVisible)
+                window.Hide();
+            else
+            {
+                window.Show();
+                window.WindowState = WindowState.Normal;
+                //workaround:)
+                window.Activate();
+                window.Topmost = true;  // important
+                window.Topmost = false; // important
+                window.Focus();
             }
         }
 

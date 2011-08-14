@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
-                    xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel">
+                    xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel"
+                    xmlns:MainApplication="clr-namespace:Cyclops.MainApplication">
 
     <ValueConverters:FalseToCollapsedValueConverter x:Key="falseToCollapsedValueConverter"/>
 
@@ -37,6 +38,17 @@
         <MenuItem Header="{Binding Path=ContextMenus.Clear, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.ClearOutputArea}" />
     </ContextMenu>
 
+    <ContextMenu x:Key="trayMenu" Placement="MousePoint" DataContext="{Binding Source={x:Static MainApplication:ApplicationContext.Current}, Path=MainViewModel}"
+                 UseLayoutRounding="True" TextOptions.TextFormattingMode="Display">
+        <MenuItem Header="{Binding Path=ContextMenus.ShowOrHide, Source={StaticResource ResourceWrapper}}" Command="{Binding ShowOrHide}" />
+        <Separator />
+        <MenuItem Header="{Binding Path=ContextMenus.Quit, Source={StaticResource ResourceWrapper}}" Command="{Binding Quit}">
+            <MenuItem.Icon>
+                <Image Source="..\..\Resources\stop.png" Height="18"/>
+            </MenuItem.Icon>
+        </MenuItem>
+    </ContextMenu>
+    
     <ContextMenu x:Key="inputMenu">
         <MenuItem Header="{Binding Path=ContextMenus.Copy, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Copy"/>
         <MenuItem Header="{Binding Path=ContextMenus.Paste, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Paste"/>

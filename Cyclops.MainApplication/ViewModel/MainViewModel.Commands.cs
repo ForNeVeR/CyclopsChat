@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Cyclops.MainApplication.Notifications;
 using Cyclops.MainApplication.View;
 using GalaSoft.MvvmLight.Command;
 
@@ -12,35 +13,22 @@ namespace Cyclops.MainApplication.ViewModel
     {
         public RelayCommand OpenConferenceList { get; private set; }
         public RelayCommand CloseActiveConferenceOrPrivate { get; private set; }
-        public RelayCommand AddToBookmarks { get; private set; }
-        public RelayCommand RemoveFromBookmarks { get; private set; }
         public RelayCommand UpdateStyles { get; private set; }
+        public RelayCommand Quit { get; private set; }
+        public RelayCommand ShowOrHide { get; private set; }
 
         private void InitializeCommands()
         {
             UpdateStyles = new RelayCommand(OnUpdateStyles);
             OpenConferenceList = new RelayCommand(OpenConferenceListAction, OpenConferenceListCanExecute);
-            AddToBookmarks = new RelayCommand(AddToBookmarksAction, AddToBookmarksCanExecute);
-            RemoveFromBookmarks = new RelayCommand(RemoveFromBookmarksAction, RemoveFromBookmarksCanExecute);
             CloseActiveConferenceOrPrivate = new RelayCommand(CloseActiveConferenceOrPrivateAction, CloseActiveConferenceOrPrivateCanExecute);
+            Quit = new RelayCommand(() => App.Current.Shutdown());
+            ShowOrHide = new RelayCommand(ShowOrHideAction);
         }
 
-        private void AddToBookmarksAction()
+        private void ShowOrHideAction()
         {
-        }
-
-        private bool AddToBookmarksCanExecute()
-        {
-            return true;
-        }
-
-        private void RemoveFromBookmarksAction()
-        {
-        }
-
-        private bool RemoveFromBookmarksCanExecute()
-        {
-            return true;
+            TrayController.HideOrShowWindow(Application.Current.MainWindow);
         }
 
         private void CloseActiveConferenceOrPrivateAction()

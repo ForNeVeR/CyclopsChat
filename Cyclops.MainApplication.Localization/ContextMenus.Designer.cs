@@ -133,6 +133,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quit.
+        /// </summary>
+        public static string Quit {
+            get {
+                return ResourceManager.GetString("Quit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove from bookmarks.
         /// </summary>
         public static string RemoveFromBookmarks {
@@ -147,6 +156,15 @@ namespace Cyclops.MainApplication.Localization {
         public static string SelectAll {
             get {
                 return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show or hide.
+        /// </summary>
+        public static string ShowOrHide {
+            get {
+                return ResourceManager.GetString("ShowOrHide", resourceCulture);
             }
         }
     }

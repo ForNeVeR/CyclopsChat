@@ -141,10 +141,16 @@
   <data name="PasteAndSend" xml:space="preserve">
     <value>Paste and send (Ctrl+Shift+V)</value>
   </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Quit</value>
+  </data>
   <data name="RemoveFromBookmarks" xml:space="preserve">
     <value>Remove from bookmarks</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
     <value>Select all (Ctrl+A)</value>
+  </data>
+  <data name="ShowOrHide" xml:space="preserve">
+    <value>Show or hide</value>
   </data>
 </root>

@@ -141,10 +141,16 @@
   <data name="PasteAndSend" xml:space="preserve">
     <value>Вставить и отправить (Ctrl+Shift+V)</value>
   </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Выход</value>
+  </data>
   <data name="RemoveFromBookmarks" xml:space="preserve">
     <value>Удалить из закладок</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
     <value>Выделить всё (Ctrl+A)</value>
+  </data>
+  <data name="ShowOrHide" xml:space="preserve">
+    <value>Показать или скрыть</value>
   </data>
 </root>
