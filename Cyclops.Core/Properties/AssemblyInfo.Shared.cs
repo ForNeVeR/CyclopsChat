@@ -3,8 +3,8 @@ using System.Runtime.InteropServices;
 
 //SHARED!
 
-[assembly: AssemblyTitle("Beta 8")]
-[assembly: AssemblyDescription("Beta 8")]
+[assembly: AssemblyTitle("RC1")]
+[assembly: AssemblyDescription("RC1")]
 [assembly: AssemblyCompany("CyclopsChat Team")]
 [assembly: AssemblyCopyright("Copyright © CyclopsChat Team 2011")]
 [assembly: AssemblyTrademark("")]

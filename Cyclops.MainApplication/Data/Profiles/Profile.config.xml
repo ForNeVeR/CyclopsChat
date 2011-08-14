@@ -7,7 +7,7 @@
     <Server>jabber.uruchie.org</Server>
     <NetworkHost />
     <Port>5222</Port>
-    <User>Nagg</User>
+    <User>cyclops</User>
     <EncodedPassword>C4Y9MwPhlZI=</EncodedPassword><!--C4Y9MwPhlZI= is for cyclops-->
   </ConnectionConfig>
   
