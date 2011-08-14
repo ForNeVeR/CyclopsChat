@@ -63,6 +63,7 @@ namespace Cyclops.Core.Resource
 
         private void Authenticated(object sender, AuthenticationEventArgs e)
         {
+            isNickConflictMode = false;
             if (!e.Success) return;
 
             if (room != null)
@@ -140,7 +141,7 @@ namespace Cyclops.Core.Resource
             room.OnParticipantLeave -= room_OnParticipantLeave;
 
         }
-
+        
         private bool waitingForPassword = false;  
         private void room_OnPresenceError(Room room, Presence pres)
         {
@@ -153,8 +154,12 @@ namespace Cyclops.Core.Resource
             switch (pres.Error.Code)
             {
                 case 409: //conflict
-                    Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.NickConflict,
-                                                             ErrorMessageResources.NickConflictErrorMessage));
+                    if (!isNickConflictMode)
+                    {
+                        isNickConflictMode = true;
+                        Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.NickConflict,
+                                                                 ErrorMessageResources.NickConflictErrorMessage));
+                    }
                     break;
 
                 case 403: //banned
@@ -480,6 +485,15 @@ namespace Cyclops.Core.Resource
         public void SendPrivateMessage(IEntityIdentifier target, string body)
         {
             room.PrivateMessage(target.Resource, body);
+        }
+
+        private bool isNickConflictMode = false;
+
+        public void RejoinWithNewNick(string nick)
+        {
+            ConferenceId = IdentifierBuilder.WithAnotherResource(ConferenceId, nick);
+            if (session.IsAuthenticated)
+                Authenticated(this, new AuthenticationEventArgs());
         }
 
         internal void RaiseSomebodyChangedHisStatusEvent(IConferenceMember member)

@@ -7,7 +7,6 @@ namespace Cyclops.Core
     public interface IConference : ISessionHolder
     {
         string Subject { get; }
-
         bool IsInConference { get; }
 
         IAvatarsManager AvatarsManager { get; }
@@ -21,6 +20,7 @@ namespace Cyclops.Core
         void SendPublicMessage(string body);
         bool ChangeNick(string value);
         void SendPrivateMessage(IEntityIdentifier target, string body);
+        void RejoinWithNewNick(string nick);
 
         event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus;
         event EventHandler<DisconnectEventArgs> Disconnected;

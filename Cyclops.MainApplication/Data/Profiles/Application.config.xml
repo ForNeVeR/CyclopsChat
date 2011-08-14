@@ -3,8 +3,8 @@
   <AutoAwayAfter>15</AutoAwayAfter>
   <AutoExtendedAwayAfter>60</AutoExtendedAwayAfter>
   <ShowStatusChangingMessages>false</ShowStatusChangingMessages>
-  <SelectedLanguage>ru-RU</SelectedLanguage>
-  <SmilesLimitInMessage>1000</SmilesLimitInMessage>
+  <SelectedLanguage>en-US</SelectedLanguage>
+  <SmilesLimitInMessage>10</SmilesLimitInMessage>
   <EnablePrivatePopups>true</EnablePrivatePopups>
   <EnableErrorPopups>true</EnableErrorPopups>
   <PopupStaysOpenning>3</PopupStaysOpenning>

@@ -219,10 +219,15 @@ namespace Cyclops.MainApplication.ViewModel
         {
             string text = "";
             if (e.ErrorKind == ConferenceJoinErrorKind.NickConflict)
+            {
                 text = string.Format(
                     Localization.Conference.NickConflictMessage,
                     Conference.ConferenceId.Resource);
-            else if (e.ErrorKind == ConferenceJoinErrorKind.Banned)
+                AddSystemMessage(text);
+                ChangeConflictedNick();
+                return;
+            }
+            if (e.ErrorKind == ConferenceJoinErrorKind.Banned)
                 text = Localization.Conference.AlreadyBannedMessage;
             else if (e.ErrorKind == ConferenceJoinErrorKind.PasswordRequired)
                 text = Localization.Conference.RoomHasPassword;
@@ -233,6 +238,22 @@ namespace Cyclops.MainApplication.ViewModel
                 AddSystemMessage(text);
             else
                 AddNotifyMessage(Localization.Conference.EnteredToTheRoom);
+        }
+
+        private void ChangeConflictedNick()
+        {
+            InputDialog.ShowForEdit(string.Format(Localization.Conference.NewNick, Conference.ConferenceId.User), 
+                Conference.ConferenceId.Resource, TryRejoinWithNewNick, NewNickValidator);
+        }
+
+        private void TryRejoinWithNewNick(string nick)
+        {
+            Conference.RejoinWithNewNick(nick);
+        }
+
+        private bool NewNickValidator(string nick)
+        {
+            return !string.IsNullOrWhiteSpace(nick) && Conference.ConferenceId.Resource != nick && nick.Length < 30;
         }
 
         private void ConferenceDisconnected(object sender, DisconnectEventArgs e)

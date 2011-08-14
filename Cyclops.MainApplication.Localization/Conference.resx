@@ -202,6 +202,9 @@
   <data name="MethodNotAllowedError" xml:space="preserve">
     <value>Action you tried to perform is not allowed at this conference.</value>
   </data>
+  <data name="NewNick" xml:space="preserve">
+    <value>New nick in ({0})</value>
+  </data>
   <data name="NickConflictMessage" xml:space="preserve">
     <value>Nick conflict. Please, rejoin with another one.</value>
   </data>
