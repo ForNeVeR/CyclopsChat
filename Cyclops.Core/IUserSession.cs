@@ -35,5 +35,7 @@ namespace Cyclops.Core
         event EventHandler<AuthenticationEventArgs> ConnectionDropped;
         event EventHandler PublicMessage;
         event EventHandler<ErrorEventArgs> ErrorMessageRecieved;
+        void RemoveFromBookmarks(IEntityIdentifier conferenceId);
+        void AddToBookmarks(IEntityIdentifier conferenceId);
     }
 }

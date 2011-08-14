@@ -123,6 +123,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
+  <data name="ConferenceList" xml:space="preserve">
+    <value>Список комнат</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ок</value>
   </data>

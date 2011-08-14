@@ -29,9 +29,14 @@ namespace Cyclops.MainApplication.ViewModel
             ApplicationSounds.PlayOnIcomingPrivate(this);
         }
 
+
+        protected override void CloseAction()
+        {
+            ApplicationContext.Current.MainViewModel.PrivateViewModels.Remove(this);
+        }
+
         public IEntityIdentifier Participant { get; set; }
-
-
+        
         public IConference Conference { get; set; }
 
         public ObservableCollection<MessageViewModel> Messages

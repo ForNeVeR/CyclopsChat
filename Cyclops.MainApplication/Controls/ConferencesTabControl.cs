@@ -13,6 +13,11 @@ namespace Cyclops.MainApplication.Controls
 {
     public class ConferencesTabControl : TabControl
     {
+        public ConferencesTabControl()
+        {
+            Visibility = System.Windows.Visibility.Hidden;
+        }
+
         public static readonly DependencyProperty ConferencesSourceProperty =
             DependencyProperty.Register("ConferencesSource", typeof (ObservableCollection<ConferenceViewModel>),
                                         typeof (ConferencesTabControl),
@@ -114,6 +119,15 @@ namespace Cyclops.MainApplication.Controls
                     Items.Remove(oldItem);
                     Cleanup();
                 }
+            ControlVisibility();
+        }
+
+        private void ControlVisibility()
+        {
+            if (!Items.IsNullOrEmpty() && Visibility == Visibility.Hidden)
+                Visibility = Visibility.Visible;
+            else if (Items.IsNullOrEmpty())
+                Visibility = Visibility.Hidden;
         }
 
         private void PrivatesSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -129,6 +143,7 @@ namespace Cyclops.MainApplication.Controls
                     Items.Remove(oldItem);
                     Cleanup();
                 }
+            ControlVisibility();
         }
 
         private void Cleanup()
@@ -137,6 +152,11 @@ namespace Cyclops.MainApplication.Controls
             GC.SuppressFinalize(this);
             GC.WaitForPendingFinalizers();
             GC.Collect();
+        }
+
+        private ContextMenu GetContextMenu(string name)
+        {
+            return FindResource(name) as ContextMenu;
         }
 
         private void AddConference(ConferenceViewModel conference)
@@ -155,8 +175,10 @@ namespace Cyclops.MainApplication.Controls
             tab.SetBinding(TabItem.IsSelectedProperty, binding);
 
             tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
+            tab.ContextMenu = GetContextMenu("conferenceMenu");
             Items.Add(tab);
             SelectedItem = tab;
+            ControlVisibility();
         }
 
         private void AddPrivate(PrivateViewModel privateModel)
@@ -175,8 +197,11 @@ namespace Cyclops.MainApplication.Controls
             tab.SetBinding(TabItem.IsSelectedProperty, binding);
 
             tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
+            tab.ContextMenu = GetContextMenu("privateMenu");
             Items.Add(tab);
+            ContextMenuServiceExtensions.SetDataContext(this, privateModel);
             SelectedItem = tab;
+            ControlVisibility();
         }
 
         // Using a DependencyProperty as the backing store for ConferencesSource.  This enables animation, styling, binding, etc...

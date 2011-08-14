@@ -50,7 +50,6 @@ namespace Cyclops.Core.Resource
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
-            UserBookmarks = new List<Tuple<IEntityIdentifier, string>>();
             BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = false, ConferenceManager = ConferenceManager };
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
@@ -248,6 +247,16 @@ namespace Cyclops.Core.Resource
         public event EventHandler PublicMessage = delegate { };
         public event EventHandler<ErrorEventArgs> ErrorMessageRecieved = delegate { };
 
+        public void RemoveFromBookmarks(IEntityIdentifier conferenceId)
+        {
+            BookmarkManager[((JID)conferenceId).BareJID] = null;
+        }
+
+        public void AddToBookmarks(IEntityIdentifier conferenceId)
+        {
+            BookmarkManager.AddConference(((JID)conferenceId).BareJID, conferenceId.User, true, conferenceId.Resource);
+        }
+
         #endregion
 
         #region JabberClient events
@@ -350,7 +359,6 @@ namespace Cyclops.Core.Resource
         {
             JID conferenceJid = conference.JID;
             conferenceJid.Resource = conference.Nick;
-            UserBookmarks.Add(new Tuple<IEntityIdentifier, string>(conferenceJid, conference.ConferenceName));
             if (conference.AutoJoin)
                 OpenConference(conferenceJid);
             conference.AutoJoin = false; 
@@ -505,12 +513,10 @@ namespace Cyclops.Core.Resource
                             select new Tuple<IEntityIdentifier, string>(childNode.JID, childNode.Name)).ToList();
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
-
-        public List<Tuple<IEntityIdentifier, string>> UserBookmarks { get; private set; }
-
+        
         public void RaiseBookmarksReceived()
         {
-            ConferencesListReceived(null, new ConferencesListEventArgs(UserBookmarks));
+            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<IEntityIdentifier, string>(IdentifierBuilder.WithAnotherResource(i.Key, i.Value.Nick), i.Value.Value)).ToList()));
         }
         
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { }; 

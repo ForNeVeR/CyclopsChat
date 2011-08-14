@@ -25,6 +25,8 @@ namespace Cyclops.MainApplication
         private ApplicationContext()
         {
             SmilePacks = new ISmilePack[0];
+            if (IsInDesignMode)
+                return;
             ReloadApplicationSettings();
             DisableAllSounds = ApplicationSettings.DisableAllSounds;
 

@@ -250,6 +250,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Resource Include="Resources\remove.png" />
+    <Resource Include="Resources\favorite.png" />
+    <Resource Include="Resources\users1.png" />
+    <Resource Include="Resources\search-web.png" />
+    <Resource Include="Resources\web search.png" />
     <Resource Include="Resources\noSound.png" />
     <Resource Include="Resources\sound.png" />
     <Resource Include="Resources\DefaultBackground.jpg" />

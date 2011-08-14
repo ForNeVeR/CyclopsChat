@@ -23,7 +23,7 @@ namespace Cyclops.MainApplication.ViewModel
         private bool isApplicationInActiveState;
         private ObservableCollection<PrivateViewModel> privateViewModels;
         private ConferenceViewModel selectedConference;
-
+        private bool isConferenceActivated;
         private PrivateViewModel selectedPrivate;
 
         /// <summary>
@@ -70,7 +70,17 @@ namespace Cyclops.MainApplication.ViewModel
         {
             mainView.ShowSettings();
         }
-    
+
+        public bool IsConferenceActivated
+        {
+            get { return isConferenceActivated; }
+            set
+            {
+                isConferenceActivated = value;
+                RaisePropertyChanged("IsConferenceActivated");
+            }
+        }
+
         public ConferenceViewModel SelectedConference
         {
             get { return selectedConference; }
@@ -78,6 +88,7 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 selectedConference = value;
                 RaisePropertyChanged("SelectedConference");
+                IsConferenceActivated = value != null;
             }
         }
 

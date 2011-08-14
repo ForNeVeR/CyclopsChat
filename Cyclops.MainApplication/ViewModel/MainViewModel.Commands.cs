@@ -12,13 +12,35 @@ namespace Cyclops.MainApplication.ViewModel
     {
         public RelayCommand OpenConferenceList { get; private set; }
         public RelayCommand CloseActiveConferenceOrPrivate { get; private set; }
+        public RelayCommand AddToBookmarks { get; private set; }
+        public RelayCommand RemoveFromBookmarks { get; private set; }
         public RelayCommand UpdateStyles { get; private set; }
 
         private void InitializeCommands()
         {
             UpdateStyles = new RelayCommand(OnUpdateStyles);
             OpenConferenceList = new RelayCommand(OpenConferenceListAction, OpenConferenceListCanExecute);
+            AddToBookmarks = new RelayCommand(AddToBookmarksAction, AddToBookmarksCanExecute);
+            RemoveFromBookmarks = new RelayCommand(RemoveFromBookmarksAction, RemoveFromBookmarksCanExecute);
             CloseActiveConferenceOrPrivate = new RelayCommand(CloseActiveConferenceOrPrivateAction, CloseActiveConferenceOrPrivateCanExecute);
+        }
+
+        private void AddToBookmarksAction()
+        {
+        }
+
+        private bool AddToBookmarksCanExecute()
+        {
+            return true;
+        }
+
+        private void RemoveFromBookmarksAction()
+        {
+        }
+
+        private bool RemoveFromBookmarksCanExecute()
+        {
+            return true;
         }
 
         private void CloseActiveConferenceOrPrivateAction()

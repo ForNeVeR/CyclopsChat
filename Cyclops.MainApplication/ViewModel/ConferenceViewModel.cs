@@ -131,6 +131,11 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
+        public override bool IsConference
+        {
+            get { return true; }
+        }
+
         public IConference Conference
         {
             get { return conference; }
@@ -265,6 +270,11 @@ namespace Cyclops.MainApplication.ViewModel
                 return;
             Conference.SendPublicMessage(RemoveEndNewLineSymbol(CurrentlyTypedMessage));
             CurrentlyTypedMessage = string.Empty;
+        }
+
+        protected override void CloseAction()
+        {
+            Conference.LeaveAndClose();
         }
 
         public override string ToString()

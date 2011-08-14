@@ -6,6 +6,8 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public partial class ConferenceViewModel
     {
+        public RelayCommand AddToBookmarks { get; private set; }
+        public RelayCommand RemoveFromBookmarks { get; private set; }
         public RelayCommand GetUserVcard { get; private set; }
         public RelayCommand ChangeSubject { get; private set; }
         public RelayCommand ChangeCurrentUserVcard { get; private set; }
@@ -19,6 +21,28 @@ namespace Cyclops.MainApplication.ViewModel
             ChangeCurrentUserVcard = new RelayCommand(() => DialogManager.ShowUsersVcard(Conference.ConferenceId, false), () => Conference.IsInConference);
             SendPublicMessageToSelectedMember = new RelayCommand(SendPublicMessageToMemberAction, DefaultCanExecuteMethod);
             ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
+            AddToBookmarks = new RelayCommand(AddToBookmarksAction, AddToBookmarksCanExecute);
+            RemoveFromBookmarks = new RelayCommand(RemoveFromBookmarksAction, RemoveFromBookmarksCanExecute);
+        }
+
+        private void RemoveFromBookmarksAction()
+        {
+            Conference.Session.RemoveFromBookmarks(Conference.ConferenceId);
+        }
+
+        private bool RemoveFromBookmarksCanExecute()
+        {
+            return Conference.IsInConference;
+        }
+
+        private void AddToBookmarksAction()
+        {
+            Conference.Session.AddToBookmarks(Conference.ConferenceId);
+        }
+
+        private bool AddToBookmarksCanExecute()
+        {
+            return Conference.IsInConference;
         }
 
         private void GetUserVcardAction()

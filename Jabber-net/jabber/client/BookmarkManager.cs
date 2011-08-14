@@ -218,6 +218,10 @@ namespace jabber.client
             }
         }
 
+        /// <summary>
+        /// </summary>
+        public IDictionary<JID, BookmarkConference> Bookmarks { get { return m_conferences; } }
+
         private void BookmarksSet(object sender, IQ iq, object state)
         {
             if ((iq == null) || (iq.Type != IQType.result))
@@ -227,7 +231,7 @@ namespace jabber.client
             if (prev == null)
                 return;
 
-            if (prev.GetAttribute("remove") == "true")
+            /*if (prev.GetAttribute("remove") == "true")
             {
                 if (OnConferenceRemove != null)
                 {
@@ -239,7 +243,7 @@ namespace jabber.client
             {
                 if (OnConferenceAdd != null)
                     OnConferenceAdd(this, prev);
-            }
+            }*/
         }
 
         /// <summary>

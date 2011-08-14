@@ -467,7 +467,7 @@ namespace jabber.connection
             {
                 if (m_name != null)
                 {
-                    return CutText(m_name, 200);
+                    return CutText(m_name, 100);
                 }
                 if (Identity != null)
                 {
@@ -476,7 +476,7 @@ namespace jabber.connection
                         if (!string.IsNullOrEmpty(id.Name))
                             m_name = id.Name;
                     }
-                    return CutText(m_name, 200);
+                    return CutText(m_name, 100);
                 }
                 string n = JID;
                 if (Node != null)

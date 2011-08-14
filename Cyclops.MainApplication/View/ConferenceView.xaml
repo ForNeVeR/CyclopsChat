@@ -29,7 +29,8 @@
         <DataTemplate x:Key="MemberInfoTemplate">
         	<Border Height="32" Background="White" x:Name="rootGrid">
             
-                <Grid MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+                <Grid MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                      ContextMenu="{StaticResource memberMenu}">
 				    <Grid.ColumnDefinitions>
 					    <ColumnDefinition Width="40" />
 					    <ColumnDefinition />
@@ -71,28 +72,7 @@
 						    </TransformGroup>
 					    </Border.RenderTransform>
 					    <TextBlock Text="NA" FontWeight="Bold" Margin="2,-1,0,0" Foreground="#FFBC2E2E" FontSize="10.667"/>
-				    </Border>
-                
-                    <Grid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="{Binding Path=Conference.SendPrivateMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding StartPrivateWithSelectedMember}">
-                                <MenuItem.Icon>
-                                    <Image Source="..\..\Resources\send.png" Height="18" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="{Binding Path=Conference.SendPublicMessage, Source={StaticResource ResourceWrapper}}" Command="{Binding SendPublicMessageToSelectedMember}">
-                            <MenuItem.Icon>
-                                <Image Source="" Height="18" />
-                            </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Header="{Binding Path=Conference.ViewVcard, Source={StaticResource ResourceWrapper}}" Command="{Binding GetUserVcard}">
-                            <MenuItem.Icon>
-                                <Image Source="..\..\Resources\image.png" Height="18" />
-                            </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </Grid.ContextMenu>
-                
+				    </Border>                
 			    </Grid>
         		     	
 			</Border>

@@ -20,6 +20,12 @@ namespace Cyclops.MainApplication.ViewModel
             get { return false; }
         }
 
+        public virtual bool IsConference
+        {
+            get { return false; }
+        }
+
+        public RelayCommand Close { get; set; }
         public IChatAreaView View { get; set; }
         public RelayCommand ClearOutputArea { get; private set; }
         public RelayCommand PasteAndSend { get; private set; }
@@ -29,9 +35,14 @@ namespace Cyclops.MainApplication.ViewModel
         {
             View = view;
             ClearOutputArea = new RelayCommand(() => View.ClearOutputArea());
+            Close = new RelayCommand(CloseAction);
             PasteAndSend = new RelayCommand(PasteAndSendAction, PasteAndSendCanExecute);
             SendMessage = new RelayCommand(OnSendMessage, OnSendMessageCanExecute);
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
+        }
+
+        protected virtual void CloseAction()
+        {
         }
 
         protected virtual void OnSendMessage()
