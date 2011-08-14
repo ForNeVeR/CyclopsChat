@@ -17,7 +17,7 @@
                 <Image Source="" Height="18" />
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{Binding }" Command="{Binding GetUserVcard}">
+        <MenuItem Header="{Binding Path=Conference.ViewVcard, Source={StaticResource ResourceWrapper}}" Command="{Binding GetUserVcard}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\image.png" Height="18" />
             </MenuItem.Icon>

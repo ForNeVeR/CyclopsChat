@@ -27,10 +27,10 @@
         <ValueConverters:SumConverter x:Key="sumConverter" />
 
         <DataTemplate x:Key="MemberInfoTemplate">
-        	<Border Height="32" Background="White" x:Name="rootGrid">
-            
-                <Grid MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+            <Border Height="32" Background="White" x:Name="rootGrid" 
+                    MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                       ContextMenu="{StaticResource memberMenu}">
+                <Grid>
 				    <Grid.ColumnDefinitions>
 					    <ColumnDefinition Width="40" />
 					    <ColumnDefinition />
@@ -89,7 +89,7 @@
                 <DataTrigger Binding="{Binding StatusType}" Value="away">
                     <Setter TargetName="awayMark" Property="Visibility" Value="Visible" />
                 </DataTrigger>
-                <!--<DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                     <Setter TargetName="rootGrid" Property="Background">
                         <Setter.Value>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -101,7 +101,7 @@
                             </LinearGradientBrush>
                         </Setter.Value>
                     </Setter>
-                </DataTrigger>-->
+                </DataTrigger>
             </DataTemplate.Triggers>
 		</DataTemplate>
 
