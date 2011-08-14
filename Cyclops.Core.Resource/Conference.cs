@@ -72,6 +72,7 @@ namespace Cyclops.Core.Resource
             }
 
             room = session.ConferenceManager.GetRoom((JID)ConferenceId);
+            room.Nickname = ConferenceId.Resource;
             SubscribeToEvents();
             BeginJoin(this, EventArgs.Empty);
             room.Join();
@@ -289,6 +290,8 @@ namespace Cyclops.Core.Resource
          
         private void room_OnRoomMessage(object sender, Message msg)
         {
+            if (string.IsNullOrEmpty(msg.Body)) return;
+
             DateTime stamp = DateTime.Now;
             var delay = msg.OfType<Delay>().FirstOrDefault();
             if (delay != null && delay.Stamp != DateTime.MinValue)
@@ -334,6 +337,7 @@ namespace Cyclops.Core.Resource
 
         private void room_OnSelfMessage(object sender, Message msg)
         {
+            if (string.IsNullOrEmpty(msg.Body)) return;
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, msg, true));
         }
 

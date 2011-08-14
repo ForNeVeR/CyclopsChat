@@ -60,7 +60,7 @@
             <!-- NewNick with label-->
 			<StackPanel Grid.Row="3" Orientation="Horizontal">
                 <TextBlock Text="{Binding Path=ConferenceList.Nick, Source={StaticResource ResourceWrapper}}" VerticalAlignment="Center" Margin="10,0,8,0" />
-				<TextBox Text="{Binding OpenWithNick, Mode=TwoWay}" Width="120" Height="22" />
+                <TextBox Text="{Binding OpenWithNick, Mode=TwoWay}" Width="120" Height="22" />
 			</StackPanel>
             
             <!-- Create new conference button-->
