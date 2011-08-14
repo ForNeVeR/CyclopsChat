@@ -124,6 +124,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clears the output are.
+        /// </summary>
+        public static string ClearTip {
+            get {
+                return ResourceManager.GetString("ClearTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy (Ctrl+C).
         /// </summary>
         public static string CopyText {
@@ -156,6 +165,15 @@ namespace Cyclops.MainApplication.Localization {
         public static string CurrentUserStatusText {
             get {
                 return ResourceManager.GetString("CurrentUserStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disables all sounds.
+        /// </summary>
+        public static string DisableSoundsTip {
+            get {
+                return ResourceManager.GetString("DisableSoundsTip", resourceCulture);
             }
         }
         
@@ -372,6 +390,24 @@ namespace Cyclops.MainApplication.Localization {
         public static string ServiceUnavailableError {
             get {
                 return ResourceManager.GetString("ServiceUnavailableError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows settings view.
+        /// </summary>
+        public static string SettingsTip {
+            get {
+                return ResourceManager.GetString("SettingsTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows smiles&apos; selection dialog.
+        /// </summary>
+        public static string SmilesTip {
+            get {
+                return ResourceManager.GetString("SmilesTip", resourceCulture);
             }
         }
         

@@ -178,7 +178,7 @@
     <value>Ограничить кол-во смайлов в сообщении:</value>
   </data>
   <data name="SoundEvenIfActive" xml:space="preserve">
-    <value>Прогр. даже если вкладка активна:</value>
+    <value>Проигр. даже если вкладка активна:</value>
   </data>
   <data name="SoundOnIncomingPrivate" xml:space="preserve">
     <value>На входящее личное сообщение:</value>

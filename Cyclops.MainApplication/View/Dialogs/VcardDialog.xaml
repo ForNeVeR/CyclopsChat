@@ -42,7 +42,7 @@
 				</Grid.ColumnDefinitions>
                 <Border Background="White" Margin="10" VerticalAlignment="Top" Grid.RowSpan="10" Grid.Row="0" Width="170" Height="166">
                 	<Border.Effect>
-                		<DropShadowEffect BlurRadius="11" ShadowDepth="2" Color="#FFD0D0D0"/>
+                		<DropShadowEffect BlurRadius="2" ShadowDepth="0" Color="#99D0D0D0"/>
                 	</Border.Effect>
                     <Controls1:AnimatedImage AnimatedBitmap="{Binding Photo}" />
                 </Border>

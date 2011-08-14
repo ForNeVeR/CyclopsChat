@@ -24,7 +24,7 @@
     
     <!-- data template for the chat tab (conferences and privates)-->
     <DataTemplate x:Key="chatTabTemplate">
-        <Grid x:Name="rootGrid" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Margin="-5,0,-3,-3" Height="18">
+        <Grid x:Name="rootGrid" ContextMenu="{StaticResource conferenceMenu}" DataContext="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Margin="-5,0,-3,-3" Height="18">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="22" />
                 <ColumnDefinition />
@@ -59,6 +59,7 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding Path=DataContext.IsPrivate, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Value="True">
                 <Setter TargetName="tabIcon" Property="Source" Value="pack://application:,,,/Cyclops.MainApplication;component/Resources/user1.png"/>
+                <Setter TargetName="rootGrid" Property="ContextMenu" Value="{StaticResource privateMenu}"/>
             </DataTrigger>
             <DataTrigger Binding="{Binding Path=DataContext.UnreadMessagesCount, RelativeSource={RelativeSource AncestorType={x:Type TabItem}}}" Value="0">
                 <Setter TargetName="messagesCountIndicator" Property="Visibility" Value="Hidden"/>

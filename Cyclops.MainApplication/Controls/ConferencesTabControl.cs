@@ -175,7 +175,7 @@ namespace Cyclops.MainApplication.Controls
             tab.SetBinding(TabItem.IsSelectedProperty, binding);
 
             tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
-            tab.ContextMenu = GetContextMenu("conferenceMenu");
+            //tab.ContextMenu = GetContextMenu("conferenceMenu");
             Items.Add(tab);
             SelectedItem = tab;
             ControlVisibility();
@@ -197,7 +197,7 @@ namespace Cyclops.MainApplication.Controls
             tab.SetBinding(TabItem.IsSelectedProperty, binding);
 
             tab.SetResourceReference(HeaderedContentControl.HeaderTemplateProperty, "chatTabTemplate");
-            tab.ContextMenu = GetContextMenu("privateMenu");
+            //tab.ContextMenu = GetContextMenu("privateMenu");
             Items.Add(tab);
             ContextMenuServiceExtensions.SetDataContext(this, privateModel);
             SelectedItem = tab;

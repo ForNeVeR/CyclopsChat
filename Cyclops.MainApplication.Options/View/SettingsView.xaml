@@ -91,8 +91,8 @@
             </TabItem>
             </TabControl>
         <Button IsDefault="True" Content="{Binding Path=Common.Ok, Source={StaticResource ResourceWrapper}}" 
-                Command="{Binding Commit}" Grid.Row="1" Width="80" HorizontalAlignment="Right" Margin="2,2,6,6"/>
+                Command="{Binding Commit}" Grid.Row="1" Width="80" HorizontalAlignment="Right" Margin="2,2,92,6"/>
         <Button IsCancel="True" Content="{Binding Path=Common.Cancel, Source={StaticResource ResourceWrapper}}" 
-                Command="{Binding Cancel}" Grid.Row="1" Width="80" HorizontalAlignment="Right" Margin="2,2,92,6"/>
+                Command="{Binding Cancel}" Grid.Row="1" Width="80" HorizontalAlignment="Right" Margin="2,2,6,6"/>
     </Grid>
 </Window>

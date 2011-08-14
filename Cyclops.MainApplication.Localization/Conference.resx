@@ -138,6 +138,9 @@
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="ClearTip" xml:space="preserve">
+    <value>Clears the output are</value>
+  </data>
   <data name="CopyText" xml:space="preserve">
     <value>Copy (Ctrl+C)</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="CurrentUserStatusText" xml:space="preserve">
     <value>Status text:</value>
+  </data>
+  <data name="DisableSoundsTip" xml:space="preserve">
+    <value>Disables all sounds</value>
   </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Disconnect due '{0}'.</value>
@@ -222,6 +228,12 @@
   </data>
   <data name="ServiceUnavailableError" xml:space="preserve">
     <value>Service unavailable.</value>
+  </data>
+  <data name="SettingsTip" xml:space="preserve">
+    <value>Shows settings view</value>
+  </data>
+  <data name="SmilesTip" xml:space="preserve">
+    <value>Shows smiles' selection dialog</value>
   </data>
   <data name="StatusChangingFormat" xml:space="preserve">
     <value>{0} has changed his status to "{1}" - "{2}"</value>

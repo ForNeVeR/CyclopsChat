@@ -140,6 +140,9 @@
   <data name="Clear" xml:space="preserve">
     <value>Очистить</value>
   </data>
+  <data name="ClearTip" xml:space="preserve">
+    <value>Очистить поле чата</value>
+  </data>
   <data name="CopyText" xml:space="preserve">
     <value>Копировать (Ctrl+C)</value>
   </data>
@@ -151,6 +154,9 @@
   </data>
   <data name="CurrentUserStatusText" xml:space="preserve">
     <value>Текст статуса:</value>
+  </data>
+  <data name="DisableSoundsTip" xml:space="preserve">
+    <value>Отключить все звуки</value>
   </data>
   <data name="DisconnectMessage" xml:space="preserve">
     <value>Разрыв соединения ({0}).</value>
@@ -229,6 +235,12 @@
   </data>
   <data name="ServiceUnavailableError" xml:space="preserve">
     <value>Сервис недоступен (возможно, в данной комнате выставлен лимит на кол-во участников).</value>
+  </data>
+  <data name="SettingsTip" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SmilesTip" xml:space="preserve">
+    <value>Смайлы</value>
   </data>
   <data name="StatusChangingFormat" xml:space="preserve">
     <value>{0} изменяет статус на "{1}" - "{2}"</value>

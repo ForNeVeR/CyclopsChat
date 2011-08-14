@@ -216,16 +216,20 @@
 
 
             <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick">
+                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick"
+                        ToolTip="{Binding Path=Conference.SmilesTip, Source={StaticResource ResourceWrapper}}">
                     <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>
                 </Button>
-                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="clearButton" HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ClearOutputArea}">
+                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="clearButton" HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ClearOutputArea}"
+                        ToolTip="{Binding Path=Conference.ClearTip, Source={StaticResource ResourceWrapper}}">
                     <Image  Height="20" Width="20" Source="..\Resources\note_delete.ico"/>
                 </Button>
-                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="configButton" HorizontalAlignment="Right" Click="SettingsButtonClick">
+                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="configButton" HorizontalAlignment="Right" Click="SettingsButtonClick"
+                        ToolTip="{Binding Path=Conference.SettingsTip, Source={StaticResource ResourceWrapper}}">
                     <Image Height="20" Width="20" Source="..\Resources\tools.png"/>
                 </Button>
-                <ToggleButton Margin="10,0,0,-2" IsChecked="{Binding Source={x:Static MainApplication:ApplicationContext.Current}, Path=DisableAllSounds}">
+                <ToggleButton Margin="10,0,0,-2" IsChecked="{Binding Source={x:Static MainApplication:ApplicationContext.Current}, Path=DisableAllSounds}"
+                        ToolTip="{Binding Path=Conference.DisableSoundsTip, Source={StaticResource ResourceWrapper}}">
                     <Image  Height="20" Width="20" Source="..\Resources\noSound.png"/>
                 </ToggleButton>
             </Controls:ToolBarEx>
