@@ -43,24 +43,6 @@ namespace Cyclops.MainApplication
             base.OnPreviewKeyDown(e);
         }
 
-        private void SmilesButtonClick(object sender, RoutedEventArgs e)
-        {
-            SmilesView.OpenForChoise(smilesButton, InsertSmileAction);
-        }
-
-        private void InsertSmileAction(string mask)
-        {
-            if (inputBox.SelectionLength == 0)
-                inputBox.Text = inputBox.Text.Insert(inputBox.SelectionStart, mask);
-            else
-                inputBox.Text = inputBox.Text.Remove(0, inputBox.SelectionLength).Insert(inputBox.SelectionStart, mask);
-            
-            inputBox.SelectionStart += mask.Length;
-
-            inputBox.Focus();
-            FocusManager.SetFocusedElement(Application.Current.MainWindow, inputBox);
-        }
-
         private void UserControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue)
@@ -95,11 +77,11 @@ namespace Cyclops.MainApplication
         {
         }
 
-        #endregion
-
-        private void SettingsButtonClick(object sender, RoutedEventArgs e)
+        public UIElement SmileElement
         {
-            ApplicationContext.Current.MainViewModel.ShowSettings();
+            get { return smilesButton; }
         }
+
+        #endregion
     }
 }

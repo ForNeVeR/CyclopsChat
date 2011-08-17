@@ -61,6 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.Shared.cs" />
     <Compile Include="Avatars\IAvatarsManager.cs" />
     <Compile Include="CaptchaSystemMessage.cs" />

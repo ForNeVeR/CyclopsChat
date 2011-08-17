@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -12,5 +13,6 @@ namespace Cyclops.MainApplication.ViewModel
         int InputBoxSelectionStart { get; set; }
         void ClearOutputArea();
         void OpenMenuOnHyperlink(Uri uri);
+        UIElement SmileElement { get; }
     }
 }

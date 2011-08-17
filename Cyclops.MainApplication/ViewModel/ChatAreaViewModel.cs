@@ -1,9 +1,11 @@
 ﻿using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
+using Cyclops.MainApplication.View;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -28,17 +30,40 @@ namespace Cyclops.MainApplication.ViewModel
         public RelayCommand Close { get; set; }
         public IChatAreaView View { get; set; }
         public RelayCommand ClearOutputArea { get; private set; }
+        public RelayCommand ShowSettings { get; private set; }
         public RelayCommand PasteAndSend { get; private set; }
         public RelayCommand SendMessage { get; private set; }
+        public RelayCommand InsertSmiles { get; private set; }
 
         protected ChatAreaViewModel(IChatAreaView view)
         {
             View = view;
             ClearOutputArea = new RelayCommand(() => View.ClearOutputArea());
             Close = new RelayCommand(CloseAction);
+            ShowSettings = new RelayCommand(() => ApplicationContext.Current.MainViewModel.ShowSettings());
             PasteAndSend = new RelayCommand(PasteAndSendAction, PasteAndSendCanExecute);
             SendMessage = new RelayCommand(OnSendMessage, OnSendMessageCanExecute);
+            InsertSmiles = new RelayCommand(InsertSmilesAction);
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
+        }
+
+        private void InsertSmilesAction()
+        {
+            SmilesView.OpenForChoise(View.SmileElement, InsertSmileIntoInputAction);
+        }
+
+        private void InsertSmileIntoInputAction(string mask)
+        {
+            if (CurrentlyTypedMessage == null)
+                CurrentlyTypedMessage = string.Empty;
+
+            if (View.InputBoxSelectionLength == 0)
+                CurrentlyTypedMessage = CurrentlyTypedMessage.Insert(View.InputBoxSelectionStart, mask);
+            else
+                CurrentlyTypedMessage = CurrentlyTypedMessage.Remove(0, View.InputBoxSelectionLength).Insert(View.InputBoxSelectionStart, mask);
+
+            View.InputBoxSelectionStart += mask.Length;
+            View.InputboxFocus();
         }
 
         protected virtual void CloseAction()

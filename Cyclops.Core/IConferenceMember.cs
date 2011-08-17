@@ -10,6 +10,8 @@ namespace Cyclops.Core
         string StatusText { get; }
         string StatusType { get; }
         bool IsSubscribed { get; }
+
+        ClientInfo ClientInfo { get; }
         BitmapImage AvatarUrl { get; }
 
         IEntityIdentifier ConferenceUserId { get; }

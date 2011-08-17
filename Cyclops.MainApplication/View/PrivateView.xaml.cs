@@ -62,6 +62,11 @@ namespace Cyclops.MainApplication.View
         {
         }
 
+        public UIElement SmileElement
+        {
+            get { return new UIElement(); }
+        }
+
         #endregion
     }
 }

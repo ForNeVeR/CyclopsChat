@@ -6,7 +6,9 @@ using System.Threading;
 using System.Windows.Media.Imaging;
 using jabber.connection;
 using jabber.protocol;
+using jabber.protocol.client;
 using jabber.protocol.iq;
+using Version = System.Version;
 
 namespace Cyclops.Core.Resource
 {
@@ -31,6 +33,21 @@ namespace Cyclops.Core.Resource
             room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
             session.JabberClient.OnPresence += JabberClientOnPresence;
             room_OnParticipantPresenceChange(room, participant); //force call
+
+
+            VersionIQ versionIq = new VersionIQ(session.JabberClient.Document);
+            versionIq.To = participant.NickJID;
+            versionIq.Type = IQType.get;
+
+            session.ConferenceManager.BeginIQ(versionIq, OnClientInfoGot, null);
+        }
+
+        private void OnClientInfoGot(object sender, IQ iq, object data)
+        {
+            if (iq == null || iq.Error != null || !(iq.Query is jabber.protocol.iq.Version))
+                return;
+            var version = iq.Query as jabber.protocol.iq.Version;
+            ClientInfo = new ClientInfo(version.OS, version.Ver, version.EntityName);
         }
 
         // this is workaround (because room_OnParticipantPresenceChange does not fired when current user changed his status
@@ -80,6 +97,20 @@ namespace Cyclops.Core.Resource
             {
                 isSubscribed = value;
                 OnPropertyChanged("IsSubscribed");
+            }
+        }
+
+        private ClientInfo clientInfo = null;
+        public ClientInfo ClientInfo
+        {
+            get
+            {
+                return clientInfo;
+            }
+            private set
+            {
+                clientInfo = value;
+                OnPropertyChanged("ClientInfo");
             }
         }
 

@@ -19,15 +19,25 @@
         <KeyBinding Modifiers="Control+Shift"
                         Key="V"
                         Command="{Binding ConferenceViewModel.PasteAndSend}" />
+        <KeyBinding Modifiers="Control"
+                        Key="S"
+                        Command="{Binding ConferenceViewModel.InsertSmiles}" />
     </UserControl.InputBindings>
 	<UserControl.Resources>
         
         <ValueConverters:StatusTypeToIntegerConverter x:Key="statusTypeConverter"/>
         <ValueConverters:SubjectConverter x:Key="subjectConverter"/>
         <ValueConverters:SumConverter x:Key="sumConverter" />
+        <ValueConverters:BraceConverter x:Key="braceConverter" />
+
+        <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+            </Style.Resources>
+        </Style>
 
         <DataTemplate x:Key="MemberInfoTemplate">
-            <Border Height="32" Background="White" x:Name="rootGrid" 
+            <Border Height="32" Background="White" x:Name="rootGrid"
                     MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                       ContextMenu="{StaticResource memberMenu}">
                 <Grid>
@@ -46,10 +56,17 @@
 					    <Image Source="{Binding AvatarUrl}" 
 						       Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
 				    </Border>
-                    <TextBlock Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" x:Name="nickTextBlock" Grid.Column="1" Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
+
+                    <StackPanel x:Name="nickPanel" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1" Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}">
+                        <TextBlock  x:Name="nickTextBlock"  Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
                                TextTrimming="CharacterEllipsis" Foreground="#FF565656" />
-                    <TextBlock Width="{Binding ActualWidth, ElementName=nickTextBlock}" Grid.Column="1" Grid.Row="1" TextTrimming="CharacterEllipsis" 
+                        <TextBlock TextTrimming="CharacterEllipsis" Margin="5,1,0,0"
+                               Text="{Binding ClientInfo, Converter={StaticResource braceConverter}, FallbackValue=CyclopsChat}" Foreground="#919191"/>
+                    </StackPanel>
+
+                    <TextBlock Width="{Binding ActualWidth, ElementName=nickPanel}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextTrimming="CharacterEllipsis" 
                                Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
+                    
 			
 				    <Border x:Name="awayMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
 					    <Border.RenderTransform>
@@ -90,17 +107,7 @@
                     <Setter TargetName="awayMark" Property="Visibility" Value="Visible" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
-                    <Setter TargetName="rootGrid" Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="White" Offset="0"/>
-                                <GradientStop Color="White" Offset="0.828"/>
-                                <GradientStop Color="#FFE9E9E9" Offset="0.527"/>
-                                <GradientStop Color="#FFE9E9E9" Offset="0.634"/>
-                                <GradientStop Color="#FFF1F1F1" Offset="0.407"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter TargetName="rootGrid" Property="Background" Value="#E3E3FD"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
 		</DataTemplate>
@@ -124,7 +131,7 @@
 			<RowDefinition Height="65" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsHitTestVisible="False" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
+		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
                  Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay, Converter={StaticResource subjectConverter}}" VerticalAlignment="Center" Margin="0,0,24,0"
                  TextWrapping="NoWrap" ToolTip="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}"/>
         
@@ -216,7 +223,7 @@
 
 
             <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
-                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Click="SmilesButtonClick"
+                <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Command="{Binding ConferenceViewModel.InsertSmiles}"
                         ToolTip="{Binding Path=Conference.SmilesTip, Source={StaticResource ResourceWrapper}}">
                     <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>
                 </Button>
@@ -224,7 +231,7 @@
                         ToolTip="{Binding Path=Conference.ClearTip, Source={StaticResource ResourceWrapper}}">
                     <Image  Height="20" Width="20" Source="..\Resources\note_delete.ico"/>
                 </Button>
-                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="configButton" HorizontalAlignment="Right" Click="SettingsButtonClick"
+                <Button Cursor="Hand" Margin="10,0,0,-2" x:Name="configButton" HorizontalAlignment="Right" Command="{Binding ConferenceViewModel.ShowSettings}"
                         ToolTip="{Binding Path=Conference.SettingsTip, Source={StaticResource ResourceWrapper}}">
                     <Image Height="20" Width="20" Source="..\Resources\tools.png"/>
                 </Button>
