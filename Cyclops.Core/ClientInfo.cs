@@ -15,7 +15,7 @@ namespace Cyclops.Core
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", Client, Version);
+            return string.Format("{0} {1} ({2})", Client, Version, Os);
         }
     }
 }

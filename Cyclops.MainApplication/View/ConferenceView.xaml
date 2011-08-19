@@ -39,7 +39,8 @@
         <DataTemplate x:Key="MemberInfoTemplate">
             <Border Height="32" Background="White" x:Name="rootGrid"
                     MainApplication:ContextMenuServiceExtensions.DataContext="{Binding Path=ConferenceViewModel, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-                      ContextMenu="{StaticResource memberMenu}">
+                      ContextMenu="{StaticResource memberMenu}"
+                    ToolTip="{Binding ClientInfo, TargetNullValue=Loading}">
                 <Grid>
 				    <Grid.ColumnDefinitions>
 					    <ColumnDefinition Width="40" />
@@ -60,8 +61,6 @@
                     <StackPanel x:Name="nickPanel" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1" Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}">
                         <TextBlock  x:Name="nickTextBlock"  Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
                                TextTrimming="CharacterEllipsis" Foreground="#FF565656" />
-                        <TextBlock TextTrimming="CharacterEllipsis" Margin="5,1,0,0"
-                               Text="{Binding ClientInfo, Converter={StaticResource braceConverter}, FallbackValue=CyclopsChat}" Foreground="#919191"/>
                     </StackPanel>
 
                     <TextBlock Width="{Binding ActualWidth, ElementName=nickPanel}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextTrimming="CharacterEllipsis" 
