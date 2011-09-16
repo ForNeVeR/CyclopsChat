@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Media.Imaging;
+using Cyclops.Core.Resource.JabberNetExtensions;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
@@ -33,13 +34,8 @@ namespace Cyclops.Core.Resource
             room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
             session.JabberClient.OnPresence += JabberClientOnPresence;
             room_OnParticipantPresenceChange(room, participant); //force call
-
-
-            VersionIQ versionIq = new VersionIQ(session.JabberClient.Document);
-            versionIq.To = participant.NickJID;
-            versionIq.Type = IQType.get;
-
-            session.ConferenceManager.BeginIQ(versionIq, OnClientInfoGot, null);
+            Role = RoleConversion(participant);
+            JabberCommonHelper.GetClientVersionAsnyc(session, participant.NickJID, OnClientInfoGot);
         }
 
         private void OnClientInfoGot(object sender, IQ iq, object data)
@@ -62,6 +58,10 @@ namespace Cyclops.Core.Resource
                     StatusType = pres.Show;
                 }
             }
+            if (participant.NickJID.Equals(conference.ConferenceId))
+            {
+                Role = RoleConversion(participant);
+            }
         }
 
         #region Implementation of ISessionHolder
@@ -82,7 +82,7 @@ namespace Cyclops.Core.Resource
 
         public bool IsModer
         {
-            get { return participant.IsModer(); }
+            get { return Role >= Role.Moder; }
         }
 
         public bool IsMe
@@ -97,6 +97,18 @@ namespace Cyclops.Core.Resource
             {
                 isSubscribed = value;
                 OnPropertyChanged("IsSubscribed");
+            }
+        }
+
+        private Role role;
+        public Role Role
+        {
+            get { return role; }
+            set
+            {
+                role = value;
+                OnPropertyChanged("Role");
+                OnPropertyChanged("IsModer");
             }
         }
 
@@ -168,7 +180,7 @@ namespace Cyclops.Core.Resource
         {
             if (this.participant != participant)
                 return;
-            UpdateProperties();
+            Role = RoleConversion(participant);
             StatusText = participant.Presence.Status;
             StatusType = participant.Presence.Show;
             if (!isFirstPresence)
@@ -176,11 +188,19 @@ namespace Cyclops.Core.Resource
             else isFirstPresence = false;
         }
 
-        private void UpdateProperties()
+        private Role RoleConversion(RoomParticipant roomParticipant)
         {
-            string[] props = { /*"StatusType", "StatusText",*/ "IsModer" };
-            foreach (var prop in props)
-                OnPropertyChanged(prop);
+            if (roomParticipant.Role == RoomRole.visitor)
+                return Core.Role.Devoiced;
+            if (roomParticipant.Affiliation == RoomAffiliation.owner)
+                return Core.Role.Owner;
+            if (roomParticipant.Affiliation == RoomAffiliation.admin)
+                return Core.Role.Admin;
+            if (roomParticipant.Role == RoomRole.moderator)
+                return Core.Role.Moder;
+            if (roomParticipant.Affiliation == RoomAffiliation.member)
+                return Core.Role.Member;
+            return Core.Role.Default;
         }
     }
 }

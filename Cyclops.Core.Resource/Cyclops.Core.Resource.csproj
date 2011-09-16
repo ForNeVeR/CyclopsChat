@@ -69,6 +69,7 @@
       <DependentUpon>XmppConsole.cs</DependentUpon>
     </Compile>
     <Compile Include="IqCommonHandler.cs" />
+    <Compile Include="JabberNetExtensions\JabberCommonHelper.cs" />
     <Compile Include="JabberNetExtensions\PhotoX.cs" />
     <Compile Include="ChatLogger.cs" />
     <Compile Include="ResourceLocator.cs" />

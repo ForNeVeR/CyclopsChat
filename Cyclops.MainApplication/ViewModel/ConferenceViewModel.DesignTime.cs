@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cyclops.Core;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -14,6 +15,7 @@ namespace Cyclops.MainApplication.ViewModel
         public ConferenceViewModelDesignTime()
         {
             var members = new List<Member>();
+            Random random = new Random(Environment.TickCount);
             for (int i = 0; i < 15; i++)
             {
                 members.Add(new Member
@@ -21,6 +23,7 @@ namespace Cyclops.MainApplication.ViewModel
                                     AvatarUrl = @"..\Resources\testavatar.png",
                                     IsModer = false,
                                     Nick = "Username" + i,
+                                    Role = (Role)random.Next(0, 4),
                                     StatusText = "Some status text some status text"
                                 });
             }
@@ -50,6 +53,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             public string AvatarUrl { get; set; }
             public string Nick { get; set; }
+            public Role Role { get; set; }
             public string StatusText { get; set; }
             public bool IsModer { get; set; }
         }

@@ -152,6 +152,7 @@
     <Compile Include="Notifications\TaskbarNotifier.cs" />
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ValueConverters\BraceConverter.cs" />
+    <Compile Include="ValueConverters\RoleAndAffilationToImageConverter.cs" />
     <Compile Include="ValueConverters\SubjectConverter.cs" />
     <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
     <Compile Include="ValueConverters\Invertor.cs" />
@@ -251,6 +252,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Resource Include="Resources\icon_shutup.png" />
+    <Resource Include="Resources\medal_silver_2.png" />
+    <Resource Include="Resources\Moderator_icon.png" />
+    <Resource Include="Resources\icon_crown.gif" />
+    <Resource Include="Resources\user_man.png" />
     <Resource Include="Resources\remove.png" />
     <Resource Include="Resources\favorite.png" />
     <Resource Include="Resources\users1.png" />
@@ -264,7 +270,7 @@
     <Resource Include="Resources\tools.png" />
     <Resource Include="Resources\warning.png" />
     <Resource Include="Resources\error.png" />
-    <Resource Include="Resources\Folder.png" />
+    <Resource Include="Resources\green-star-th.png" />
     <Resource Include="Resources\image.png" />
     <Resource Include="Resources\send.png" />
     <Resource Include="Resources\editicon.png" />

@@ -11,7 +11,7 @@
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
              x:Class="Cyclops.MainApplication.ConferenceView" 
              IsVisibleChanged="UserControlIsVisibleChanged"
-             d:DesignHeight="400" d:DesignWidth="500" 
+             d:DesignHeight="800" d:DesignWidth="500" 
              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
@@ -28,6 +28,7 @@
         <ValueConverters:StatusTypeToIntegerConverter x:Key="statusTypeConverter"/>
         <ValueConverters:SubjectConverter x:Key="subjectConverter"/>
         <ValueConverters:SumConverter x:Key="sumConverter" />
+        <ValueConverters:RoleAndAffilationToImageConverter x:Key="roleAndAffilationConverter"/>
         <ValueConverters:BraceConverter x:Key="braceConverter" />
 
         <Style x:Key="ListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
@@ -59,8 +60,9 @@
 				    </Border>
 
                     <StackPanel x:Name="nickPanel" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1" Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}">
-                        <TextBlock  x:Name="nickTextBlock"  Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
-                               TextTrimming="CharacterEllipsis" Foreground="#FF565656" />
+                        <Image Margin="-17,-2,0,0"  Source="{Binding Role, Converter={StaticResource roleAndAffilationConverter}}" />
+                        <TextBlock x:Name="nickTextBlock"  Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
+                               TextTrimming="CharacterEllipsis" Foreground="#FF565656" Margin="2,0,0,0"/>
                     </StackPanel>
 
                     <TextBlock Width="{Binding ActualWidth, ElementName=nickPanel}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextTrimming="CharacterEllipsis" 
@@ -96,6 +98,9 @@
                 <DataTrigger Binding="{Binding IsModer}" Value="True">
                     <Setter TargetName="nickTextBlock" Property="Foreground" Value="Green" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding Role}" Value="Devoiced">
+                    <Setter TargetName="nickTextBlock" Property="Foreground" Value="#9D9D9D" />
+                </DataTrigger>
                 <DataTrigger Binding="{Binding StatusType}" Value="xa">
                     <Setter TargetName="naMark" Property="Visibility" Value="Visible" />
                 </DataTrigger>
@@ -113,7 +118,7 @@
 
         <CollectionViewSource x:Key="membersSource" Source="{Binding ConferenceViewModel.Conference.Members}">
             <CollectionViewSource.SortDescriptions>
-                <ComponentModel:SortDescription PropertyName="IsModer" Direction="Descending"/>
+                <ComponentModel:SortDescription PropertyName="Role" Direction="Descending"/>
                 <ComponentModel:SortDescription PropertyName="Nick"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>

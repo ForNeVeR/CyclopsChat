@@ -11,6 +11,7 @@ namespace Cyclops.Core
         string StatusType { get; }
         bool IsSubscribed { get; }
 
+        Role Role { get; }
         ClientInfo ClientInfo { get; }
         BitmapImage AvatarUrl { get; }
 
