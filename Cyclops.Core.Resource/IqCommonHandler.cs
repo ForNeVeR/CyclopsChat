@@ -77,13 +77,19 @@ namespace Cyclops.Core.Resource
         {
             var os = Environment.OSVersion;
             string result = "";
+            if (os.Version.Major == 7 && os.Version.Minor == 0)
+            {
+                result = "Windows 8";//windows 8 is 6.2 or 7.0 ?
+            }
             if (os.Version.Major == 6)
             {
                 if (os.Version.Minor == 0)
                     result = "Windows Vista";
                 else if (os.Version.Minor == 1)
                     result = "Windows 7";
-                else if (os.Version.Minor == 3)
+                else if (os.Version.Minor == 2)
+                    result = "Windows 8";
+                else if (os.Version.Minor == 3) //sure?
                     result = "Windows Server 2008";
             }
             else if (os.Version.Major == 5)

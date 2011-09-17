@@ -22,6 +22,7 @@ namespace Cyclops.Core
         void SendPrivateMessage(IEntityIdentifier target, string body);
         void RejoinWithNewNick(string nick);
 
+        event EventHandler<RoleChangedEventArgs> RoleChanged;
         event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus;
         event EventHandler<DisconnectEventArgs> Disconnected;
         event EventHandler<ConferenceJoinEventArgs> Joined;

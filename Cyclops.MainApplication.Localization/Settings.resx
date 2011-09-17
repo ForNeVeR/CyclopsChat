@@ -171,6 +171,12 @@
   <data name="PopupStaysOpenning" xml:space="preserve">
     <value>Pop-up showing time in sec.:</value>
   </data>
+  <data name="ShowEntryAndExits" xml:space="preserve">
+    <value>Show users' entry and exits</value>
+  </data>
+  <data name="ShowRoleChanges" xml:space="preserve">
+    <value>Show roles' changes</value>
+  </data>
   <data name="ShowStatusChanges" xml:space="preserve">
     <value>Show status changes in a chat:</value>
   </data>

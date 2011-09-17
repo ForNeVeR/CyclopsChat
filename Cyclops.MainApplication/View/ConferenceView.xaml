@@ -226,7 +226,15 @@
             <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
 
 
-            <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor">
+            <Controls:ToolBarEx Grid.ColumnSpan="2" ToolBarTray.IsLocked="True" RenderOptions.BitmapScalingMode="NearestNeighbor" BorderThickness="0" BorderBrush="#FF5E5E5E" Margin="0,0,-11,0">
+            	<Controls:ToolBarEx.Background>
+            		<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+            			<GradientStop Color="White" Offset="0.462"/>
+            			<GradientStop Color="White" Offset="0.747"/>
+            			<GradientStop Color="#FFFBFBFB" Offset="1"/>
+            			<GradientStop Color="#FEEBEBEB"/>
+            		</LinearGradientBrush>
+            	</Controls:ToolBarEx.Background>
                 <Button Cursor="Hand" Margin="0,0,0,-4" x:Name="smilesButton" HorizontalAlignment="Left" Command="{Binding ConferenceViewModel.InsertSmiles}"
                         ToolTip="{Binding Path=Conference.SmilesTip, Source={StaticResource ResourceWrapper}}">
                     <Image Height="20" Width="20" Source="..\Resources\Smile.gif"/>

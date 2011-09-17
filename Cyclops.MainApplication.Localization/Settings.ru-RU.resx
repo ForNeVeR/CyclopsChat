@@ -171,6 +171,12 @@
   <data name="PopupStaysOpenning" xml:space="preserve">
     <value>Длительность всплыв. уведомления, сек.:</value>
   </data>
+  <data name="ShowEntryAndExits" xml:space="preserve">
+    <value>Показывать входы и выходы участников</value>
+  </data>
+  <data name="ShowRoleChanges" xml:space="preserve">
+    <value>Показывать изменение ролей участников</value>
+  </data>
   <data name="ShowStatusChanges" xml:space="preserve">
     <value>Отображать изменения статусов в чате:</value>
   </data>

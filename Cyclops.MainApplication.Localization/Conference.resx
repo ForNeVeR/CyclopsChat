@@ -126,6 +126,9 @@
   <data name="CaptchaMessage" xml:space="preserve">
     <value>Prove you are not a bot:</value>
   </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>User {0} {1}</value>
+  </data>
   <data name="ChangeSubject" xml:space="preserve">
     <value>Changing subject</value>
   </data>
@@ -213,6 +216,30 @@
   </data>
   <data name="ReconnectStart" xml:space="preserve">
     <value>Reconnect in {0} seconds...</value>
+  </data>
+  <data name="RoleAdmin" xml:space="preserve">
+    <value>is now administrator</value>
+  </data>
+  <data name="RoleBanned" xml:space="preserve">
+    <value>was banned</value>
+  </data>
+  <data name="RoleDevoiced" xml:space="preserve">
+    <value>was devoiced</value>
+  </data>
+  <data name="RoleKicked" xml:space="preserve">
+    <value>was kicked</value>
+  </data>
+  <data name="RoleMember" xml:space="preserve">
+    <value>is now member</value>
+  </data>
+  <data name="RoleModer" xml:space="preserve">
+    <value>is now moderator</value>
+  </data>
+  <data name="RoleOwner" xml:space="preserve">
+    <value>is now owner</value>
+  </data>
+  <data name="RoleRegular" xml:space="preserve">
+    <value>is now regular user</value>
   </data>
   <data name="RoomHasPassword" xml:space="preserve">
     <value>This conference has password (inputbox is not implemented yet :()</value>

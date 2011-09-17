@@ -48,6 +48,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.Banned += ConferenceBanned;
             Conference.NickChange += ConferenceNickChange;
             Conference.Kicked += ConferenceKicked;
+            Conference.RoleChanged += RoleChanged;
             Conference.AccessDenied += ConferenceAccessDenied;
             Conference.InvalidCaptchaCode += ConferenceInvalidCaptchaCode;
             Conference.Disconnected += ConferenceDisconnected;
@@ -62,6 +63,37 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.SomebodyChangedHisStatus += ConferenceSomebodyChangedHisStatus;
             Conference.ParticipantLeave += ConferenceParticipantLeave;
             Conference.Messages.CollectionChanged += ConferenceMessagesCollectionChanged;
+        }
+
+        private void RoleChanged(object sender, RoleChangedEventArgs e)
+        {
+            if (Settings.ShowRoleChanges)
+                AddNotifyMessage(Localization.Conference.ChangeRole, e.To, LocalizeRole(e.Role));
+        }
+
+        private string LocalizeRole(Role role)
+        {
+            switch (role)
+            {
+                case Role.Banned:
+                    return Localization.Conference.RoleBanned;
+                case Role.Kicked:
+                    return Localization.Conference.RoleKicked;
+                case Role.Devoiced:
+                    return Localization.Conference.RoleDevoiced;
+                case Role.Regular:
+                    return Localization.Conference.RoleRegular;
+                case Role.Member:
+                    return Localization.Conference.RoleMember;
+                case Role.Moder:
+                    return Localization.Conference.RoleModer;
+                case Role.Admin:
+                    return Localization.Conference.RoleAdmin;
+                case Role.Owner:
+                    return Localization.Conference.RoleOwner;
+                default:
+                    throw new ArgumentOutOfRangeException("role");
+            }
         }
 
         private void ConferenceMessagesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -89,13 +121,15 @@ namespace Cyclops.MainApplication.ViewModel
         private void ConferenceParticipantLeave(object sender, ConferenceMemberEventArgs e)
         {
             ApplicationSounds.PlayOnUserLeave(this);
-            AddNotifyMessage(Localization.Conference.UserLeaveMessage, e.Member.Nick);
+            if (ApplicationContext.Current.ApplicationSettings.ShowEntryAndExits)
+                AddNotifyMessage(Localization.Conference.UserLeaveMessage, e.Member.Nick);
         }
 
         private void ConferenceParticipantJoin(object sender, ConferenceMemberEventArgs e)
         {
             ApplicationSounds.PlayOnUserJoin(this);
-            AddNotifyMessage(Localization.Conference.UserJoinMessage, e.Member.Nick);
+            if (ApplicationContext.Current.ApplicationSettings.ShowEntryAndExits)
+                AddNotifyMessage(Localization.Conference.UserJoinMessage, e.Member.Nick);
         }
 
         private void SoundOnSystemMessage()

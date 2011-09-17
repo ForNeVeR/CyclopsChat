@@ -128,6 +128,9 @@
     <value>Докажите, что вы не бот (введите текст с картинки в поле ввода):</value>
     <comment>а то я вам не верю...</comment>
   </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>Пользователь {0} {1}</value>
+  </data>
   <data name="ChangeSubject" xml:space="preserve">
     <value>Изменение темы</value>
   </data>
@@ -220,6 +223,30 @@
   </data>
   <data name="ReconnectStart" xml:space="preserve">
     <value>Автоматическое переподключение через {0} секунд...</value>
+  </data>
+  <data name="RoleAdmin" xml:space="preserve">
+    <value>теперь администратор</value>
+  </data>
+  <data name="RoleBanned" xml:space="preserve">
+    <value>забанен</value>
+  </data>
+  <data name="RoleDevoiced" xml:space="preserve">
+    <value>лишён голоса</value>
+  </data>
+  <data name="RoleKicked" xml:space="preserve">
+    <value>выкинут из комнаты</value>
+  </data>
+  <data name="RoleMember" xml:space="preserve">
+    <value>теперь член комнаты</value>
+  </data>
+  <data name="RoleModer" xml:space="preserve">
+    <value>теперь модератор</value>
+  </data>
+  <data name="RoleOwner" xml:space="preserve">
+    <value>теперь владетель комнаты</value>
+  </data>
+  <data name="RoleRegular" xml:space="preserve">
+    <value>теперь обычный пользователь</value>
   </data>
   <data name="RoomHasPassword" xml:space="preserve">
     <value>Эта комната запоролена. Введите пароль в поле ввода.</value>

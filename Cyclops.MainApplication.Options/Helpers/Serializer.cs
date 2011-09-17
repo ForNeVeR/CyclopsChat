@@ -10,7 +10,7 @@ namespace Cyclops.MainApplication.Options.Helpers
         public T Deserialize(string path)
         {
             Stream stream = null;
-            try
+            try //using? не, не слышал
             {
                 stream = File.OpenRead(path);
                 return xmlSerializer.Deserialize(stream) as T;

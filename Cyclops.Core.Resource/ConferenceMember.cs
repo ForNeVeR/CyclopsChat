@@ -190,17 +190,7 @@ namespace Cyclops.Core.Resource
 
         private Role RoleConversion(RoomParticipant roomParticipant)
         {
-            if (roomParticipant.Role == RoomRole.visitor)
-                return Core.Role.Devoiced;
-            if (roomParticipant.Affiliation == RoomAffiliation.owner)
-                return Core.Role.Owner;
-            if (roomParticipant.Affiliation == RoomAffiliation.admin)
-                return Core.Role.Admin;
-            if (roomParticipant.Role == RoomRole.moderator)
-                return Core.Role.Moder;
-            if (roomParticipant.Affiliation == RoomAffiliation.member)
-                return Core.Role.Member;
-            return Core.Role.Default;
+            return JabberCommonHelper.ConvertRole(roomParticipant.Role, roomParticipant.Affiliation);
         }
     }
 }

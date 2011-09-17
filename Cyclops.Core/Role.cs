@@ -7,10 +7,12 @@ namespace Cyclops.Core
 {
     public enum Role
     {
-        Devoiced = -1, //Affilation
-        Default = 0,
+        Banned = -3, //Special case
+        Kicked = -2, //Special case
+        Devoiced = -1, //Affiliation
+        Regular = 0,
         Member,
-        Moder, //Affilation
+        Moder, //Affiliation
         Admin,
         Owner
     }

@@ -88,6 +88,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User {0} {1}.
+        /// </summary>
+        public static string ChangeRole {
+            get {
+                return ResourceManager.GetString("ChangeRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changing subject.
         /// </summary>
         public static string ChangeSubject {
@@ -345,6 +354,78 @@ namespace Cyclops.MainApplication.Localization {
         public static string ReconnectStart {
             get {
                 return ResourceManager.GetString("ReconnectStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is now administrator.
+        /// </summary>
+        public static string RoleAdmin {
+            get {
+                return ResourceManager.GetString("RoleAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was banned.
+        /// </summary>
+        public static string RoleBanned {
+            get {
+                return ResourceManager.GetString("RoleBanned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was devoiced.
+        /// </summary>
+        public static string RoleDevoiced {
+            get {
+                return ResourceManager.GetString("RoleDevoiced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to was kicked.
+        /// </summary>
+        public static string RoleKicked {
+            get {
+                return ResourceManager.GetString("RoleKicked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is now member.
+        /// </summary>
+        public static string RoleMember {
+            get {
+                return ResourceManager.GetString("RoleMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is now moderator.
+        /// </summary>
+        public static string RoleModer {
+            get {
+                return ResourceManager.GetString("RoleModer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is now owner.
+        /// </summary>
+        public static string RoleOwner {
+            get {
+                return ResourceManager.GetString("RoleOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to is now regular user.
+        /// </summary>
+        public static string RoleRegular {
+            get {
+                return ResourceManager.GetString("RoleRegular", resourceCulture);
             }
         }
         

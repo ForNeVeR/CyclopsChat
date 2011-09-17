@@ -18,7 +18,7 @@ namespace Cyclops.MainApplication.ValueConverters
             const string uriTemplate = @"pack://application:,,,/Cyclops.MainApplication;component/Resources/{0}";
             switch (role)
             {
-                case Role.Default:
+                case Role.Regular:
                     return string.Format(uriTemplate, "");
                 case Role.Devoiced:
                     return string.Format(uriTemplate, "icon_shutup.png");

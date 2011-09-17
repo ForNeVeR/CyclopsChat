@@ -105,6 +105,10 @@ namespace Cyclops.Core.Resource
             if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID) && !pres.From.Equals(Session.CurrentUserId))
                 return;
 
+            var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(pres, room.Participants.FindParticipant(pres.From));
+            if (roleChangedEventArgs != null && IsInConference)
+                RoleChanged(this, roleChangedEventArgs);
+            
             IEntityIdentifier from = pres.From.Equals(Session.CurrentUserId) ? ConferenceId : pres.From;
 
             var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(from));
@@ -222,7 +226,6 @@ namespace Cyclops.Core.Resource
                 waitingForPassword = false;
             
             Joined(this, new ConferenceJoinEventArgs());
-            IsInConference = true;
             foreach (RoomParticipant participant in room.Participants)
             {
                 if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
@@ -231,6 +234,7 @@ namespace Cyclops.Core.Resource
                                                          AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                                                      });
             }
+            IsInConference = true;
         }
 
         private void room_OnParticipantLeave(Room room, RoomParticipant participant)
@@ -501,6 +505,7 @@ namespace Cyclops.Core.Resource
             SomebodyChangedHisStatus(this, new ConferenceMemberEventArgs(member));
         }
 
+        public event EventHandler<RoleChangedEventArgs> RoleChanged = delegate { }; 
         public event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus = delegate { }; 
         public event EventHandler ServiceUnavailable = delegate { };
         public event EventHandler<ConferenceJoinEventArgs> Joined = delegate { };

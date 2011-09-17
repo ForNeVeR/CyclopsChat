@@ -61,6 +61,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomEventArgs\RoleChangedEventArgs.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.Shared.cs" />

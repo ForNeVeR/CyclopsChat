@@ -12,17 +12,16 @@ namespace Cyclops.MainApplication.Options.Model
         private bool enableErrorPopups;
         private bool enablePrivatePopups;
         private bool isSmilesAnimated;
-        private string selectedLanguage;
-        private int smilesLimitInMessage;
         private int popupStaysOpenning;
+        private string selectedLanguage;
+        private bool showEntryAndExits;
+        private bool showRoleChanges;
+        private int smilesLimitInMessage;
 
         [XmlIgnore]
         public string[] Languages
         {
-            get
-            {
-                return LocalizationManager.Instance.Languages.Select(i => i.Culture).ToArray();
-            }
+            get { return LocalizationManager.Instance.Languages.Select(i => i.Culture).ToArray(); }
         }
 
         public string SelectedLanguage
@@ -85,6 +84,26 @@ namespace Cyclops.MainApplication.Options.Model
             }
         }
 
+        public bool ShowEntryAndExits
+        {
+            get { return showEntryAndExits; }
+            set
+            {
+                showEntryAndExits = value;
+                RaisePropertyChanged("ShowEntryAndExits");
+            }
+        }
+
+        public bool ShowRoleChanges
+        {
+            get { return showRoleChanges; }
+            set
+            {
+                showRoleChanges = value;
+                RaisePropertyChanged("ShowRoleChanges");
+            }
+        }
+
         public bool BlinkOnlyOnPrivates
         {
             get { return blinkOnlyOnPrivates; }
@@ -115,6 +134,8 @@ namespace Cyclops.MainApplication.Options.Model
             cloneObj.DisableBlinking = DisableBlinking;
             cloneObj.BlinkOnlyOnPrivates = BlinkOnlyOnPrivates;
             cloneObj.IsSmilesAnimated = IsSmilesAnimated;
+            cloneObj.ShowEntryAndExits = ShowEntryAndExits;
+            cloneObj.ShowRoleChanges = ShowRoleChanges;
         }
 
         private void SetInterfaceDefaultValues()
@@ -127,6 +148,8 @@ namespace Cyclops.MainApplication.Options.Model
             DisableBlinking = false;
             BlinkOnlyOnPrivates = false;
             IsSmilesAnimated = false;
+            ShowRoleChanges = true;
+            ShowEntryAndExits = true;
         }
     }
 }

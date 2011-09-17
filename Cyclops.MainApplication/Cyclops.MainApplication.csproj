@@ -252,6 +252,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <SplashScreen Include="Splashscreen.png" />
     <Resource Include="Resources\icon_shutup.png" />
     <Resource Include="Resources\medal_silver_2.png" />
     <Resource Include="Resources\Moderator_icon.png" />

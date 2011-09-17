@@ -197,7 +197,7 @@ namespace Cyclops.Core.Resource
             else
             {
                 JabberClient.AutoRoster = false;
-                JabberClient.Priority = -1;
+                JabberClient.Priority = 0;// -1;
             }
 
             JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5;

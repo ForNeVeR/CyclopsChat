@@ -14,4 +14,6 @@
   <HideOnWindowClosing>false</HideOnWindowClosing>
   <DisableAllSounds>false</DisableAllSounds>
   <SoundEvenIfActive>true</SoundEvenIfActive>
+  <ShowRoleChanges>true</ShowRoleChanges>
+  <ShowEntryAndExits>true</ShowEntryAndExits>
 </ApplicationSettings>
