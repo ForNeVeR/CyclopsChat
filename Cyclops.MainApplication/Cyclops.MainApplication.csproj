@@ -160,6 +160,7 @@
     <Compile Include="ValueConverters\StatusTypeToIntegerConverter.cs" />
     <Compile Include="ValueConverters\SumConverter.cs" />
     <Compile Include="ViewModel\IMainView.cs" />
+    <Compile Include="ViewModel\NickAndStatusViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ConferencesServiceItem.cs" />
     <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
@@ -198,6 +199,9 @@
     <Compile Include="View\Dialogs\DialogManager.cs" />
     <Compile Include="View\Dialogs\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialogs\NickAndStatusDialog.xaml.cs">
+      <DependentUpon>NickAndStatusDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Dialogs\VcardDialog.xaml.cs">
       <DependentUpon>VcardDialog.xaml</DependentUpon>
@@ -309,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Page Include="View\Dialogs\NickAndStatusDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Dialogs\VcardDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

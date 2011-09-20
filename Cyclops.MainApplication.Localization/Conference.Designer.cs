@@ -340,6 +340,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conference is not found..
+        /// </summary>
+        public static string NotFoundError {
+            get {
+                return ResourceManager.GetString("NotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only members can join to this conference..
         /// </summary>
         public static string OnlyMembersAccess {

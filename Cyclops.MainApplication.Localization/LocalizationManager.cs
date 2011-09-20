@@ -54,8 +54,7 @@ namespace Cyclops.MainApplication.Localization
                                 new Language {Culture = "en-US", Name = "English"},
                                 new Language {Culture = "ru-RU", Name = "Russian"}
                             };
-            var lang = Languages.FirstOrDefault(i =>
-                string.Equals(i.Culture, Thread.CurrentThread.CurrentCulture.Name, StringComparison.InvariantCultureIgnoreCase)) ?? Languages[0];
+            var lang = Languages.First();
             SelectedLanguage = lang;
         }
 

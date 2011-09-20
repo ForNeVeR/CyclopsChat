@@ -154,46 +154,14 @@
 
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="23" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Expander IsExpanded="False" FontWeight="Bold" Foreground="DarkGray" Style="{DynamicResource ExpanderStyle}" 
-                      Header="{Binding ConferenceViewModel.NewNick}" Margin="0,0,-2,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="12"/>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="12"/>
-                        <RowDefinition Height="26"/>
-                        <RowDefinition Height="12" />
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="30" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserNick, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
-                    <TextBox x:Name="nickBox" Margin="4,4,1,4" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="1" 
-                             Text="{Binding ConferenceViewModel.NewNick, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                             Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"/>
-                    
-					
-                    <TextBlock Grid.Row="2" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserStatus, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
-                    <ComboBox Grid.Row="3" Margin="4,0,0,2" VerticalAlignment="Bottom" IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}"
-                              SelectedIndex="{Binding ConferenceViewModel.Conference.Session.StatusType, Mode=TwoWay, Converter={StaticResource statusTypeConverter}}">
-						<ComboBoxItem>Online</ComboBoxItem>
-						<ComboBoxItem>Busy</ComboBoxItem>
-						<ComboBoxItem>Away</ComboBoxItem>
-						<ComboBoxItem>Not available</ComboBoxItem>
-					</ComboBox>
-					
-					
-					<TextBlock Grid.Row="4" FontWeight="Normal" VerticalAlignment="Bottom" Text="{Binding Path=Conference.CurrentUserStatusText, Source={StaticResource ResourceWrapper}}" Margin="4,0,0,-4" />
-                    <TextBox x:Name="statusBox" Margin="4,4,1,4" TextWrapping="Wrap"
-							 IsEnabled="{Binding ConferenceViewModel.Conference.IsInConference}" FontWeight="Normal" MaxLength="60" Grid.Row="5" 
-                             Text="{Binding ConferenceViewModel.Conference.Session.Status, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                             Controls:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" />
-					<Button Grid.Row="6" Command="{Binding ConferenceViewModel.ChangeCurrentUserVcard}" 
-                            Content="{Binding Path=Conference.EditVcard, Source={StaticResource ResourceWrapper}}" Height="22" HorizontalAlignment="Left" Margin="3,0,0,0" FontWeight="Normal" />
-                </Grid>
-            </Expander>
+
+            <Button Style="{StaticResource borderlessButtonStyle}" Margin="2,0,0,0" 
+                    Command="{Binding ConferenceViewModel.NickAndStatusChange}" 
+                    Content="{Binding ConferenceViewModel.NewNick, FallbackValue=Nick}"
+                    Cursor="Hand" BorderThickness="0"/>
                       
             <ListBox Grid.Row="1"
                  BorderThickness="0"

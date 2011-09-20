@@ -21,7 +21,9 @@ namespace Cyclops.Core
         bool ChangeNick(string value);
         void SendPrivateMessage(IEntityIdentifier target, string body);
         void RejoinWithNewNick(string nick);
+        void ChangeNickAndStatus(string nick, StatusType statusType, string status);
 
+        event EventHandler NotFound;
         event EventHandler<RoleChangedEventArgs> RoleChanged;
         event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus;
         event EventHandler<DisconnectEventArgs> Disconnected;

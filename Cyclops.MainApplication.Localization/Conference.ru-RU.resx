@@ -217,6 +217,9 @@
     <value>В этой комнате уже есть участник с таким же ником.</value>
     <comment>ты не оригинален</comment>
   </data>
+  <data name="NotFoundError" xml:space="preserve">
+    <value>Комната не найдена!</value>
+  </data>
   <data name="OnlyMembersAccess" xml:space="preserve">
     <value>В эту комнату могут войти только назначенные участники.</value>
     <comment>ВИПнах</comment>

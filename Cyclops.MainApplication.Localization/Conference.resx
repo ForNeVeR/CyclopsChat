@@ -211,6 +211,9 @@
   <data name="NickConflictMessage" xml:space="preserve">
     <value>Nick conflict. Please, rejoin with another one.</value>
   </data>
+  <data name="NotFoundError" xml:space="preserve">
+    <value>Conference is not found.</value>
+  </data>
   <data name="OnlyMembersAccess" xml:space="preserve">
     <value>Only members can join to this conference.</value>
   </data>

@@ -5,10 +5,7 @@ using System.Linq;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.MainApplication.Controls;
-using Cyclops.MainApplication.MessageDecoration;
-using Cyclops.MainApplication.MessageDecoration.Decorators;
 using Cyclops.MainApplication.View.Dialogs;
-using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -54,6 +51,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.Disconnected += ConferenceDisconnected;
             Conference.BeginJoin += ConferenceBeginJoin;
             Conference.ServiceUnavailable += ConferenceServiceUnavailable;
+            Conference.NotFound += ConferenceNotFound;
             Conference.StartReconnectTimer += ConferenceStartReconnectTimer;
             Conference.CantChangeSubject += ConferenceCantChangeSubject;
             Conference.SubjectChanged += ConferenceSubjectChanged;
@@ -63,6 +61,12 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.SomebodyChangedHisStatus += ConferenceSomebodyChangedHisStatus;
             Conference.ParticipantLeave += ConferenceParticipantLeave;
             Conference.Messages.CollectionChanged += ConferenceMessagesCollectionChanged;
+        }
+
+        private void ConferenceNotFound(object sender, EventArgs e)
+        {
+            SoundOnSystemMessage();
+            AddSystemMessage(Localization.Conference.NotFoundError);
         }
 
         private void RoleChanged(object sender, RoleChangedEventArgs e)

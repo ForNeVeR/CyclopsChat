@@ -23,16 +23,19 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
             var userX = presence["x"] as UserX;
             if (userX == null || userX.RoomItem == null)
                 return null;
+            
+            if (userX.RoomItem.Actor == null || (presence.Status == null && presence.Show == null))
+                return null;
 
             Role role = Role.Regular;
-            if(!userX.Status.IsNullOrEmpty())
+            if (!userX.Status.IsNullOrEmpty())
             {
                 if (userX.Status[0] == RoomStatus.KICKED)
                     role = Role.Kicked;
                 if (userX.Status[0] == RoomStatus.BANNED)
                     role = Role.Banned;
             }
-            else
+            else 
                 role = ConvertRole(userX.RoomItem.Role, userX.RoomItem.Affiliation);
 
             return new RoleChangedEventArgs { To = presence.From.Resource, Role = role };

@@ -194,6 +194,9 @@ namespace Cyclops.Core.Resource
                     MethodNotAllowedError(this, EventArgs.Empty);
                     break;
 
+                case 404:
+                    NotFound(this, EventArgs.Empty);
+                    break;
 #if DEBUG
                 default:
                     Debugger.Break();
@@ -500,11 +503,23 @@ namespace Cyclops.Core.Resource
                 Authenticated(this, new AuthenticationEventArgs());
         }
 
+        public void ChangeNickAndStatus(string nick, StatusType statusType, string status)
+        {
+            var manager = ((UserSession) Session).JabberClient;
+            Presence p = new Presence(manager.Document);
+            p.To = (JID)IdentifierBuilder.WithAnotherResource(ConferenceId, nick);
+            p.Status = status;
+            p.Show = statusType.StatusTypeToString();
+
+            manager.Write(p);
+        }
+
         internal void RaiseSomebodyChangedHisStatusEvent(IConferenceMember member)
         {
             SomebodyChangedHisStatus(this, new ConferenceMemberEventArgs(member));
         }
 
+        public event EventHandler NotFound = delegate { }; 
         public event EventHandler<RoleChangedEventArgs> RoleChanged = delegate { }; 
         public event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus = delegate { }; 
         public event EventHandler ServiceUnavailable = delegate { };

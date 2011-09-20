@@ -22,7 +22,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         /// </summary>
         public List<Inline> Decorate(IConferenceMessage msg, List<Inline> inlines)
         {
-            const string pattern = "(http|https|ftp|dchub|mailto|xmpp)://([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?";
+            const string pattern = "(http|https|ftp|dchub|mailto|xmpp)://([a-zA-Zà-ÿÀ-ß0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?";
 
             for (int i = 0; i < inlines.Count; i++)
             {
@@ -41,13 +41,25 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
                 for (int j = i; j < parts.Length + i; j++)
                 {
                     string part = parts[j - i];
-                    if (matches.Contains(part) && Uri.IsWellFormedUriString(part, UriKind.RelativeOrAbsolute))
+                    if (matches.Contains(part) && IsWellFormedUriString(part))
                         inlines.Insert(j, DecorateAsHyperlink(part));
                     else
                         inlines.Insert(j, CommonMessageDecorator.Decorate(msg, part));
                 }
             }
             return inlines;
+        }
+
+        private static bool IsWellFormedUriString(string uri)
+        {
+            try
+            {
+                return Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Inline DecorateAsHyperlink(string text)

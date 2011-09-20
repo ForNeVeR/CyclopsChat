@@ -6,7 +6,7 @@
   <ConnectionConfig> 
     <Server>jabber.uruchie.org</Server>
     <NetworkHost />
-    <Port>5222</Port> 
+    <Port>5222</Port>  
     <User>cyclops</User>
     <EncodedPassword>C4Y9MwPhlZI=</EncodedPassword><!--not a plain text!-->
   </ConnectionConfig>

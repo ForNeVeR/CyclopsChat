@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using Cyclops.MainApplication.View.Dialogs;
 using GalaSoft.MvvmLight.Command;
 
@@ -13,6 +14,7 @@ namespace Cyclops.MainApplication.ViewModel
         public RelayCommand ChangeCurrentUserVcard { get; private set; }
         public RelayCommand StartPrivateWithSelectedMember { get; private set; }
         public RelayCommand SendPublicMessageToSelectedMember { get; private set; }
+        public RelayCommand NickAndStatusChange { get; private set; }
 
         public void InitializeCommands()
         {
@@ -23,6 +25,14 @@ namespace Cyclops.MainApplication.ViewModel
             ChangeSubject = new RelayCommand(ChangeSubjectAction, () => Conference.IsInConference);
             AddToBookmarks = new RelayCommand(AddToBookmarksAction, AddToBookmarksCanExecute);
             RemoveFromBookmarks = new RelayCommand(RemoveFromBookmarksAction, RemoveFromBookmarksCanExecute);
+            NickAndStatusChange = new RelayCommand(NickAndStatusChangeAction, () => Conference.IsInConference && Conference.Session.IsAuthenticated);
+        }
+
+        private void NickAndStatusChangeAction()
+        {
+            NickAndStatusDialog dlg = new NickAndStatusDialog(Conference);
+            dlg.Owner = Application.Current.MainWindow;
+            dlg.ShowDialog();
         }
 
         private void RemoveFromBookmarksAction()
