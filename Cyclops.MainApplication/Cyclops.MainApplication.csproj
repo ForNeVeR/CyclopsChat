@@ -138,6 +138,7 @@
     <Compile Include="Controls\ToolBarEx.cs" />
     <Compile Include="Controls\InputBindingsManager.cs" />
     <Compile Include="Controls\SmilesTable.cs" />
+    <Compile Include="Helpers\MemoryUtility.cs" />
     <Compile Include="Helpers\StartupLinkUtil.cs" />
     <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
     <Compile Include="Helpers\ImageResizingUtility.cs" />

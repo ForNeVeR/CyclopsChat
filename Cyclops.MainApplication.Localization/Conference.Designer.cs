@@ -331,6 +331,15 @@ namespace Cyclops.MainApplication.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New nick and status.
+        /// </summary>
+        public static string NewNickDialogCaption {
+            get {
+                return ResourceManager.GetString("NewNickDialogCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nick conflict. Please, rejoin with another one..
         /// </summary>
         public static string NickConflictMessage {

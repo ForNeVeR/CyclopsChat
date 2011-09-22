@@ -539,5 +539,16 @@ namespace Cyclops.Core.Resource
 
         #endregion
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+            return ConferenceId.Equals(((Conference)obj).ConferenceId);
+        }
+
+        public override int GetHashCode()
+        {
+            return ConferenceId.GetHashCode();
+        }
     }
 }

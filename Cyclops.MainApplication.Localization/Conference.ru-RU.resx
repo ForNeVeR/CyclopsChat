@@ -150,10 +150,10 @@
     <value>Копировать (Ctrl+C)</value>
   </data>
   <data name="CurrentUserNick" xml:space="preserve">
-    <value>Ваш ник:</value>
+    <value>Ник:</value>
   </data>
   <data name="CurrentUserStatus" xml:space="preserve">
-    <value>Ваш статус:</value>
+    <value>Статус:</value>
   </data>
   <data name="CurrentUserStatusText" xml:space="preserve">
     <value>Текст статуса:</value>
@@ -212,6 +212,9 @@
   </data>
   <data name="NewNick" xml:space="preserve">
     <value>Новый ник в ({0})</value>
+  </data>
+  <data name="NewNickDialogCaption" xml:space="preserve">
+    <value>Новый ник и статус</value>
   </data>
   <data name="NickConflictMessage" xml:space="preserve">
     <value>В этой комнате уже есть участник с таким же ником.</value>

@@ -208,6 +208,9 @@
   <data name="NewNick" xml:space="preserve">
     <value>New nick in ({0})</value>
   </data>
+  <data name="NewNickDialogCaption" xml:space="preserve">
+    <value>New nick and status</value>
+  </data>
   <data name="NickConflictMessage" xml:space="preserve">
     <value>Nick conflict. Please, rejoin with another one.</value>
   </data>
