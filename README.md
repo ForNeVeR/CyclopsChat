@@ -17,9 +17,9 @@ It's built using WPF and jabber-net library. Originaly, it was hosted [here](htt
 
 # Screenshots:
 
-![Sample](http://storage3.static.itmages.ru/i/11/0814/h_1313340634_1887297_fbe3b75b8c.png)
+![Main Window Screenshot](Docs/screenshot-1.png)
 
-![Sample](http://storage3.static.itmages.ru/i/11/0814/h_1313304403_8217247_9e86dc8bf7.png)
+![Login Window Screenshot](Docs/screenshot-2.png)
 
 # License
 
