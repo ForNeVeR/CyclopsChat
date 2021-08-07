@@ -1,0 +1,22 @@
+name: Main
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * 6'
+
+jobs:
+  main:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up MSBuild environment
+        uses: microsoft/setup-msbuild@v1
+      - name: Build
+        run: MSBuild -p:Configuration=Release

@@ -31,6 +31,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.MainApplication.Opt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.MainApplication.Localization", "Cyclops.MainApplication.Localization\Cyclops.MainApplication.Localization.csproj", "{D142085E-7C6A-4F26-8F53-623BD89BBB4E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{11D748C8-33AE-4AE8-BA78-D368A8DF70D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{83BF8062-55BF-4925-B88F-804DCE42F7BA}"
+ProjectSection(SolutionItems) = preProject
+	.github\workflows\main.yml = .github\workflows\main.yml
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,5 +146,6 @@ Global
 		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5} = {1164E110-8696-43FE-878F-C8F39BD7882B}
 		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1} = {1164E110-8696-43FE-878F-C8F39BD7882B}
 		{071A79A9-E23F-418F-A6B7-63D3A3E59EEB} = {1164E110-8696-43FE-878F-C8F39BD7882B}
+		{83BF8062-55BF-4925-B88F-804DCE42F7BA} = {11D748C8-33AE-4AE8-BA78-D368A8DF70D3}
 	EndGlobalSection
 EndGlobal
