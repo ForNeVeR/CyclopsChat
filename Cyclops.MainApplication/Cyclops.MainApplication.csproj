@@ -1,454 +1,143 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{08CEBA92-6628-4818-85EB-7C24C531F1D2}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cyclops.MainApplication</RootNamespace>
-    <AssemblyName>Cyclops.MainApplication</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://cyclopschat.codeplex.com/releases/clickonce/</InstallUrl>
-    <SupportUrl>http://cyclopschat.codeplex.com</SupportUrl>
-    <ProductName>Cyclops Chat</ProductName>
-    <PublisherName>Cyclops Chat Team</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\Bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\Bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>151FB2D4ED02F9E310C31F881469C1EB2724C33C</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>Cyclops.MainApplication_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
-      <HintPath>..\Libraries\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WPF4">
-      <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="ReuxablesLegacy">
-      <HintPath>..\Libraries\ReuxablesLegacy.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\Libraries\WPFToolkit.Extended.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="..\Cyclops.Core\Properties\AssemblyInfo.Shared.cs">
-      <Link>Properties\AssemblyInfo.Shared.cs</Link>
-    </Compile>
-    <Compile Include="ApplicationContext.cs" />
-    <Compile Include="ChatObjectFactory.cs" />
-    <Compile Include="Composition\Module.cs" />
-    <Compile Include="Configuration\Profile.cs" />
-    <Compile Include="Configuration\ProfileManager.cs" />
-    <Compile Include="Controls\AnimatedImage.cs" />
-    <Compile Include="Controls\ApplicationSounds.cs" />
-    <Compile Include="Controls\ToolBarEx.cs" />
-    <Compile Include="Controls\InputBindingsManager.cs" />
-    <Compile Include="Controls\SmilesTable.cs" />
-    <Compile Include="Helpers\MemoryUtility.cs" />
-    <Compile Include="Helpers\StartupLinkUtil.cs" />
-    <Compile Include="Helpers\ContextMenuServiceExtensions.cs" />
-    <Compile Include="Helpers\ImageResizingUtility.cs" />
-    <Compile Include="Helpers\SystemHelper.cs" />
-    <Compile Include="Helpers\UIHelper.cs" />
-    <Compile Include="MessageDecoration\ChatCommands.cs" />
-    <Compile Include="MessageDecoration\DecoratorsStyles.cs" />
-    <Compile Include="MessageDecoration\Decorators\MessagePartType.cs" />
-    <Compile Include="MessageDecoration\Decorators\RunEx.cs" />
-    <Compile Include="MessageDecoration\Decorators\NickEventArgs.cs" />
-    <Compile Include="MessageDecoration\Decorators\UrlEventArgs.cs" />
-    <Compile Include="Notifications\TaskbarNotifier.cs" />
-    <Compile Include="ThemeManager.cs" />
-    <Compile Include="ValueConverters\BraceConverter.cs" />
-    <Compile Include="ValueConverters\RoleAndAffilationToImageConverter.cs" />
-    <Compile Include="ValueConverters\SubjectConverter.cs" />
-    <Compile Include="ValueConverters\FalseToCollapsedValueConverter.cs" />
-    <Compile Include="ValueConverters\Invertor.cs" />
-    <Compile Include="ValueConverters\IsNullToCollapsedValueConverter.cs" />
-    <Compile Include="ValueConverters\StatusTypeToIntegerConverter.cs" />
-    <Compile Include="ValueConverters\SumConverter.cs" />
-    <Compile Include="ViewModel\IMainView.cs" />
-    <Compile Include="ViewModel\NickAndStatusViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
-    <Compile Include="ViewModel\ConferencesServiceItem.cs" />
-    <Compile Include="ViewModel\ConferenceViewModel.DesignTime.cs" />
-    <Compile Include="ViewModel\ConferencesListViewModel.cs" />
-    <Compile Include="ViewModel\ConferenceViewModel.Commands.cs" />
-    <Compile Include="ViewModel\IChatAreaView.cs" />
-    <Compile Include="ViewModel\MainViewModel.Commands.cs" />
-    <Compile Include="ViewModel\PrivateViewModel.cs" />
-    <Compile Include="ViewModel\ChatAreaViewModel.cs" />
-    <Compile Include="ViewModel\VcardViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBaseEx.cs" />
-    <Compile Include="View\ConferencesList.xaml.cs">
-      <DependentUpon>ConferencesList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ConferenceView.xaml.cs">
-      <DependentUpon>ConferenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ChatFlowDocument.cs" />
-    <Compile Include="Controls\ChatScrollViewer.cs" />
-    <Compile Include="Controls\ConferencesTabControl.cs" />
-    <Compile Include="Controls\InputBox.cs" />
-    <Compile Include="Notifications\TrayController.cs" />
-    <Compile Include="Helpers\GlassEffectHelper.cs" />
-    <Compile Include="MessageDecoration\DecoratorsRegistry.cs" />
-    <Compile Include="MessageDecoration\Decorators\CommonMessageDecorator.cs" />
-    <Compile Include="MessageDecoration\Decorators\HyperlinkDecorator.cs" />
-    <Compile Include="MessageDecoration\Decorators\IMessageDecorator.cs" />
-    <Compile Include="MessageDecoration\Decorators\NickDecorator.cs" />
-    <Compile Include="MessageDecoration\Decorators\SmilesDecorator.cs" />
-    <Compile Include="MessageDecoration\Decorators\TimestampDecorator.cs" />
-    <Compile Include="MessageDecoration\MessagePresenter.cs" />
-    <Compile Include="ViewModel\ConferenceViewModel.cs" />
-    <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MessageViewModel.cs" />
-    <Compile Include="View\Dialogs\DialogManager.cs" />
-    <Compile Include="View\Dialogs\InputDialog.xaml.cs">
-      <DependentUpon>InputDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\NickAndStatusDialog.xaml.cs">
-      <DependentUpon>NickAndStatusDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\VcardDialog.xaml.cs">
-      <DependentUpon>VcardDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Popups\ErrorNotificationViewModel.cs" />
-    <Compile Include="View\Popups\ErrorNotification.xaml.cs">
-      <DependentUpon>ErrorNotification.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Popups\NotificationManager.cs" />
-    <Compile Include="View\Popups\PrivateNotification.xaml.cs">
-      <DependentUpon>PrivateNotification.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Popups\PrivateNotificationViewModel.cs" />
-    <Compile Include="View\PrivateView.xaml.cs">
-      <DependentUpon>PrivateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SmilesView.xaml.cs">
-      <DependentUpon>SmilesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewController.cs" />
-    <Content Include="Data\Profiles\Application.config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Data\Avatars\default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Smiles\kolobok.jisp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Sounds\3.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Sounds\2.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Sounds\1.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Themes\Default\OutputAreaStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\Profiles\Profile.config.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <SplashScreen Include="Splashscreen.png" />
-    <Resource Include="Resources\icon_shutup.png" />
-    <Resource Include="Resources\medal_silver_2.png" />
-    <Resource Include="Resources\Moderator_icon.png" />
-    <Resource Include="Resources\icon_crown.gif" />
-    <Resource Include="Resources\user_man.png" />
-    <Resource Include="Resources\remove.png" />
-    <Resource Include="Resources\favorite.png" />
-    <Resource Include="Resources\users1.png" />
-    <Resource Include="Resources\search-web.png" />
-    <Resource Include="Resources\web search.png" />
-    <Resource Include="Resources\noSound.png" />
-    <Resource Include="Resources\sound.png" />
-    <Resource Include="Resources\DefaultBackground.jpg" />
-    <Resource Include="Resources\note_delete.ico" />
-    <Resource Include="Resources\clean.ico" />
-    <Resource Include="Resources\tools.png" />
-    <Resource Include="Resources\warning.png" />
-    <Resource Include="Resources\error.png" />
-    <Resource Include="Resources\green-star-th.png" />
-    <Resource Include="Resources\image.png" />
-    <Resource Include="Resources\send.png" />
-    <Resource Include="Resources\editicon.png" />
-    <Content Include="Data\Themes\Default\SettingsViewStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Page Include="Data\Themes\Default\Brushes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
-    </Page>
-    <Page Include="View\ContextMenus.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Dialogs\InputDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Resource Include="Resources\users_c.png" />
-    <Resource Include="Resources\user group.ico" />
-    <Resource Include="Resources\user1.png" />
-    <Resource Include="Resources\mail.png" />
-    <Resource Include="Resources\stop.png" />
-    <Resource Include="Resources\testavatar.png" />
-    <Resource Include="Resources\smile.gif" />
-    <Content Include="Data\Themes\Default\General.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Page Include="View\Dialogs\NickAndStatusDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Dialogs\VcardDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Popups\ErrorNotification.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Popups\PrivateNotification.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SmilesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Resource Include="AppIcon.ico" />
-    <Page Include="View\ConferencesList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ConferenceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <None Include="Resources\ligth-off.ico" />
-    <None Include="Resources\ligth-on.ico" />
-    <None Include="Resources\EmptyIcon.ico" />
-    <Resource Include="Resources\email.png" />
-    <Resource Include="Resources\users.png" />
-    <Page Include="View\LoginView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\PrivateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj">
-      <Project>{3D3E964F-34F2-423B-B22D-865DFE640182}</Project>
-      <Name>Cyclops.Core.Resource</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj">
-      <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
-      <Name>Cyclops.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Cyclops.MainApplication.Localization\Cyclops.MainApplication.Localization.csproj">
-      <Project>{D142085E-7C6A-4F26-8F53-623BD89BBB4E}</Project>
-      <Name>Cyclops.MainApplication.Localization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Cyclops.MainApplication.Options\Cyclops.MainApplication.Options.csproj">
-      <Project>{57602637-288C-4870-B1C4-3242C8ACC165}</Project>
-      <Name>Cyclops.MainApplication.Options</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj">
-      <Project>{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}</Project>
-      <Name>2005-jabber-net</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <UseWpf>true</UseWpf>
+        <UseWindowsForms>true</UseWindowsForms>
+        <OutputType>WinExe</OutputType>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System.Configuration" />
+        <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
+            <HintPath>..\Libraries\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
+        </Reference>
+        <Reference Include="GalaSoft.MvvmLight.WPF4">
+            <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\Libraries\Microsoft.Expression.Interactions.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Practices.ServiceLocation">
+            <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
+        </Reference>
+        <Reference Include="ReuxablesLegacy">
+            <HintPath>..\Libraries\ReuxablesLegacy.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+            <SpecificVersion>False</SpecificVersion>
+            <HintPath>..\Libraries\System.Windows.Interactivity.dll</HintPath>
+        </Reference>
+        <Reference Include="WPFToolkit.Extended">
+            <HintPath>..\Libraries\WPFToolkit.Extended.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\Cyclops.Core\Properties\AssemblyInfo.Shared.cs">
+            <Link>Properties\AssemblyInfo.Shared.cs</Link>
+        </Compile>
+        <Content Include="Data\Profiles\Application.config.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <SubType>Designer</SubType>
+        </Content>
+        <Content Include="Data\Avatars\default.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Data\Smiles\kolobok.jisp">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Data\Sounds\3.wav">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Data\Sounds\2.wav">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Data\Sounds\1.wav">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Data\Themes\Default\OutputAreaStyles.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <SubType>Designer</SubType>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Data\Profiles\Profile.config.xml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <SubType>Designer</SubType>
+        </Content>
+        <SplashScreen Include="Splashscreen.png" />
+        <Resource Include="Resources\icon_shutup.png" />
+        <Resource Include="Resources\medal_silver_2.png" />
+        <Resource Include="Resources\Moderator_icon.png" />
+        <Resource Include="Resources\icon_crown.gif" />
+        <Resource Include="Resources\user_man.png" />
+        <Resource Include="Resources\remove.png" />
+        <Resource Include="Resources\favorite.png" />
+        <Resource Include="Resources\users1.png" />
+        <Resource Include="Resources\search-web.png" />
+        <Resource Include="Resources\web search.png" />
+        <Resource Include="Resources\noSound.png" />
+        <Resource Include="Resources\sound.png" />
+        <Resource Include="Resources\DefaultBackground.jpg" />
+        <Resource Include="Resources\note_delete.ico" />
+        <Resource Include="Resources\clean.ico" />
+        <Resource Include="Resources\tools.png" />
+        <Resource Include="Resources\warning.png" />
+        <Resource Include="Resources\error.png" />
+        <Resource Include="Resources\green-star-th.png" />
+        <Resource Include="Resources\image.png" />
+        <Resource Include="Resources\send.png" />
+        <Resource Include="Resources\editicon.png" />
+        <Content Include="Data\Themes\Default\SettingsViewStyles.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Resource Include="Resources\users_c.png" />
+        <Resource Include="Resources\user group.ico" />
+        <Resource Include="Resources\user1.png" />
+        <Resource Include="Resources\mail.png" />
+        <Resource Include="Resources\stop.png" />
+        <Resource Include="Resources\testavatar.png" />
+        <Resource Include="Resources\smile.gif" />
+        <Content Include="Data\Themes\Default\General.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Resource Include="AppIcon.ico" />
+        <None Include="Resources\ligth-off.ico" />
+        <None Include="Resources\ligth-on.ico" />
+        <None Include="Resources\EmptyIcon.ico" />
+        <Resource Include="Resources\email.png" />
+        <Resource Include="Resources\users.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj">
+            <Project>{3D3E964F-34F2-423B-B22D-865DFE640182}</Project>
+            <Name>Cyclops.Core.Resource</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj">
+            <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
+            <Name>Cyclops.Core</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\Cyclops.MainApplication.Localization\Cyclops.MainApplication.Localization.csproj">
+            <Project>{D142085E-7C6A-4F26-8F53-623BD89BBB4E}</Project>
+            <Name>Cyclops.MainApplication.Localization</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\Cyclops.MainApplication.Options\Cyclops.MainApplication.Options.csproj">
+            <Project>{57602637-288C-4870-B1C4-3242C8ACC165}</Project>
+            <Name>Cyclops.MainApplication.Options</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj">
+            <Project>{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}</Project>
+            <Name>2005-jabber-net</Name>
+        </ProjectReference>
+    </ItemGroup>
 </Project>
