@@ -21,6 +21,16 @@ It's built using WPF and jabber-net library. Originaly, it was hosted [here](htt
 
 ![Login Window Screenshot](Docs/screenshot-2.png)
 
+# Build
+
+To build the project, install [.NET 5 SDK][dotnet-sdk], and then run the following in the shell:
+
+```console
+$ dotnet build
+```
+
 # License
 
 MIT
+
+[dotnet-sdk]: https://dotnet.microsoft.com/download
