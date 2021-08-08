@@ -5,6 +5,7 @@
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>WinExe</OutputType>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     </PropertyGroup>
     <PropertyGroup>
         <ApplicationIcon>AppIcon.ico</ApplicationIcon>
@@ -117,6 +118,9 @@
         <None Include="Resources\EmptyIcon.ico" />
         <Resource Include="Resources\email.png" />
         <Resource Include="Resources\users.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj">
