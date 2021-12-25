@@ -1,148 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{61356ED8-D17B-4940-943D-812B8FCDA911}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cyclops.Core</RootNamespace>
-    <AssemblyName>Cyclops.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CyclopsKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CustomEventArgs\RoleChangedEventArgs.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="ClientInfo.cs" />
-    <Compile Include="Properties\AssemblyInfo.Shared.cs" />
-    <Compile Include="Avatars\IAvatarsManager.cs" />
-    <Compile Include="CaptchaSystemMessage.cs" />
-    <Compile Include="IChatLogger.cs" />
-    <Compile Include="CustomEventArgs\AvatarChangedEventArgs.cs" />
-    <Compile Include="CustomEventArgs\CaptchaEventArgs.cs" />
-    <Compile Include="CustomEventArgs\ConferenceMemberEventArgs.cs" />
-    <Compile Include="CustomEventArgs\ErrorEventArgs.cs" />
-    <Compile Include="CustomEventArgs\NickChangeEventArgs.cs" />
-    <Compile Include="CustomEventArgs\StatusType.cs" />
-    <Compile Include="CustomEventArgs\RegistrationEventArgs.cs" />
-    <Compile Include="CustomEventArgs\RegistrationResult.cs" />
-    <Compile Include="CustomEventArgs\SubjectChangedEventArgs.cs" />
-    <Compile Include="IDebugWindow.cs" />
-    <Compile Include="ILogger.cs" />
-    <Compile Include="CustomEventArgs\ConferenceJoinErrorKind.cs" />
-    <Compile Include="IChatObjectsValidator.cs" />
-    <Compile Include="CustomEventArgs\ConferencesListEventArgs.cs" />
-    <Compile Include="CustomEventArgs\ConnectionErrorKind.cs" />
-    <Compile Include="CustomEventArgs\AuthenticationEventArgs.cs" />
-    <Compile Include="CustomEventArgs\BannedEventArgs.cs" />
-    <Compile Include="CustomEventArgs\ConferenceJoinEventArgs.cs" />
-    <Compile Include="CustomEventArgs\DisconnectEventArgs.cs" />
-    <Compile Include="CustomEventArgs\KickedEventArgs.cs" />
-    <Compile Include="CustomEventArgs\OperationResult.cs" />
-    <Compile Include="Helpers\CommonExtensions.cs" />
-    <Compile Include="Helpers\EnumerableExtensions.cs" />
-    <Compile Include="Helpers\ReflectionHelper.cs" />
-    <Compile Include="Helpers\ResourceHelper.cs" />
-    <Compile Include="IConferenceMessage.cs" />
-    <Compile Include="IObservableCollection.cs" />
-    <Compile Include="ISessionHolder.cs" />
-    <Compile Include="IConferenceMember.cs" />
-    <Compile Include="Configuration\ConnectionConfig.cs" />
-    <Compile Include="IConference.cs" />
-    <Compile Include="ISynchronizeInvokeHolder.cs" />
-    <Compile Include="Modularity\UnityExtensions\EnumerableResolutionStrategy.cs" />
-    <Compile Include="Modularity\UnityExtensions\LazyResolveBuildPlanPolicy.cs" />
-    <Compile Include="Modularity\UnityExtensions\LazySupportExtension.cs" />
-    <Compile Include="NotifyPropertyChangedBase.cs" />
-    <Compile Include="PrivateMessage.cs" />
-    <Compile Include="Registration\IRegistrationManager.cs" />
-    <Compile Include="Resources\ErrorMessageResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ErrorMessageResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Security\Base64Helper.cs" />
-    <Compile Include="Security\IStringEncryptor.cs" />
-    <Compile Include="IUserSession.cs" />
-    <Compile Include="Composition\Module.cs" />
-    <Compile Include="Modularity\Bootstrapper.cs" />
-    <Compile Include="Modularity\IModule.cs" />
-    <Compile Include="Modularity\ModuleBase.cs" />
-    <Compile Include="Modularity\ServiceLocatorImpl.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IEntityIdentifier.cs" />
-    <Compile Include="Smiles\ISmilesManager.cs" />
-    <Compile Include="Smiles\ISmile.cs" />
-    <Compile Include="Smiles\ISmilePack.cs" />
-    <Compile Include="Smiles\ISmilePackMeta.cs" />
-    <Compile Include="SystemConferenceMessage.cs" />
-    <Compile Include="Vcard.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CyclopsKey.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ErrorMessageResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ErrorMessageResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="Smiles\note.txt" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <UseWpf>true</UseWpf>
+    </PropertyGroup>
+    <PropertyGroup>
+        <SignAssembly>true</SignAssembly>
+    </PropertyGroup>
+    <PropertyGroup>
+        <AssemblyOriginatorKeyFile>CyclopsKey.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="Microsoft.Practices.ServiceLocation">
+            <HintPath>..\Libraries\Microsoft.Practices.ServiceLocation.dll</HintPath>
+        </Reference>
+        <Reference Include="Microsoft.Practices.Unity">
+            <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="Smiles\note.txt"/>
+    </ItemGroup>
 </Project>
