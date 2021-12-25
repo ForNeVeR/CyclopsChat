@@ -6,16 +6,14 @@
         <LangVersion>9</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj" />
-      <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />
-      <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj" />
+        <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj"/>
+        <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj"/>
+        <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj"/>
     </ItemGroup>
     <ItemGroup>
-      <Reference Include="GalaSoft.MvvmLight.WPF4, Version=3.0.0.30125, Culture=neutral, PublicKeyToken=6fcde8ddc3781e3e">
-        <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.Practices.Unity, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-        <HintPath>..\Libraries\Microsoft.Practices.Unity.dll</HintPath>
-      </Reference>
+        <Reference Include="GalaSoft.MvvmLight.WPF4, Version=3.0.0.30125, Culture=neutral, PublicKeyToken=6fcde8ddc3781e3e">
+            <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
+        </Reference>
+        <PackageReference Include="Unity" Version="2.0.0" />
     </ItemGroup>
 </Project>

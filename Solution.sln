@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{901A4F95-3009-4893-8C70-0A73B809EF1C}"
 	ProjectSection(SolutionItems) = preProject
 		Libraries\Microsoft.Practices.ServiceLocation.dll = Libraries\Microsoft.Practices.ServiceLocation.dll
-		Libraries\Microsoft.Practices.Unity.dll = Libraries\Microsoft.Practices.Unity.dll
 		Libraries\Moq.dll = Libraries\Moq.dll
 		Libraries\nunit.framework.dll = Libraries\nunit.framework.dll
 	EndProjectSection
