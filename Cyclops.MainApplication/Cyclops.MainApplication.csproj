@@ -123,6 +123,7 @@
         <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\Cyclops.Console\Cyclops.Console.csproj" />
         <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj">
             <Project>{3D3E964F-34F2-423B-B22D-865DFE640182}</Project>
             <Name>Cyclops.Core.Resource</Name>

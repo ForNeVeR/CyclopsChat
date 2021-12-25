@@ -17,7 +17,8 @@ namespace Cyclops.MainApplication
                 {
                     new Module(),
                     new Core.Resource.Composition.Module(),
-                    new Composition.Module()
+                    new Composition.Module(),
+                    new Console.Composition.Module()
                 });
 
         private static IUserSession session;
@@ -51,7 +52,7 @@ namespace Cyclops.MainApplication
         {
             return serviceLocator.GetInstance<IRegistrationManager>();
         }
-        
+
         public static IStringEncryptor GetStringEncryptor()
         {
             return serviceLocator.GetInstance<IStringEncryptor>();

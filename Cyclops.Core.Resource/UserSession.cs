@@ -55,12 +55,12 @@ namespace Cyclops.Core.Resource
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
             SubscribeToEvents();
-            
+
             statusType = StatusType.Online;
             status = "CyclopsChat " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
-        
-        internal JabberClient JabberClient { get; set; }
+
+        public JabberClient JabberClient { get; set; }
         internal ConferenceManager ConferenceManager { get; set; }
         internal DiscoManager DiscoManager { get; set; }
         internal BookmarkManager BookmarkManager { get; set; }
@@ -192,7 +192,7 @@ namespace Cyclops.Core.Resource
             bool isVkServer = info.Server.Equals("vk.com", StringComparison.InvariantCultureIgnoreCase);
             if (isVkServer)
             {
-                JabberClient.AutoRoster = true; 
+                JabberClient.AutoRoster = true;
             }
             else
             {
@@ -333,7 +333,7 @@ namespace Cyclops.Core.Resource
             JabberClient.OnAuthError += jabberClient_OnAuthError;
             JabberClient.OnConnect += jabberClient_OnConnect;
             JabberClient.OnDisconnect += jabberClient_OnDisconnect;
-           
+
             JabberClient.OnError += jabberClient_OnError;
             JabberClient.OnInvalidCertificate += jabberClient_OnInvalidCertificate;
             JabberClient.OnStreamError += jabberClient_OnStreamError;
@@ -361,7 +361,7 @@ namespace Cyclops.Core.Resource
             conferenceJid.Resource = conference.Nick;
             if (conference.AutoJoin)
                 OpenConference(conferenceJid);
-            conference.AutoJoin = false; 
+            conference.AutoJoin = false;
         }
 
         void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
@@ -370,7 +370,7 @@ namespace Cyclops.Core.Resource
             pres.Status = Status;
             pres.Show = StatusType.StatusTypeToString();
         }
-        
+
         //DEBUG:
         void JabberClient_OnReadText(object sender, string txt)
         {
@@ -429,7 +429,7 @@ namespace Cyclops.Core.Resource
             var client = JabberClient;
             var vcardIq = new VCardIQ(client.Document)
                                   {
-                                      To = (JID) target, 
+                                      To = (JID) target,
                                       Type = jabber.protocol.client.IQType.get
                                   };
             client.Tracker.BeginIQ(vcardIq, (s, iq, o) => callback(ConvertToVcard(iq)), new object());
@@ -464,7 +464,7 @@ namespace Cyclops.Core.Resource
                 callback(false);
             }
         }
-        
+
         private void SendUpdateNotification(Image image)
         {
             Presence pres = new Presence(JabberClient.Document);
@@ -506,21 +506,21 @@ namespace Cyclops.Core.Resource
                 ConferenceServiceId = node.JID;
             DiscoManager.BeginGetItems(node, DiscoHandlerGetItems, state);
         }
-        
+
         void DiscoHandlerGetItems(DiscoManager sender, DiscoNode node, object state)
         {
             var result = (from DiscoNode childNode in node.Children
                             select new Tuple<IEntityIdentifier, string>(childNode.JID, childNode.Name)).ToList();
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
-        
+
         public void RaiseBookmarksReceived()
         {
             ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<IEntityIdentifier, string>(IdentifierBuilder.WithAnotherResource(i.Key, i.Value.Nick), i.Value.Value)).ToList()));
         }
-        
-        public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { }; 
-        
+
+        public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { };
+
         private void ReconnectTimerTick(object sender, EventArgs e)
         {
             reconnectTimer.Stop();
