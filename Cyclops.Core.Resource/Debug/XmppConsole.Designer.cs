@@ -36,9 +36,9 @@
             this.panel = new System.Windows.Forms.Panel();
             this.toolStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // toolStrip
-            // 
+            //
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearButton,
             this.toolStripSeparator1,
@@ -48,42 +48,38 @@
             this.toolStrip.Size = new System.Drawing.Size(761, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
-            // 
+            //
             // clearButton
-            // 
+            //
             this.clearButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.clearButton.Image = ((System.Drawing.Image)(resources.GetObject("clearButton.Image")));
-            this.clearButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(82, 22);
             this.clearButton.Text = "Clear console";
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
-            // 
+            //
             // toolStripSeparator1
-            // 
+            //
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
+            //
             // hideButton
-            // 
+            //
             this.hideButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.hideButton.Image = ((System.Drawing.Image)(resources.GetObject("hideButton.Image")));
-            this.hideButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.hideButton.Name = "hideButton";
             this.hideButton.Size = new System.Drawing.Size(36, 22);
             this.hideButton.Text = "Hide";
             this.hideButton.Click += new System.EventHandler(this.hideButton_Click);
-            // 
+            //
             // panel
-            // 
+            //
             this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel.Location = new System.Drawing.Point(0, 25);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(761, 576);
             this.panel.TabIndex = 1;
-            // 
+            //
             // XmppConsole
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(761, 601);
