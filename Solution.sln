@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Core", "Cyclops.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Core.Resource", "Cyclops.Core.Resource\Cyclops.Core.Resource.csproj", "{3D3E964F-34F2-423B-B22D-865DFE640182}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Tests", "Cyclops.Tests\Cyclops.Tests.csproj", "{7CD188E0-DFCC-40CF-A954-4692A0988C63}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.MainApplication.Options", "Cyclops.MainApplication.Options\Cyclops.MainApplication.Options.csproj", "{57602637-288C-4870-B1C4-3242C8ACC165}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.MainApplication.Localization", "Cyclops.MainApplication.Localization\Cyclops.MainApplication.Localization.csproj", "{D142085E-7C6A-4F26-8F53-623BD89BBB4E}"
@@ -57,10 +55,6 @@ Global
 		{3D3E964F-34F2-423B-B22D-865DFE640182}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3E964F-34F2-423B-B22D-865DFE640182}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3E964F-34F2-423B-B22D-865DFE640182}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7CD188E0-DFCC-40CF-A954-4692A0988C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CD188E0-DFCC-40CF-A954-4692A0988C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CD188E0-DFCC-40CF-A954-4692A0988C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CD188E0-DFCC-40CF-A954-4692A0988C63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D142085E-7C6A-4F26-8F53-623BD89BBB4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D142085E-7C6A-4F26-8F53-623BD89BBB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D142085E-7C6A-4F26-8F53-623BD89BBB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
