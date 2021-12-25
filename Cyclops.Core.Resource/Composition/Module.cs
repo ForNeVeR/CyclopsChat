@@ -1,6 +1,5 @@
 ﻿using Cyclops.Core.Modularity;
 using Cyclops.Core.Registration;
-using Cyclops.Core.Resource.Debug;
 using Cyclops.Core.Resource.Registration;
 using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;
