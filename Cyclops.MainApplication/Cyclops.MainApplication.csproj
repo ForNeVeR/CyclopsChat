@@ -14,9 +14,6 @@
         <Reference Include="System.Configuration" />
         <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
         <PackageReference Include="Unity" Version="2.0.0" />
-        <Reference Include="ReuxablesLegacy">
-            <HintPath>..\Libraries\ReuxablesLegacy.dll</HintPath>
-        </Reference>
         <Reference Include="WPFToolkit.Extended">
             <HintPath>..\Libraries\WPFToolkit.Extended.dll</HintPath>
         </Reference>
