@@ -4,9 +4,7 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="GalaSoft.MvvmLight.WPF4">
-            <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-        </Reference>
+        <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
         <Reference Include="ReuxablesLegacy">
             <HintPath>..\Libraries\ReuxablesLegacy.dll</HintPath>
         </Reference>

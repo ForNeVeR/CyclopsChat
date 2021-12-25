@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Windows;
 using System.Windows.Controls;
 using Cyclops.Core;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Registration;
-using Cyclops.Core.Resource;
-using Cyclops.Core.Security;
 using Cyclops.MainApplication.Configuration;
-using Cyclops.MainApplication.Localization;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
@@ -81,7 +75,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             if (!ValidatePassword(passwordBox))
                 return;
-            
+
             IsBusy = true;
             password = passwordBox.Password;
             registrationManager.RegisterNewUserAsync(new ConnectionConfig
@@ -123,7 +117,7 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("Server");
             }
         }
-        
+
         public bool IsBusy
         {
             get { return isBusy; }
@@ -203,12 +197,12 @@ namespace Cyclops.MainApplication.ViewModel
                    !string.IsNullOrWhiteSpace(Server) &&
                    !Name.Contains("@") && !Name.Contains("/");
         }
-        
+
         private void AuthenticateAction(PasswordBox passwordBox)
         {
             if (!ValidatePassword(passwordBox))
                 return;
-            
+
             IsBusy = true;
             string encodedPsw = ChatObjectFactory.GetStringEncryptor().EncryptString(passwordBox.Password);
             var connectionConfig = new ConnectionConfig
@@ -225,11 +219,10 @@ namespace Cyclops.MainApplication.ViewModel
             Session.AuthenticateAsync(connectionConfig);
         }
 
-        protected override void Dispose(bool disposing)
+        public override void Cleanup()
         {
             Session.Authenticated -= SessionAuthenticated;
             Session.ConnectionDropped -= SessionConnectionDropped;
-            base.Dispose(disposing);
         }
     }
 }

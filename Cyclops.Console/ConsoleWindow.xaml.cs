@@ -19,7 +19,7 @@ namespace Cyclops.Console
 
         public void ShowConsole(IUserSession session)
         {
-            DataContext?.Dispose();
+            DataContext?.Cleanup();
 
             var client = ((UserSession)session).JabberClient;
             DataContext = new ConsoleViewModel(client);

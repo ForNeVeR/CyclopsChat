@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Cyclops.MainApplication.ViewModel;
+using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.View
 {
@@ -25,7 +26,7 @@ namespace Cyclops.MainApplication.View
 
         private static void ViewControllerLoginAuthenticated(object sender, EventArgs e)
         {
-            ((IDisposable) loginView.DataContext).Dispose();
+            ((ICleanup) loginView.DataContext).Cleanup();
             SetActiveView(mainView = new MainView());
         }
 

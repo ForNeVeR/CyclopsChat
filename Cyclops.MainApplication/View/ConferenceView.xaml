@@ -1,17 +1,17 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls" 
-             xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel" 
-             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase" 
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-             xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4" 
-             xmlns:MainApplication="clr-namespace:Cyclops.MainApplication" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls"
+             xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:MainApplication="clr-namespace:Cyclops.MainApplication"
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
-             x:Class="Cyclops.MainApplication.ConferenceView" 
+             xmlns:galasoft="http://www.galasoft.ch/mvvmlight"
+             x:Class="Cyclops.MainApplication.ConferenceView"
              IsVisibleChanged="UserControlIsVisibleChanged"
-             d:DesignHeight="800" d:DesignWidth="500" 
+             d:DesignHeight="800" d:DesignWidth="500"
              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType"
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
@@ -24,7 +24,7 @@
                         Command="{Binding ConferenceViewModel.InsertSmiles}" />
     </UserControl.InputBindings>
 	<UserControl.Resources>
-        
+
         <ValueConverters:StatusTypeToIntegerConverter x:Key="statusTypeConverter"/>
         <ValueConverters:SubjectConverter x:Key="subjectConverter"/>
         <ValueConverters:SumConverter x:Key="sumConverter" />
@@ -55,20 +55,20 @@
 					    <Border.Effect>
 						    <DropShadowEffect ShadowDepth="0" BlurRadius="4" Color="#FF646464"/>
 					    </Border.Effect>
-					    <Image Source="{Binding AvatarUrl}" 
+					    <Image Source="{Binding AvatarUrl}"
 						       Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality" />
 				    </Border>
 
                     <StackPanel x:Name="nickPanel" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="1" Width="{Binding Path=ActualWidth, Converter={StaticResource sumConverter}, ConverterParameter=20, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}">
                         <Image Margin="-17,-2,0,0"  Source="{Binding Role, Converter={StaticResource roleAndAffilationConverter}}" />
-                        <TextBlock x:Name="nickTextBlock"  Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333" 
+                        <TextBlock x:Name="nickTextBlock"  Text="{Binding Nick, FallbackValue=Nick}" FontWeight="Bold" FontSize="13.333"
                                TextTrimming="CharacterEllipsis" Foreground="#FF565656" Margin="2,0,0,0"/>
                     </StackPanel>
 
-                    <TextBlock Width="{Binding ActualWidth, ElementName=nickPanel}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextTrimming="CharacterEllipsis" 
+                    <TextBlock Width="{Binding ActualWidth, ElementName=nickPanel}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextTrimming="CharacterEllipsis"
                                Text="{Binding StatusText, FallbackValue=Some_status}" Foreground="#FF919191" Margin="0,0,0,0" />
-                    
-			
+
+
 				    <Border x:Name="awayMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
 					    <Border.RenderTransform>
 						    <TransformGroup>
@@ -79,7 +79,7 @@
 						    </TransformGroup>
 					    </Border.RenderTransform>
 				    </Border>
-			
+
 				    <Border x:Name="naMark" Visibility="Hidden" Grid.RowSpan="1" BorderBrush="#FF9B9B9B" BorderThickness="1" Background="White" RenderTransformOrigin="0.5,0.5" Margin="15.989,-1.737,0.759,3.177" Grid.Row="1" d:LayoutOverrides="VerticalAlignment" CornerRadius="2">
 					    <Border.RenderTransform>
 						    <TransformGroup>
@@ -90,9 +90,9 @@
 						    </TransformGroup>
 					    </Border.RenderTransform>
 					    <TextBlock Text="NA" FontWeight="Bold" Margin="2,-1,0,0" Foreground="#FFBC2E2E" FontSize="10.667"/>
-				    </Border>                
+				    </Border>
 			    </Grid>
-        		     	
+
 			</Border>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsModer}" Value="True">
@@ -135,11 +135,11 @@
 			<RowDefinition Height="65" />
 		</Grid.RowDefinitions>
 
-		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"                  
+		<TextBox Height="24" IsReadOnly="True" Background="Transparent" BorderThickness="0,0,0,1" BorderBrush="#FFE5E5E5"
                  Text="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay, Converter={StaticResource subjectConverter}}" VerticalAlignment="Center" Margin="0,0,24,0"
                  TextWrapping="NoWrap" ToolTip="{Binding ConferenceViewModel.Conference.Subject, Mode=OneWay}"/>
-        
-        <Button Style="{StaticResource borderlessButtonStyle}" Cursor="Hand" x:Name="changeSubject" 
+
+        <Button Style="{StaticResource borderlessButtonStyle}" Cursor="Hand" x:Name="changeSubject"
                 Command="{Binding ConferenceViewModel.ChangeSubject}"
                 HorizontalAlignment="Right"
                 ToolTip="{Binding Conference.EditSubjectTooltip, Source={StaticResource ResourceWrapper}}">
@@ -148,10 +148,9 @@
 
         <Controls:ChatFlowDocumentScrollViewer UseLayoutRounding="True" Style="{DynamicResource chatFlowDocumentScrollViewerStyle}" Grid.Row="1" BorderThickness="1">
             <Controls:ChatFlowDocument x:Name="chatFlowDocument"
-                                        Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1" 
-                                        Style="{DynamicResource flowDocumentStyle}" ContextMenu="{StaticResource chatFlowDocumentMenu}">
-            </Controls:ChatFlowDocument>
-		</Controls:ChatFlowDocumentScrollViewer>
+                                        Messages="{Binding ConferenceViewModel.Messages}" LineHeight="1"
+                                        Style="{DynamicResource flowDocumentStyle}" ContextMenu="{StaticResource chatFlowDocumentMenu}" />
+        </Controls:ChatFlowDocumentScrollViewer>
 
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
             <Grid.RowDefinitions>
@@ -160,23 +159,23 @@
             </Grid.RowDefinitions>
 
             <Button Style="{StaticResource borderlessButtonStyle}"
-                    Background="White"  Margin="2,0,0,0" 
-                    Command="{Binding ConferenceViewModel.NickAndStatusChange}" 
+                    Background="White"  Margin="2,0,0,0"
+                    Command="{Binding ConferenceViewModel.NickAndStatusChange}"
                     Content="{Binding ConferenceViewModel.NewNick, FallbackValue=Nick}"
                     HorizontalAlignment="Stretch"
                     Cursor="Hand" BorderThickness="0"/>
-                      
+
             <ListBox Grid.Row="1"
                  x:Name="listBox"
                  BorderThickness="0"
-                 ItemsSource="{Binding Source={StaticResource membersSource}}" 
-                 ItemTemplate="{StaticResource MemberInfoTemplate}" ScrollViewer.CanContentScroll="False" 
+                 ItemsSource="{Binding Source={StaticResource membersSource}}"
+                 ItemTemplate="{StaticResource MemberInfoTemplate}" ScrollViewer.CanContentScroll="False"
                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                  SelectedItem="{Binding ConferenceViewModel.SelectedMember, Mode=TwoWay}"
                  ItemContainerStyle="{StaticResource ListBoxItemStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
-                        <GalaSoft_MvvmLight_Command:EventToCommand Command="{Binding ConferenceViewModel.StartPrivateWithSelectedMember}"/>
+                        <galasoft:EventToCommand Command="{Binding ConferenceViewModel.StartPrivateWithSelectedMember}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ListBox>
@@ -190,9 +189,9 @@
                 <RowDefinition Height="28"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Controls:InputBox x:Name="inputBox" Grid.Row="1" FontSize="14" TextBlock.LineHeight="15" 
+            <Controls:InputBox x:Name="inputBox" Grid.Row="1" FontSize="14" TextBlock.LineHeight="15"
                                 TextBlock.LineStackingStrategy="BlockLineHeight"
-                                Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Text="{Binding ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SendCommand="{Binding ConferenceViewModel.SendMessage}"
                                 ContextMenu="{StaticResource inputMenu}"/>
             <Button Grid.Row="1" Grid.Column="1" Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.SendMessage}" />
@@ -224,7 +223,7 @@
                     <Image  Height="20" Width="20" Source="..\Resources\noSound.png"/>
                 </ToggleButton>
             </Controls:ToolBarEx>
-            
+
         </Grid>
 
 		<GridSplitter Grid.RowSpan="2" Grid.Column="1" Height="Auto" Width="2" HorizontalAlignment="Left" />

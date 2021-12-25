@@ -12,12 +12,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System.Configuration" />
-        <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
-            <HintPath>..\Libraries\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
-        </Reference>
-        <Reference Include="GalaSoft.MvvmLight.WPF4">
-            <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-        </Reference>
+        <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
         <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
             <SpecificVersion>False</SpecificVersion>
             <HintPath>..\Libraries\Microsoft.Expression.Interactions.dll</HintPath>
@@ -25,10 +20,6 @@
         <PackageReference Include="Unity" Version="2.0.0" />
         <Reference Include="ReuxablesLegacy">
             <HintPath>..\Libraries\ReuxablesLegacy.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\Libraries\System.Windows.Interactivity.dll</HintPath>
         </Reference>
         <Reference Include="WPFToolkit.Extended">
             <HintPath>..\Libraries\WPFToolkit.Extended.dll</HintPath>

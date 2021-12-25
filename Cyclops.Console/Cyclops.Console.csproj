@@ -11,9 +11,7 @@
         <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj"/>
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="GalaSoft.MvvmLight.WPF4, Version=3.0.0.30125, Culture=neutral, PublicKeyToken=6fcde8ddc3781e3e">
-            <HintPath>..\Libraries\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-        </Reference>
+        <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
         <PackageReference Include="Unity" Version="2.0.0" />
     </ItemGroup>
 </Project>
