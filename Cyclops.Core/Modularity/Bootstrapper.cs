@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Unity.Extensions;
@@ -17,7 +16,7 @@ namespace Cyclops.Core.Modularity
             ServiceLocator.SetLocatorProvider(() => locator);
 
             unity.RegisterInstance<IServiceLocator>(locator, new ContainerControlledLifetimeManager());
-            unity.RegisterInstance<IServiceProvider>(locator, new ContainerControlledLifetimeManager());
+            // unity.RegisterInstance<System.IServiceProvider>(locator, new ContainerControlledLifetimeManager());
 
             IEnumerable<IModule> modulesRaw = GetAllModulesRaw(modules);
             modulesRaw.ForEach(module => module.Initialize(unity));
