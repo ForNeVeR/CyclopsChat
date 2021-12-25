@@ -16,7 +16,6 @@ namespace Cyclops.Core.Modularity
             ServiceLocator.SetLocatorProvider(() => locator);
 
             unity.RegisterInstance<IServiceLocator>(locator, new ContainerControlledLifetimeManager());
-            // unity.RegisterInstance<System.IServiceProvider>(locator, new ContainerControlledLifetimeManager());
 
             IEnumerable<IModule> modulesRaw = GetAllModulesRaw(modules);
             modulesRaw.ForEach(module => module.Initialize(unity));
