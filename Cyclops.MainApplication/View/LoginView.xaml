@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="Cyclops.MainApplication.View.LoginView" 
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended" 
-             xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel" 
-             xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters" 
+﻿<UserControl x:Class="Cyclops.MainApplication.View.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel"
+             xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
              xmlns:Localization1="clr-namespace:Cyclops.MainApplication.Localization;assembly=Cyclops.MainApplication.Localization"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" UseLayoutRounding="True"
              FocusManager.FocusedElement="{Binding ElementName=userName}" Loaded="UserControlLoaded"
              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
@@ -40,8 +40,8 @@
     </UserControl.Resources>
 
 
-    <Controls:BusyIndicator x:Name="busyIndicator" 
-                            BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}" 
+    <xctk:BusyIndicator x:Name="busyIndicator"
+                            BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}"
                             IsBusy="{Binding IsBusy}" Focusable="False">
         <Grid x:Name="LayoutRoot">
 
@@ -75,11 +75,11 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="1" Text="{Binding Path=Login.UserName, Source={StaticResource ResourceWrapper}}" Style="{StaticResource FieldNameStyle}"/>
                     <TextBlock Grid.Row="2" Text="{Binding Path=Login.Password, Source={StaticResource ResourceWrapper}}" Style="{StaticResource FieldNameStyle}"/>
-                    <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Margin="178,0,0,0" Command="{Binding Authenticate}" CommandParameter="{Binding ElementName=passwordBox}" 
+                    <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Margin="178,0,0,0" Command="{Binding Authenticate}" CommandParameter="{Binding ElementName=passwordBox}"
                             IsDefault="True" Content="{Binding Path=Login.Connect, Source={StaticResource ResourceWrapper}}" />
-                    <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Command="{Binding Register}" CommandParameter="{Binding ElementName=passwordBox}" 
+                    <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Command="{Binding Register}" CommandParameter="{Binding ElementName=passwordBox}"
                             Content="{Binding Path=Login.RegisterAccount, Source={StaticResource ResourceWrapper}}" Margin="282,2,0,2" Width="155"/>
-                    <Expander Grid.Row="3" Grid.Column="1" x:Name="expander" Header="{Binding Path=Login.AdvancedSettings, Source={StaticResource ResourceWrapper}}" 
+                    <Expander Grid.Row="3" Grid.Column="1" x:Name="expander" Header="{Binding Path=Login.AdvancedSettings, Source={StaticResource ResourceWrapper}}"
 							  VerticalAlignment="Top" Foreground="White" FontSize="15" Margin="3,4,0,6" >
                         <Grid Background="#2E000000" Margin="-165,0,0,0">
                             <Grid.ColumnDefinitions>
@@ -108,5 +108,5 @@
                           SelectedItem="{Binding Source={x:Static Localization1:LocalizationManager.Instance}, Path=SelectedLanguage, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-    </Controls:BusyIndicator>
+    </xctk:BusyIndicator>
 </UserControl>

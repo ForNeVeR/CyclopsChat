@@ -5,13 +5,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
-        <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-            <SpecificVersion>False</SpecificVersion>
-            <HintPath>..\Libraries\WPFToolkit.dll</HintPath>
-        </Reference>
-        <Reference Include="WPFToolkit.Extended">
-            <HintPath>..\Libraries\WPFToolkit.Extended.dll</HintPath>
-        </Reference>
+        <PackageReference Include="Extended.Wpf.Toolkit" Version="4.2.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />
