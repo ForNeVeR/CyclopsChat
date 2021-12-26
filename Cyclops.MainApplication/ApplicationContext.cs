@@ -34,6 +34,12 @@ namespace Cyclops.MainApplication
             lastInputDetector.LeaveIdleMode += (_, _) => dispatcher.InvokeAsync(OnLeaveIdleMode);
         }
 
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            lastInputDetector.Dispose();
+        }
+
         private bool originalStatusSaved = false;
         private StatusType originalStatus;
 
