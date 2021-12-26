@@ -34,6 +34,8 @@ EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Console", "Cyclops.Console\Cyclops.Console.csproj", "{EF70FF5F-2CBD-4009-BE55-5B53A5AB6C1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Xmpp", "Cyclops.Xmpp\Cyclops.Xmpp.csproj", "{FC66EBD9-FF45-4200-8708-A5E484E45302}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{EF70FF5F-2CBD-4009-BE55-5B53A5AB6C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF70FF5F-2CBD-4009-BE55-5B53A5AB6C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF70FF5F-2CBD-4009-BE55-5B53A5AB6C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
