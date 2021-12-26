@@ -23,7 +23,7 @@ It's built using WPF and jabber-net library. Originaly, it was hosted [here](htt
 
 # Build
 
-To build the project, install [.NET 5 SDK][dotnet-sdk], and then run the following in the shell:
+To build the project, install [.NET 6 SDK][dotnet-sdk], and then run the following in the shell:
 
 ```console
 $ dotnet build
