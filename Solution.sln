@@ -29,6 +29,7 @@ ProjectSection(SolutionItems) = preProject
 	.editorconfig = .editorconfig
 	.gitignore = .gitignore
 	README.md = README.md
+	Directory.Build.props = Directory.Build.props
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Console", "Cyclops.Console\Cyclops.Console.csproj", "{EF70FF5F-2CBD-4009-BE55-5B53A5AB6C1C}"
