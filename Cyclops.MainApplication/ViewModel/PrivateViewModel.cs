@@ -1,10 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Cyclops.Core;
-using Cyclops.Core.Resource;
 using Cyclops.MainApplication.Controls;
-using Cyclops.MainApplication.View.Popups;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.MainApplication.ViewModel
 {

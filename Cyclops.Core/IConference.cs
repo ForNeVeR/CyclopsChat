@@ -1,6 +1,7 @@
 ﻿using System;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core
 {

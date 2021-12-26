@@ -7,6 +7,7 @@ using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.View.Dialogs;
 using Cyclops.Xmpp;
+using Cyclops.Xmpp.Data;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel

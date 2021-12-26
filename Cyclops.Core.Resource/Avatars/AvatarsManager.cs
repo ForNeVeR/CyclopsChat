@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Core.Security;
-using jabber;
+using Cyclops.Core.Helpers;
+using Cyclops.Xmpp.Data;
 using jabber.protocol;
 using jabber.protocol.client;
-using jabber.protocol.iq;
 
 namespace Cyclops.Core.Resource.Avatars
 {
@@ -20,10 +19,12 @@ namespace Cyclops.Core.Resource.Avatars
     /// </summary>
     public class AvatarsManager : IAvatarsManager
     {
+        private readonly ILogger logger;
         private readonly IUserSession session;
 
-        public AvatarsManager(IUserSession session)
+        public AvatarsManager(ILogger logger, IUserSession session)
         {
+            this.logger = logger;
             this.session = session;
             var currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             AvatarsFolder = Path.Combine(currentDir, AvatarsFolder);
@@ -39,7 +40,7 @@ namespace Cyclops.Core.Resource.Avatars
             catch
             {
                 return null;
-            } 
+            }
         }
 
         public static string AvatarsFolder = @"Data\Avatars";
@@ -71,50 +72,37 @@ namespace Cyclops.Core.Resource.Avatars
                 return defaultAvatar;
             return FromFile(file);
         }
-        
-        public void SendAvatarRequest(IEntityIdentifier id)
-        {
-            var client = ((UserSession)Session).JabberClient;
-            VCardIQ vcardIq = new VCardIQ(client.Document);
-            vcardIq.To = (JID)id;
-            vcardIq.Type = jabber.protocol.client.IQType.get;
-            client.Tracker.BeginIQ(vcardIq, OnVcard, new object());
-        }
 
-        public event EventHandler<AvatarChangedEventArgs> AvatarChange = delegate { }; 
-
-        private void OnVcard(object sender, IQ iq, object data)
+        public async Task SendAvatarRequest(IEntityIdentifier id)
         {
-            if (iq.Query is VCard)
+            var vCard = await Session.GetVCard(id);
+            var image = defaultAvatar;
+            if (vCard.Photo != null)
             {
-                BitmapImage image = defaultAvatar;
-                VCard vcard = iq.Query as VCard;
-
-                if (vcard.Photo != null && vcard.Photo.Image != null)
+                try
                 {
-                    try
-                    {
-                        var file = BuildPath(ImageUtils.CalculateSha1HashOfAnImage(vcard.Photo.Image));
-                        if (File.Exists(file))
-                            try
-                            {
-                                File.Delete(file);}
-                            catch //file is used by another process
-                            {
-                                return;
-                            }
-                        vcard.Photo.Image.Save(file, ImageFormat.Png);
-                        image = vcard.Photo.Image.ToBitmapImage();
-                    }
-                    catch
-                    {
-                        //TODO: log an exception
-                    }
+                    var file = BuildPath(ImageUtils.CalculateSha1HashOfAnImage(vCard.Photo));
+                    if (File.Exists(file))
+                        try
+                        {
+                            File.Delete(file);}
+                        catch //file is used by another process
+                        {
+                            return;
+                        }
+                    vCard.Photo.Save(file, ImageFormat.Png);
+                    image = vCard.Photo.ToBitmapImage();
                 }
-
-                AvatarChange(this, new AvatarChangedEventArgs(iq.From, image ?? defaultAvatar));
+                catch
+                {
+                    //TODO: log an exception
+                }
             }
+
+            AvatarChange(this, new AvatarChangedEventArgs(id, image));
         }
+
+        public event EventHandler<AvatarChangedEventArgs> AvatarChange = delegate { };
 
         private static string BuildPath(string hash)
         {
@@ -139,7 +127,7 @@ namespace Cyclops.Core.Resource.Avatars
                         if (DoesCacheContain(sha1Hash))
                             AvatarChange(this, new AvatarChangedEventArgs(from, GetFromCache(sha1Hash)));
 
-                        SendAvatarRequest(from);
+                        SendAvatarRequest(from).NoAwait(logger);
                     }
                     else
                         AvatarChange(this, new AvatarChangedEventArgs(from, defaultAvatar));

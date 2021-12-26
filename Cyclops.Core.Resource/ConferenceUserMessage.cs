@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Cyclops.Xmpp.Data;
 using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.x;

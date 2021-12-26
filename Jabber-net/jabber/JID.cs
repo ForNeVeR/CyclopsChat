@@ -11,14 +11,13 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
-using System.Text;
 using System.Diagnostics;
-
-using bedrock.util;
+using System.Text;
 using System.Text.RegularExpressions;
-using Cyclops.Core;
+using bedrock.util;
+using Cyclops.Xmpp.Data;
 
 namespace jabber
 {
@@ -455,12 +454,12 @@ namespace jabber
         /// </summary>
         public JID BareJID
         {
-            get 
+            get
             {
                 parse();
                 if (m_resource == null)
                     return this; // already bare
-                return new JID(m_user, m_server, null, build(m_user, m_server, null)); 
+                return new JID(m_user, m_server, null, build(m_user, m_server, null));
             }
         }
 
@@ -516,7 +515,7 @@ namespace jabber
                 count++;
             }
             string u = sb.ToString();
-            return new JID(u, server, resource); 
+            return new JID(u, server, resource);
         }
 
         /// <summary>
@@ -617,7 +616,7 @@ namespace jabber
     public class JIDTypeConverter : System.ComponentModel.TypeConverter
     {
         /// <summary>
-        /// Returns whether this converter can convert an object of one type to the type of this converter. 
+        /// Returns whether this converter can convert an object of one type to the type of this converter.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="sourceType"></param>
@@ -628,21 +627,21 @@ namespace jabber
             {
                 throw new ArgumentNullException("sourceType");
             }
-            return ((sourceType == typeof(string)) || 
-                    (typeof(JID).IsAssignableFrom(sourceType) || 
+            return ((sourceType == typeof(string)) ||
+                    (typeof(JID).IsAssignableFrom(sourceType) ||
                      base.CanConvertFrom(context, sourceType)));
         }
 
         /// <summary>
-        /// Returns whether this converter can convert the object to the specified type. 
+        /// Returns whether this converter can convert the object to the specified type.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="destinationType"></param>
         /// <returns></returns>
         public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, Type destinationType)
         {
-             return ((destinationType == typeof(string)) || 
-                     ((destinationType == typeof(JID)) || 
+             return ((destinationType == typeof(string)) ||
+                     ((destinationType == typeof(JID)) ||
                     base.CanConvertTo(context, destinationType)));
         }
 

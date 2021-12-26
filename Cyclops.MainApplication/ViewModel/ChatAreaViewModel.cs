@@ -1,12 +1,8 @@
-﻿using System.Net.Mime;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using Cyclops.Core;
+﻿using System.Windows;
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using Cyclops.MainApplication.View;
-using GalaSoft.MvvmLight;
+using Cyclops.Xmpp.Data;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel

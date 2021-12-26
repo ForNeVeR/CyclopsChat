@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Xml;
 using Cyclops.Core.Configuration;
@@ -11,7 +12,8 @@ using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
-using Cyclops.Xmpp;
+using Cyclops.Xmpp.Client;
+using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.JabberNet;
 using jabber;
 using jabber.client;
@@ -25,6 +27,7 @@ namespace Cyclops.Core.Resource
 {
     public class UserSession : NotifyPropertyChangedBase, IUserSession
     {
+        private readonly ILogger logger;
         private readonly JabberNetXmppClient xmppClient;
 
         /// <summary>
@@ -42,8 +45,10 @@ namespace Cyclops.Core.Resource
 
         private IObservableCollection<IConferenceMessage> privateMessages;
 
-        public UserSession(IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator, Dispatcher dispatcher)
+        public UserSession(ILogger logger, IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator, Dispatcher dispatcher)
         {
+            this.logger = logger;
+
             AutoReconnect = true;
             Dispatcher = dispatcher;
             Conferences = new InternalObservableCollection<IConference>();
@@ -168,7 +173,7 @@ namespace Cyclops.Core.Resource
 
         public void OpenConference(IEntityIdentifier id)
         {
-            Conferences.AsInternalImpl().Add(new Conference(this, id));
+            Conferences.AsInternalImpl().Add(new Conference(logger, this, id));
         }
 
         public void AuthenticateAsync(ConnectionConfig info)
@@ -430,16 +435,7 @@ namespace Cyclops.Core.Resource
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage {AuthorId = conferenceUserId});
         }
 
-        public void RequestVcard(IEntityIdentifier target, Action<Vcard> callback)
-        {
-            var client = JabberClient;
-            var vcardIq = new VCardIQ(client.Document)
-                                  {
-                                      To = (JID) target,
-                                      Type = jabber.protocol.client.IQType.get
-                                  };
-            client.Tracker.BeginIQ(vcardIq, (s, iq, o) => callback(ConvertToVcard(iq)), new object());
-        }
+        public Task<Vcard> GetVCard(IEntityIdentifier target) => xmppClient.GetVCard(target);
 
         public void UpdateVcard(Vcard vcard, Action<bool> callback)
         {
@@ -480,28 +476,6 @@ namespace Cyclops.Core.Resource
             PhotoX photo = new PhotoX(JabberClient.Document) {PhotoHash = hash};
             pres.AddChild(photo);
             JabberClient.Write(pres);
-        }
-
-        private static Vcard ConvertToVcard(IQ iq)
-        {
-            Vcard result = new Vcard();
-            try
-            {
-                var vcard = iq.Query as VCard;
-                if (vcard == null)
-                    return result;
-                result.Photo = vcard.Photo == null ? null : vcard.Photo.Image;
-                result.Email = vcard.Email;
-                result.FullName = vcard.FullName;
-                result.Birthday = vcard.Birthday;
-                result.Nick = vcard.Nickname ?? iq.From.Resource;
-                result.Comments = vcard.Description;
-                return result;
-            }
-            catch
-            {
-                return result;
-            }
         }
 
         public IEntityIdentifier ConferenceServiceId { get; private set; }

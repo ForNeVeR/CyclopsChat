@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 // http://www.xmpp.org/extensions/xep-0054.html
@@ -208,7 +207,7 @@ namespace jabber.protocol.iq
         /// Person's nick name.  This might be a good choice for a default roster nick,
         /// for instance.
         /// </summary>
-        public string Nickname
+        public string? Nickname
         {
             get { return GetElem("NICKNAME"); }
             set { SetElem("NICKNAME", value); }
@@ -217,7 +216,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// User's photograph
         /// </summary>
-        public VPhoto Photo
+        public VPhoto? Photo
         {
             get { return this["PHOTO"] as VPhoto; }
             set { ReplaceChild(value); }
@@ -896,7 +895,7 @@ namespace jabber.protocol.iq
             /// </summary>
             public System.Drawing.Imaging.ImageFormat ImageType
             {
-                get 
+                get
                 {
                     System.Drawing.Imaging.ImageFormat def = System.Drawing.Imaging.ImageFormat.Png;
 
@@ -980,7 +979,7 @@ namespace jabber.protocol.iq
                     }
                     catch
                     {
-                        
+
                     }
                 }
             }

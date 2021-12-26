@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core.Resource
 {

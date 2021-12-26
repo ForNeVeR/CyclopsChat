@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media.Imaging;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core
 {

@@ -492,6 +492,10 @@
       <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
       <Name>Cyclops.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj">
+      <Project>{fc66ebd9-ff45-4200-8708-a5e484e45302}</Project>
+      <Name>Cyclops.Xmpp</Name>
+    </ProjectReference>
     <ProjectReference Include="netlib.Dns\netlib.Dns.csproj">
       <Project>{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}</Project>
       <Name>netlib.Dns</Name>

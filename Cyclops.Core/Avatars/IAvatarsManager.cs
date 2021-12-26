@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core.Avatars
 {
@@ -8,7 +10,7 @@ namespace Cyclops.Core.Avatars
     {
         bool DoesCacheContain(string hash);
         BitmapImage GetFromCache(string hash);
-        void SendAvatarRequest(IEntityIdentifier id);
+        Task SendAvatarRequest(IEntityIdentifier id);
         event EventHandler<AvatarChangedEventArgs> AvatarChange;
     }
 }

@@ -11,14 +11,12 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Xml;
-
 using bedrock.util;
 using jabber.protocol.client;
 
@@ -57,7 +55,7 @@ namespace jabber.connection
         ///<param name="iq">IQ packet to send.</param>
         ///<param name="cb">Callback to execute when the result comes back.</param>
         ///<param name="cbArg">Arguments to pass to the callback.</param>
-        void BeginIQ(IQ iq, IqCB cb, object cbArg);
+        void BeginIQ(IQ iq, IqCB cb, object? cbArg);
 
         ///<summary>
         /// Does a synchronous IQ call.

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows;
 using Cyclops.Core;
-using GalaSoft.MvvmLight;
+using Cyclops.Core.Helpers;
+using Cyclops.Xmpp.Data;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 
@@ -13,13 +15,13 @@ namespace Cyclops.MainApplication.ViewModel
         private readonly Action closeAction;
         private IUserSession session;
         private Vcard sourceVcard = null;
-        
-        public VcardViewModel(IEntityIdentifier target, Action closeAction, bool isEditMode = false)
+
+        public VcardViewModel(ILogger logger, IEntityIdentifier target, Action closeAction, bool isEditMode = false)
         {
             this.closeAction = closeAction;
             IsEditMode = isEditMode;
             session = ChatObjectFactory.GetSession();
-            session.RequestVcard(target, OnReceived);
+            GetVCardInfo(target).NoAwait(logger);
             IsBusy = true;
             Save = new RelayCommand(SaveAction, SaveCanExecute);
             Cancel = new RelayCommand(closeAction);
@@ -35,15 +37,15 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void LoadPictureAction()
         {
-            // Create OpenFileDialog 
+            // Create OpenFileDialog
             OpenFileDialog dlg = new OpenFileDialog();
 
             dlg.Filter = "Images|*.png;*.jpg;*.jpeg;*.bmp;*.gif";
             dlg.Multiselect = false;
 
-            // Display OpenFileDialog by calling ShowDialog method 
+            // Display OpenFileDialog by calling ShowDialog method
             bool? result = dlg.ShowDialog();
-            // Get the selected file name and display in a TextBox 
+            // Get the selected file name and display in a TextBox
             if (result == true)
             {
                 Image img;
@@ -63,7 +65,7 @@ namespace Cyclops.MainApplication.ViewModel
                 }
             }
         }
-        
+
         private void SaveAction()
         {
             IsBusy = true;
@@ -99,8 +101,10 @@ namespace Cyclops.MainApplication.ViewModel
         public RelayCommand LoadPicture { get; set; }
         public RelayCommand ClearPicture { get; set; }
 
-        private void OnReceived(Vcard obj)
+        private async Task GetVCardInfo(IEntityIdentifier target)
         {
+            var obj = await session.GetVCard(target);
+
             sourceVcard = obj;
             Photo = obj.Photo;
             Nick = obj.Nick;
@@ -111,8 +115,8 @@ namespace Cyclops.MainApplication.ViewModel
             IsBusy = false;
         }
 
-        private Image photo;
-        public Image Photo
+        private Image? photo;
+        public Image? Photo
         {
             get { return photo; }
             set

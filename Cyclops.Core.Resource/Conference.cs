@@ -4,12 +4,13 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.Avatars;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
+using Cyclops.Xmpp.Data;
 using jabber;
 using jabber.connection;
-using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 using jabber.protocol.x;
@@ -18,18 +19,20 @@ namespace Cyclops.Core.Resource
 {
     public class Conference : NotifyPropertyChangedBase, IConference
     {
+        private readonly ILogger logger;
         private readonly UserSession session;
         private Room room;
 
-        internal Conference(UserSession session, IEntityIdentifier conferenceId)
+        internal Conference(ILogger logger, UserSession session, IEntityIdentifier conferenceId)
         {
+            this.logger = logger;
             this.session = session;
             ConferenceId = conferenceId;
 
             session.ConnectionDropped += OnConnectionDropped;
             Members = new InternalObservableCollection<IConferenceMember>();
             Messages = new InternalObservableCollection<IConferenceMessage>();
-            AvatarsManager = new AvatarsManager(session);
+            AvatarsManager = new AvatarsManager(logger, session);
             AvatarsManager.AvatarChange += AvatarsManagerAvatarChange;
 
             //if we are currently authenticated lets join to the channel imidiatly
@@ -108,7 +111,7 @@ namespace Cyclops.Core.Resource
             var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(pres, room.Participants.FindParticipant(pres.From));
             if (roleChangedEventArgs != null && IsInConference)
                 RoleChanged(this, roleChangedEventArgs);
-            
+
             IEntityIdentifier from = pres.From.Equals(Session.CurrentUserId) ? ConferenceId : pres.From;
 
             var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(from));
@@ -120,7 +123,7 @@ namespace Cyclops.Core.Resource
             if (!member.IsSubscribed)
             {
                 if (!successHandling)
-                    AvatarsManager.SendAvatarRequest(from);
+                    AvatarsManager.SendAvatarRequest(from).NoAwait(logger);
                 ((ConferenceMember)member).IsSubscribed = true;
             }
 
@@ -137,7 +140,7 @@ namespace Cyclops.Core.Resource
             room.OnLeave -= room_OnLeave;
             room.OnSubjectChange -= room_OnSubjectChange;
             room.OnPresenceError -= room_OnPresenceError;
-            
+
             room.OnSelfMessage -= room_OnSelfMessage;
             room.OnAdminMessage -= room_OnAdminMessage;
             room.OnRoomMessage -= room_OnRoomMessage;
@@ -145,8 +148,8 @@ namespace Cyclops.Core.Resource
             room.OnParticipantLeave -= room_OnParticipantLeave;
 
         }
-        
-        private bool waitingForPassword = false;  
+
+        private bool waitingForPassword = false;
         private void room_OnPresenceError(Room room, Presence pres)
         {
             if (pres.Error == null)
@@ -227,7 +230,7 @@ namespace Cyclops.Core.Resource
         {
             if (waitingForPassword)
                 waitingForPassword = false;
-            
+
             Joined(this, new ConferenceJoinEventArgs());
             foreach (RoomParticipant participant in room.Participants)
             {
@@ -258,7 +261,7 @@ namespace Cyclops.Core.Resource
                 NickChange(this, new NickChangeEventArgs(oldNick, newNick));
                 nickChangeAction = true;
             }
-            
+
             if (nickChangeAction && participant.NickJID.Equals(ConferenceId))
             {
                 // a small hack:
@@ -282,7 +285,7 @@ namespace Cyclops.Core.Resource
 
             if (!nickChangeAction)
                 ParticipantLeave(this, new ConferenceMemberEventArgs(memberObj));
-           
+
             Members.AsInternalImpl().Remove(i => participant.NickJID == (JID) i.ConferenceUserId);
         }
 
@@ -299,7 +302,7 @@ namespace Cyclops.Core.Resource
                     ParticipantJoin(this, new ConferenceMemberEventArgs(member));
             }
         }
-         
+
         private void room_OnRoomMessage(object sender, Message msg)
         {
             if (string.IsNullOrEmpty(msg.Body)) return;
@@ -453,13 +456,13 @@ namespace Cyclops.Core.Resource
             }
 
             if (waitingForPassword)
-            {                
+            {
                 //let's rejoin
                 room.Leave("");
                 room.Join(body);
                 return;
             }
-                
+
             room.PublicMessage(body);
         }
 
@@ -519,9 +522,9 @@ namespace Cyclops.Core.Resource
             SomebodyChangedHisStatus(this, new ConferenceMemberEventArgs(member));
         }
 
-        public event EventHandler NotFound = delegate { }; 
-        public event EventHandler<RoleChangedEventArgs> RoleChanged = delegate { }; 
-        public event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus = delegate { }; 
+        public event EventHandler NotFound = delegate { };
+        public event EventHandler<RoleChangedEventArgs> RoleChanged = delegate { };
+        public event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus = delegate { };
         public event EventHandler ServiceUnavailable = delegate { };
         public event EventHandler<ConferenceJoinEventArgs> Joined = delegate { };
         public event EventHandler<KickedEventArgs> Kicked = delegate { };

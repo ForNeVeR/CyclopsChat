@@ -1,4 +1,5 @@
 ﻿using System;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core.CustomEventArgs
 {

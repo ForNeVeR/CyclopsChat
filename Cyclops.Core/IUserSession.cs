@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Xmpp;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core
 {
     public interface IUserSession : IDisposable
     {
-        IXmppClient XmppClient { get; }
-
         bool IsAuthenticating { get; }
         bool IsAuthenticated { get; }
         IEntityIdentifier CurrentUserId { get; }
@@ -29,7 +28,7 @@ namespace Cyclops.Core
         void GetConferenceListAsync(string conferenceService = null);
         void RaiseBookmarksReceived();
         void StartPrivate(IEntityIdentifier conferenceUserId);
-        void RequestVcard(IEntityIdentifier target, Action<Vcard> callback);
+        Task<Vcard> GetVCard(IEntityIdentifier target);
         void UpdateVcard(Vcard vcard, Action<bool> callback);
 
         event EventHandler<ConferencesListEventArgs> ConferencesListReceived;

@@ -1,6 +1,8 @@
 using System.Xml;
+using Cyclops.Core;
+using Cyclops.Xmpp.Data;
 
-namespace Cyclops.Xmpp;
+namespace Cyclops.Xmpp.Client;
 
 public interface IXmppClient
 {
@@ -10,4 +12,6 @@ public interface IXmppClient
     event EventHandler<Exception> Error;
 
     void SendElement(XmlElement element);
+
+    Task<Vcard> GetVCard(IEntityIdentifier jid);
 }

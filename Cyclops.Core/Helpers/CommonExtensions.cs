@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops
 {

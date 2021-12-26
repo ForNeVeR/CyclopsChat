@@ -1,4 +1,6 @@
-﻿namespace Cyclops.Core
+﻿using Cyclops.Xmpp.Data;
+
+namespace Cyclops.Core
 {
     public interface IChatLogger
     {

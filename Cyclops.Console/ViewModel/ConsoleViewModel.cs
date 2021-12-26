@@ -2,7 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Xml;
-using Cyclops.Xmpp;
+using Cyclops.Xmpp.Client;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
