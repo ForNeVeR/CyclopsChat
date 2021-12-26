@@ -5,7 +5,6 @@ using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
-using jabber;
 using Microsoft.Practices.Unity;
 
 namespace Cyclops.Core.Resource.Composition
@@ -20,7 +19,6 @@ namespace Cyclops.Core.Resource.Composition
                 .RegisterType<IRegistrationManager, RegistrationManager>()
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()
-                .RegisterType<IEntityIdentifier, JID>()
                 .RegisterType<IChatLogger, ChatLogger>()
                 .RegisterType<IUserSession, UserSession>();
         }
