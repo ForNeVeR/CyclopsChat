@@ -51,7 +51,7 @@ namespace Cyclops.Console.ViewModel
             client.Error -= OnError;
         }
 
-        private void OnConnect()
+        private void OnConnect(object sender, object _)
         {
             Entries.Add("CONNECTION ESTABLISHED");
         }

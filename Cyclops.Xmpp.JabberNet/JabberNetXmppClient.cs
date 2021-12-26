@@ -13,17 +13,17 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         InitializeEvents();
     }
 
-    public event Action? Connect;
+    public event EventHandler? Connect;
     public event EventHandler<string>? ReadRawMessage;
     public event EventHandler<string>? WriteRawMessage;
     public event EventHandler<Exception>? Error;
 
     private void InitializeEvents()
     {
-        client.OnConnect += delegate { Connect?.Invoke(); };
-        client.OnReadText += (sender, text) => ReadRawMessage?.Invoke(sender, text);
-        client.OnWriteText += (sender, text) => WriteRawMessage?.Invoke(sender, text);
-        client.OnError += (sender, error) => Error?.Invoke(sender, error);
+        client.OnConnect += delegate { Connect?.Invoke(this, null); };
+        client.OnReadText += (sender, text) => ReadRawMessage?.Invoke(this, text);
+        client.OnWriteText += (sender, text) => WriteRawMessage?.Invoke(this, text);
+        client.OnError += (sender, error) => Error?.Invoke(this, error);
     }
 
     public void SendElement(XmlElement element)
