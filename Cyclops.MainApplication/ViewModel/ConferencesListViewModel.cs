@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Threading;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource;
 using Cyclops.MainApplication.View.Dialogs;
-using GalaSoft.MvvmLight;
+using Cyclops.Xmpp;
 using GalaSoft.MvvmLight.Command;
-using jabber.protocol;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -34,7 +32,7 @@ namespace Cyclops.MainApplication.ViewModel
 
             if (IsInDesignMode)
             {
-                Conferences = new[] 
+                Conferences = new[]
                                   {
                                       new ConferenceInfo {Id = new FakeId {User = "cyclops"}, Name = "Cyclops development test", IsOpened = true},
                                       new ConferenceInfo {Id = new FakeId {User = "main"}, Name = "Main (5)", IsOpened = true},
@@ -90,9 +88,9 @@ namespace Cyclops.MainApplication.ViewModel
 
         private static bool CreateConferenceValidator(string arg)
         {
-            return !string.IsNullOrWhiteSpace(arg) 
-                && arg.Length < 100 
-                && arg.Count(i => i == '@') < 2 
+            return !string.IsNullOrWhiteSpace(arg)
+                && arg.Length < 100
+                && arg.Count(i => i == '@') < 2
                 && arg.Count(i => i == '/') < 2;
         }
 
@@ -135,15 +133,15 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("Conferences");
 
                 IsBusy = true;
-                if (selectedService.ConferenceService != null && selectedService.ConferenceService.Equals(URI.BOOKMARKS))
+                if (selectedService.ConferenceService != null && selectedService.ConferenceService.Equals(Namespaces.Bookmarks))
                 {
                     Session.RaiseBookmarksReceived();
-                } 
+                }
                 else
                 {
-                    Session.GetConferenceListAsync(value.ConferenceService);    
+                    Session.GetConferenceListAsync(value.ConferenceService);
                 }
-                
+
             }
         }
 
@@ -167,7 +165,7 @@ namespace Cyclops.MainApplication.ViewModel
                 if (string.IsNullOrEmpty(value))
                     Conferences = sourceConferences.ToArray();
                 else
-                    Conferences = sourceConferences.Where(i => 
+                    Conferences = sourceConferences.Where(i =>
                         /*i.Name.ToLower().Contains(value.ToLower()) ||*/
                         i.Id.User.ToLower().Contains(value.ToLower())).ToArray();
             }
@@ -185,7 +183,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         public RelayCommand OpenConference { get; set; }
         public RelayCommand CreateNewConference { get; set; }
-        
+
         private void ConferencesListReceived(object sender, ConferencesListEventArgs e)
         {
             IsBusy = false;
@@ -194,10 +192,10 @@ namespace Cyclops.MainApplication.ViewModel
 
             var conferenceIds = ChatObjectFactory.GetSession().Conferences.Select(i => i.ConferenceId);
 
-            sourceConferences = Conferences = e.Result.Select(i => 
+            sourceConferences = Conferences = e.Result.Select(i =>
                 new ConferenceInfo
                     {
-                        Id = i.Item1, 
+                        Id = i.Item1,
                         Name = i.Item2,
                         IsOpened = conferenceIds.Any(c => i.Item1.BaresEqual(c))
                     }).OrderBy(i => i.Id.User).ToList();
