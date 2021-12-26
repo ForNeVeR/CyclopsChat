@@ -2,16 +2,15 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Xml;
+using Cyclops.Xmpp;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using jabber.client;
-using jabber.connection;
 
 namespace Cyclops.Console.ViewModel
 {
     public class ConsoleViewModel : ViewModelBase
     {
-        private readonly JabberClient client;
+        private readonly IXmppClient client;
 
         public ObservableCollection<string> Entries { get; } = new();
 
@@ -29,7 +28,7 @@ namespace Cyclops.Console.ViewModel
 
         public ICommand Send { get; }
 
-        public ConsoleViewModel(JabberClient client)
+        public ConsoleViewModel(IXmppClient client)
         {
             this.client = client;
             Send = new RelayCommand(SendCommand);
@@ -38,21 +37,21 @@ namespace Cyclops.Console.ViewModel
 
         private void Initialize()
         {
-            client.OnConnect += OnConnect;
-            client.OnReadText += OnReadText;
-            client.OnWriteText += OnWriteText;
-            client.OnError += OnError;
+            client.Connect += OnConnect;
+            client.ReadRawMessage += OnReadText;
+            client.WriteRawMessage += OnWriteText;
+            client.Error += OnError;
         }
 
         public override void Cleanup()
         {
-            client.OnConnect -= OnConnect;
-            client.OnReadText -= OnReadText;
-            client.OnWriteText -= OnWriteText;
-            client.OnError -= OnError;
+            client.Connect -= OnConnect;
+            client.ReadRawMessage -= OnReadText;
+            client.WriteRawMessage -= OnWriteText;
+            client.Error -= OnError;
         }
 
-        private void OnConnect(object sender, StanzaStream stream)
+        private void OnConnect()
         {
             Entries.Add("CONNECTION ESTABLISHED");
         }
@@ -79,8 +78,10 @@ namespace Cyclops.Console.ViewModel
                 var document = new XmlDocument();
                 document.LoadXml(XmlToSend);
 
-                client.Write(document.DocumentElement);
+                var element = document.DocumentElement;
+                if (element == null) return;
 
+                client.SendElement(element);
                 XmlToSend = "";
             }
             catch (XmlException)

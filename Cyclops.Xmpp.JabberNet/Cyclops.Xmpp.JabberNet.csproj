@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
+      <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj" />
+    </ItemGroup>
+</Project>

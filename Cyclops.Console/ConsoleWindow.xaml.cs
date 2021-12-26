@@ -1,6 +1,5 @@
 using Cyclops.Console.ViewModel;
 using Cyclops.Core;
-using Cyclops.Core.Resource;
 
 namespace Cyclops.Console
 {
@@ -20,10 +19,7 @@ namespace Cyclops.Console
         public void ShowConsole(IUserSession session)
         {
             DataContext?.Cleanup();
-
-            var client = ((UserSession)session).JabberClient;
-            DataContext = new ConsoleViewModel(client);
-
+            DataContext = new ConsoleViewModel(session.XmppClient);
             Show();
         }
     }

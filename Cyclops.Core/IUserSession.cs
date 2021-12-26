@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Windows.Threading;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp;
 
 namespace Cyclops.Core
 {
     public interface IUserSession : IDisposable
     {
+        IXmppClient XmppClient { get; }
+
         bool IsAuthenticating { get; }
         bool IsAuthenticated { get; }
         IEntityIdentifier CurrentUserId { get; }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net.Security;
@@ -7,12 +6,13 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Threading;
 using System.Xml;
-using bedrock.util;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
+using Cyclops.Xmpp;
+using Cyclops.Xmpp.JabberNet;
 using jabber;
 using jabber.client;
 using jabber.connection;
@@ -25,6 +25,8 @@ namespace Cyclops.Core.Resource
 {
     public class UserSession : NotifyPropertyChangedBase, IUserSession
     {
+        private readonly JabberNetXmppClient xmppClient;
+
         /// <summary>
         /// Timer for reconnect
         /// </summary>
@@ -49,6 +51,7 @@ namespace Cyclops.Core.Resource
             this.stringEncryptor = stringEncryptor;
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
+            xmppClient = new JabberNetXmppClient(JabberClient);
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
             BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = false, ConferenceManager = ConferenceManager };
 
@@ -60,6 +63,7 @@ namespace Cyclops.Core.Resource
             status = "CyclopsChat " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
 
+        public IXmppClient XmppClient => xmppClient;
         public JabberClient JabberClient { get; set; }
         internal ConferenceManager ConferenceManager { get; set; }
         internal DiscoManager DiscoManager { get; set; }
@@ -217,6 +221,8 @@ namespace Cyclops.Core.Resource
             catch
             {
             }
+
+            xmppClient.Dispose();
         }
 
         public void Reconnect()

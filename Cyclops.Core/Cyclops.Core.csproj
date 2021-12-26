@@ -6,10 +6,13 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.ComponentModel.DataAnnotations" />
         <PackageReference Include="Unity" Version="2.0.0" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="Smiles\note.txt"/>
+        <Content Include="Smiles\note.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
     </ItemGroup>
 </Project>
