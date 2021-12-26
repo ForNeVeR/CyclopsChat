@@ -12,7 +12,6 @@
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>jabber-net</AssemblyName>
-    <AssemblyOriginatorKeyFile>jabbernet.key</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -27,7 +26,7 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' AND '$(BuildMono)'==''">
@@ -442,9 +441,6 @@
     <EmbeddedResource Include="jabber\client\PresenceManager.bmp" />
     <EmbeddedResource Include="jabber\client\RosterManager.bmp" />
     <EmbeddedResource Include="jabber\server\JabberService.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="jabbernet.key" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jabber\connection\DiscoManager.bmp" />
