@@ -115,5 +115,6 @@
             <Project>{57602637-288C-4870-B1C4-3242C8ACC165}</Project>
             <Name>Cyclops.MainApplication.Options</Name>
         </ProjectReference>
+        <ProjectReference Include="..\Cyclops.Windows\Cyclops.Windows.csproj" />
     </ItemGroup>
 </Project>

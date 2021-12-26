@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Windows.Threading;
-using Cyclops.MainApplication.Options.Model;
-using bedrock.util;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Core.Resource;
 using Cyclops.Core.Smiles;
 using Cyclops.MainApplication.Configuration;
 using Cyclops.MainApplication.Helpers;
+using Cyclops.MainApplication.Localization;
+using Cyclops.MainApplication.Options.Model;
 using Cyclops.MainApplication.ViewModel;
-using GalaSoft.MvvmLight;
+using Cyclops.Windows;
 
 namespace Cyclops.MainApplication
 {
     public class ApplicationContext : ViewModelBaseEx
     {
-        private IdleTime idleTime = null;
+        private readonly LastInputDetector lastInputDetector = new(
+            pollInterval: TimeSpan.FromSeconds(2.0),
+            idleInterval: TimeSpan.FromSeconds(60.0));
 
         #region Singleton implementation
         private ApplicationContext()
@@ -30,16 +28,16 @@ namespace Cyclops.MainApplication
             ReloadApplicationSettings();
             DisableAllSounds = ApplicationSettings.DisableAllSounds;
 
-            idleTime = new IdleTime(2, 60);
-            idleTime.InvokeControl = new SynchronizeInvokeImpl(Dispatcher.CurrentDispatcher);
-            idleTime.OnIdle += IdleTimeOnIdle;
-            idleTime.OnUnIdle += IdleTimeOnUnIdle;
+            var dispatcher = Dispatcher.CurrentDispatcher;
+            lastInputDetector.IdleModePeriodic += (_, idleTime) =>
+                dispatcher.InvokeAsync(() => OnIdleModePeriodic(idleTime));
+            lastInputDetector.LeaveIdleMode += (_, _) => dispatcher.InvokeAsync(OnLeaveIdleMode);
         }
 
         private bool originalStatusSaved = false;
         private StatusType originalStatus;
 
-        private void IdleTimeOnIdle(object sender, TimeSpan span)
+        private void OnIdleModePeriodic(TimeSpan span)
         {
             if (!Session.IsAuthenticated)
                 return;
@@ -61,13 +59,13 @@ namespace Cyclops.MainApplication
             int awayAfter = Settings.AutoAwayAfter;
             if (awayAfter > 0 && idleMinutes >= awayAfter && Session.StatusType != StatusType.Away)
                 Session.StatusType = StatusType.Away;
-            
+
             int naAfter = Settings.AutoExtendedAwayAfter;
             if (naAfter > 0 && idleMinutes >= naAfter)
                 Session.StatusType = StatusType.ExtendedAway;
         }
 
-        private void IdleTimeOnUnIdle(object sender, TimeSpan span)
+        private void OnLeaveIdleMode()
         {
             if (!Session.IsAuthenticated)
                 return;
@@ -88,7 +86,7 @@ namespace Cyclops.MainApplication
                     instance = new ApplicationContext();
                 return instance;
             }
-        } 
+        }
 
         #endregion
 
@@ -153,7 +151,7 @@ namespace Cyclops.MainApplication
         {
             ApplicationSettings = ApplicationSettings.Load();
             SystemHelper.SetStartup(ApplicationSettings.StartWithWindows);
-            Localization.LocalizationManager.ChangeLanguage(ApplicationSettings.SelectedLanguage);
+            LocalizationManager.ChangeLanguage(ApplicationSettings.SelectedLanguage);
         }
 
         #region Global nonsavable options
