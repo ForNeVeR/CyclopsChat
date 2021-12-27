@@ -1,25 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Cyclops.Core.Resource
 {
+    [SuppressMessage("ReSharper", "LocalizableElement")]
     public class FileLogger : ILogger
     {
+        private readonly object errorLocker = new();
+        private readonly object infoLocker = new();
+
         public void LogError(string message, Exception exception)
         {
-            File.AppendAllText("errors.log", string.Format("\n============\n{0}\n============\n{1}\n{2}\n{3}\n\n", 
-                DateTime.Now, message, exception.Message, exception.StackTrace));
+            lock (errorLocker)
+            {
+                File.AppendAllText(
+                    "errors.log",
+                    $"\n============\n{DateTime.Now}\n============\n{message}\n{exception.Message}\n{exception.StackTrace}\n\n");
+            }
+
             if (exception.InnerException != null)
                 LogError("InnerException", exception.InnerException);
         }
 
         public void LogInfo(string message, params object[] args)
         {
-            File.AppendAllText("info.log", string.Format("\n============\n{0}\n============\n{1}\n\n",
-                DateTime.Now, string.Format(message, args)));
+            lock (infoLocker)
+            {
+                File.AppendAllText(
+                    "info.log",
+                    $"\n============\n{DateTime.Now}\n============\n{string.Format(message, args)}\n\n");
+            }
         }
     }
 }

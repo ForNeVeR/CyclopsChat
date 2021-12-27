@@ -15,7 +15,7 @@ namespace Cyclops.Core.Resource.Composition
         {
             container
                 .RegisterType<IChatObjectsValidator, ChatObjectsValidator>()
-                .RegisterType<ILogger, FileLogger>()
+                .RegisterInstance<ILogger>(new FileLogger())
                 .RegisterType<IRegistrationManager, RegistrationManager>()
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()
