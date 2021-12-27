@@ -56,7 +56,7 @@ namespace jabber.protocol
         /// <summary>
         ///  The FROM address
         /// </summary>
-        public JID From
+        public JID? From
         {
             get { return (JID)this.GetAttr("from"); }
             set { SetAttr("from", value); }
