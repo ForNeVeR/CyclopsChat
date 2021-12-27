@@ -30,7 +30,7 @@ internal static class IqEx
             Email = vCard.Email,
             FullName = vCard.FullName,
             Birthday = vCard.Birthday,
-            Nick = vCard.Nickname ?? iq.From.Resource,
+            Nick = vCard.Nickname ?? iq.From?.Resource,
             Comments = vCard.Description
         };
     }
