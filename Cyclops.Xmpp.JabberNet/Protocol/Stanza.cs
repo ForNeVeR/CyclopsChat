@@ -13,7 +13,7 @@ internal abstract class Stanza : IStanza
     }
 
     public XmlElement? this[string name] => packet[name];
-    public IEnumerable<XmlNode> Elements => packet.Cast<XmlElement>();
+    public IEnumerable<XmlNode> Elements => packet.Cast<XmlNode>();
 
     public IEntityIdentifier? From => packet.From;
     public IEntityIdentifier? To => packet.To;
