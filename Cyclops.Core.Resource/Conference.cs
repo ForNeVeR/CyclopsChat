@@ -240,7 +240,7 @@ namespace Cyclops.Core.Resource
             foreach (RoomParticipant participant in room.Participants)
             {
                 if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                    Members.AsInternalImpl().Add(new ConferenceMember(session, this, participant, room)
+                    Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, participant, room)
                                                      {
                                                          AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                                                      });
@@ -278,7 +278,7 @@ namespace Cyclops.Core.Resource
                             //LOG?
                         }
                         else
-                            Members.AsInternalImpl().Add(new ConferenceMember(session, this, newParticipantObj, r)
+                            Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, newParticipantObj, r)
                                 {
                                     AvatarUrl = memberObj != null ? memberObj.AvatarUrl : null
                                 });
@@ -298,7 +298,7 @@ namespace Cyclops.Core.Resource
         {
             if (!Members.Any(i => (JID)i.ConferenceUserId == participant.NickJID))
             {
-                var member = new ConferenceMember(session, this, participant, room)
+                var member = new ConferenceMember(logger, session, this, participant, room)
                                  {
                                      AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                                  };

@@ -1,8 +1,10 @@
-﻿using System.Windows.Media.Imaging;
+﻿using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
+using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 using jabber.connection;
-using jabber.protocol.client;
 
 namespace Cyclops.Core.Resource
 {
@@ -17,7 +19,12 @@ namespace Cyclops.Core.Resource
         private BitmapImage avatarUrl;
         private bool isSubscribed;
 
-        internal ConferenceMember(UserSession session, Conference conference, RoomParticipant participant, Room room)
+        internal ConferenceMember(
+            ILogger logger,
+            UserSession session,
+            Conference conference,
+            RoomParticipant participant,
+            Room room)
         {
             this.session = session;
             this.conference = conference;
@@ -28,15 +35,12 @@ namespace Cyclops.Core.Resource
             session.Presence += OnPresence;
             room_OnParticipantPresenceChange(room, participant); //force call
             Role = RoleConversion(participant);
-            JabberCommonHelper.GetClientVersionAsnyc(session, participant.NickJID, OnClientInfoGot);
+            ProcessClientVersion().NoAwait(logger);
         }
 
-        private void OnClientInfoGot(object sender, IQ iq, object data)
+        private async Task ProcessClientVersion()
         {
-            if (iq == null || iq.Error != null || !(iq.Query is jabber.protocol.iq.Version))
-                return;
-            var version = iq.Query as jabber.protocol.iq.Version;
-            ClientInfo = new ClientInfo(version.OS, version.Ver, version.EntityName);
+            ClientInfo = await session.GetClientInfo(participant.NickJID);
         }
 
         // this is workaround (because room_OnParticipantPresenceChange does not fired when current user changed his status
@@ -101,8 +105,8 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        private ClientInfo clientInfo = null;
-        public ClientInfo ClientInfo
+        private ClientInfo? clientInfo;
+        public ClientInfo? ClientInfo
         {
             get
             {

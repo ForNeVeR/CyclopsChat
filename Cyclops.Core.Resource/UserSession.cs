@@ -450,6 +450,8 @@ namespace Cyclops.Core.Resource
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage {AuthorId = conferenceUserId});
         }
 
+        public Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid) => XmppClient.GetClientInfo(jid);
+
         public Task<Vcard> GetVCard(IEntityIdentifier target) => XmppClient.GetVCard(target);
 
         public void UpdateVcard(Vcard vcard, Action<bool> callback)

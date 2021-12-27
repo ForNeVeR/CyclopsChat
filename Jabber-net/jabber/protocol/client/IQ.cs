@@ -219,7 +219,7 @@ namespace jabber.protocol.client
         /// <summary>
         /// The child element (often "query") with the command for this IQ.
         /// </summary>
-        public T Instruction
+        public T? Instruction
         {
             get { return GetChildElement<T>(); }
             set { ReplaceChild<T>(value); }

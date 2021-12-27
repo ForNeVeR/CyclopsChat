@@ -16,5 +16,7 @@ public interface IXmppClient
     void SendElement(XmlElement element);
 
     Task<IIq> SendCaptchaAnswer(IEntityIdentifier mucId, string challenge, string answer);
+
     Task<Vcard> GetVCard(IEntityIdentifier jid);
+    Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
 }

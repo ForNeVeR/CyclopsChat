@@ -29,6 +29,8 @@ namespace Cyclops.Core
         void GetConferenceListAsync(string conferenceService = null);
         void RaiseBookmarksReceived();
         void StartPrivate(IEntityIdentifier conferenceUserId);
+
+        Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
         Task<Vcard> GetVCard(IEntityIdentifier target);
         void UpdateVcard(Vcard vcard, Action<bool> callback);
 

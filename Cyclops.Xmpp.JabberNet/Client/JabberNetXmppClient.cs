@@ -71,12 +71,9 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         {
             To = conferenceJid.BareJID,
             Type = IQType.set,
-            Instruction =
-            {
-                CaptchaAnswerX = new CaptchaAnswerX(client.Document)
-            }
         };
 
+        iq.Instruction!.CaptchaAnswerX = new CaptchaAnswerX(client.Document);
         iq.Instruction.CaptchaAnswerX.FillAnswer(answer, conferenceJid, challenge);
 
         var response = await SendIq(iq);
@@ -92,5 +89,14 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         };
         var iq = await SendIq(vCardIq);
         return iq.ToVCard();
+    }
+
+    public async Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid)
+    {
+        var versionIq = new VersionIQ(client.Document) { To = (JID)jid, Type = IQType.get };
+        // HACK: Most clients' answers aren't recognized as VersionIQ by Jabber-Net, so let's not break on cast failure.
+        var response = await SendIq(versionIq) as VersionIQ;
+        var versionInfo = response?.Instruction;
+        return versionInfo == null ? null : new ClientInfo(versionInfo.OS, versionInfo.Ver, versionInfo.EntityName);
     }
 }

@@ -31,7 +31,7 @@ namespace Cyclops.Xmpp.JabberNet.Elements
 
         /// <summary>
         /// </summary>
-        public CaptchaAnswerX CaptchaAnswerX
+        public CaptchaAnswerX? CaptchaAnswerX
         {
             get => GetChildElement<CaptchaAnswerX>();
             set => ReplaceChild(value);
