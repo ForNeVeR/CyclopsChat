@@ -11,12 +11,10 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Xml;
-
 using bedrock.util;
-using jabber;
-using jabber.protocol;
 
 namespace jabber.protocol.iq
 {
@@ -451,7 +449,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// The associated item
         /// </summary>
-        public RoomItem RoomItem
+        public RoomItem? RoomItem
         {
             get { return GetChildElement<RoomItem>(); }
             set { ReplaceChild<RoomItem>(value); }
@@ -906,7 +904,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// The JID associated with this item
         /// </summary>
-        public RoomActor Actor
+        public RoomActor? Actor
         {
             get { return GetOrCreateElement("actor", null, typeof(RoomActor)) as RoomActor; }
             set { ReplaceChild(value); }

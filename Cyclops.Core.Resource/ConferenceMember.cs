@@ -3,6 +3,7 @@ using System.Windows.Media.Imaging;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.JabberNet.Data;
 using Cyclops.Xmpp.Protocol;
 using jabber.connection;
 
@@ -34,7 +35,7 @@ namespace Cyclops.Core.Resource
             room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
             session.Presence += OnPresence;
             room_OnParticipantPresenceChange(room, participant); //force call
-            Role = RoleConversion(participant);
+            Role = RoleConversion(participant.Wrap());
             ProcessClientVersion().NoAwait(logger);
         }
 
@@ -53,7 +54,7 @@ namespace Cyclops.Core.Resource
             }
             if (participant.NickJID.Equals(conference.ConferenceId))
             {
-                Role = RoleConversion(participant);
+                Role = RoleConversion(participant.Wrap());
             }
         }
 
@@ -173,7 +174,7 @@ namespace Cyclops.Core.Resource
         {
             if (this.participant != participant)
                 return;
-            Role = RoleConversion(participant);
+            Role = RoleConversion(participant.Wrap());
             StatusText = participant.Presence.Status;
             StatusType = participant.Presence.Show;
             if (!isFirstPresence)
@@ -181,7 +182,7 @@ namespace Cyclops.Core.Resource
             else isFirstPresence = false;
         }
 
-        private Role RoleConversion(RoomParticipant roomParticipant)
+        private Role RoleConversion(IMucParticipant roomParticipant)
         {
             return JabberCommonHelper.ConvertRole(roomParticipant.Role, roomParticipant.Affiliation);
         }

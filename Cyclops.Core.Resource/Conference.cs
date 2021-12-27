@@ -113,7 +113,7 @@ namespace Cyclops.Core.Resource
             if (!presenceFrom.BareJID.Equals(((JID)ConferenceId).BareJID) && !pres.From.Equals(Session.CurrentUserId))
                 return;
 
-            var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(pres, room.Participants.FindParticipant(presenceFrom));
+            var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(dataExtractor, pres);
             if (roleChangedEventArgs != null && IsInConference)
                 RoleChanged(this, roleChangedEventArgs);
 

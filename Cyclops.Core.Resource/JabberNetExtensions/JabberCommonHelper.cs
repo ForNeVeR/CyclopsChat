@@ -1,57 +1,50 @@
 ﻿using System.Linq;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
-using jabber;
-using jabber.connection;
-using jabber.protocol.iq;
 
 namespace Cyclops.Core.Resource.JabberNetExtensions
 {
     public static class JabberCommonHelper
     {
-        public static RoleChangedEventArgs ConvertToRoleChangedEventArgs(IPresence presence, RoomParticipant participant)
+        public static RoleChangedEventArgs? ConvertToRoleChangedEventArgs(
+            IXmppDataExtractor extractor,
+            IPresence presence)
         {
-            var userX = presence["x"] as UserX;
-            if (userX == null || userX.RoomItem == null)
-                return null;
+            var userX = extractor.GetExtendedUserData(presence);
 
-            if (userX.RoomItem.Actor == null || (presence.Status == null && presence.Show == null))
+            if (userX?.ActorJid == null || (presence.Status == null && presence.Show == null))
                 return null;
 
             Role role = Role.Regular;
             if (!userX.Status.IsNullOrEmpty())
             {
-                if (userX.Status[0] == RoomStatus.KICKED)
+                if (userX.Status.Contains(MucUserStatus.Kicked))
                     role = Role.Kicked;
-                if (userX.Status[0] == RoomStatus.BANNED)
+                if (userX.Status.Contains(MucUserStatus.Banned))
                     role = Role.Banned;
             }
             else
-                role = ConvertRole(userX.RoomItem.Role, userX.RoomItem.Affiliation);
+                role = ConvertRole(userX.Role, userX.Affiliation);
 
-            return new RoleChangedEventArgs { To = presence.From.Resource, Role = role };
+            return new RoleChangedEventArgs { To = presence.From?.Resource, Role = role };
         }
 
-        public static Role ConvertRole(RoomRole role, RoomAffiliation affiliation)
+        public static Role ConvertRole(MucRole? role, MucAffiliation? affiliation)
         {
-            if (affiliation == RoomAffiliation.outcast)
+            if (affiliation == MucAffiliation.Outcast)
                 return Role.Banned;
-            if (role == RoomRole.visitor)
-                return Core.Role.Devoiced;
-            if (affiliation == RoomAffiliation.owner)
-                return Core.Role.Owner;
-            if (affiliation == RoomAffiliation.admin)
-                return Core.Role.Admin;
-            if (role == RoomRole.moderator)
-                return Core.Role.Moder;
-            if (affiliation == RoomAffiliation.member)
-                return Core.Role.Member;
-            return Core.Role.Regular;
-        }
-
-        public static RoomParticipant FindParticipant(this ParticipantCollection collection, JID nickJid)
-        {
-            return collection.OfType<RoomParticipant>().FirstOrDefault(i => i.NickJID.Equals(nickJid));
+            if (role == MucRole.Visitor)
+                return Role.Devoiced;
+            if (affiliation == MucAffiliation.Owner)
+                return Role.Owner;
+            if (affiliation == MucAffiliation.Admin)
+                return Role.Admin;
+            if (role == MucRole.Moderator)
+                return Role.Moder;
+            if (affiliation == MucAffiliation.Member)
+                return Role.Member;
+            return Role.Regular;
         }
     }
 }

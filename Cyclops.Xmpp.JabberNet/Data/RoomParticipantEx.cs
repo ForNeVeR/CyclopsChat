@@ -1,6 +1,6 @@
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.JabberNet.Helpers;
 using jabber.connection;
-using jabber.protocol.iq;
 
 namespace Cyclops.Xmpp.JabberNet.Data;
 
@@ -15,24 +15,8 @@ public static class RoomParticipantEx
             this.participant = participant;
         }
 
-        public MucRole? Role => participant.Role switch
-        {
-            RoomRole.moderator => MucRole.Moderator,
-            RoomRole.participant => MucRole.Participant,
-            RoomRole.visitor => MucRole.Visitor,
-            RoomRole.none => MucRole.None,
-            _ => null
-        };
-
-        public MucAffiliation? Affiliation => participant.Affiliation switch
-        {
-            RoomAffiliation.admin => MucAffiliation.Admin,
-            RoomAffiliation.member => MucAffiliation.Member,
-            RoomAffiliation.none => MucAffiliation.None,
-            RoomAffiliation.outcast => MucAffiliation.Outcast,
-            RoomAffiliation.owner => MucAffiliation.Owner,
-            _ => null
-        };
+        public MucRole? Role => participant.Role.Map();
+        public MucAffiliation? Affiliation => participant.Affiliation.Map();
     }
 
     public static IMucParticipant Wrap(this RoomParticipant participant) => new MucParticipant(participant);

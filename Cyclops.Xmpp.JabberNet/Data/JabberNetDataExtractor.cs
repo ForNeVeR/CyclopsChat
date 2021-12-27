@@ -2,6 +2,7 @@ using System.Xml;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.JabberNet.Helpers;
 using Cyclops.Xmpp.Protocol;
+using jabber.protocol.iq;
 using jabber.protocol.x;
 
 namespace Cyclops.Xmpp.JabberNet.Data;
@@ -25,5 +26,18 @@ public class JabberNetDataExtractor : IXmppDataExtractor
         }
 
         return null;
+    }
+
+    public ExtendedUserData? GetExtendedUserData(IPresence presence)
+    {
+        var userX = presence["x"] as UserX;
+        if (userX == null) return null;
+
+        var roomItem = userX.RoomItem;
+        return new ExtendedUserData(
+            roomItem?.Actor?.JID,
+            userX.Status.Select(x => x.Map()).ToList(),
+            roomItem?.Role.Map(),
+            roomItem?.Affiliation.Map());
     }
 }
