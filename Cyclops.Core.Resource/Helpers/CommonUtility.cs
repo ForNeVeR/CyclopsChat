@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Cyclops.Xmpp.Data;
-using jabber.protocol;
 
 namespace Cyclops.Core.Resource
 {
@@ -19,9 +19,7 @@ namespace Cyclops.Core.Resource
                    participant.Affiliation is MucAffiliation.Admin or MucAffiliation.Owner;
         }
 
-        public static T GetNodeByName<T>(this IEnumerable<Element> node, string name) where T : Element
-        {
-            return node.FirstOrDefault<Element>(i => string.Equals(i.Name, name, StringComparison.InvariantCultureIgnoreCase)) as T;
-        }
+        public static T? GetNodeByName<T>(this IEnumerable<XmlElement> node, string name) where T : XmlElement =>
+            node.FirstOrDefault(i => string.Equals(i.Name, name, StringComparison.InvariantCultureIgnoreCase)) as T;
     }
 }
