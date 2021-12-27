@@ -4,5 +4,5 @@ namespace Cyclops.Xmpp.Data;
 
 public interface IXmppDataExtractor
 {
-    public CaptchaRequest? GetCaptchaRequest(IMessage message);
+    CaptchaRequest? GetCaptchaRequest(IMessage message);
 }
