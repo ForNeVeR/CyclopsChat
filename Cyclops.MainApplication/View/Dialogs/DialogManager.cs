@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Cyclops.MainApplication.ViewModel;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.MainApplication.View.Dialogs
 {

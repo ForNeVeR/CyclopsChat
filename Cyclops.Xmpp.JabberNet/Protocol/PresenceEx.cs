@@ -1,9 +1,8 @@
 using System.Xml;
-using Cyclops.Xmpp.Client;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 using jabber.protocol.client;
 
-namespace Cyclops.Xmpp.JabberNet;
+namespace Cyclops.Xmpp.JabberNet.Protocol;
 
 internal static class PresenceEx
 {

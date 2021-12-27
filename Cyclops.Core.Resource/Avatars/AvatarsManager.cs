@@ -9,8 +9,7 @@ using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
-using Cyclops.Xmpp.Client;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core.Resource.Avatars
 {

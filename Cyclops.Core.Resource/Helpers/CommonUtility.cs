@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using jabber.connection;
+using Cyclops.Xmpp.Data;
 using jabber.protocol;
-using jabber.protocol.iq;
 
 namespace Cyclops.Core.Resource
 {
@@ -14,13 +13,12 @@ namespace Cyclops.Core.Resource
             return collection as InternalObservableCollection<T>;
         }
 
-        internal static bool IsModer(this RoomParticipant participant)
+        internal static bool IsModer(this IMucParticipant participant)
         {
-            return participant.Role == RoomRole.moderator ||
-                    participant.Affiliation == RoomAffiliation.admin ||
-                    participant.Affiliation == RoomAffiliation.owner;
+            return participant.Role == MucRole.Moderator ||
+                   participant.Affiliation is MucAffiliation.Admin or MucAffiliation.Owner;
         }
-        
+
         public static T GetNodeByName<T>(this IEnumerable<Element> node, string name) where T : Element
         {
             return node.FirstOrDefault<Element>(i => string.Equals(i.Name, name, StringComparison.InvariantCultureIgnoreCase)) as T;

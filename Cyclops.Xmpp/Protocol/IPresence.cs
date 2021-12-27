@@ -1,4 +1,4 @@
-namespace Cyclops.Xmpp.Client;
+namespace Cyclops.Xmpp.Protocol;
 
 public interface IPresence : IStanza
 {

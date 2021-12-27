@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Xmpp.Client;
+using Cyclops.Xmpp.Protocol;
 using jabber;
 using jabber.connection;
 using jabber.protocol.client;

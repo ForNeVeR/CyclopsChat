@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using bedrock.util;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace jabber
 {

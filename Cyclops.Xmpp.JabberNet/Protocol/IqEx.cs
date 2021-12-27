@@ -2,7 +2,7 @@ using Cyclops.Xmpp.Data;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 
-namespace Cyclops.Xmpp.JabberNet;
+namespace Cyclops.Xmpp.JabberNet.Protocol;
 
 internal static class IqEx
 {

@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core
 {

@@ -6,7 +6,7 @@ using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.View.Dialogs;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.MainApplication.ViewModel
 {

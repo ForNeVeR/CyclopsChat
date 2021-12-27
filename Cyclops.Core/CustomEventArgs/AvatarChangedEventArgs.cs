@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core.CustomEventArgs
 {

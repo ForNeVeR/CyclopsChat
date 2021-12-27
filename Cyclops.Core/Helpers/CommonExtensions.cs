@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops
 {

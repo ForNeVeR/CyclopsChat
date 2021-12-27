@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.JabberNet.Data;
+using Cyclops.Xmpp.Protocol;
 using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.x;
@@ -56,7 +57,7 @@ namespace Cyclops.Core.Resource
                 if (room == null || room.Participants == null)
                     return false;
                 return room.Participants.OfType<RoomParticipant>().Any(i =>
-                    i.NickJID != null && i.NickJID.Equals(AuthorId) && i.IsModer());
+                    i.NickJID != null && i.NickJID.Equals(AuthorId) && i.Wrap().IsModer());
             }
         }
 

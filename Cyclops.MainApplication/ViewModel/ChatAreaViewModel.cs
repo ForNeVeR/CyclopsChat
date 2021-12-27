@@ -2,7 +2,7 @@
 using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using Cyclops.MainApplication.View;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel

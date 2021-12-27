@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Resource.JabberNetExtensions;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;

@@ -5,6 +5,7 @@ using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.Helpers;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 

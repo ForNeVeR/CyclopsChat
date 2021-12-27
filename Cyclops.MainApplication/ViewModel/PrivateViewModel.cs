@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Cyclops.Core;
 using Cyclops.MainApplication.Controls;
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.MainApplication.ViewModel
 {

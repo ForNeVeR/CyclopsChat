@@ -1,4 +1,4 @@
-﻿using Cyclops.Xmpp.Data;
+﻿using Cyclops.Xmpp.Protocol;
 using jabber;
 
 namespace Cyclops.Core.Resource

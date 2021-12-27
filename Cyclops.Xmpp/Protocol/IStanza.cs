@@ -1,7 +1,6 @@
 using System.Xml;
-using Cyclops.Xmpp.Data;
 
-namespace Cyclops.Xmpp.Client;
+namespace Cyclops.Xmpp.Protocol;
 
 public interface IStanza
 {

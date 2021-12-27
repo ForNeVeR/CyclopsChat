@@ -1,12 +1,14 @@
 ﻿using System.Xml;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.JabberNet.Protocol;
+using Cyclops.Xmpp.Protocol;
 using jabber;
 using jabber.client;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 
-namespace Cyclops.Xmpp.JabberNet;
+namespace Cyclops.Xmpp.JabberNet.Client;
 
 public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 {
