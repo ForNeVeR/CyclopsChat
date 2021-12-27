@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Xmpp.Protocol;
 using jabber.connection;
-using jabber.protocol;
 using jabber.protocol.client;
 
 namespace Cyclops.Core.Resource
@@ -14,8 +12,8 @@ namespace Cyclops.Core.Resource
         private readonly Room room;
         private readonly UserSession session;
         private readonly Conference conference;
-        private string statusText;
-        private string statusType;
+        private string? statusText;
+        private string? statusType;
         private BitmapImage avatarUrl;
         private bool isSubscribed;
 
@@ -27,7 +25,7 @@ namespace Cyclops.Core.Resource
             this.room = room;
             conferenceUserId = participant.NickJID;
             room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
-            session.JabberClient.OnPresence += JabberClientOnPresence;
+            session.Presence += OnPresence;
             room_OnParticipantPresenceChange(room, participant); //force call
             Role = RoleConversion(participant);
             JabberCommonHelper.GetClientVersionAsnyc(session, participant.NickJID, OnClientInfoGot);
@@ -42,16 +40,12 @@ namespace Cyclops.Core.Resource
         }
 
         // this is workaround (because room_OnParticipantPresenceChange does not fired when current user changed his status
-        private void JabberClientOnPresence(object sender, jabber.protocol.client.Presence pres)
+        private void OnPresence(object sender, IPresence pres)
         {
-            if (pres.From == pres.To && participant.NickJID.Equals(conference.ConferenceId))
+            if (pres.From?.Equals(pres.To) == true && participant.NickJID.Equals(conference.ConferenceId))
             {
-                var statusElement = pres.OfType<Element>().GetNodeByName<Element>("status");
-                if (statusElement != null)
-                {
-                    StatusText = pres.Status;
-                    StatusType = pres.Show;
-                }
+                StatusText = pres.Status;
+                StatusType = pres.Show;
             }
             if (participant.NickJID.Equals(conference.ConferenceId))
             {
@@ -121,7 +115,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public string StatusText
+        public string? StatusText
         {
             get { return statusText; }
             set
@@ -131,7 +125,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public string StatusType
+        public string? StatusType
         {
             get { return statusType; }
             set

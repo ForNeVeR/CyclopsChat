@@ -29,6 +29,7 @@ namespace Cyclops.Core.Resource
     public class UserSession : NotifyPropertyChangedBase, IUserSession
     {
         private readonly ILogger logger;
+        private readonly IXmppDataExtractor dataExtractor;
         private readonly JabberNetXmppClient xmppClient;
 
         /// <summary>
@@ -46,9 +47,15 @@ namespace Cyclops.Core.Resource
 
         private IObservableCollection<IConferenceMessage> privateMessages;
 
-        public UserSession(ILogger logger, IStringEncryptor stringEncryptor, IChatObjectsValidator commonValidator, Dispatcher dispatcher)
+        public UserSession(
+            ILogger logger,
+            IXmppDataExtractor dataExtractor,
+            IStringEncryptor stringEncryptor,
+            IChatObjectsValidator commonValidator,
+            Dispatcher dispatcher)
         {
             this.logger = logger;
+            this.dataExtractor = dataExtractor;
 
             AutoReconnect = true;
             Dispatcher = dispatcher;
@@ -174,7 +181,7 @@ namespace Cyclops.Core.Resource
 
         public void OpenConference(IEntityIdentifier id)
         {
-            Conferences.AsInternalImpl().Add(new Conference(logger, this, id));
+            Conferences.AsInternalImpl().Add(new Conference(logger, this, dataExtractor, id));
         }
 
         public void AuthenticateAsync(ConnectionConfig info)
@@ -443,7 +450,7 @@ namespace Cyclops.Core.Resource
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage {AuthorId = conferenceUserId});
         }
 
-        public Task<Vcard> GetVCard(IEntityIdentifier target) => xmppClient.GetVCard(target);
+        public Task<Vcard> GetVCard(IEntityIdentifier target) => XmppClient.GetVCard(target);
 
         public void UpdateVcard(Vcard vcard, Action<bool> callback)
         {

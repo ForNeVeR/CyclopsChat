@@ -1,7 +1,4 @@
-﻿using System.Windows.Controls;
-using System.Windows.Threading;
-using Cyclops.Core;
-using Cyclops.Core.Composition;
+﻿using Cyclops.Core;
 using Cyclops.Core.Modularity;
 using Cyclops.Core.Registration;
 using Cyclops.Core.Security;
@@ -15,7 +12,8 @@ namespace Cyclops.MainApplication
         private static readonly IServiceLocator serviceLocator = Bootstrapper.Run(
             new IModule[]
                 {
-                    new Module(),
+                    new Cyclops.Core.Composition.Module(),
+                    new Cyclops.Xmpp.JabberNet.Composition.Module(),
                     new Core.Resource.Composition.Module(),
                     new Composition.Module(),
                     new Console.Composition.Module()

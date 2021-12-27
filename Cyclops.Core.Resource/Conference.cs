@@ -2,14 +2,14 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.Avatars;
-using Cyclops.Core.Resource.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
+using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 using jabber;
 using jabber.connection;
@@ -22,13 +22,15 @@ namespace Cyclops.Core.Resource
     public class Conference : NotifyPropertyChangedBase, IConference
     {
         private readonly ILogger logger;
+        private readonly IXmppDataExtractor dataExtractor;
         private readonly UserSession session;
         private Room room;
 
-        internal Conference(ILogger logger, UserSession session, IEntityIdentifier conferenceId)
+        internal Conference(ILogger logger, UserSession session, IXmppDataExtractor dataExtractor, IEntityIdentifier conferenceId)
         {
             this.logger = logger;
             this.session = session;
+            this.dataExtractor = dataExtractor;
             ConferenceId = conferenceId;
 
             session.ConnectionDropped += OnConnectionDropped;
@@ -327,10 +329,13 @@ namespace Cyclops.Core.Resource
         private void room_OnAdminMessage(object sender, Message msg)
         {
             // CAPTCHA required
-            BitmapImage captcha = null;
-            if (CaptchaHelper.ExtractImage(msg, ref captcha, ref captchaChallenge))
+            var captcha =  dataExtractor.GetCaptchaRequest(msg.Wrap());
+            if (captcha != null)
             {
-                CaptchaRequirment(this, new CaptchaEventArgs(captcha));
+                captchaChallenge = captcha.CaptchaChallenge;
+                CaptchaRequirment(
+                    this,
+                    new CaptchaEventArgs(ImageUtils.Base64ToBitmapImage(captcha.CaptchaImageBodyBase64)));
                 captchaMode = true;
                 return;
             }

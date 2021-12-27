@@ -4,7 +4,7 @@ using jabber.protocol;
 
 namespace Cyclops.Xmpp.JabberNet.Protocol;
 
-internal abstract class Stanza
+internal abstract class Stanza : IStanza
 {
     private readonly Packet packet;
     protected Stanza(Packet packet)
@@ -16,4 +16,5 @@ internal abstract class Stanza
     public IEnumerable<XmlNode> Elements => packet.Cast<XmlElement>();
 
     public IEntityIdentifier From => packet.From;
+    public IEntityIdentifier? To => packet.To;
 }
