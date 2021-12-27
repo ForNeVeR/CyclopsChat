@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp.Client;
 using jabber;
 using jabber.connection;
 using jabber.protocol.client;
@@ -18,12 +16,12 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
             session.ConferenceManager.BeginIQ(versionIq, callback, null);
         }
 
-        public static RoleChangedEventArgs ConvertToRoleChangedEventArgs(Presence presence, RoomParticipant participant)
+        public static RoleChangedEventArgs ConvertToRoleChangedEventArgs(IPresence presence, RoomParticipant participant)
         {
             var userX = presence["x"] as UserX;
             if (userX == null || userX.RoomItem == null)
                 return null;
-            
+
             if (userX.RoomItem.Actor == null || (presence.Status == null && presence.Show == null))
                 return null;
 
@@ -35,7 +33,7 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
                 if (userX.Status[0] == RoomStatus.BANNED)
                     role = Role.Banned;
             }
-            else 
+            else
                 role = ConvertRole(userX.RoomItem.Role, userX.RoomItem.Affiliation);
 
             return new RoleChangedEventArgs { To = presence.From.Resource, Role = role };
@@ -55,7 +53,7 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
                 return Core.Role.Moder;
             if (affiliation == RoomAffiliation.member)
                 return Core.Role.Member;
-            return Core.Role.Regular;    
+            return Core.Role.Regular;
         }
 
         public static RoomParticipant FindParticipant(this ParticipantCollection collection, JID nickJid)

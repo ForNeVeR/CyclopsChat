@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 
 namespace Cyclops.Core
@@ -34,6 +35,7 @@ namespace Cyclops.Core
         event EventHandler<ConferencesListEventArgs> ConferencesListReceived;
         event EventHandler<AuthenticationEventArgs> Authenticated;
         event EventHandler<AuthenticationEventArgs> ConnectionDropped;
+        event EventHandler<IPresence> Presence;
         event EventHandler PublicMessage;
         event EventHandler<ErrorEventArgs> ErrorMessageRecieved;
         void RemoveFromBookmarks(IEntityIdentifier conferenceId);

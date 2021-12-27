@@ -8,6 +8,7 @@ using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.Avatars;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
+using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using jabber;
 using jabber.connection;
@@ -95,7 +96,7 @@ namespace Cyclops.Core.Resource
             room.OnParticipantJoin += room_OnParticipantJoin;
             room.OnParticipantLeave += room_OnParticipantLeave;
 
-            session.JabberClient.OnPresence += JabberClient_OnPresence;
+            session.Presence += OnPresence;
         }
 
         private IQ room_OnRoomConfig(Room room, IQ parent)
@@ -103,12 +104,13 @@ namespace Cyclops.Core.Resource
             return parent;
         }
 
-        void JabberClient_OnPresence(object sender, Presence pres)
+        private void OnPresence(object sender, IPresence pres)
         {
-            if (!pres.From.BareJID.Equals(((JID)ConferenceId).BareJID) && !pres.From.Equals(Session.CurrentUserId))
+            var presenceFrom = (JID)pres.From;
+            if (!presenceFrom.BareJID.Equals(((JID)ConferenceId).BareJID) && !pres.From.Equals(Session.CurrentUserId))
                 return;
 
-            var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(pres, room.Participants.FindParticipant(pres.From));
+            var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(pres, room.Participants.FindParticipant(presenceFrom));
             if (roleChangedEventArgs != null && IsInConference)
                 RoleChanged(this, roleChangedEventArgs);
 
@@ -131,7 +133,7 @@ namespace Cyclops.Core.Resource
 
         private void UnSubscribeToEvents()
         {
-            session.JabberClient.OnPresence -= JabberClient_OnPresence;
+            session.Presence -= OnPresence;
 
             if (room == null)
                 return;

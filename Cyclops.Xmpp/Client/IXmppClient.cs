@@ -10,6 +10,8 @@ public interface IXmppClient
     event EventHandler<string> WriteRawMessage;
     event EventHandler<Exception> Error;
 
+    event EventHandler<IPresence> Presence;
+
     void SendElement(XmlElement element);
 
     Task<Vcard> GetVCard(IEntityIdentifier jid);

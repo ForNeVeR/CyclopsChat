@@ -11,8 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
@@ -20,7 +20,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol
@@ -56,7 +55,7 @@ namespace jabber.protocol
         /// jabber:client and jabber:component:accept are removed from the root element,
         /// and empty namespace declarations are removed throughout.
         /// </summary>
-        private static readonly Regex s_RemoveNS = 
+        private static readonly Regex s_RemoveNS =
             new Regex("(?:(?<=^[^>]*)( xmlns=\"(?:jabber:client|jabber:component:accept)\")| xmlns=\"\")",
                       RegexOptions.Compiled);
 
@@ -92,8 +91,8 @@ namespace jabber.protocol
 
         /// <summary>
         /// Returns the first child element with the given type.
-        /// 
-        /// You might expect this to be slower than this["name", "uri"], but it's 
+        ///
+        /// You might expect this to be slower than this["name", "uri"], but it's
         /// probably actually faster, since that code has to check several different
         /// things, and this code can just do a type comparison.
         /// </summary>
@@ -257,7 +256,7 @@ namespace jabber.protocol
         /// </summary>
         /// <param name="name">The element tag.</param>
         /// <param name="value">The inner text of the element.</param>
-        protected void SetElem(string name, string value)
+        protected void SetElem(string name, string? value)
         {
             XmlElement e = GetOrCreateElement(name, null, null);
             e.RemoveAll();
@@ -300,9 +299,9 @@ namespace jabber.protocol
 
         /// <summary>
         /// If a child element exists with the given type, return it.  Otherwise,
-        /// gin up a new instance of the given type, add it as a child, 
+        /// gin up a new instance of the given type, add it as a child,
         /// and return the result.
-        /// 
+        ///
         /// This should not have the performance impact of GetOrCreateElement.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -606,7 +605,7 @@ namespace jabber.protocol
             else
                 SetAttribute(name, val.ToString());
         }
-        
+
         /// <summary>
         /// Get an attribute cast to DateTime, using the DateTime profile
         /// of XEP-82.
@@ -717,7 +716,7 @@ namespace jabber.protocol
             DateTime date = DateTime.MinValue;
             if (string.IsNullOrWhiteSpace(dt))
                 return date;
-            DateTime.TryParseExact(dt, "yyyyMMddTHH:mm:ss", CultureInfo.InvariantCulture, 
+            DateTime.TryParseExact(dt, "yyyyMMddTHH:mm:ss", CultureInfo.InvariantCulture,
                 DateTimeStyles.None, out date);
             return date;
         }

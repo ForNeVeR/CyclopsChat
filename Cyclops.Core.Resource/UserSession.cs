@@ -255,6 +255,8 @@ namespace Cyclops.Core.Resource
         /// </summary>
         public event EventHandler<AuthenticationEventArgs> ConnectionDropped = delegate { };
 
+        public event EventHandler<IPresence>? Presence;
+
         public event EventHandler PublicMessage = delegate { };
         public event EventHandler<ErrorEventArgs> ErrorMessageRecieved = delegate { };
 
@@ -340,6 +342,8 @@ namespace Cyclops.Core.Resource
 
         private void SubscribeToEvents()
         {
+            XmppClient.Presence += (_, presence) => Presence?.Invoke(this, presence);
+
             JabberClient.OnAuthenticate += jabberClient_OnAuthenticate;
             JabberClient.OnAuthError += jabberClient_OnAuthError;
             JabberClient.OnConnect += jabberClient_OnConnect;

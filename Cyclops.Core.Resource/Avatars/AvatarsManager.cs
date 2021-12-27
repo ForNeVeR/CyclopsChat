@@ -9,9 +9,8 @@ using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
+using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
-using jabber.protocol;
-using jabber.protocol.client;
 
 namespace Cyclops.Core.Resource.Avatars
 {
@@ -109,12 +108,12 @@ namespace Cyclops.Core.Resource.Avatars
             return Path.Combine(AvatarsFolder, hash.ToLower() + ".png");
         }
 
-        internal bool ProcessAvatarChangeHash(Presence pres, IEntityIdentifier conferenceId)
+        internal bool ProcessAvatarChangeHash(IPresence pres, IEntityIdentifier conferenceId)
         {
             try
             {
                 bool hasAvatar = false;
-                var photoTagParent = pres.OfType<Element>().FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
+                var photoTagParent = pres.Elements.FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
                 if (photoTagParent != null)
                 {
                     var from = pres.From.Equals(session.CurrentUserId) ? conferenceId : pres.From;

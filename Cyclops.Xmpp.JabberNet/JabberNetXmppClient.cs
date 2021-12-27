@@ -1,5 +1,4 @@
 ﻿using System.Xml;
-using Cyclops.Core;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using jabber;
@@ -26,12 +25,16 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     public event EventHandler<string>? WriteRawMessage;
     public event EventHandler<Exception>? Error;
 
+    public event EventHandler<IPresence>? Presence;
+
     private void InitializeEvents()
     {
         client.OnConnect += delegate { Connect?.Invoke(this, null); };
         client.OnReadText += (_, text) => ReadRawMessage?.Invoke(this, text);
         client.OnWriteText += (_, text) => WriteRawMessage?.Invoke(this, text);
         client.OnError += (_, error) => Error?.Invoke(this, error);
+
+        client.OnPresence += (_, presence) => Presence?.Invoke(this, presence.Wrap());
     }
 
     public void SendElement(XmlElement element)
