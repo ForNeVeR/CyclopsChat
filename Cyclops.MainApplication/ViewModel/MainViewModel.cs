@@ -4,13 +4,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using Cyclops.Core;
-using Cyclops.Core.Resource;
-using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.Notifications;
-using Cyclops.MainApplication.View;
 using Cyclops.MainApplication.View.Popups;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -29,7 +24,7 @@ namespace Cyclops.MainApplication.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IMainView mainView)
+        public MainViewModel(ILogger logger, IMainView mainView)
         {
             this.mainView = mainView;
             if (IsInDesignMode)
@@ -46,9 +41,9 @@ namespace Cyclops.MainApplication.ViewModel
             ConferencesModels = new ObservableCollection<ConferenceViewModel>();
             PrivateViewModels = new ObservableCollection<PrivateViewModel>();
 
-            Session.Conferences.SynchronizeWith(ConferencesModels, 
-                conference => new ConferenceViewModel(null, conference), i => i, i => i.Conference);
-            
+            Session.Conferences.SynchronizeWith(ConferencesModels,
+                conference => new ConferenceViewModel(logger, null, conference), i => i, i => i.Conference);
+
             SubscribeToEvents();
             IsApplicationInActiveState = Application.Current.MainWindow.IsActive;
         }
@@ -57,7 +52,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             NotificationManager.NotifyError(e.From.ToString(), e.Message);
         }
-        
+
         private void SubscribeToEvents()
         {
             Session.PrivateMessages.CollectionChanged += PrivateMessagesCollectionChanged;
@@ -156,7 +151,7 @@ namespace Cyclops.MainApplication.ViewModel
         }
 
         #endregion
-        
+
         private void PrivateMessagesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)

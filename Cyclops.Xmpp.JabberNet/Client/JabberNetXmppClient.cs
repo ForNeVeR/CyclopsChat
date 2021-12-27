@@ -1,6 +1,7 @@
 ﻿using System.Xml;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.JabberNet.Elements;
 using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 using jabber;
@@ -44,21 +45,15 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         client.Write(element);
     }
 
-    public Task<Vcard> GetVCard(IEntityIdentifier jid)
+    private Task<IQ> SendIq(IQ request)
     {
-        var result = new TaskCompletionSource<Vcard>();
+        var result = new TaskCompletionSource<IQ>();
 
-        var vcardIq = new VCardIQ(client.Document)
-        {
-            To = (JID)jid,
-            Type = IQType.get
-        };
-
-        client.Tracker.BeginIQ(vcardIq, (_, iq, _) =>
+        client.Tracker.BeginIQ(request, (_, response, _) =>
         {
             try
             {
-                result.SetResult(iq.ToVCard());
+                result.SetResult(response);
             }
             catch (Exception ex)
             {
@@ -67,5 +62,35 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         }, null);
 
         return result.Task;
+    }
+
+    public async Task<IIq> SendCaptchaAnswer(IEntityIdentifier conferenceId, string challenge, string answer)
+    {
+        var conferenceJid = (JID)conferenceId;
+        var iq = new TypedIQ<CaptchaAnswer>(client.Document)
+        {
+            To = conferenceJid.BareJID,
+            Type = IQType.set,
+            Instruction =
+            {
+                CaptchaAnswerX = new CaptchaAnswerX(client.Document)
+            }
+        };
+
+        iq.Instruction.CaptchaAnswerX.FillAnswer(answer, conferenceJid, challenge);
+
+        var response = await SendIq(iq);
+        return response.Wrap();
+    }
+
+    public async Task<Vcard> GetVCard(IEntityIdentifier jid)
+    {
+        var vCardIq = new VCardIQ(client.Document)
+        {
+            To = (JID)jid,
+            Type = IQType.get
+        };
+        var iq = await SendIq(vCardIq);
+        return iq.ToVCard();
     }
 }

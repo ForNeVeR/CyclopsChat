@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Xmpp.Protocol;
@@ -18,7 +19,7 @@ namespace Cyclops.Core
         void Leave(string reason = "");
         void LeaveAndClose(string reason = "");
         void ChangeSubject(string s);
-        void SendPublicMessage(string body);
+        Task SendPublicMessage(string body);
         bool ChangeNick(string value);
         void SendPrivateMessage(IEntityIdentifier target, string body);
         void RejoinWithNewNick(string nick);

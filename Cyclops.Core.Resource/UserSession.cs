@@ -402,6 +402,9 @@ namespace Cyclops.Core.Resource
             IqCommonHandler.Handle(JabberClient, iq);
         }
 
+        public Task<IIq> SendCaptchaAnswer(IEntityIdentifier mucId, string challenge, string answer) =>
+            XmppClient.SendCaptchaAnswer(mucId, challenge, answer);
+
         private void JabberClient_OnMessage(object sender, Message msg)
         {
             //some conferences are not allowed to send privates

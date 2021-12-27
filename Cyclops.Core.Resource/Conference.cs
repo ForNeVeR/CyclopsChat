@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.Avatars;
+using Cyclops.Core.Resource.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Xmpp.Protocol;
@@ -442,17 +444,20 @@ namespace Cyclops.Core.Resource
             room.Subject = subj;
         }
 
-        public void SendPublicMessage(string body)
+        public async Task SendPublicMessage(string body)
         {
             if (captchaMode)
             {
-                ConferenceManager manager = session.ConferenceManager;
-                var iq = new TypedIQ<CaptchaAnswer>(session.JabberClient.Document);
-                iq.To = ((JID) ConferenceId).BareJID;
-                iq.Type = IQType.set;
-                iq.Instruction.CaptchaAnswerX = new CaptchaAnswerX(session.JabberClient.Document);
-                iq.Instruction.CaptchaAnswerX.FillAnswer(body, (JID)ConferenceId, captchaChallenge);
-                manager.BeginIQ(iq, OnCaptchaResponse, new Object());
+                var response = await session.SendCaptchaAnswer(ConferenceId, captchaChallenge, body);
+                if (response.Error == null)
+                    captchaMode = false;
+                else
+                {
+                    //let's rejoin
+                    room.Leave("");
+                    room.Join();
+                    InvalidCaptchaCode(this, EventArgs.Empty);
+                }
                 return;
             }
 
@@ -478,19 +483,6 @@ namespace Cyclops.Core.Resource
             }
 
             return true;
-        }
-
-        private void OnCaptchaResponse(object sender, IQ iq, object data)
-        {
-            if (iq.Error == null)
-                captchaMode = false;
-            else
-            {
-                //let's rejoin
-                room.Leave("");
-                room.Join();
-                InvalidCaptchaCode(this, EventArgs.Empty);
-            }
         }
 
         public void SendPrivateMessage(IEntityIdentifier target, string body)

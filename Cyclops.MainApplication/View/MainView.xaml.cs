@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Windows.Controls;
+﻿using System.Configuration;
 using Cyclops.MainApplication.Options.View;
 using Cyclops.MainApplication.ViewModel;
 
@@ -15,7 +13,7 @@ namespace Cyclops.MainApplication.View
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel(this);
+            DataContext = new MainViewModel(ChatObjectFactory.GetDebugLogger(), this);
 
             var stylingMode = ConfigurationManager.AppSettings["StylingMode"];
             if (stylingMode != null && stylingMode.ToLower().Equals("true"))

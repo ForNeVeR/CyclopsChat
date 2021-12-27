@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.client
@@ -89,7 +88,7 @@ namespace jabber.protocol.client
         public IQType Type
         {
             get { return GetEnumAttr<IQType>("type"); }
-            set 
+            set
             {
                 IQType cur = this.Type;
                 if (cur == value)
@@ -107,7 +106,7 @@ namespace jabber.protocol.client
         /// <summary>
         /// IQ error.
         /// </summary>
-        public Error Error
+        public Error? Error
         {
             get { return GetChildElement<Error>(); }
             set

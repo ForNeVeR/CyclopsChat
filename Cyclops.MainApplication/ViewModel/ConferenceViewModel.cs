@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Helpers;
 using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.View.Dialogs;
 using Cyclops.Xmpp.Protocol;
@@ -12,6 +13,8 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public partial class ConferenceViewModel : ChatAreaViewModel
     {
+        private readonly ILogger logger;
+
         private IConference conference;
         private ObservableCollection<MessageViewModel> messages;
         private string newNick;
@@ -19,8 +22,10 @@ namespace Cyclops.MainApplication.ViewModel
         private string statusText;
         private IChatObjectsValidator validator;
 
-        public ConferenceViewModel(IChatAreaView view, IConference conference) : base(view)
+        public ConferenceViewModel(ILogger logger, IChatAreaView view, IConference conference) : base(view)
         {
+            this.logger = logger;
+
             validator = ChatObjectFactory.GetValidator();
             Conference = conference;
 
@@ -112,7 +117,7 @@ namespace Cyclops.MainApplication.ViewModel
             if (Settings.ShowStatusChangingMessages)
             {
                 ApplicationSounds.PlayOnStatusChanging(this);
-                AddNotifyMessage(Localization.Conference.StatusChangingFormat, 
+                AddNotifyMessage(Localization.Conference.StatusChangingFormat,
                     e.Member.Nick, e.Member.StatusType, e.Member.StatusText);
             }
         }
@@ -281,7 +286,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ChangeConflictedNick()
         {
-            InputDialog.ShowForEdit(string.Format(Localization.Conference.NewNick, Conference.ConferenceId.User), 
+            InputDialog.ShowForEdit(string.Format(Localization.Conference.NewNick, Conference.ConferenceId.User),
                 Conference.ConferenceId.Resource, TryRejoinWithNewNick, NewNickValidator);
         }
 
@@ -328,7 +333,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             if (string.IsNullOrEmpty(CurrentlyTypedMessage))
                 return;
-            Conference.SendPublicMessage(RemoveEndNewLineSymbol(CurrentlyTypedMessage));
+            Conference.SendPublicMessage(RemoveEndNewLineSymbol(CurrentlyTypedMessage)).NoAwait(logger);
             CurrentlyTypedMessage = string.Empty;
         }
 

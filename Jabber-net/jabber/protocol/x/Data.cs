@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.x
@@ -226,7 +225,7 @@ namespace jabber.protocol.x
         /// </summary>
         public string FormType
         {
-            get 
+            get
             {
                 Field f = GetField(FORM_TYPE);
                 if (f == null)
@@ -438,7 +437,7 @@ namespace jabber.protocol.x
         /// <summary>
         /// The field value.
         /// </summary>
-        public string Val
+        public string? Val
         {
             get { return GetElem("value"); }
             set { SetElem("value", value); }
