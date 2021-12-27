@@ -1,9 +1,8 @@
-﻿namespace Cyclops.Xmpp.Protocol
+﻿namespace Cyclops.Xmpp.Protocol;
+
+public interface IEntityIdentifier
 {
-    public interface IEntityIdentifier
-    {
-        string Server { get; }
-        string User { get; }
-        string Resource { get; }
-    }
+    string Server { get; }
+    string User { get; }
+    string Resource { get; }
 }
