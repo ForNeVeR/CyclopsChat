@@ -1,4 +1,4 @@
-using Cyclops.Core;
+using Cyclops.Xmpp.Data;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 

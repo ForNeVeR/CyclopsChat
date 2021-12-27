@@ -2,5 +2,23 @@
     <PropertyGroup>
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
+        <!--
+            Below is the list of the old projects which shouldn't be checked for warnings that strictly.
+
+            For WPF-related projects, a check for StartsWith is necessary, because otherwise warnings get enabled in a
+            generated $(MSBuildProjectName)_<something>.csproj file generated during XAML processing.
+        -->
+        <TreatWarningsAsErrors Condition="
+            '$(MSBuildProjectName)' != '2005-jabber-net'
+            And '$(MSBuildProjectName)' != 'Cyclops.Core'
+            And '$(MSBuildProjectName)' != 'Cyclops.Core.Resource'
+            And '$(MSBuildProjectName)' != 'Cyclops.MainApplication'
+            And '$(MSBuildProjectName)' != 'Cyclops.MainApplication.Localization'
+            And '$(MSBuildProjectName)' != 'Cyclops.MainApplication.Options'
+            And '$(MSBuildProjectName)' != 'netlib.Dns'
+            And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication_'))
+            And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication.Localization_'))
+            And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication.Options_'))
+        ">true</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>
