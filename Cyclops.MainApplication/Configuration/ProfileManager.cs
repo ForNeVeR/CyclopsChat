@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
 using Cyclops.MainApplication.Options.Helpers;
 
 namespace Cyclops.MainApplication.Configuration
@@ -11,7 +6,9 @@ namespace Cyclops.MainApplication.Configuration
     public static class ProfileManager
     {
         private static readonly Serializer<Profile> Serializer = new Serializer<Profile>();
-        private const string ProfileFile = @"Data\Profiles\Profile.config.xml";
+        private static readonly string ProfileFile =
+            Environment.GetEnvironmentVariable("CYCLOPS_PROFILE_FILE")
+            ?? @"Data\Profiles\Profile.config.xml";
 
         /// <summary>
         /// Get all saved profiles
@@ -20,7 +17,7 @@ namespace Cyclops.MainApplication.Configuration
         {
             return Serializer.Deserialize(ProfileFile) ?? new Profile();
         }
-        
+
         /// <summary>
         /// Save new or changed profile to the specific folder
         /// </summary>
@@ -42,7 +39,7 @@ namespace Cyclops.MainApplication.Configuration
     //    {
     //        ProfilesFolder = ConfigurationManager.AppSettings["ProfilesFolder"];
     //    }
-        
+
     //    /// <summary>
     //    /// Get all saved profiles
     //    /// </summary>
