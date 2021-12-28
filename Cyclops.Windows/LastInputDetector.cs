@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using static Cyclops.Windows.User32;
+﻿using static Cyclops.Windows.User32;
 
 namespace Cyclops.Windows;
 
@@ -27,7 +26,6 @@ public class LastInputDetector : IDisposable
         var currentTime = Environment.TickCount;
 
         var inputIdle = TimeSpan.FromMilliseconds(currentTime - lastInputInfo.dwTime);
-        Debug.WriteLine(inputIdle);
         if (inputIdle >= idleInterval)
             NotifyInIdleMode(inputIdle);
         else
