@@ -188,7 +188,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// Full name of the individual, as a single string
         /// </summary>
-        public string FullName
+        public string? FullName
         {
             get { return GetElem("FN"); }
             set { SetElem("FN", value); }
@@ -298,7 +298,7 @@ namespace jabber.protocol.iq
         /// <summary>
         ///
         /// </summary>
-        public string Description
+        public string? Description
         {
             get { return GetElem("DESC"); }
             set { SetElem("DESC", value); }
@@ -947,7 +947,7 @@ namespace jabber.protocol.iq
             /// An Image representation of the bytes in the picture.
             /// The MimeType MUST be set before calling set.
             /// </summary>
-            public System.Drawing.Image Image
+            public System.Drawing.Image? Image
             {
                 get
                 {

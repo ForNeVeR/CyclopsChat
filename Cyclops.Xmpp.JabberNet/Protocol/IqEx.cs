@@ -2,7 +2,6 @@ using System.Xml;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 using jabber.protocol.client;
-using jabber.protocol.iq;
 
 namespace Cyclops.Xmpp.JabberNet.Protocol;
 
@@ -21,10 +20,10 @@ internal static class IqEx
 
     public static IIq Wrap(this IQ iq) => new Iq(iq);
 
-    public static Vcard ToVCard(this IQ iq)
+    public static VCard ToVCard(this IQ iq)
     {
-        var vCard = (VCard)iq.Query;
-        return new Vcard
+        var vCard = (jabber.protocol.iq.VCard)iq.Query;
+        return new VCard
         {
             Photo = vCard.Photo?.Image,
             Email = vCard.Email,

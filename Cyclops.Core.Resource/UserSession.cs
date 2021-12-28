@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Net.Security;
 using System.Reflection;
@@ -9,7 +8,6 @@ using System.Windows.Threading;
 using System.Xml;
 using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
 using Cyclops.Xmpp.Client;
@@ -23,6 +21,7 @@ using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
 using jabber.protocol.stream;
+using VCard = Cyclops.Xmpp.Data.VCard;
 
 namespace Cyclops.Core.Resource
 {
@@ -452,47 +451,20 @@ namespace Cyclops.Core.Resource
 
         public Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid) => XmppClient.GetClientInfo(jid);
 
-        public Task<Vcard> GetVCard(IEntityIdentifier target) => XmppClient.GetVCard(target);
+        public Task<VCard> GetVCard(IEntityIdentifier target) => XmppClient.GetVCard(target);
 
-        public void UpdateVcard(Vcard vcard, Action<bool> callback)
+        public async Task UpdateVCard(VCard vCard)
         {
-            try
+            logger.LogInfo("Updating vCard.");
+            var updateResult = await XmppClient.UpdateVCard(vCard);
+            if (updateResult.Error != null)
             {
-                VCardIQ iq = new VCardIQ(JabberClient.Document);
-                iq.Type = IQType.set;
-                VCard.VPhoto p = iq.VCard.Photo = new VCard.VPhoto(JabberClient.Document);
-                if (vcard.Photo != null)
-                    p.ImageType = vcard.Photo.RawFormat;
-                p.Image = vcard.Photo;
-                iq.VCard.Photo = p;
-                iq.VCard.Description = vcard.Comments;
-                iq.VCard.Birthday = vcard.Birthday;
-                iq.VCard.FullName = vcard.FullName;
-
-                JabberClient.Tracker.BeginIQ(iq, (s, resIq, d) =>
-                                                     {
-                                                         callback(resIq.Error == null);
-                                                         if (resIq.Error == null)
-                                                         {
-                                                             SendUpdateNotification(vcard.Photo);
-                                                         }
-                                                     }, null);
+                logger.LogInfo($"Update vCard error: {updateResult.Error}.");
+                return;
             }
-            catch
-            {
-                callback(false);
-            }
-        }
 
-        private void SendUpdateNotification(Image image)
-        {
-            Presence pres = new Presence(JabberClient.Document);
-            string hash = string.Empty;
-            if (image != null)
-                hash = ImageUtils.CalculateSha1HashOfAnImage(image);
-            PhotoX photo = new PhotoX(JabberClient.Document) {PhotoHash = hash};
-            pres.AddChild(photo);
-            JabberClient.Write(pres);
+            var photoHash = vCard.Photo == null ? "" : ImageUtils.CalculateSha1HashOfAnImage(vCard.Photo);
+            XmppClient.SendPhotoUpdatePresence(photoHash);
         }
 
         public IEntityIdentifier ConferenceServiceId { get; private set; }

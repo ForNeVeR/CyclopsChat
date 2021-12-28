@@ -17,6 +17,9 @@ public interface IXmppClient
 
     Task<IIq> SendCaptchaAnswer(IEntityIdentifier mucId, string challenge, string answer);
 
-    Task<Vcard> GetVCard(IEntityIdentifier jid);
+    Task<VCard> GetVCard(IEntityIdentifier jid);
+    Task<IIq> UpdateVCard(VCard vCard);
+    void SendPhotoUpdatePresence(string photoHash);
+
     Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
 }

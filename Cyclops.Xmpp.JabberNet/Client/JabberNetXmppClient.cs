@@ -8,6 +8,7 @@ using jabber;
 using jabber.client;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+using VCard = Cyclops.Xmpp.Data.VCard;
 
 namespace Cyclops.Xmpp.JabberNet.Client;
 
@@ -80,7 +81,7 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         return response.Wrap();
     }
 
-    public async Task<Vcard> GetVCard(IEntityIdentifier jid)
+    public async Task<VCard> GetVCard(IEntityIdentifier jid)
     {
         var vCardIq = new VCardIQ(client.Document)
         {
@@ -89,6 +90,34 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         };
         var iq = await SendIq(vCardIq);
         return iq.ToVCard();
+    }
+
+    public async Task<IIq> UpdateVCard(VCard vCard)
+    {
+        var iq = new VCardIQ(client.Document)
+        {
+            Type = IQType.set
+        };
+        var photo = iq.VCard.Photo = new jabber.protocol.iq.VCard.VPhoto(client.Document);
+        if (vCard.Photo != null)
+            photo.ImageType = vCard.Photo.RawFormat;
+
+        photo.Image = vCard.Photo;
+        iq.VCard.Photo = photo;
+        iq.VCard.Description = vCard.Comments;
+        iq.VCard.Birthday = vCard.Birthday;
+        iq.VCard.FullName = vCard.FullName;
+
+        var response = await SendIq(iq);
+        return response.Wrap();
+    }
+
+    public void SendPhotoUpdatePresence(string photoHash)
+    {
+        var presence = new Presence(client.Document);
+        presence.AddChild(new PhotoX(client.Document) { PhotoHash = photoHash });
+
+        client.Write(presence);
     }
 
     public async Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid)

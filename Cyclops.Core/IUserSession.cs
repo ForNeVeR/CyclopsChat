@@ -31,8 +31,8 @@ namespace Cyclops.Core
         void StartPrivate(IEntityIdentifier conferenceUserId);
 
         Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
-        Task<Vcard> GetVCard(IEntityIdentifier target);
-        void UpdateVcard(Vcard vcard, Action<bool> callback);
+        Task<VCard> GetVCard(IEntityIdentifier target);
+        Task UpdateVCard(VCard vCard);
 
         event EventHandler<ConferencesListEventArgs> ConferencesListReceived;
         event EventHandler<AuthenticationEventArgs> Authenticated;

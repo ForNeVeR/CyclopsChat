@@ -13,12 +13,14 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public class VcardViewModel : ViewModelBaseEx
     {
+        private readonly ILogger logger;
         private readonly Action closeAction;
         private IUserSession session;
-        private Vcard sourceVcard = null;
+        private VCard sourceVCard = null;
 
         public VcardViewModel(ILogger logger, IEntityIdentifier target, Action closeAction, bool isEditMode = false)
         {
+            this.logger = logger;
             this.closeAction = closeAction;
             IsEditMode = isEditMode;
             session = ChatObjectFactory.GetSession();
@@ -70,31 +72,39 @@ namespace Cyclops.MainApplication.ViewModel
         private void SaveAction()
         {
             IsBusy = true;
-            session.UpdateVcard(new Vcard
-                                    {
-                                        Birthday = Birthday,
-                                        Comments = Comments,
-                                        Email = Email,
-                                        FullName = FullName,
-                                        Photo = Photo == null ? null : (Photo.Clone() as Image),
-                                    }, SaveCompleted);
-        }
+            var vCard = new VCard
+            {
+                Birthday = Birthday,
+                Comments = Comments,
+                Email = Email,
+                FullName = FullName,
+                Photo = Photo?.Clone() as Image,
+            };
 
-        private void SaveCompleted(bool obj)
-        {
-            IsBusy = false;
-            closeAction();
+            DoAction().NoAwait(logger);
+            async Task DoAction()
+            {
+                try
+                {
+                    await session.UpdateVCard(vCard);
+                }
+                finally
+                {
+                    IsBusy = false;
+                    closeAction();
+                }
+            }
         }
 
         private bool avatarsChanged = false;
         private bool SaveCanExecute()
         {
-            return IsEditMode && session.IsAuthenticated && sourceVcard != null &&
-                (Birthday != sourceVcard.Birthday ||
-                 FullName != sourceVcard.FullName ||
+            return IsEditMode && session.IsAuthenticated && sourceVCard != null &&
+                (Birthday != sourceVCard.Birthday ||
+                 FullName != sourceVCard.FullName ||
                  avatarsChanged ||
-                 Email != sourceVcard.Email ||
-                 Comments != sourceVcard.Comments);
+                 Email != sourceVCard.Email ||
+                 Comments != sourceVCard.Comments);
         }
 
         public RelayCommand Save { get; set; }
@@ -106,7 +116,7 @@ namespace Cyclops.MainApplication.ViewModel
         {
             var obj = await session.GetVCard(target);
 
-            sourceVcard = obj;
+            sourceVCard = obj;
             Photo = obj.Photo;
             Nick = obj.Nick;
             FullName = obj.FullName;

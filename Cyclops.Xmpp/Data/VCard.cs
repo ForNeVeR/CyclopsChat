@@ -2,7 +2,7 @@
 
 namespace Cyclops.Xmpp.Data;
 
-public class Vcard
+public class VCard
 {
     public Image? Photo { get; set; }
     public string? FullName { get; set; }
