@@ -1,10 +1,12 @@
-using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.JabberNet.Helpers;
+using Cyclops.Xmpp.Data.Rooms;
+using Cyclops.Xmpp.JabberNet.Data.Rooms;
+using Cyclops.Xmpp.JabberNet.Protocol;
+using Cyclops.Xmpp.Protocol;
 using jabber.connection;
 
 namespace Cyclops.Xmpp.JabberNet.Data;
 
-public static class RoomParticipantEx
+internal static class RoomParticipantEx
 {
     private class MucParticipant : IMucParticipant
     {
@@ -15,8 +17,12 @@ public static class RoomParticipantEx
             this.participant = participant;
         }
 
+        public IEntityIdentifier RoomParticipantJid => participant.NickJID;
+        public IEntityIdentifier? RealJid => participant.RealJID;
         public MucRole? Role => participant.Role.Map();
         public MucAffiliation? Affiliation => participant.Affiliation.Map();
+        public IPresence Presence => participant.Presence.Wrap();
+        public string Nick => participant.Nick;
     }
 
     public static IMucParticipant Wrap(this RoomParticipant participant) => new MucParticipant(participant);

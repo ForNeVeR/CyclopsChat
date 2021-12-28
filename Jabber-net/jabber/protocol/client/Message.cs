@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.client
@@ -136,7 +135,7 @@ namespace jabber.protocol.client
         /// <summary>
         /// The message body
         /// </summary>
-        public string Body
+        public string? Body
         {
             get { return GetElem("body"); }
             set { SetElem("body", value); }
@@ -154,7 +153,7 @@ namespace jabber.protocol.client
         /// <summary>
         /// The message subject
         /// </summary>
-        public string Subject
+        public string? Subject
         {
             get { return GetElem("subject"); }
             set { SetElem("subject", value); }

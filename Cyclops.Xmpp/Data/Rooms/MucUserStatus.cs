@@ -1,4 +1,4 @@
-namespace Cyclops.Xmpp.Data;
+namespace Cyclops.Xmpp.Data.Rooms;
 
 /// <remarks>Descriptions taken from XEO-0045: https://xmpp.org/extensions/xep-0045.html</remarks>
 public enum MucUserStatus

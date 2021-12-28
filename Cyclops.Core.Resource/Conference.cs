@@ -9,13 +9,10 @@ using Cyclops.Core.Resource.Avatars;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.JabberNet.Protocol;
+using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 using jabber;
-using jabber.connection;
 using jabber.protocol.client;
-using jabber.protocol.iq;
-using jabber.protocol.x;
 
 namespace Cyclops.Core.Resource
 {
@@ -24,7 +21,7 @@ namespace Cyclops.Core.Resource
         private readonly ILogger logger;
         private readonly IXmppDataExtractor dataExtractor;
         private readonly UserSession session;
-        private Room room;
+        private IRoom? room;
 
         internal Conference(ILogger logger, UserSession session, IXmppDataExtractor dataExtractor, IEntityIdentifier conferenceId)
         {
@@ -77,10 +74,11 @@ namespace Cyclops.Core.Resource
             {
                 UnSubscribeToEvents();
                 Leave("Replaced with new connection.");
+                room.Dispose();
             }
 
-            room = session.ConferenceManager.GetRoom((JID)ConferenceId);
-            room.Nickname = ConferenceId.Resource;
+            room = session.GetRoom(ConferenceId);
+            room.SetNickname(ConferenceId.Resource);
             SubscribeToEvents();
             BeginJoin(this, EventArgs.Empty);
             room.Join();
@@ -88,23 +86,17 @@ namespace Cyclops.Core.Resource
 
         private void SubscribeToEvents()
         {
-            room.OnJoin += room_OnJoin;
-            room.OnLeave += room_OnLeave;
-            room.OnSubjectChange += room_OnSubjectChange;
-            room.OnPresenceError += room_OnPresenceError;
-            room.OnSelfMessage += room_OnSelfMessage;
-            room.OnAdminMessage += room_OnAdminMessage;
-            room.OnRoomMessage += room_OnRoomMessage;
-            room.OnRoomConfig += room_OnRoomConfig;
-            room.OnParticipantJoin += room_OnParticipantJoin;
-            room.OnParticipantLeave += room_OnParticipantLeave;
+            room!.Joined += room_OnJoin;
+            room.Left += room_OnLeave;
+            room.SubjectChange += room_OnSubjectChange;
+            room.PresenceError += room_OnPresenceError;
+            room.SelfMessage += room_OnSelfMessage;
+            room.AdminMessage += room_OnAdminMessage;
+            room.RoomMessage += room_OnRoomMessage;
+            room.ParticipantJoin += room_OnParticipantJoin;
+            room.ParticipantLeave += room_OnParticipantLeave;
 
             session.Presence += OnPresence;
-        }
-
-        private IQ room_OnRoomConfig(Room room, IQ parent)
-        {
-            return parent;
         }
 
         private void OnPresence(object sender, IPresence pres)
@@ -141,21 +133,19 @@ namespace Cyclops.Core.Resource
             if (room == null)
                 return;
 
-            room.OnJoin -= room_OnJoin;
-            room.OnLeave -= room_OnLeave;
-            room.OnSubjectChange -= room_OnSubjectChange;
-            room.OnPresenceError -= room_OnPresenceError;
-
-            room.OnSelfMessage -= room_OnSelfMessage;
-            room.OnAdminMessage -= room_OnAdminMessage;
-            room.OnRoomMessage -= room_OnRoomMessage;
-            room.OnParticipantJoin -= room_OnParticipantJoin;
-            room.OnParticipantLeave -= room_OnParticipantLeave;
-
+            room.Joined -= room_OnJoin;
+            room.Left -= room_OnLeave;
+            room.SubjectChange -= room_OnSubjectChange;
+            room.PresenceError -= room_OnPresenceError;
+            room.SelfMessage -= room_OnSelfMessage;
+            room.AdminMessage -= room_OnAdminMessage;
+            room.RoomMessage -= room_OnRoomMessage;
+            room.ParticipantJoin -= room_OnParticipantJoin;
+            room.ParticipantLeave -= room_OnParticipantLeave;
         }
 
         private bool waitingForPassword = false;
-        private void room_OnPresenceError(Room room, Presence pres)
+        private void room_OnPresenceError(object _, IPresence pres)
         {
             if (pres.Error == null)
                 return;
@@ -213,34 +203,32 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        private void room_OnLeave(Room room, Presence pres)
+        private void room_OnLeave(object _, IPresence pres)
         {
-            if (!pres.IsNullOrEmpty() && pres["x"] != null)
+            var userX = dataExtractor.GetExtendedUserData(pres);
+            if (userX?.Status.IsNullOrEmpty() == false)
             {
-                var userX = pres["x"] as UserX;
-                if (!userX.Status.IsNullOrEmpty())
-                {
-                    if (userX.Status.Any(i => i == RoomStatus.KICKED))
-                        Kicked(this, new KickedEventArgs(null, userX.RoomItem.Reason));
-                    else if (userX.Status.Any(i => i == RoomStatus.BANNED))
-                        Banned(this, new BannedEventArgs(null, userX.RoomItem.Reason));
-                }
+                if (userX.Status.Any(i => i == MucUserStatus.Kicked))
+                    Kicked(this, new KickedEventArgs(null, userX.RoomItem?.Reason));
+                else if (userX.Status.Any(i => i == MucUserStatus.Banned))
+                    Banned(this, new BannedEventArgs(null, userX.RoomItem.Reason));
             }
 
             Members.AsInternalImpl().Clear();
             IsInConference = false;
         }
 
-        private void room_OnJoin(Room room)
+        private void room_OnJoin(object sender, object __)
         {
+            var senderRoom = (IRoom)sender;
             if (waitingForPassword)
                 waitingForPassword = false;
 
             Joined(this, new ConferenceJoinEventArgs());
-            foreach (RoomParticipant participant in room.Participants)
+            foreach (var participant in senderRoom.Participants)
             {
-                if (!Members.Any(i => (JID) i.ConferenceUserId == participant.NickJID))
-                    Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, participant, room)
+                if (!Members.Any(i => i.ConferenceUserId?.Equals(participant.RoomParticipantJid) == true))
+                    Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, participant, senderRoom)
                                                      {
                                                          AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                                                      });
@@ -248,8 +236,10 @@ namespace Cyclops.Core.Resource
             IsInConference = true;
         }
 
-        private void room_OnParticipantLeave(Room room, RoomParticipant participant)
+        private void room_OnParticipantLeave(object sender, IMucParticipant participant)
         {
+            var senderRoom = (IRoom)sender;
+
             //HANDLE NICK CHANGE
             bool nickChangeAction = false;
             string newNick = string.Empty;
@@ -257,33 +247,40 @@ namespace Cyclops.Core.Resource
             var memberObj = Members.FirstOrDefault(i => i.Nick == participant.Nick);
             if (memberObj == null)
                 return;
-
-            var nickChange = participant.Presence.OfType<UserX>().FirstOrDefault(i => i.Status != null && i.Status.Any(s => s == RoomStatus.NEW_NICK));
-            if (nickChange != null && nickChange.OfType<AdminItem>().Any(i => !string.IsNullOrEmpty(i.Nick)))
+            var userX = dataExtractor.GetExtendedUserData(participant.Presence);
+            var nickChange = userX?.Status.Contains(MucUserStatus.NewRoomNickname) == true ? userX : null;
+            var adminItem = dataExtractor.GetAdminItem(nickChange);
+            if (!string.IsNullOrEmpty(adminItem?.Nick))
             {
-                newNick = nickChange.OfType<AdminItem>().First(i => !string.IsNullOrEmpty(i.Nick)).Nick;
+                newNick = adminItem.Nick;
                 string oldNick = participant.Nick;
                 NickChange(this, new NickChangeEventArgs(oldNick, newNick));
                 nickChangeAction = true;
             }
 
-            if (nickChangeAction && participant.NickJID.Equals(ConferenceId))
+            if (nickChangeAction && participant.RoomParticipantJid.Equals(ConferenceId))
             {
-                // a small hack:
-                room.RetrieveListByAffiliation(participant.Affiliation, (r, p, s) =>
-                    {
-                        var newParticipantObj = r.Participants.OfType<RoomParticipant>().FirstOrDefault(i => i.Nick == newNick);
-                        if (newParticipantObj == null)
-                        {
-                            //LOG?
-                        }
-                        else
-                            Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, newParticipantObj, r)
-                                {
-                                    AvatarUrl = memberObj != null ? memberObj.AvatarUrl : null
-                                });
+                ProcessParticipant().NoAwait(logger);
+                async Task ProcessParticipant()
+                {
+                    var member = memberObj;
 
-                    }, new Object());
+                    // a small hack:
+                    var _ = await senderRoom.GetParticipants(participant.Affiliation);
+                    var newParticipant = senderRoom.Participants.FirstOrDefault(i => i.Nick == newNick);
+                    if (newParticipant == null)
+                    {
+                        //LOG?
+                        return;
+                    }
+
+                    Members.AsInternalImpl().Add(
+                        new ConferenceMember(logger, session, this, newParticipant, senderRoom)
+                        {
+                            AvatarUrl = member.AvatarUrl
+                        });
+                }
+
                 ConferenceId = IdentifierBuilder.WithAnotherResource(ConferenceId, newNick);
             }
             //HANDLE NICK CHANGE (END)
@@ -291,14 +288,16 @@ namespace Cyclops.Core.Resource
             if (!nickChangeAction)
                 ParticipantLeave(this, new ConferenceMemberEventArgs(memberObj));
 
-            Members.AsInternalImpl().Remove(i => participant.NickJID == (JID) i.ConferenceUserId);
+            Members.AsInternalImpl().Remove(i => participant.RoomParticipantJid.Equals(i.ConferenceUserId));
         }
 
-        private void room_OnParticipantJoin(Room room, RoomParticipant participant)
+        private void room_OnParticipantJoin(object sender, IMucParticipant participant)
         {
-            if (!Members.Any(i => (JID)i.ConferenceUserId == participant.NickJID))
+            var senderRoom = (IRoom)sender;
+
+            if (!Members.Any(i => i.ConferenceUserId?.Equals(participant.RoomParticipantJid) == true))
             {
-                var member = new ConferenceMember(logger, session, this, participant, room)
+                var member = new ConferenceMember(logger, session, this, participant, senderRoom)
                                  {
                                      AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
                                  };
@@ -308,17 +307,16 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        private void room_OnRoomMessage(object sender, Message msg)
+        private void room_OnRoomMessage(object sender, IMessage msg)
         {
+            var senderRoom = (IRoom)sender;
             if (string.IsNullOrEmpty(msg.Body)) return;
 
-            DateTime stamp = DateTime.Now;
-            var delay = msg.OfType<Delay>().FirstOrDefault();
-            if (delay != null && delay.Stamp != DateTime.MinValue)
-                stamp = delay.Stamp;
-
-
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg) { Timestamp = stamp });
+            var stamp = dataExtractor.GetDelayStamp(msg) ?? DateTime.Now;
+            Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, senderRoom, msg)
+            {
+                Timestamp = stamp
+            });
         }
 
         public event EventHandler<CaptchaEventArgs> CaptchaRequirment = delegate { };
@@ -326,10 +324,10 @@ namespace Cyclops.Core.Resource
         private bool captchaMode = false;
         private string captchaChallenge = null;
 
-        private void room_OnAdminMessage(object sender, Message msg)
+        private void room_OnAdminMessage(object sender, IMessage msg)
         {
             // CAPTCHA required
-            var captcha =  dataExtractor.GetCaptchaRequest(msg.Wrap());
+            var captcha =  dataExtractor.GetCaptchaRequest(msg);
             if (captcha != null)
             {
                 captchaChallenge = captcha.CaptchaChallenge;
@@ -355,16 +353,16 @@ namespace Cyclops.Core.Resource
             }
 
             //unknown:
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, sender as Room, msg));
+            Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, (IRoom)sender, msg));
         }
 
-        private void room_OnSelfMessage(object sender, Message msg)
+        private void room_OnSelfMessage(object _, IMessage msg)
         {
             if (string.IsNullOrEmpty(msg.Body)) return;
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(session, msg, true));
+            Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, msg, true));
         }
 
-        private void room_OnSubjectChange(object sender, Message msg)
+        private void room_OnSubjectChange(object sender, IMessage msg)
         {
             if (msg.From != null && !string.IsNullOrEmpty(msg.From.Resource))
                 SubjectChanged(this, new SubjectChangedEventArgs(msg.From.Resource, msg.Subject));
@@ -446,7 +444,7 @@ namespace Cyclops.Core.Resource
 
         public void ChangeSubject(string subj)
         {
-            room.Subject = subj;
+            room.SetSubject(subj);
         }
 
         public async Task SendPublicMessage(string body)
@@ -474,7 +472,7 @@ namespace Cyclops.Core.Resource
                 return;
             }
 
-            room.PublicMessage(body);
+            room.SendPublicMessage(body);
         }
 
         public bool ChangeNick(string value)
@@ -484,7 +482,7 @@ namespace Cyclops.Core.Resource
                 //TODO: GLOBAL VALIDATOR!!!
                 if (!string.IsNullOrWhiteSpace(value) && value.Length < 30 &&
                     !value.Contains("@") && !value.Contains("/"))
-                    room.Nickname = value;
+                    room.SetNickname(value);
             }
 
             return true;
@@ -492,7 +490,7 @@ namespace Cyclops.Core.Resource
 
         public void SendPrivateMessage(IEntityIdentifier target, string body)
         {
-            room.PrivateMessage(target.Resource, body);
+            room.SendPrivateMessage(target.Resource, body);
         }
 
         private bool isNickConflictMode = false;

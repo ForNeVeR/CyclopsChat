@@ -12,6 +12,7 @@ using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Client;
 using Cyclops.Xmpp.Protocol;
 using jabber;
@@ -63,8 +64,8 @@ namespace Cyclops.Core.Resource
             this.stringEncryptor = stringEncryptor;
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
-            xmppClient = new JabberNetXmppClient(JabberClient);
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
+            xmppClient = new JabberNetXmppClient(JabberClient, ConferenceManager);
             BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = false, ConferenceManager = ConferenceManager };
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
@@ -495,5 +496,7 @@ namespace Cyclops.Core.Resource
             reconnectTimer.Stop();
             Reconnect();
         }
+
+        public IRoom GetRoom(IEntityIdentifier roomId) => XmppClient.GetRoom(roomId);
     }
 }

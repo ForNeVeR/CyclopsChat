@@ -3,16 +3,15 @@ using System.Windows.Media.Imaging;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.JabberNet.Data;
+using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
-using jabber.connection;
 
 namespace Cyclops.Core.Resource
 {
     public class ConferenceMember : NotifyPropertyChangedBase, IConferenceMember
     {
-        private readonly RoomParticipant participant;
-        private readonly Room room;
+        private readonly IMucParticipant participant;
+        private readonly IRoom room;
         private readonly UserSession session;
         private readonly Conference conference;
         private string? statusText;
@@ -24,37 +23,37 @@ namespace Cyclops.Core.Resource
             ILogger logger,
             UserSession session,
             Conference conference,
-            RoomParticipant participant,
-            Room room)
+            IMucParticipant participant,
+            IRoom room)
         {
             this.session = session;
             this.conference = conference;
             this.participant = participant;
             this.room = room;
-            conferenceUserId = participant.NickJID;
-            room.OnParticipantPresenceChange += room_OnParticipantPresenceChange;
+            conferenceUserId = participant.RoomParticipantJid;
+            room.ParticipantPresenceChange += room_OnParticipantPresenceChange;
             session.Presence += OnPresence;
             room_OnParticipantPresenceChange(room, participant); //force call
-            Role = RoleConversion(participant.Wrap());
+            Role = RoleConversion(participant);
             ProcessClientVersion().NoAwait(logger);
         }
 
         private async Task ProcessClientVersion()
         {
-            ClientInfo = await session.GetClientInfo(participant.NickJID);
+            ClientInfo = await session.GetClientInfo(participant.RoomParticipantJid);
         }
 
         // this is workaround (because room_OnParticipantPresenceChange does not fired when current user changed his status
-        private void OnPresence(object sender, IPresence pres)
+        private void OnPresence(object sender, IPresence presence)
         {
-            if (pres.From?.Equals(pres.To) == true && participant.NickJID.Equals(conference.ConferenceId))
+            if (presence.From?.Equals(presence.To) == true && participant.RoomParticipantJid.Equals(conference.ConferenceId))
             {
-                StatusText = pres.Status;
-                StatusType = pres.Show;
+                StatusText = presence.Status;
+                StatusType = presence.Show;
             }
-            if (participant.NickJID.Equals(conference.ConferenceId))
+            if (participant.RoomParticipantJid.Equals(conference.ConferenceId))
             {
-                Role = RoleConversion(participant.Wrap());
+                Role = RoleConversion(participant);
             }
         }
 
@@ -163,18 +162,18 @@ namespace Cyclops.Core.Resource
 
         public IEntityIdentifier RealUserId
         {
-            get { return participant.RealJID; }
+            get { return participant.RealJid; }
         }
 
         #endregion
 
         private bool isFirstPresence = true;
 
-        private void room_OnParticipantPresenceChange(Room room, RoomParticipant participant)
+        private void room_OnParticipantPresenceChange(object _, IMucParticipant participant)
         {
             if (this.participant != participant)
                 return;
-            Role = RoleConversion(participant.Wrap());
+            Role = RoleConversion(participant);
             StatusText = participant.Presence.Status;
             StatusType = participant.Presence.Show;
             if (!isFirstPresence)

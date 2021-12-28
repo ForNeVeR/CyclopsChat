@@ -1,6 +1,7 @@
 using System.Xml;
 using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.JabberNet.Helpers;
+using Cyclops.Xmpp.JabberNet.Data.Rooms;
+using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 using jabber.protocol.iq;
 using jabber.protocol.x;
@@ -28,16 +29,14 @@ public class JabberNetDataExtractor : IXmppDataExtractor
         return null;
     }
 
-    public ExtendedUserData? GetExtendedUserData(IPresence presence)
+    public IExtendedUserData? GetExtendedUserData(IPresence presence) => (presence["x"] as UserX)?.Wrap();
+    public DateTime? GetDelayStamp(IMessage message)
     {
-        var userX = presence["x"] as UserX;
-        if (userX == null) return null;
-
-        var roomItem = userX.RoomItem;
-        return new ExtendedUserData(
-            roomItem?.Actor?.JID,
-            userX.Status.Select(x => x.Map()).ToList(),
-            roomItem?.Role.Map(),
-            roomItem?.Affiliation.Map());
+        var delay = message.Nodes.OfType<Delay>().SingleOrDefault();
+        var stamp = delay?.Stamp;
+        return stamp == DateTime.MinValue ? null : stamp;
     }
+
+    public IAdminItem? GetAdminItem(IExtendedUserData nickChange) =>
+        nickChange.Nodes.OfType<AdminItem>().SingleOrDefault()?.Map();
 }

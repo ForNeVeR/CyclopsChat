@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core.Resource.JabberNetExtensions
@@ -13,7 +14,7 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
         {
             var userX = extractor.GetExtendedUserData(presence);
 
-            if (userX?.ActorJid == null || (presence.Status == null && presence.Show == null))
+            if (userX?.RoomItem?.ActorJid == null || (presence.Status == null && presence.Show == null))
                 return null;
 
             Role role = Role.Regular;
@@ -25,7 +26,7 @@ namespace Cyclops.Core.Resource.JabberNetExtensions
                     role = Role.Banned;
             }
             else
-                role = ConvertRole(userX.Role, userX.Affiliation);
+                role = ConvertRole(userX.RoomItem?.Role, userX.RoomItem?.Affiliation);
 
             return new RoleChangedEventArgs { To = presence.From?.Resource, Role = role };
         }

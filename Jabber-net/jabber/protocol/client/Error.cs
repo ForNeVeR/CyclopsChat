@@ -11,10 +11,9 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.client
@@ -419,7 +418,7 @@ namespace jabber.protocol.client
         /// <summary>
         /// The error message.  Not used anymore (not I18N).
         /// </summary>
-        public string Message
+        public string? Message
         {
             get { return this.InnerText; }
             set { this.InnerText = value; }

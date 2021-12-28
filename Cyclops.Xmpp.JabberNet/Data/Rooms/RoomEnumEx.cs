@@ -1,7 +1,7 @@
-using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Data.Rooms;
 using jabber.protocol.iq;
 
-namespace Cyclops.Xmpp.JabberNet.Helpers;
+namespace Cyclops.Xmpp.JabberNet.Data.Rooms;
 
 internal static class EnumEx
 {
@@ -22,6 +22,16 @@ internal static class EnumEx
         RoomAffiliation.outcast => MucAffiliation.Outcast,
         RoomAffiliation.owner => MucAffiliation.Owner,
         _ => null
+    };
+
+    public static RoomAffiliation Map(this MucAffiliation? affiliation) => affiliation switch
+    {
+        MucAffiliation.Admin => RoomAffiliation.admin,
+        MucAffiliation.Member => RoomAffiliation.member,
+        MucAffiliation.None => RoomAffiliation.none,
+        MucAffiliation.Outcast => RoomAffiliation.outcast,
+        MucAffiliation.Owner => RoomAffiliation.owner,
+        _ => RoomAffiliation.UNSPECIFIED
     };
 
     public static MucUserStatus? Map(this RoomStatus status) => (MucUserStatus)status;

@@ -7,14 +7,16 @@ internal static class PresenceEx
 {
     private class JabberNetPresence : Stanza, IPresence
     {
-        private readonly Presence jnPresence;
+        private readonly Presence presence;
         public JabberNetPresence(Presence presence) : base(presence)
         {
-            jnPresence = presence;
+            this.presence = presence;
         }
 
-        public string? Status => jnPresence.Status;
-        public string? Show => jnPresence.Show;
+        public string? Status => presence.Status;
+        public string? Show => presence.Show;
+
+        public IError Error => presence.Error.Wrap();
     }
 
     public static IPresence Wrap(this Presence presence) => new JabberNetPresence(presence);

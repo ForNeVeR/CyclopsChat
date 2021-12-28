@@ -11,19 +11,17 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
-
 using bedrock.util;
+using jabber.client;
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
-using jabber.client;
 using jabber.protocol.x;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
 
 namespace jabber.connection
 {
@@ -267,8 +265,8 @@ namespace jabber.connection
         [DefaultValue(null)]
         public string DefaultNick
         {
-            get 
-            { 
+            get
+            {
                 if (m_nick != null)
                     return m_nick;
                 if ((m_stream == null) || m_stream.JID == null)
@@ -418,7 +416,7 @@ namespace jabber.connection
 
         ///<summary>
         ///</summary>
-        public event EventHandler<RoomPresenceEventArgs> BeforeRoomPresenceOut = delegate { }; 
+        public event EventHandler<RoomPresenceEventArgs> BeforeRoomPresenceOut = delegate { };
 
         ///<summary>
         ///</summary>
@@ -916,14 +914,14 @@ namespace jabber.connection
         /// Join a room, using a password.
         /// </summary>
         /// <param name="password"></param>
-        public void Join(string password)
+        public void Join(string? password)
         {
             if (m_state == STATE.running)
                 return;
 
             m_state = STATE.join;
             RoomPresence pres = new RoomPresence(m_manager.Stream.Document, m_jid);
-            
+
             if (password != null)
                 pres.X.Password = password;
 
@@ -936,7 +934,7 @@ namespace jabber.connection
         /// Exits the room.  This cleans up the entry in the ConferenceManager, as well.
         /// </summary>
         /// <param name="reason">Reason for leaving the room.  May be null for no reason.</param>
-        public void Leave(string reason)
+        public void Leave(string? reason)
         {
             m_state = STATE.leaving;
 
@@ -1338,7 +1336,10 @@ namespace jabber.connection
         /// <param name="affiliation">The affiliation to search for</param>
         /// <param name="callback">A callback to receive the participant list</param>
         /// <param name="state">Caller state information</param>
-        public void RetrieveListByAffiliation(RoomAffiliation affiliation, RoomParticipantsEvent callback, object state)
+        public void RetrieveListByAffiliation(
+            RoomAffiliation affiliation,
+            RoomParticipantsEvent callback,
+            object? state)
         {
             if (callback == null)
                 throw new ArgumentNullException("callback");
@@ -1640,7 +1641,7 @@ namespace jabber.connection
         /// <summary>
         /// The real JID of the user, if this is a non-anonymous room.
         /// </summary>
-        public JID RealJID
+        public JID? RealJID
         {
             get
             {

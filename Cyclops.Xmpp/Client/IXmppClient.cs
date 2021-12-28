@@ -1,5 +1,6 @@
 using System.Xml;
 using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Xmpp.Client;
@@ -22,4 +23,6 @@ public interface IXmppClient
     void SendPhotoUpdatePresence(string photoHash);
 
     Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
+
+    IRoom GetRoom(IEntityIdentifier roomJid);
 }

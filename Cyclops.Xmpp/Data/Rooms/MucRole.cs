@@ -1,4 +1,4 @@
-namespace Cyclops.Xmpp.Data;
+namespace Cyclops.Xmpp.Data.Rooms;
 
 public enum MucRole
 {

@@ -112,7 +112,7 @@ namespace Cyclops.Core.Resource.Avatars
             try
             {
                 bool hasAvatar = false;
-                var photoTagParent = pres.Elements.FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
+                var photoTagParent = pres.Nodes.FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
                 if (photoTagParent != null)
                 {
                     var from = pres.From.Equals(session.CurrentUserId) ? conferenceId : pres.From;

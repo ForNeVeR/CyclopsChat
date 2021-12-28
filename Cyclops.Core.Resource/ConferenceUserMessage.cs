@@ -1,35 +1,41 @@
 ﻿using System;
 using System.Linq;
-using Cyclops.Xmpp.JabberNet.Data;
+using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
-using jabber.connection;
-using jabber.protocol.client;
-using jabber.protocol.x;
 
 namespace Cyclops.Core.Resource
 {
     public class ConferenceUserMessage : IConferenceMessage
     {
-        private readonly Message msg;
+        private readonly IMessage msg;
         private readonly UserSession userSession;
-        private readonly Room room;
+        private readonly IRoom room;
 
-        internal ConferenceUserMessage(UserSession userSession, Room room, Message msg)
+        internal ConferenceUserMessage(
+            IXmppDataExtractor dataExtractor,
+            UserSession userSession,
+            IRoom room,
+            IMessage msg)
         {
             this.userSession = userSession;
             this.room = room;
             this.msg = msg;
-            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(room.JID));
-            IsFromHistory = msg.OfType<Delay>().Any();
+            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(room.Jid));
+            IsFromHistory = dataExtractor.GetDelayStamp(msg) != null;
         }
 
-        internal ConferenceUserMessage(UserSession userSession, Message msg, bool selfMessage)
+        internal ConferenceUserMessage(
+            IXmppDataExtractor dataExtractor,
+            UserSession userSession,
+            IMessage msg,
+            bool selfMessage)
         {
             this.userSession = userSession;
             this.msg = msg;
             this.IsSelfMessage = selfMessage;
             Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(msg.From));
-            IsFromHistory = msg.OfType<Delay>().Any();
+            IsFromHistory = dataExtractor.GetDelayStamp(msg) != null;
         }
 
         #region IConferenceMessage Members
@@ -56,8 +62,8 @@ namespace Cyclops.Core.Resource
             {
                 if (room == null || room.Participants == null)
                     return false;
-                return room.Participants.OfType<RoomParticipant>().Any(i =>
-                    i.NickJID != null && i.NickJID.Equals(AuthorId) && i.Wrap().IsModer());
+                return room.Participants.Any(i =>
+                    i.RoomParticipantJid?.Equals(AuthorId) == true && i.IsModer());
             }
         }
 
