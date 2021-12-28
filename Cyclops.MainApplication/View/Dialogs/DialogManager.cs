@@ -12,7 +12,7 @@ namespace Cyclops.MainApplication.View.Dialogs
             return InputDialog.ShowForEdit(title, initialValue, okAction, validator);
         }
 
-        public static void ShowUsersVcard(IEntityIdentifier target, bool readonlyMode = true)
+        public static void ShowUsersVcard(Jid target, bool readonlyMode = true)
         {
             VcardDialog dlg = new VcardDialog();
             dlg.Owner = Application.Current.MainWindow;

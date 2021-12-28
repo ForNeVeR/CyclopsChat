@@ -5,13 +5,13 @@ namespace Cyclops.Core.CustomEventArgs
 {
     public class KickedEventArgs : EventArgs
     {
-        public KickedEventArgs(IEntityIdentifier author, string? reason)
+        public KickedEventArgs(Jid? author, string? reason)
         {
             Author = author;
             Reason = reason;
         }
 
-        public IEntityIdentifier Author { get; }
+        public Jid? Author { get; }
         public string? Reason { get; }
     }
 }

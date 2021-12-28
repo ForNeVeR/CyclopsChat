@@ -10,8 +10,8 @@ using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
+using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
-using jabber;
 using jabber.protocol.client;
 
 namespace Cyclops.Core.Resource
@@ -23,7 +23,7 @@ namespace Cyclops.Core.Resource
         private readonly UserSession session;
         private IRoom? room;
 
-        internal Conference(ILogger logger, UserSession session, IXmppDataExtractor dataExtractor, IEntityIdentifier conferenceId)
+        internal Conference(ILogger logger, UserSession session, IXmppDataExtractor dataExtractor, Jid conferenceId)
         {
             this.logger = logger;
             this.session = session;
@@ -101,15 +101,15 @@ namespace Cyclops.Core.Resource
 
         private void OnPresence(object sender, IPresence pres)
         {
-            var presenceFrom = (JID)pres.From;
-            if (!presenceFrom.BareJID.Equals(((JID)ConferenceId).BareJID) && !pres.From.Equals(Session.CurrentUserId))
+            var presenceFrom = pres.From;
+            if (presenceFrom?.Bare != ConferenceId.Bare && presenceFrom != Session.CurrentUserId)
                 return;
 
             var roleChangedEventArgs = JabberCommonHelper.ConvertToRoleChangedEventArgs(dataExtractor, pres);
             if (roleChangedEventArgs != null && IsInConference)
                 RoleChanged(this, roleChangedEventArgs);
 
-            IEntityIdentifier from = pres.From.Equals(Session.CurrentUserId) ? ConferenceId : pres.From;
+            var from = pres.From.Equals(Session.CurrentUserId) ? ConferenceId : pres.From;
 
             var member = Members.FirstOrDefault(i => i.ConferenceUserId.Equals(from));
             if (member == null)
@@ -120,7 +120,7 @@ namespace Cyclops.Core.Resource
             if (!member.IsSubscribed)
             {
                 if (!successHandling)
-                    AvatarsManager.SendAvatarRequest(from).NoAwait(logger);
+                    AvatarsManager.SendAvatarRequest(from.Value).NoAwait(logger);
                 ((ConferenceMember)member).IsSubscribed = true;
             }
 
@@ -227,7 +227,7 @@ namespace Cyclops.Core.Resource
             Joined(this, new ConferenceJoinEventArgs());
             foreach (var participant in senderRoom.Participants)
             {
-                if (!Members.Any(i => i.ConferenceUserId?.Equals(participant.RoomParticipantJid) == true))
+                if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
                     Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, participant, senderRoom)
                                                      {
                                                          AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
@@ -258,7 +258,7 @@ namespace Cyclops.Core.Resource
                 nickChangeAction = true;
             }
 
-            if (nickChangeAction && participant.RoomParticipantJid.Equals(ConferenceId))
+            if (nickChangeAction && participant.RoomParticipantJid == ConferenceId)
             {
                 ProcessParticipant().NoAwait(logger);
                 async Task ProcessParticipant()
@@ -295,7 +295,7 @@ namespace Cyclops.Core.Resource
         {
             var senderRoom = (IRoom)sender;
 
-            if (!Members.Any(i => i.ConferenceUserId?.Equals(participant.RoomParticipantJid) == true))
+            if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
             {
                 var member = new ConferenceMember(logger, session, this, participant, senderRoom)
                                  {
@@ -364,8 +364,8 @@ namespace Cyclops.Core.Resource
 
         private void room_OnSubjectChange(object sender, IMessage msg)
         {
-            if (msg.From != null && !string.IsNullOrEmpty(msg.From.Resource))
-                SubjectChanged(this, new SubjectChangedEventArgs(msg.From.Resource, msg.Subject));
+            if (msg.From != null && !string.IsNullOrEmpty(msg.From?.Resource))
+                SubjectChanged(this, new SubjectChangedEventArgs(msg.From!.Value.Resource, msg.Subject));
 
             Subject = msg.Subject;
         }
@@ -406,8 +406,8 @@ namespace Cyclops.Core.Resource
 
         public IAvatarsManager AvatarsManager { get; private set; }
 
-        private IEntityIdentifier conferenceId;
-        public IEntityIdentifier ConferenceId
+        private Jid conferenceId;
+        public Jid ConferenceId
         {
             get { return conferenceId; }
             private set
@@ -488,7 +488,7 @@ namespace Cyclops.Core.Resource
             return true;
         }
 
-        public void SendPrivateMessage(IEntityIdentifier target, string body)
+        public void SendPrivateMessage(Jid target, string body)
         {
             room.SendPrivateMessage(target.Resource, body);
         }
@@ -506,7 +506,7 @@ namespace Cyclops.Core.Resource
         {
             var manager = ((UserSession) Session).JabberClient;
             Presence p = new Presence(manager.Document);
-            p.To = (JID)IdentifierBuilder.WithAnotherResource(ConferenceId, nick);
+            p.To = IdentifierBuilder.WithAnotherResource(ConferenceId, nick).Map();
             p.Status = status;
             p.Show = statusType.StatusTypeToString();
 

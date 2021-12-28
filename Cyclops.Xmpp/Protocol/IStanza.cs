@@ -7,6 +7,6 @@ public interface IStanza
     XmlElement? this[string name] { get; }
     IEnumerable<XmlNode> Nodes { get; }
 
-    IEntityIdentifier? From { get; }
-    IEntityIdentifier? To { get; }
+    Jid? From { get; }
+    Jid? To { get; }
 }

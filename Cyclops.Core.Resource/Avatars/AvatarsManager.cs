@@ -71,7 +71,7 @@ namespace Cyclops.Core.Resource.Avatars
             return FromFile(file);
         }
 
-        public async Task SendAvatarRequest(IEntityIdentifier id)
+        public async Task SendAvatarRequest(Jid id)
         {
             var vCard = await Session.GetVCard(id);
             var image = defaultAvatar;
@@ -107,7 +107,7 @@ namespace Cyclops.Core.Resource.Avatars
             return Path.Combine(AvatarsFolder, hash.ToLower() + ".png");
         }
 
-        internal bool ProcessAvatarChangeHash(IPresence pres, IEntityIdentifier conferenceId)
+        internal bool ProcessAvatarChangeHash(IPresence pres, Jid conferenceId)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace Cyclops.Core.Resource.Avatars
                 var photoTagParent = pres.Nodes.FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
                 if (photoTagParent != null)
                 {
-                    var from = pres.From.Equals(session.CurrentUserId) ? conferenceId : pres.From;
+                    var from = pres.From.Equals(session.CurrentUserId) ? conferenceId : pres.From!.Value;
 
                     string sha1Hash = photoTagParent["photo"].InnerText;
                     if (!string.IsNullOrWhiteSpace(sha1Hash) && sha1Hash.Length == 40)

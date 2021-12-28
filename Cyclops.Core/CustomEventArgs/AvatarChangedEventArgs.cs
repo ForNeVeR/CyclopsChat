@@ -6,10 +6,10 @@ namespace Cyclops.Core.CustomEventArgs
 {
     public class AvatarChangedEventArgs : EventArgs
     {
-        public IEntityIdentifier UserId { get; private set; }
+        public Jid UserId { get; private set; }
         public BitmapImage BitmapImage { get; private set; }
 
-        public AvatarChangedEventArgs(IEntityIdentifier userId, BitmapImage bitmapImage)
+        public AvatarChangedEventArgs(Jid userId, BitmapImage bitmapImage)
         {
             UserId = userId;
             BitmapImage = bitmapImage;

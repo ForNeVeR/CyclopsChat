@@ -778,7 +778,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// The JID of the destroyer
         /// </summary>
-        public JID JID
+        public JID? JID
         {
             get
             {

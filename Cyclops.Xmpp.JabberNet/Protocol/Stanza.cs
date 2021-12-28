@@ -15,6 +15,6 @@ internal abstract class Stanza : IStanza
     public XmlElement? this[string name] => packet[name];
     public IEnumerable<XmlNode> Nodes => packet.Cast<XmlNode>();
 
-    public IEntityIdentifier? From => packet.From;
-    public IEntityIdentifier? To => packet.To;
+    public Jid? From => packet.From?.Map();
+    public Jid? To => packet.To?.Map();
 }

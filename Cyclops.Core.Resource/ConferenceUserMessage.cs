@@ -34,7 +34,7 @@ namespace Cyclops.Core.Resource
             this.userSession = userSession;
             this.msg = msg;
             this.IsSelfMessage = selfMessage;
-            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(msg.From));
+            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.Bare == msg.From?.Bare);
             IsFromHistory = dataExtractor.GetDelayStamp(msg) != null;
         }
 
@@ -51,9 +51,9 @@ namespace Cyclops.Core.Resource
 
         public IConference Conference { get; private set; }
 
-        public IEntityIdentifier AuthorId
+        public Jid AuthorId
         {
-            get { return msg.From; }
+            get { return msg.From.Value; }
         }
 
         public bool IsAuthorModer
@@ -63,13 +63,13 @@ namespace Cyclops.Core.Resource
                 if (room == null || room.Participants == null)
                     return false;
                 return room.Participants.Any(i =>
-                    i.RoomParticipantJid?.Equals(AuthorId) == true && i.IsModer());
+                    i.RoomParticipantJid == AuthorId && i.IsModer());
             }
         }
 
         public string AuthorNick
         {
-            get { return msg.From.Resource; }
+            get { return msg.From?.Resource ?? ""; }
         }
 
         public string Body

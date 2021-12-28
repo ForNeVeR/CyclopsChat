@@ -17,7 +17,7 @@ namespace Cyclops.Core
         ClientInfo ClientInfo { get; }
         BitmapImage AvatarUrl { get; }
 
-        IEntityIdentifier ConferenceUserId { get; }
-        IEntityIdentifier RealUserId { get; }
+        Jid ConferenceUserId { get; }
+        Jid? RealUserId { get; }
     }
 }

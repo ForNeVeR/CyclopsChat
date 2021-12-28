@@ -6,7 +6,6 @@ using Cyclops.Xmpp.JabberNet.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Elements;
 using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
-using jabber;
 using jabber.client;
 using jabber.connection;
 using jabber.protocol.client;
@@ -71,27 +70,26 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         return result.Task;
     }
 
-    public async Task<IIq> SendCaptchaAnswer(IEntityIdentifier conferenceId, string challenge, string answer)
+    public async Task<IIq> SendCaptchaAnswer(Jid conferenceId, string challenge, string answer)
     {
-        var conferenceJid = (JID)conferenceId;
         var iq = new TypedIQ<CaptchaAnswer>(client.Document)
         {
-            To = conferenceJid.BareJID,
+            To = conferenceId.Bare.Map(),
             Type = IQType.set,
         };
 
         iq.Instruction!.CaptchaAnswerX = new CaptchaAnswerX(client.Document);
-        iq.Instruction.CaptchaAnswerX.FillAnswer(answer, conferenceJid, challenge);
+        iq.Instruction.CaptchaAnswerX.FillAnswer(answer, conferenceId.Map(), challenge);
 
         var response = await SendIq(iq);
         return response.Wrap();
     }
 
-    public async Task<VCard> GetVCard(IEntityIdentifier jid)
+    public async Task<VCard> GetVCard(Jid jid)
     {
         var vCardIq = new VCardIQ(client.Document)
         {
-            To = (JID)jid,
+            To = jid.Map(),
             Type = IQType.get
         };
         var iq = await SendIq(vCardIq);
@@ -126,14 +124,14 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         client.Write(presence);
     }
 
-    public async Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid)
+    public async Task<ClientInfo?> GetClientInfo(Jid jid)
     {
-        var versionIq = new VersionIQ(client.Document) { To = (JID)jid, Type = IQType.get };
+        var versionIq = new VersionIQ(client.Document) { To = jid.Map(), Type = IQType.get };
         // HACK: Most clients' answers aren't recognized as VersionIQ by Jabber-Net, so let's not break on cast failure.
         var response = await SendIq(versionIq) as VersionIQ;
         var versionInfo = response?.Instruction;
         return versionInfo == null ? null : new ClientInfo(versionInfo.OS, versionInfo.Ver, versionInfo.EntityName);
     }
 
-    public IRoom GetRoom(IEntityIdentifier roomJid) => conferenceManager.GetRoom((JID)roomJid).Wrap();
+    public IRoom GetRoom(Jid roomJid) => conferenceManager.GetRoom(roomJid.Map()).Wrap();
 }

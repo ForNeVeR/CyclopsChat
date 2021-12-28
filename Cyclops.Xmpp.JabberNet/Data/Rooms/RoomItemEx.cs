@@ -1,4 +1,5 @@
 using Cyclops.Xmpp.Data.Rooms;
+using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Xmpp.JabberNet.Data.Rooms;
@@ -13,7 +14,7 @@ internal static class RoomItemEx
             this.roomItem = roomItem;
         }
 
-        public IEntityIdentifier? ActorJid => roomItem.Actor?.JID;
+        public Jid? ActorJid => roomItem.Actor?.JID?.Map();
         public string Reason => roomItem.Reason;
         public MucRole? Role => roomItem.Role.Map();
         public MucAffiliation? Affiliation => roomItem.Affiliation.Map();

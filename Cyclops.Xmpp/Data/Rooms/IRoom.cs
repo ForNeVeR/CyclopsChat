@@ -21,7 +21,7 @@ public interface IRoom : IDisposable
     event EventHandler<IMucParticipant> ParticipantLeave;
     event EventHandler<IMucParticipant> ParticipantPresenceChange;
 
-    IEntityIdentifier Jid { get; }
+    Jid Jid { get; }
     IReadOnlyList<IMucParticipant> Participants { get; }
 
     Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation);

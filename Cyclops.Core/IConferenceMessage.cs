@@ -5,7 +5,7 @@ namespace Cyclops.Core
 {
     public interface IConferenceMessage : ISessionHolder
     {
-        IEntityIdentifier AuthorId { get; }
+        Jid AuthorId { get; }
         bool IsAuthorModer { get; }
         string AuthorNick { get; }
         string Body { get; }

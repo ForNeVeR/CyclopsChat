@@ -17,8 +17,8 @@ internal static class RoomParticipantEx
             this.participant = participant;
         }
 
-        public IEntityIdentifier RoomParticipantJid => participant.NickJID;
-        public IEntityIdentifier? RealJid => participant.RealJID;
+        public Jid RoomParticipantJid => participant.NickJID.Map();
+        public Jid? RealJid => participant.RealJID?.Map();
         public MucRole? Role => participant.Role.Map();
         public MucAffiliation? Affiliation => participant.Affiliation.Map();
         public IPresence Presence => participant.Presence.Wrap();

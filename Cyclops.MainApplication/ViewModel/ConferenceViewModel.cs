@@ -40,7 +40,7 @@ namespace Cyclops.MainApplication.ViewModel
             AddNotifyMessage(Localization.Conference.Entering);
         }
 
-        protected override void OnNickClick(IEntityIdentifier id)
+        protected override void OnNickClick(Jid id)
         {
             SelectedMember = Conference.Members.FirstOrDefault(i => i.ConferenceUserId.Equals(id));
         }

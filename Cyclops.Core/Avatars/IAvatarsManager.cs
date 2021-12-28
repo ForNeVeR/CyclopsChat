@@ -10,7 +10,7 @@ namespace Cyclops.Core.Avatars
     {
         bool DoesCacheContain(string hash);
         BitmapImage GetFromCache(string hash);
-        Task SendAvatarRequest(IEntityIdentifier id);
+        Task SendAvatarRequest(Jid id);
         event EventHandler<AvatarChangedEventArgs> AvatarChange;
     }
 }

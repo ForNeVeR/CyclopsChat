@@ -14,6 +14,7 @@ using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Client;
+using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 using jabber;
 using jabber.client;
@@ -39,7 +40,7 @@ namespace Cyclops.Core.Resource
         private readonly IStringEncryptor stringEncryptor;
         private readonly IChatObjectsValidator commonValidator;
         private ConnectionConfig connectionConfig;
-        private IEntityIdentifier currentUserId;
+        private Jid currentUserId;
         private StatusType statusType;
         private string status;
         private bool isAuthenticated;
@@ -149,7 +150,7 @@ namespace Cyclops.Core.Resource
         internal Dispatcher Dispatcher { get; set; }
 
 
-        public IEntityIdentifier CurrentUserId
+        public Jid CurrentUserId
         {
             get { return currentUserId; }
             set
@@ -179,7 +180,7 @@ namespace Cyclops.Core.Resource
             JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), 30);
         }
 
-        public void OpenConference(IEntityIdentifier id)
+        public void OpenConference(Jid id)
         {
             Conferences.AsInternalImpl().Add(new Conference(logger, this, dataExtractor, id));
         }
@@ -199,7 +200,7 @@ namespace Cyclops.Core.Resource
             if (Dispatcher != null)
                 JabberClient.InvokeControl = new SynchronizeInvokeImpl(Dispatcher);
 
-            currentUserId = new JID(info.User, info.Server, JabberClient.Resource);
+            currentUserId = new Jid(info.User ?? "", info.Server ?? "", JabberClient.Resource);
             ConnectionConfig = info;
 
             // some default settings
@@ -248,7 +249,7 @@ namespace Cyclops.Core.Resource
                 AuthenticateAsync(ConnectionConfig);
         }
 
-        public void SendPrivate(IEntityIdentifier target, string body)
+        public void SendPrivate(Jid target, string body)
         {
             JabberClient.Message(MessageType.chat, target.ToString(), body);
         }
@@ -268,14 +269,14 @@ namespace Cyclops.Core.Resource
         public event EventHandler PublicMessage = delegate { };
         public event EventHandler<ErrorEventArgs> ErrorMessageRecieved = delegate { };
 
-        public void RemoveFromBookmarks(IEntityIdentifier conferenceId)
+        public void RemoveFromBookmarks(Jid conferenceId)
         {
-            BookmarkManager[((JID)conferenceId).BareJID] = null;
+            BookmarkManager[conferenceId.Bare.Map()] = null;
         }
 
-        public void AddToBookmarks(IEntityIdentifier conferenceId)
+        public void AddToBookmarks(Jid conferenceId)
         {
-            BookmarkManager.AddConference(((JID)conferenceId).BareJID, conferenceId.User, true, conferenceId.Resource);
+            BookmarkManager.AddConference(conferenceId.Bare.Map(), conferenceId.User, true, conferenceId.Resource);
         }
 
         #endregion
@@ -383,7 +384,7 @@ namespace Cyclops.Core.Resource
             JID conferenceJid = conference.JID;
             conferenceJid.Resource = conference.Nick;
             if (conference.AutoJoin)
-                OpenConference(conferenceJid);
+                OpenConference(conferenceJid.Map());
             conference.AutoJoin = false;
         }
 
@@ -409,7 +410,7 @@ namespace Cyclops.Core.Resource
             IqCommonHandler.Handle(JabberClient, iq);
         }
 
-        public Task<IIq> SendCaptchaAnswer(IEntityIdentifier mucId, string challenge, string answer) =>
+        public Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer) =>
             XmppClient.SendCaptchaAnswer(mucId, challenge, answer);
 
         private void JabberClient_OnMessage(object sender, Message msg)
@@ -417,7 +418,7 @@ namespace Cyclops.Core.Resource
             //some conferences are not allowed to send privates
             if (msg.Error != null)
             {
-                ErrorMessageRecieved(this, new ErrorEventArgs(msg.From, msg.Error.Message));
+                ErrorMessageRecieved(this, new ErrorEventArgs(msg.From.Map(), msg.Error.Message));
                 return;
             }
 
@@ -426,7 +427,7 @@ namespace Cyclops.Core.Resource
 
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage
                                                      {
-                                                         AuthorId = msg.From,
+                                                         AuthorId = msg.From.Map(),
                                                          AuthorNick = msg.From.Resource,
                                                          Body = msg.Body,
                                                      });
@@ -445,14 +446,14 @@ namespace Cyclops.Core.Resource
                 DiscoManager.BeginFindServiceWithFeature(URI.MUC, DiscoHandlerFindServiceWithFeature, new object());
         }
 
-        public void StartPrivate(IEntityIdentifier conferenceUserId)
+        public void StartPrivate(Jid conferenceUserId)
         {
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage {AuthorId = conferenceUserId});
         }
 
-        public Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid) => XmppClient.GetClientInfo(jid);
+        public Task<ClientInfo?> GetClientInfo(Jid jid) => XmppClient.GetClientInfo(jid);
 
-        public Task<VCard> GetVCard(IEntityIdentifier target) => XmppClient.GetVCard(target);
+        public Task<VCard> GetVCard(Jid target) => XmppClient.GetVCard(target);
 
         public async Task UpdateVCard(VCard vCard)
         {
@@ -468,25 +469,25 @@ namespace Cyclops.Core.Resource
             XmppClient.SendPhotoUpdatePresence(photoHash);
         }
 
-        public IEntityIdentifier ConferenceServiceId { get; private set; }
+        public Jid ConferenceServiceId { get; private set; }
 
         void DiscoHandlerFindServiceWithFeature(DiscoManager sender, DiscoNode node, object state)
         {
             if (node != null)
-                ConferenceServiceId = node.JID;
+                ConferenceServiceId = node.JID.Map();
             DiscoManager.BeginGetItems(node, DiscoHandlerGetItems, state);
         }
 
         void DiscoHandlerGetItems(DiscoManager sender, DiscoNode node, object state)
         {
             var result = (from DiscoNode childNode in node.Children
-                            select new Tuple<IEntityIdentifier, string>(childNode.JID, childNode.Name)).ToList();
+                            select new Tuple<Jid, string>(childNode.JID.Map(), childNode.Name)).ToList();
             ConferencesListReceived(null, new ConferencesListEventArgs(result));
         }
 
         public void RaiseBookmarksReceived()
         {
-            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<IEntityIdentifier, string>(IdentifierBuilder.WithAnotherResource(i.Key, i.Value.Nick), i.Value.Value)).ToList()));
+            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<Jid, string>(IdentifierBuilder.WithAnotherResource(i.Key.Map(), i.Value.Nick), i.Value.Value)).ToList()));
         }
 
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { };
@@ -497,6 +498,6 @@ namespace Cyclops.Core.Resource
             Reconnect();
         }
 
-        public IRoom GetRoom(IEntityIdentifier roomId) => XmppClient.GetRoom(roomId);
+        public IRoom GetRoom(Jid roomId) => XmppClient.GetRoom(roomId);
     }
 }

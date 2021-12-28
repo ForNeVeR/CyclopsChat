@@ -17,7 +17,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using bedrock.util;
-using Cyclops.Xmpp.Protocol;
 
 namespace jabber
 {
@@ -68,7 +67,7 @@ namespace jabber
     /// </summary>
     [SVN(@"$Id: JID.cs 748 2008-10-28 14:21:07Z hildjj $")]
     [System.ComponentModel.TypeConverter(typeof(JIDTypeConverter))]
-    public class JID : IComparable, IEntityIdentifier
+    public class JID : IComparable
     {
 #if !NO_STRINGPREP
         private static readonly stringprep.Profile s_nodeprep     = new stringprep.XmppNode();

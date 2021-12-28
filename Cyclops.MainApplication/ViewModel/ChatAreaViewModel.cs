@@ -97,7 +97,7 @@ namespace Cyclops.MainApplication.ViewModel
                 OnNickClick(e.Id);
         }
 
-        protected virtual void OnNickClick(IEntityIdentifier id)
+        protected virtual void OnNickClick(Jid id)
         {
         }
 
@@ -146,7 +146,7 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("UnreadMessagesCount");
             }
         }
-        
+
         public string CurrentlyTypedMessage
         {
             get { return currentlyTypedMessage; }

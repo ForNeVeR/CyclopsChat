@@ -149,8 +149,8 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        private IEntityIdentifier conferenceUserId;
-        public IEntityIdentifier ConferenceUserId
+        private Jid conferenceUserId;
+        public Jid ConferenceUserId
         {
             get { return conferenceUserId; }
             set
@@ -160,7 +160,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public IEntityIdentifier RealUserId
+        public Jid? RealUserId
         {
             get { return participant.RealJid; }
         }

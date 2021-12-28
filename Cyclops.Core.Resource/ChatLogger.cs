@@ -19,7 +19,7 @@ namespace Cyclops.Core.Resource
 
         #region Implementation of IChatLogManager
 
-        public void AddRecord(IEntityIdentifier id, string message, bool isPrivate = false)
+        public void AddRecord(Jid? id, string message, bool isPrivate = false)
         {
             lock (SyncObject)
             {
@@ -27,7 +27,7 @@ namespace Cyclops.Core.Resource
                     return;
                 try
                 {
-                    string file = BuildPath(id, isPrivate);
+                    string file = BuildPath(id.Value, isPrivate);
                     using (var ws = File.AppendText(file))
                         ws.WriteLine(message ?? string.Empty);
                 }
@@ -39,7 +39,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        private string BuildPath(IEntityIdentifier id, bool isPrivate)
+        private string BuildPath(Jid id, bool isPrivate)
         {
             string jid = string.Format("{0}@{1}", id.User, id.Server);
             foreach (var c in Path.GetInvalidFileNameChars())

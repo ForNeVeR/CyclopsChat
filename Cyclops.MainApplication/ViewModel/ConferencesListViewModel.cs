@@ -35,9 +35,9 @@ namespace Cyclops.MainApplication.ViewModel
             {
                 Conferences = new[]
                                   {
-                                      new ConferenceInfo {Id = new FakeId {User = "cyclops"}, Name = "Cyclops development test", IsOpened = true},
-                                      new ConferenceInfo {Id = new FakeId {User = "main"}, Name = "Main (5)", IsOpened = true},
-                                      new ConferenceInfo {Id = new FakeId {User = "anime"}, Name = "Anime"},
+                                      new ConferenceInfo {Id = new Jid("cyclops", ""), Name = "Cyclops development test", IsOpened = true},
+                                      new ConferenceInfo {Id = new Jid("main", ""), Name = "Main (5)", IsOpened = true},
+                                      new ConferenceInfo {Id = new Jid("anime", ""), Name = "Anime"},
                                   };
                 return;
             }
@@ -72,7 +72,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void CreateConferenceSubmit(string arg)
         {
-            IEntityIdentifier id = null;
+            Jid? id = null;
             try
             {
                 if (arg.Contains("@"))
@@ -207,14 +207,15 @@ namespace Cyclops.MainApplication.ViewModel
             return SelectedConference != null;
         }
 
-        private void OpenConferenceAction(IEntityIdentifier id)
+        private void OpenConferenceAction(Jid? id)
         {
             if (id == null)
                 return;
 
+            var jid = id.Value;
             IUserSession session = ChatObjectFactory.GetSession();
 
-            IConference existsConference = session.Conferences.FirstOrDefault(i => IsEqual(i.ConferenceId, id));
+            IConference existsConference = session.Conferences.FirstOrDefault(i => i.ConferenceId.Bare == jid.Bare);
             if (existsConference != null)
             {
                 if (existsConference.IsInConference)
@@ -226,23 +227,17 @@ namespace Cyclops.MainApplication.ViewModel
             }
 
             string nick = string.IsNullOrWhiteSpace(OpenWithNick) ? session.CurrentUserId.User : OpenWithNick;
-            session.OpenConference(IdentifierBuilder.Create(id.User, id.Server, nick));
+            session.OpenConference(IdentifierBuilder.Create(jid.User, jid.Server, nick));
             Close(this, EventArgs.Empty);
         }
 
         public event EventHandler Close = delegate { };
-
-        private static bool IsEqual(IEntityIdentifier id1, IEntityIdentifier id2)
-        {
-            return string.Equals(id1.User, id2.User, StringComparison.InvariantCultureIgnoreCase) &&
-                   string.Equals(id1.Server, id2.Server, StringComparison.InvariantCultureIgnoreCase);
-        }
     }
 
     public class ConferenceInfo : NotifyPropertyChangedBase
     {
-        private IEntityIdentifier id;
-        public IEntityIdentifier Id
+        private Jid id;
+        public Jid Id
         {
             get { return id; }
             set
@@ -264,16 +259,5 @@ namespace Cyclops.MainApplication.ViewModel
         }
 
         public bool IsOpened { get; set; }
-    }
-
-    public class FakeId : IEntityIdentifier
-    {
-        #region IEntityIdentifier Members
-
-        public string Server { get; set; }
-        public string User { get; set; }
-        public string Resource { get; set; }
-
-        #endregion
     }
 }

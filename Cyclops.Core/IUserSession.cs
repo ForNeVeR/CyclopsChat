@@ -11,8 +11,8 @@ namespace Cyclops.Core
     {
         bool IsAuthenticating { get; }
         bool IsAuthenticated { get; }
-        IEntityIdentifier CurrentUserId { get; }
-        IEntityIdentifier ConferenceServiceId { get; }
+        Jid CurrentUserId { get; }
+        Jid ConferenceServiceId { get; }
         ConnectionConfig ConnectionConfig { get; }
         IObservableCollection<IConference> Conferences { get; }
         IObservableCollection<IConferenceMessage> PrivateMessages { get; }
@@ -21,17 +21,17 @@ namespace Cyclops.Core
         StatusType StatusType { get; set; }
 
         void ChangeStatus(StatusType type, string status);
-        void OpenConference(IEntityIdentifier id);
+        void OpenConference(Jid id);
         void AuthenticateAsync(ConnectionConfig config);
         void Close();
         void Reconnect();
-        void SendPrivate(IEntityIdentifier target, string body);
+        void SendPrivate(Jid target, string body);
         void GetConferenceListAsync(string conferenceService = null);
         void RaiseBookmarksReceived();
-        void StartPrivate(IEntityIdentifier conferenceUserId);
+        void StartPrivate(Jid conferenceUserId);
 
-        Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
-        Task<VCard> GetVCard(IEntityIdentifier target);
+        Task<ClientInfo?> GetClientInfo(Jid jid);
+        Task<VCard> GetVCard(Jid target);
         Task UpdateVCard(VCard vCard);
 
         event EventHandler<ConferencesListEventArgs> ConferencesListReceived;
@@ -40,7 +40,7 @@ namespace Cyclops.Core
         event EventHandler<IPresence> Presence;
         event EventHandler PublicMessage;
         event EventHandler<ErrorEventArgs> ErrorMessageRecieved;
-        void RemoveFromBookmarks(IEntityIdentifier conferenceId);
-        void AddToBookmarks(IEntityIdentifier conferenceId);
+        void RemoveFromBookmarks(Jid conferenceId);
+        void AddToBookmarks(Jid conferenceId);
     }
 }

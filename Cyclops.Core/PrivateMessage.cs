@@ -14,13 +14,13 @@ namespace Cyclops.Core
             get { return null; }
         }
 
-        public IEntityIdentifier AuthorId { get; set; }
+        public Jid AuthorId { get; set; }
 
         public bool IsAuthorModer
         {
             get { return false; }
         }
-        
+
         public bool IsFromHistory { get; private set; }
 
         public string AuthorNick { get; set; }

@@ -60,7 +60,7 @@ namespace Cyclops
             }
         }
 
-        public static bool BaresEqual(this IEntityIdentifier x, IEntityIdentifier y)
+        public static bool BaresEqual(this Jid x, Jid y)
         {
             return string.Equals(x.User, y.User, StringComparison.InvariantCultureIgnoreCase) &&
                    string.Equals(x.Server, y.Server, StringComparison.InvariantCultureIgnoreCase);

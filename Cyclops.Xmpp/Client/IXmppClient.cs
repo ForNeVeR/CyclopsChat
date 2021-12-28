@@ -16,13 +16,13 @@ public interface IXmppClient
 
     void SendElement(XmlElement element);
 
-    Task<IIq> SendCaptchaAnswer(IEntityIdentifier mucId, string challenge, string answer);
+    Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer);
 
-    Task<VCard> GetVCard(IEntityIdentifier jid);
+    Task<VCard> GetVCard(Jid jid);
     Task<IIq> UpdateVCard(VCard vCard);
     void SendPhotoUpdatePresence(string photoHash);
 
-    Task<ClientInfo?> GetClientInfo(IEntityIdentifier jid);
+    Task<ClientInfo?> GetClientInfo(Jid jid);
 
-    IRoom GetRoom(IEntityIdentifier roomJid);
+    IRoom GetRoom(Jid roomJid);
 }

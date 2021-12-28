@@ -32,8 +32,8 @@ namespace Cyclops.MainApplication.ViewModel
             ApplicationContext.Current.MainViewModel.PrivateViewModels.Remove(this);
         }
 
-        public IEntityIdentifier Participant { get; set; }
-        
+        public Jid Participant { get; set; }
+
         public IConference Conference { get; set; }
 
         public ObservableCollection<MessageViewModel> Messages
@@ -45,7 +45,7 @@ namespace Cyclops.MainApplication.ViewModel
                 RaisePropertyChanged("Messages");
             }
         }
-        
+
         protected override void OnSendMessage()
         {
             if (string.IsNullOrEmpty(CurrentlyTypedMessage))
@@ -56,7 +56,7 @@ namespace Cyclops.MainApplication.ViewModel
 
             Messages.Add(new MessageViewModel(new PrivateMessage
                                                   {
-                                                      AuthorNick = Localization.Conference.Me, 
+                                                      AuthorNick = Localization.Conference.Me,
                                                       IsSelfMessage = true,
                                                       Body = RemoveEndNewLineSymbol(CurrentlyTypedMessage)
                                                   }));

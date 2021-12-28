@@ -12,7 +12,7 @@ namespace Cyclops.Core
         bool IsInConference { get; }
 
         IAvatarsManager AvatarsManager { get; }
-        IEntityIdentifier ConferenceId { get; }
+        Jid ConferenceId { get; }
         IObservableCollection<IConferenceMember> Members { get; }
         IObservableCollection<IConferenceMessage> Messages { get; }
 
@@ -21,7 +21,7 @@ namespace Cyclops.Core
         void ChangeSubject(string s);
         Task SendPublicMessage(string body);
         bool ChangeNick(string value);
-        void SendPrivateMessage(IEntityIdentifier target, string body);
+        void SendPrivateMessage(Jid target, string body);
         void RejoinWithNewNick(string nick);
         void ChangeNickAndStatus(string nick, StatusType statusType, string status);
 

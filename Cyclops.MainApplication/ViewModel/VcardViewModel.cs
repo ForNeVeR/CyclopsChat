@@ -18,7 +18,7 @@ namespace Cyclops.MainApplication.ViewModel
         private IUserSession session;
         private VCard sourceVCard = null;
 
-        public VcardViewModel(ILogger logger, IEntityIdentifier target, Action closeAction, bool isEditMode = false)
+        public VcardViewModel(ILogger logger, Jid target, Action closeAction, bool isEditMode = false)
         {
             this.logger = logger;
             this.closeAction = closeAction;
@@ -112,7 +112,7 @@ namespace Cyclops.MainApplication.ViewModel
         public RelayCommand LoadPicture { get; set; }
         public RelayCommand ClearPicture { get; set; }
 
-        private async Task GetVCardInfo(IEntityIdentifier target)
+        private async Task GetVCardInfo(Jid target)
         {
             var obj = await session.GetVCard(target);
 
