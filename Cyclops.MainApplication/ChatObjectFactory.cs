@@ -1,8 +1,8 @@
 ﻿using Cyclops.Core;
 using Cyclops.Core.Modularity;
-using Cyclops.Core.Registration;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
+using Cyclops.Xmpp.Registration;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Cyclops.MainApplication

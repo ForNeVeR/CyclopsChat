@@ -1,29 +1,34 @@
 ﻿using System;
 using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using Cyclops.Configuration;
 using Cyclops.Core;
-using Cyclops.Core.Configuration;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Core.Registration;
+using Cyclops.Core.Helpers;
 using Cyclops.MainApplication.Configuration;
+using Cyclops.Xmpp.Registration;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
     public class LoginViewModel : ViewModelBaseEx
     {
+        private readonly ILogger logger;
+
         private bool isBusy;
         private string name;
         private string server;
-        private string errorMessage;
+        private string? errorMessage;
         private IUserSession session;
         private bool autoLogin;
         private Profile profile;
         private readonly IRegistrationManager registrationManager;
         private string password;
 
-        public LoginViewModel()
+        private LoginViewModel(ILogger logger)
         {
+            this.logger = logger;
             if (IsInDesignMode)
                 return;
 
@@ -55,6 +60,8 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
+        public LoginViewModel() : this(ChatObjectFactory.GetDebugLogger()) {}
+
         private bool RegisterCanExecute(PasswordBox obj)
         {
             return Validate();
@@ -78,21 +85,32 @@ namespace Cyclops.MainApplication.ViewModel
 
             IsBusy = true;
             password = passwordBox.Password;
-            registrationManager.RegisterNewUserAsync(new ConnectionConfig
-                {
-                    Server = Server,
-                    User = Name,
-                    EncodedPassword = ChatObjectFactory.GetStringEncryptor().EncryptString(password),
-                }, OnRegistered);
-        }
 
-        private void OnRegistered(RegistrationEventArgs obj)
-        {
-            ErrorMessage = obj.ErrorMessage;
-            if (!obj.HasError)
-                AuthenticateAction(new PasswordBox {Password = password});
-            else
-                IsBusy = false;
+            DoRegister().NoAwait(logger);
+            async Task DoRegister()
+            {
+                RegistrationResult registrationResult;
+                try
+                {
+                    registrationResult = await registrationManager.RegisterNewUser(new ConnectionConfig
+                    {
+                        Server = Server,
+                        User = Name,
+                        EncodedPassword = ChatObjectFactory.GetStringEncryptor().EncryptString(password),
+                    });
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError("Exception during registration.", ex);
+                    registrationResult = new RegistrationResult(ex.Message);
+                }
+
+                ErrorMessage = registrationResult.ErrorMessage;
+                if (!registrationResult.HasError)
+                    AuthenticateAction(new PasswordBox {Password = password});
+                else
+                    IsBusy = false;
+            }
         }
 
         public RelayCommand<PasswordBox> Authenticate { get; set; }
@@ -138,7 +156,7 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
-        public string ErrorMessage
+        public string? ErrorMessage
         {
             get { return errorMessage; }
             set

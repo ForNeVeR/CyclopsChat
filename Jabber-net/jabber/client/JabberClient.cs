@@ -11,21 +11,17 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.ComponentModel;
-using System.Collections;
 using System.Diagnostics;
 using System.Xml;
-
 using bedrock.util;
-using bedrock.net;
-
 using jabber.connection;
+using jabber.connection.sasl;
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
-using jabber.connection.sasl;
 
 namespace jabber.client
 {
@@ -186,7 +182,7 @@ namespace jabber.client
         /// </summary>
         [Description("The username to connect as.")]
         [Category("Jabber")]
-        public string User
+        public string? User
         {
             get { return this[Options.USER] as string; }
             set { this[Options.USER] = value; }

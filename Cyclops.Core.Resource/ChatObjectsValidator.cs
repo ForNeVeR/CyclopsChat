@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cyclops.Core.Configuration;
+﻿using Cyclops.Configuration;
 
 namespace Cyclops.Core.Resource
 {
     public class ChatObjectsValidator : IChatObjectsValidator
     {
         #region Implementation of IChatObjectsValidator
-        
+
         public bool ValidateConfig(ConnectionConfig config)
         {
             //TODO:

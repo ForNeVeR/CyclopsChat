@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Xml;
-using Cyclops.Core.Configuration;
+using Cyclops.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;

@@ -1,6 +1,4 @@
 ﻿using Cyclops.Core.Modularity;
-using Cyclops.Core.Registration;
-using Cyclops.Core.Resource.Registration;
 using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;
 using Cyclops.Core.Security;
@@ -16,7 +14,6 @@ namespace Cyclops.Core.Resource.Composition
             container
                 .RegisterType<IChatObjectsValidator, ChatObjectsValidator>()
                 .RegisterInstance<ILogger>(new FileLogger())
-                .RegisterType<IRegistrationManager, RegistrationManager>()
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()
                 .RegisterType<IChatLogger, ChatLogger>()

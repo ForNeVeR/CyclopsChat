@@ -1,5 +1,4 @@
-﻿using Cyclops.Core.Configuration;
-using Cyclops.Core.Modularity;
+﻿using Cyclops.Core.Modularity;
 using Microsoft.Practices.Unity;
 
 namespace Cyclops.Core.Composition

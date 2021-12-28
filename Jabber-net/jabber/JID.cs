@@ -76,9 +76,9 @@ namespace jabber
         private static readonly stringprep.Profile s_resourceprep = new stringprep.XmppResource();
 #endif
 
-        private string m_user     = null;
-        private string m_server   = null;
-        private string m_resource = null;
+        private string? m_user     = null;
+        private string? m_server   = null;
+        private string? m_resource = null;
         private string m_JID      = null;
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace jabber
         /// <param name="user">The username value.</param>
         /// <param name="server">The XMPP server domain value.</param>
         /// <param name="resource">The current resource value.</param>
-        public JID(string user, string server, string resource)
+        public JID(string? user, string? server, string? resource)
         {
             Debug.Assert(server != null, "server must be non-null");
 

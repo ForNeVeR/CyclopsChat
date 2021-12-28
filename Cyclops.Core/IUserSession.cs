@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cyclops.Core.Configuration;
+using Cyclops.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;

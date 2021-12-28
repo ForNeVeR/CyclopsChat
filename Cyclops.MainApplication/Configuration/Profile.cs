@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using Cyclops.Core;
-using Cyclops.Core.Configuration;
+using Cyclops.Configuration;
 using Cyclops.MainApplication.ViewModel;
-using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.Configuration
 {
@@ -44,7 +42,7 @@ namespace Cyclops.MainApplication.Configuration
                 RaisePropertyChanged("AutoLogin");
             }
         }
-        
+
         /// <summary>
         /// Default theme for current profile. Themes are stored in %APPFOLDER%\Themes folder
         /// </summary>
@@ -70,7 +68,7 @@ namespace Cyclops.MainApplication.Configuration
                 RaisePropertyChanged("ConnectionConfig");
             }
         }
-        
+
         public List<ConferencesServiceItem> FriendlyConferencesServices
         {
             get { return friendlyConferencesServices; }

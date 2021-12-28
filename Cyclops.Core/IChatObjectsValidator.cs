@@ -1,4 +1,4 @@
-﻿using Cyclops.Core.Configuration;
+﻿using Cyclops.Configuration;
 
 namespace Cyclops.Core
 {

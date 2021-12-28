@@ -11,23 +11,19 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
-using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
-using System.Security.Cryptography;
 using System.Xml;
 using bedrock.util;
-
+using jabber.connection.sasl;
 using jabber.protocol;
 using jabber.protocol.stream;
-using jabber.connection.sasl;
-
-using System.Security.Cryptography.X509Certificates;
 
 namespace jabber.connection
 {
@@ -282,7 +278,7 @@ namespace jabber.connection
 #pragma warning disable 0414
         private System.ComponentModel.Container components = new System.ComponentModel.Container();
 #pragma warning restore 0414
-        
+
         /// <summary>
         /// Creates a new XMPP stream and associates it with the parent control.
         /// </summary>
@@ -487,7 +483,7 @@ namespace jabber.connection
         [Description("Gets or sets the name of the XMPP server to connect to.")]
         [DefaultValue("jabber.com")]
         [Category("Jabber")]
-        public virtual string Server
+        public virtual string? Server
         {
             get { return this[Options.TO] as string; }
             set { this[Options.TO] = value; }
@@ -502,7 +498,7 @@ namespace jabber.connection
         [Description("")]
         [DefaultValue(null)]
         [Category("Jabber")]
-        public string NetworkHost
+        public string? NetworkHost
         {
             get { return this[Options.NETWORK_HOST] as string; }
             set { this[Options.NETWORK_HOST] = value; }
@@ -908,7 +904,7 @@ namespace jabber.connection
             {
                 //SHIT HAPPENS!\
                 Close();
-            }   
+            }
             else
                 m_stanzas.Write(elem);
         }
@@ -1112,7 +1108,7 @@ namespace jabber.connection
         }
 
         /// <summary>
-        /// Handle the last set of stream:features we have received, 
+        /// Handle the last set of stream:features we have received,
         /// based on the current state.
         /// </summary>
         protected virtual void ProcessFeatures()
