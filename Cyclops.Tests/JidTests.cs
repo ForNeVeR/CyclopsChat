@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Cyclops.Tests;
 
-public class UnitTest1
+public class JidTests
 {
     [Theory]
     [InlineData("foo@bar/baz")]
