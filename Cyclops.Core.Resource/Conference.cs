@@ -249,10 +249,10 @@ namespace Cyclops.Core.Resource
                 return;
             var userX = dataExtractor.GetExtendedUserData(participant.Presence);
             var nickChange = userX?.Status.Contains(MucUserStatus.NewRoomNickname) == true ? userX : null;
-            var adminItem = dataExtractor.GetAdminItem(nickChange);
+            var adminItem = nickChange == null ? null : dataExtractor.GetAdminItem(nickChange);
             if (!string.IsNullOrEmpty(adminItem?.Nick))
             {
-                newNick = adminItem.Nick;
+                newNick = adminItem!.Nick;
                 string oldNick = participant.Nick;
                 NickChange(this, new NickChangeEventArgs(oldNick, newNick));
                 nickChangeAction = true;
