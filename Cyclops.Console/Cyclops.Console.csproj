@@ -2,8 +2,6 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <UseWpf>true</UseWpf>
-        <Nullable>enable</Nullable>
-        <LangVersion>9</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj"/>
