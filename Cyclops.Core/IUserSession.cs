@@ -21,6 +21,8 @@ namespace Cyclops.Core
         StatusType StatusType { get; set; }
 
         void SendPresence(PresenceDetails presenceDetails);
+        void SendIq(IIq iq);
+
         void ChangeStatus(StatusType type, string status);
         void OpenConference(Jid id);
         void AuthenticateAsync(ConnectionConfig config);

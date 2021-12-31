@@ -19,10 +19,14 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     private readonly JabberClient client;
     private readonly ConferenceManager conferenceManager;
 
+    public IIqQueryManager IqQueryManager { get; }
+
     public JabberNetXmppClient(JabberClient client, ConferenceManager conferenceManager)
     {
         this.client = client;
         this.conferenceManager = conferenceManager;
+
+        IqQueryManager = new JabberNetIqQueryManager(client);
 
         InitializeEvents();
     }
@@ -83,6 +87,12 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         }, null);
 
         return result.Task;
+    }
+
+    public void SendIq(IIq iq)
+    {
+        var protocolIq = iq.Unwrap();
+        client.Write(protocolIq);
     }
 
     public async Task<IIq> SendCaptchaAnswer(Jid conferenceId, string challenge, string answer)

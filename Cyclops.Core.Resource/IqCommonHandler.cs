@@ -4,72 +4,39 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using bedrock.util;
-using jabber.client;
-using jabber.protocol.client;
-using jabber.protocol.iq;
+using Cyclops.Xmpp.Data;
+using Cyclops.Xmpp.Protocol.IqQueries;
 
 namespace Cyclops.Core.Resource
 {
     public class IqCommonHandler
     {
-        public static void Handle(JabberClient jc, IQ iq)
+        public static void HandleTime(IUserSession session, ITimeIq iq)
         {
-            //process only requests
-            if (iq.Type != IQType.get)
-                return;
+            var response = iq.CreateResponse();
+            response.Time = (DateTime.Now, TimeZoneInfo.Local);
 
-            if (iq.Query == null)
-                return;
-
-            HandleTime(jc, iq);
-            HandleLast(jc, iq);
-            HandleVersion(jc, iq);
+            session.SendIq(iq);
         }
 
-        #region Private members
-        private static void HandleTime(JabberClient jc, IQ iq)
+        public static void HandleLast(IUserSession session, ILastIq iq)
         {
-            var query = iq.Query as jabber.protocol.iq.Time;
-            if (query == null)
-                return;
+            var response = iq.CreateResponse();
+            response.Seconds = (int)IdleTime.GetIdleTime();
 
-            iq = iq.GetResponse(jc.Document);
-            Time tim = iq.Query as Time;
-            if (tim != null) tim.SetCurrentTime();
-            jc.Write(iq);
+            session.SendIq(response);
         }
 
-        private static void HandleLast(JabberClient jc, IQ iq)
+        public static void HandleVersion(IUserSession session, IVersionIq iq)
         {
-            var query = iq.Query as jabber.protocol.iq.Last;
-            if (query == null)
-                return;
-            iq = iq.GetResponse(jc.Document);
-            Last last = iq.Query as Last;
-            if (last != null) last.Seconds = (int)IdleTime.GetIdleTime();
-            jc.Write(iq);
-            return;
+            var response = iq.CreateResponse();
+            response.ClientInfo = new ClientInfo(
+                GetOsVersion(),
+                Assembly.GetExecutingAssembly().GetName().Version.ToString(3),
+                ConfigurationManager.AppSettings["ApplicationName"]);
+
+            session.SendIq(response);
         }
-
-        private static void HandleVersion(JabberClient jc, IQ iq)
-        {
-            var query = iq.Query as jabber.protocol.iq.Version;
-            if (query == null)
-                return;
-
-            iq = iq.GetResponse(jc.Document);
-            var ver = iq.Query as jabber.protocol.iq.Version;
-            if (ver != null)
-            {
-                ver.OS = GetOsVersion(); //"Fedora 14 64bit"; //:D
-                ver.EntityName = ConfigurationManager.AppSettings["ApplicationName"];
-                ver.Ver = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
-            }
-            jc.Write(iq);
-            return;
-        } 
-
-        #endregion
 
 
         #region Get OS version
@@ -124,7 +91,7 @@ namespace Cyclops.Core.Resource
             bool retVal;
             IsWow64Process(Process.GetCurrentProcess().Handle, out retVal);
             return retVal;
-        } 
+        }
         #endregion
     }
 }

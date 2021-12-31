@@ -7,6 +7,8 @@ namespace Cyclops.Xmpp.Client;
 
 public interface IXmppClient
 {
+    IIqQueryManager IqQueryManager { get; }
+
     event EventHandler Connect;
     event EventHandler<string> ReadRawMessage;
     event EventHandler<string> WriteRawMessage;
@@ -17,6 +19,7 @@ public interface IXmppClient
     void SendElement(XmlElement element);
 
     void SendPresence(PresenceDetails presence);
+    void SendIq(IIq iq);
 
     Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer);
 

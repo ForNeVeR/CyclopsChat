@@ -11,10 +11,8 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
-using System;
 
 using System.Xml;
-
 using bedrock.util;
 
 namespace jabber.protocol.iq
@@ -61,7 +59,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// Name of the entity.
         /// </summary>
-        public string EntityName
+        public string? EntityName
         {
             get { return GetElem("name"); }
             set { SetElem("name", value); }
@@ -70,7 +68,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// Enitity version.  (Version was a keyword, or something)
         /// </summary>
-        public string Ver
+        public string? Ver
         {
             get { return GetElem("version"); }
             set { SetElem("version", value); }
@@ -79,7 +77,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// Operating system of the entity.
         /// </summary>
-        public string OS
+        public string? OS
         {
             get { return GetElem("os"); }
             set { SetElem("os", value); }

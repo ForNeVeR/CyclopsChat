@@ -1,6 +1,6 @@
 namespace Cyclops.Xmpp.Data;
 
-public class ClientInfo
+public sealed class ClientInfo
 {
     public ClientInfo(string? os, string? version, string? client)
     {

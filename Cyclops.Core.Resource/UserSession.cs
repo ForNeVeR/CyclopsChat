@@ -175,6 +175,8 @@ namespace Cyclops.Core.Resource
 
         public void SendPresence(PresenceDetails presenceDetails) => XmppClient.SendPresence(presenceDetails);
 
+        public void SendIq(IIq iq) => XmppClient.SendIq(iq);
+
         public void ChangeStatus(StatusType type, string status)
         {
             if (!IsAuthenticated || !JabberClient.IsAuthenticated)
@@ -355,6 +357,10 @@ namespace Cyclops.Core.Resource
         {
             XmppClient.Presence += (_, presence) => Presence?.Invoke(this, presence);
 
+            XmppClient.IqQueryManager.TimeQueried += (_, iq) => IqCommonHandler.HandleTime(this, iq);
+            XmppClient.IqQueryManager.LastQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
+            XmppClient.IqQueryManager.VersionQueried += (_, iq) => IqCommonHandler.HandleVersion(this, iq);
+
             JabberClient.OnAuthenticate += jabberClient_OnAuthenticate;
             JabberClient.OnAuthError += jabberClient_OnAuthError;
             JabberClient.OnConnect += jabberClient_OnConnect;
@@ -363,7 +369,6 @@ namespace Cyclops.Core.Resource
             JabberClient.OnError += jabberClient_OnError;
             JabberClient.OnInvalidCertificate += jabberClient_OnInvalidCertificate;
             JabberClient.OnStreamError += jabberClient_OnStreamError;
-            JabberClient.OnIQ += JabberClient_OnIQ;
             JabberClient.OnWriteText += JabberClient_OnWriteText;
             JabberClient.OnReadText += JabberClient_OnReadText;
 
@@ -405,11 +410,6 @@ namespace Cyclops.Core.Resource
         //DEBUG:
         void JabberClient_OnWriteText(object sender, string txt)
         {
-        }
-
-        void JabberClient_OnIQ(object sender, IQ iq)
-        {
-            IqCommonHandler.Handle(JabberClient, iq);
         }
 
         public Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer) =>
