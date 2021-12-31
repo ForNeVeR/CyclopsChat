@@ -41,7 +41,7 @@ namespace Cyclops.Core.Resource
 
         private string BuildPath(Jid id, bool isPrivate)
         {
-            string jid = string.Format("{0}@{1}", id.User, id.Server);
+            string jid = string.Format("{0}@{1}", id.Local, id.Domain);
             foreach (var c in Path.GetInvalidFileNameChars())
                 jid = jid.Replace(c, '_');
 

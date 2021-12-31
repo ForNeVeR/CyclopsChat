@@ -279,7 +279,7 @@ namespace Cyclops.Core.Resource
                         });
                 }
 
-                ConferenceId = IdentifierBuilder.WithAnotherResource(ConferenceId, newNick);
+                ConferenceId = ConferenceId.WithResource(newNick);
             }
             //HANDLE NICK CHANGE (END)
 
@@ -495,7 +495,7 @@ namespace Cyclops.Core.Resource
 
         public void RejoinWithNewNick(string nick)
         {
-            ConferenceId = IdentifierBuilder.WithAnotherResource(ConferenceId, nick);
+            ConferenceId = ConferenceId.WithResource(nick);
             if (session.IsAuthenticated)
                 Authenticated(this, new AuthenticationEventArgs());
         }
@@ -503,7 +503,7 @@ namespace Cyclops.Core.Resource
         public void ChangeNickAndStatus(string nick, StatusType statusType, string status) =>
             Session.SendPresence(new PresenceDetails
             {
-                To = IdentifierBuilder.WithAnotherResource(ConferenceId, nick),
+                To = ConferenceId.WithResource(nick),
                 StatusText = status,
                 StatusType = statusType
             });

@@ -278,7 +278,7 @@ namespace Cyclops.Core.Resource
 
         public void AddToBookmarks(Jid conferenceId)
         {
-            BookmarkManager.AddConference(conferenceId.Bare.Map(), conferenceId.User, true, conferenceId.Resource);
+            BookmarkManager.AddConference(conferenceId.Bare.Map(), conferenceId.Local, true, conferenceId.Resource);
         }
 
         #endregion
@@ -492,7 +492,7 @@ namespace Cyclops.Core.Resource
 
         public void RaiseBookmarksReceived()
         {
-            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<Jid, string>(IdentifierBuilder.WithAnotherResource(i.Key.Map(), i.Value.Nick), i.Value.Value)).ToList()));
+            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<Jid, string>(i.Key.Map().WithResource(i.Value.Nick), i.Value.Value)).ToList()));
         }
 
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { };

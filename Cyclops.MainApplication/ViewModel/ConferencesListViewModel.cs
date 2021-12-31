@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
-using Cyclops.Core.Resource;
 using Cyclops.MainApplication.View.Dialogs;
 using Cyclops.Xmpp;
 using Cyclops.Xmpp.Protocol;
@@ -54,7 +53,7 @@ namespace Cyclops.MainApplication.ViewModel
             ConferenceServices = services;
             SelectedService = currentService;
 
-            OpenWithNick = Session.CurrentUserId.User;
+            OpenWithNick = Session.CurrentUserId.Local;
         }
 
         public IUserSession Session { get; private set; }
@@ -76,9 +75,9 @@ namespace Cyclops.MainApplication.ViewModel
             try
             {
                 if (arg.Contains("@"))
-                    id = IdentifierBuilder.Create(arg);
+                    id = Jid.Parse(arg);
                 else
-                    id = IdentifierBuilder.Create(arg, Session.ConferenceServiceId.Server, OpenWithNick);
+                    id = new Jid(arg, Session.ConferenceServiceId.Domain, OpenWithNick);
                 OpenConferenceAction(id);
             }
             catch(Exception exc)
@@ -168,7 +167,7 @@ namespace Cyclops.MainApplication.ViewModel
                 else
                     Conferences = sourceConferences.Where(i =>
                         /*i.Name.ToLower().Contains(value.ToLower()) ||*/
-                        i.Id.User.ToLower().Contains(value.ToLower())).ToArray();
+                        i.Id.Local.ToLower().Contains(value.ToLower())).ToArray();
             }
         }
 
@@ -199,7 +198,7 @@ namespace Cyclops.MainApplication.ViewModel
                         Id = i.Item1,
                         Name = i.Item2,
                         IsOpened = conferenceIds.Any(c => i.Item1.BaresEqual(c))
-                    }).OrderBy(i => i.Id.User).ToList();
+                    }).OrderBy(i => i.Id.Local).ToList();
         }
 
         private bool OpenConferenceCanExecute()
@@ -226,8 +225,8 @@ namespace Cyclops.MainApplication.ViewModel
                 existsConference.LeaveAndClose();
             }
 
-            string nick = string.IsNullOrWhiteSpace(OpenWithNick) ? session.CurrentUserId.User : OpenWithNick;
-            session.OpenConference(IdentifierBuilder.Create(jid.User, jid.Server, nick));
+            string nick = string.IsNullOrWhiteSpace(OpenWithNick) ? session.CurrentUserId.Local : OpenWithNick;
+            session.OpenConference(jid.WithResource(nick));
             Close(this, EventArgs.Empty);
         }
 

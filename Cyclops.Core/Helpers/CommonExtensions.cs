@@ -42,8 +42,8 @@ namespace Cyclops
 
         public static bool BaresEqual(this Jid x, Jid y)
         {
-            return string.Equals(x.User, y.User, StringComparison.InvariantCultureIgnoreCase) &&
-                   string.Equals(x.Server, y.Server, StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals(x.Local, y.Local, StringComparison.InvariantCultureIgnoreCase) &&
+                   string.Equals(x.Domain, y.Domain, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public static bool StringToBool(this string str)

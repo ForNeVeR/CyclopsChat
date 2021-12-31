@@ -286,7 +286,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         private void ChangeConflictedNick()
         {
-            InputDialog.ShowForEdit(string.Format(Localization.Conference.NewNick, Conference.ConferenceId.User),
+            InputDialog.ShowForEdit(string.Format(Localization.Conference.NewNick, Conference.ConferenceId.Local),
                 Conference.ConferenceId.Resource, TryRejoinWithNewNick, NewNickValidator);
         }
 
@@ -344,7 +344,7 @@ namespace Cyclops.MainApplication.ViewModel
 
         public override string ToString()
         {
-            return Conference.ConferenceId.User;
+            return Conference.ConferenceId.Local;
         }
     }
 }
