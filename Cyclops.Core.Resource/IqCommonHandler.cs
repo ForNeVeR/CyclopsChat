@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using bedrock.util;
+using Cyclops.Windows;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol.IqQueries;
 
@@ -22,7 +22,7 @@ namespace Cyclops.Core.Resource
         public static void HandleLast(IUserSession session, ILastIq iq)
         {
             var response = iq.CreateResponse();
-            response.Seconds = (int)IdleTime.GetIdleTime();
+            response.Seconds = checked((int)LastInputDetector.GetTimeSinceLastInput().TotalSeconds);
 
             session.SendIq(response);
         }

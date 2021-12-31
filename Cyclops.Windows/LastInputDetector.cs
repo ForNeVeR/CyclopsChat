@@ -19,13 +19,18 @@ public class LastInputDetector : IDisposable
         timer = new Timer(TimerCallback, null, TimeSpan.Zero, pollInterval);
     }
 
-    private unsafe void TimerCallback(object _)
+    public static unsafe TimeSpan GetTimeSinceLastInput()
     {
         var lastInputInfo = new LASTINPUTINFO { cbSize = (uint)sizeof(LASTINPUTINFO) };
-        if (!GetLastInputInfo(ref lastInputInfo)) return;
-        var currentTime = Environment.TickCount;
+        if (!GetLastInputInfo(ref lastInputInfo)) return TimeSpan.Zero;
 
-        var inputIdle = TimeSpan.FromMilliseconds(currentTime - lastInputInfo.dwTime);
+        var currentTime = Environment.TickCount;
+        return TimeSpan.FromMilliseconds(currentTime - lastInputInfo.dwTime);
+    }
+
+    private void TimerCallback(object _)
+    {
+        var inputIdle = GetTimeSinceLastInput();
         if (inputIdle >= idleInterval)
             NotifyInIdleMode(inputIdle);
         else

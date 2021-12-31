@@ -19,6 +19,7 @@
             <Project>{61356ED8-D17B-4940-943D-812B8FCDA911}</Project>
             <Name>Cyclops.Core</Name>
         </ProjectReference>
+        <ProjectReference Include="..\Cyclops.Windows\Cyclops.Windows.csproj" />
         <ProjectReference Include="..\Cyclops.Xmpp.JabberNet\Cyclops.Xmpp.JabberNet.csproj" />
         <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
         <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj">
