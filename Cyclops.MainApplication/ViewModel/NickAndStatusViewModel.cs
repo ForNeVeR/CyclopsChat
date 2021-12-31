@@ -1,7 +1,7 @@
 ﻿using System;
 using Cyclops.Core;
-using Cyclops.Core.CustomEventArgs;
 using Cyclops.MainApplication.View.Dialogs;
+using Cyclops.Xmpp.Data;
 using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
@@ -80,9 +80,9 @@ namespace Cyclops.MainApplication.ViewModel
         {
             return
                 conference.IsInConference && conference.Session.IsAuthenticated &&
-                Nick != conference.ConferenceId.Resource &&
-                Status != conference.Session.Status &&
-                StatusType != conference.Session.StatusType;
+                (Nick != conference.ConferenceId.Resource ||
+                 Status != conference.Session.Status ||
+                 StatusType != conference.Session.StatusType);
         }
 
         private void OkAction()
