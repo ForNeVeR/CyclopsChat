@@ -51,6 +51,21 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         client.Write(element);
     }
 
+    public void SendPresence(PresenceDetails presence)
+    {
+        var presenceToSend = new Presence(client.Document);
+        if (presence.To != null)
+            presenceToSend.To = presence.To.Value.Map();
+        if (presence.StatusText != null)
+            presenceToSend.Status = presence.StatusText;
+        if (presence.StatusType != null)
+            presenceToSend.Show = presence.StatusType?.Map();
+        if (presence.PhotoHash != null)
+            presenceToSend.AddChild(new PhotoX(client.Document) { PhotoHash = presence.PhotoHash });
+
+        client.Write(presenceToSend);
+    }
+
     private Task<IQ> SendIq(IQ request)
     {
         var result = new TaskCompletionSource<IQ>();
@@ -114,14 +129,6 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 
         var response = await SendIq(iq);
         return response.Wrap();
-    }
-
-    public void SendPhotoUpdatePresence(string photoHash)
-    {
-        var presence = new Presence(client.Document);
-        presence.AddChild(new PhotoX(client.Document) { PhotoHash = photoHash });
-
-        client.Write(presence);
     }
 
     public async Task<ClientInfo?> GetClientInfo(Jid jid)

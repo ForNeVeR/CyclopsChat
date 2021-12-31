@@ -10,9 +10,7 @@ using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
-using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
-using jabber.protocol.client;
 
 namespace Cyclops.Core.Resource
 {
@@ -502,16 +500,13 @@ namespace Cyclops.Core.Resource
                 Authenticated(this, new AuthenticationEventArgs());
         }
 
-        public void ChangeNickAndStatus(string nick, StatusType statusType, string status)
-        {
-            var manager = ((UserSession) Session).JabberClient;
-            Presence p = new Presence(manager.Document);
-            p.To = IdentifierBuilder.WithAnotherResource(ConferenceId, nick).Map();
-            p.Status = status;
-            p.Show = statusType.StatusTypeToString();
-
-            manager.Write(p);
-        }
+        public void ChangeNickAndStatus(string nick, StatusType statusType, string status) =>
+            Session.SendPresence(new PresenceDetails
+            {
+                To = IdentifierBuilder.WithAnotherResource(ConferenceId, nick),
+                StatusText = status,
+                StatusType = statusType
+            });
 
         internal void RaiseSomebodyChangedHisStatusEvent(IConferenceMember member)
         {

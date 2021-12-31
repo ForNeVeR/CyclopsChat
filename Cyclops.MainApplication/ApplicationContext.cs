@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows.Threading;
 using Cyclops.Core;
-using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Smiles;
 using Cyclops.MainApplication.Configuration;
 using Cyclops.MainApplication.Helpers;
@@ -10,6 +9,7 @@ using Cyclops.MainApplication.Localization;
 using Cyclops.MainApplication.Options.Model;
 using Cyclops.MainApplication.ViewModel;
 using Cyclops.Windows;
+using Cyclops.Xmpp.Data;
 
 namespace Cyclops.MainApplication
 {

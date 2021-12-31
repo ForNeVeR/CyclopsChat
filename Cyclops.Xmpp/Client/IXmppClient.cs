@@ -16,11 +16,12 @@ public interface IXmppClient
 
     void SendElement(XmlElement element);
 
+    void SendPresence(PresenceDetails presence);
+
     Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer);
 
     Task<VCard> GetVCard(Jid jid);
     Task<IIq> UpdateVCard(VCard vCard);
-    void SendPhotoUpdatePresence(string photoHash);
 
     Task<ClientInfo?> GetClientInfo(Jid jid);
 

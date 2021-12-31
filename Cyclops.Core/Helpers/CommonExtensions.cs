@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cyclops.Core.CustomEventArgs;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops
@@ -39,25 +38,6 @@ namespace Cyclops
         {
             public string String { get; set; }
             public bool IsDelimiter { get; set; }
-        }
-
-        public static string StatusTypeToString(this StatusType type)
-        {
-            switch(type)
-            {
-                case StatusType.Online:
-                    return "online";
-                case StatusType.Busy:
-                    return "dnd";
-                case StatusType.Away:
-                    return "away";
-                case StatusType.ExtendedAway:
-                    return "xa";
-                case StatusType.Chat:
-                    return "chat";
-                default:
-                    throw new ArgumentOutOfRangeException("type");
-            }
         }
 
         public static bool BaresEqual(this Jid x, Jid y)

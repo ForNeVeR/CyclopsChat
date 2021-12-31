@@ -173,11 +173,13 @@ namespace Cyclops.Core.Resource
 
         public IObservableCollection<IConference> Conferences { get; private set; }
 
+        public void SendPresence(PresenceDetails presenceDetails) => XmppClient.SendPresence(presenceDetails);
+
         public void ChangeStatus(StatusType type, string status)
         {
             if (!IsAuthenticated || !JabberClient.IsAuthenticated)
                 return;
-            JabberClient.Presence(PresenceType.available, status, type.StatusTypeToString(), 30);
+            JabberClient.Presence(PresenceType.available, status, type.Map(), 30);
         }
 
         public void OpenConference(Jid id)
@@ -392,7 +394,7 @@ namespace Cyclops.Core.Resource
         {
             RoomPresence pres = e.RoomPresence;
             pres.Status = Status;
-            pres.Show = StatusType.StatusTypeToString();
+            pres.Show = StatusType.Map();
         }
 
         //DEBUG:
@@ -466,7 +468,10 @@ namespace Cyclops.Core.Resource
             }
 
             var photoHash = vCard.Photo == null ? "" : ImageUtils.CalculateSha1HashOfAnImage(vCard.Photo);
-            XmppClient.SendPhotoUpdatePresence(photoHash);
+            XmppClient.SendPresence(new PresenceDetails
+            {
+                PhotoHash = photoHash
+            });
         }
 
         public Jid ConferenceServiceId { get; private set; }

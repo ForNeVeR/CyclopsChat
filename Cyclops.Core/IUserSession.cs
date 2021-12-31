@@ -20,6 +20,7 @@ namespace Cyclops.Core
         string Status { get; set; }
         StatusType StatusType { get; set; }
 
+        void SendPresence(PresenceDetails presenceDetails);
         void ChangeStatus(StatusType type, string status);
         void OpenConference(Jid id);
         void AuthenticateAsync(ConnectionConfig config);
