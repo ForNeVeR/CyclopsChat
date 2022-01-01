@@ -171,7 +171,7 @@ namespace jabber.protocol.client
         /// <summary>
         /// Message error.
         /// </summary>
-        public Error Error
+        public Error? Error
         {
             get { return GetChildElement<Error>(); }
             set

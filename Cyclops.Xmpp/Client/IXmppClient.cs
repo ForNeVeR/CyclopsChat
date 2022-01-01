@@ -12,12 +12,18 @@ public interface IXmppClient
     IConferenceManager ConferenceManager { get; }
 
     event EventHandler Connect;
+    event EventHandler Disconnect;
     event EventHandler<string> ReadRawMessage;
     event EventHandler<string> WriteRawMessage;
     event EventHandler<Exception> Error;
+    event EventHandler StreamError;
+
+    event EventHandler Authenticated;
+    event EventHandler AuthenticationError;
 
     event EventHandler<IPresence> Presence;
     event EventHandler RoomMessage;
+    event EventHandler<IMessage> Message;
 
     bool IsAuthenticated { get; }
 

@@ -40,7 +40,6 @@ public class JabberNetRegistrationManager : IRegistrationManager
 
             var result = new TaskCompletionSource<RegistrationResult>();
 
-            client.OnInvalidCertificate += (_, _, _, _) => true;
             client.OnAuthError += (_, _) => OnAuthError(result);
             client.OnLoginRequired += _ => client.Register(new JID(client.User, client.Server, null));
             client.OnRegistered += (_, iq) => OnRegistered(client, iq, result);

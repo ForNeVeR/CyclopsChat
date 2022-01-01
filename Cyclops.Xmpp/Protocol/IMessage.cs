@@ -6,4 +6,5 @@ public interface IMessage : IStanza
     string? Body { get; }
 
     IError? Error { get; }
+    MessageType Type { get; }
 }

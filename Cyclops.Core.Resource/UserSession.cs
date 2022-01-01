@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Security;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using System.Xml;
 using Cyclops.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
@@ -15,13 +12,11 @@ using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Client;
-using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 using jabber.client;
 using jabber.connection;
-using jabber.protocol.client;
 using jabber.protocol.stream;
-using PresenceType = Cyclops.Xmpp.Data.PresenceType;
+using MessageType = jabber.protocol.client.MessageType;
 
 namespace Cyclops.Core.Resource
 {
@@ -73,7 +68,7 @@ namespace Cyclops.Core.Resource
         }
 
         public IXmppClient XmppClient => xmppClient;
-        public JabberClient JabberClient { get; set; }
+        private JabberClient JabberClient { get; }
 
         #region IUserSession Members
 
@@ -285,7 +280,7 @@ namespace Cyclops.Core.Resource
 
         #region JabberClient events
 
-        private void jabberClient_OnStreamError(object sender, XmlElement rp)
+        private void OnStreamError(object _, object __)
         {
             if (IsAuthenticated)
             {
@@ -301,42 +296,33 @@ namespace Cyclops.Core.Resource
             reconnectTimer.Start();
         }
 
-        private bool jabberClient_OnInvalidCertificate(object sender, X509Certificate certificate, X509Chain chain,
-                                                       SslPolicyErrors sslPolicyErrors)
+        private void OnError(object sender, Exception ex)
         {
-            return true;
-        }
-
-        private void jabberClient_OnError(object sender, Exception ex)
-        {
+            logger.LogError("Error from the XMPP client.", ex);
             if (IsAuthenticated)
                 IsAuthenticated = false;
             ConnectionDropped(this, new AuthenticationEventArgs(ConnectionErrorKind.ConnectionError, ex.Message));
             reconnectTimer.Start();
         }
 
-        private void jabberClient_OnDisconnect(object sender)
+        private void OnDisconnect(object _, object __)
         {
             reconnectTimer.Start();
         }
 
-        private void jabberClient_OnConnect(object sender, StanzaStream stream)
+        private void OnAuthenticationError(object _, object __)
         {
-        }
-
-        private void jabberClient_OnAuthError(object sender, XmlElement rp)
-        {
-            Authenticated(sender,
+            Authenticated(this,
                           new AuthenticationEventArgs(ConnectionErrorKind.InvalidPasswordOrUserName,
                                                       ErrorMessageResources.InvalidLoginOrPasswordMessage));
         }
 
         private bool firstAuthentigation = true;
 
-        private void jabberClient_OnAuthenticate(object sender)
+        private void OnAuthenticated(object _, object __)
         {
             IsAuthenticated = true;
-            Authenticated(sender, new AuthenticationEventArgs());
+            Authenticated(this, new AuthenticationEventArgs());
 
             if (firstAuthentigation)
             {
@@ -360,20 +346,16 @@ namespace Cyclops.Core.Resource
             XmppClient.IqQueryManager.LastQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
             XmppClient.IqQueryManager.VersionQueried += (_, iq) => IqCommonHandler.HandleVersion(this, iq);
 
-            JabberClient.OnAuthenticate += jabberClient_OnAuthenticate;
-            JabberClient.OnAuthError += jabberClient_OnAuthError;
-            JabberClient.OnConnect += jabberClient_OnConnect;
-            JabberClient.OnDisconnect += jabberClient_OnDisconnect;
+            XmppClient.Authenticated += OnAuthenticated;
+            XmppClient.AuthenticationError += OnAuthenticationError;
+            XmppClient.Disconnect += OnDisconnect;
 
-            JabberClient.OnError += jabberClient_OnError;
-            JabberClient.OnInvalidCertificate += jabberClient_OnInvalidCertificate;
-            JabberClient.OnStreamError += jabberClient_OnStreamError;
-            JabberClient.OnWriteText += JabberClient_OnWriteText;
-            JabberClient.OnReadText += JabberClient_OnReadText;
+            XmppClient.Error += OnError;
+            XmppClient.StreamError += OnStreamError;
 
             XmppClient.BookmarkManager.BookmarkAdded += OnBookmarkAdded;
 
-            JabberClient.OnMessage += JabberClient_OnMessage;
+            XmppClient.Message += OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
         }
 
@@ -384,35 +366,25 @@ namespace Cyclops.Core.Resource
                 OpenConference(conferenceJid);
         }
 
-        //DEBUG:
-        void JabberClient_OnReadText(object sender, string txt)
-        {
-        }
-
-        //DEBUG:
-        void JabberClient_OnWriteText(object sender, string txt)
-        {
-        }
-
         public Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer) =>
             XmppClient.SendCaptchaAnswer(mucId, challenge, answer);
 
-        private void JabberClient_OnMessage(object sender, Message msg)
+        private void OnMessage(object sender, IMessage msg)
         {
             //some conferences are not allowed to send privates
             if (msg.Error != null)
             {
-                ErrorMessageRecieved(this, new ErrorEventArgs(msg.From.Map(), msg.Error.Message));
+                ErrorMessageRecieved(this, new ErrorEventArgs(msg.From, msg.Error.Message));
                 return;
             }
 
-            if (msg.Type != MessageType.chat)
+            if (msg.Type != Xmpp.Protocol.MessageType.Chat)
                 return;
 
             PrivateMessages.AsInternalImpl().Add(new PrivateMessage
                                                      {
-                                                         AuthorId = msg.From.Map(),
-                                                         AuthorNick = msg.From.Resource,
+                                                         AuthorId = msg.From.Value,
+                                                         AuthorNick = msg.From.Value.Resource,
                                                          Body = msg.Body,
                                                      });
         }

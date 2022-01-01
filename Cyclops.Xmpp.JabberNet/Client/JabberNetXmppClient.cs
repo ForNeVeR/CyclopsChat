@@ -47,22 +47,34 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     public void Dispose() => client.Dispose();
 
     public event EventHandler? Connect;
+    public event EventHandler? Disconnect;
     public event EventHandler<string>? ReadRawMessage;
     public event EventHandler<string>? WriteRawMessage;
     public event EventHandler<Exception>? Error;
+    public event EventHandler? StreamError;
+
+    public event EventHandler? Authenticated;
+    public event EventHandler? AuthenticationError;
 
     public event EventHandler<IPresence>? Presence;
     public event EventHandler? RoomMessage;
+    public event EventHandler<IMessage>? Message;
 
     private void InitializeEvents()
     {
         client.OnConnect += delegate { Connect?.Invoke(this, null); };
+        client.OnDisconnect += delegate { Disconnect?.Invoke(this, null); };
         client.OnReadText += (_, text) => ReadRawMessage?.Invoke(this, text);
         client.OnWriteText += (_, text) => WriteRawMessage?.Invoke(this, text);
         client.OnError += (_, error) => Error?.Invoke(this, error);
+        client.OnStreamError += delegate { StreamError?.Invoke(this, null); };
+
+        client.OnAuthenticate += delegate { Authenticated?.Invoke(this, null); };
+        client.OnAuthError += delegate { AuthenticationError?.Invoke(this, null); };
 
         client.OnPresence += (_, presence) => Presence?.Invoke(this, presence.Wrap());
         conferenceManager.OnRoomMessage += (_, _) => RoomMessage?.Invoke(this, null);
+        client.OnMessage += (_, message) => Message?.Invoke(this, message.Wrap());
     }
 
     public bool IsAuthenticated => client.IsAuthenticated;
