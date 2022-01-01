@@ -4,7 +4,7 @@ using jabber.connection;
 
 namespace Cyclops.Xmpp.JabberNet.Client;
 
-public class JabberNetConferenceManager : IConferenceManager
+internal class JabberNetConferenceManager : IConferenceManager
 {
     public JabberNetConferenceManager(ConferenceManager conferenceManager)
     {

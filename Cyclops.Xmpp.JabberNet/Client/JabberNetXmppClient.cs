@@ -19,7 +19,7 @@ using VCard = Cyclops.Xmpp.Data.VCard;
 
 namespace Cyclops.Xmpp.JabberNet.Client;
 
-public sealed class JabberNetXmppClient : IXmppClient
+internal class JabberNetXmppClient : IXmppClient
 {
     private readonly JabberClient client;
     private readonly ConferenceManager conferenceManager;

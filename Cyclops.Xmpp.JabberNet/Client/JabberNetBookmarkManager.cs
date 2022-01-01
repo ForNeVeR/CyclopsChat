@@ -7,7 +7,7 @@ using jabber.client;
 
 namespace Cyclops.Xmpp.JabberNet.Client;
 
-public class JabberNetBookmarkManager : IBookmarkManager
+internal class JabberNetBookmarkManager : IBookmarkManager
 {
     private readonly BookmarkManager bookmarkManager;
     public JabberNetBookmarkManager(BookmarkManager bookmarkManager)

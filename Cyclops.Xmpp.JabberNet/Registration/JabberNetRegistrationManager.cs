@@ -10,7 +10,7 @@ using jabber.protocol.stream;
 
 namespace Cyclops.Xmpp.JabberNet.Registration;
 
-public class JabberNetRegistrationManager : IRegistrationManager
+internal class JabberNetRegistrationManager : IRegistrationManager
 {
     private readonly ILogger logger;
     private readonly IStringEncryptor encryptor;
