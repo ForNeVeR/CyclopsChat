@@ -9,6 +9,7 @@ public interface IXmppClient
 {
     IIqQueryManager IqQueryManager { get; }
     IBookmarkManager BookmarkManager { get; }
+    IConferenceManager ConferenceManager { get; }
 
     event EventHandler Connect;
     event EventHandler<string> ReadRawMessage;

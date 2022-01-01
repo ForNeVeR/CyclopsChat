@@ -21,9 +21,7 @@ using jabber.client;
 using jabber.connection;
 using jabber.protocol;
 using jabber.protocol.client;
-using jabber.protocol.iq;
 using jabber.protocol.stream;
-using VCard = Cyclops.Xmpp.Data.VCard;
 
 namespace Cyclops.Core.Resource
 {
@@ -65,9 +63,7 @@ namespace Cyclops.Core.Resource
             this.stringEncryptor = stringEncryptor;
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
-            ConferenceManager = new ConferenceManager {Stream = JabberClient};
-            xmppClient = new JabberNetXmppClient(JabberClient, ConferenceManager);
-            BookmarkManager = XmppClient.BookmarkManager;
+            xmppClient = new JabberNetXmppClient(JabberClient);
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
@@ -79,9 +75,7 @@ namespace Cyclops.Core.Resource
 
         public IXmppClient XmppClient => xmppClient;
         public JabberClient JabberClient { get; set; }
-        internal ConferenceManager ConferenceManager { get; set; }
         internal DiscoManager DiscoManager { get; set; }
-        internal IBookmarkManager BookmarkManager { get; set; }
 
         #region IUserSession Members
 
@@ -179,8 +173,13 @@ namespace Cyclops.Core.Resource
 
         public void ChangeStatus(StatusType type, string status)
         {
+            var conferenceManager = XmppClient.ConferenceManager;
+            conferenceManager.Status = status;
+            conferenceManager.StatusType = type;
+
             if (!IsAuthenticated || !JabberClient.IsAuthenticated)
                 return;
+
             JabberClient.Presence(PresenceType.available, status, type.Map(), 30);
         }
 
@@ -337,7 +336,7 @@ namespace Cyclops.Core.Resource
 
             if (firstAuthentigation)
             {
-                BookmarkManager.RequestBookmarks();
+                XmppClient.BookmarkManager.RequestBookmarks();
                 firstAuthentigation = false;
             }
 
@@ -368,9 +367,7 @@ namespace Cyclops.Core.Resource
             JabberClient.OnWriteText += JabberClient_OnWriteText;
             JabberClient.OnReadText += JabberClient_OnReadText;
 
-            ConferenceManager.BeforeRoomPresenceOut += ConferenceManager_BeforeRoomPresenceOut;
-
-            BookmarkManager.BookmarkAdded += OnBookmarkAdded;
+            XmppClient.BookmarkManager.BookmarkAdded += OnBookmarkAdded;
 
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
@@ -381,13 +378,6 @@ namespace Cyclops.Core.Resource
             var conferenceJid = bookmark.ConferenceJid.WithResource(bookmark.Nick);
             if (bookmark.AutoJoin)
                 OpenConference(conferenceJid);
-        }
-
-        void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
-        {
-            RoomPresence pres = e.RoomPresence;
-            pres.Status = Status;
-            pres.Show = StatusType.Map();
         }
 
         //DEBUG:
@@ -475,7 +465,9 @@ namespace Cyclops.Core.Resource
 
         public void RaiseBookmarksReceived()
         {
-            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<Jid, string>(i.ConferenceJid.WithResource(i.Nick), i.Name)).ToList()));
+            var data = XmppClient.BookmarkManager.Bookmarks
+                .Select(i => new Tuple<Jid, string>(i.ConferenceJid.WithResource(i.Nick), i.Name)).ToList();
+            ConferencesListReceived(null, new ConferencesListEventArgs(data));
         }
 
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { };

@@ -21,13 +21,12 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 
     public IIqQueryManager IqQueryManager { get; }
     public IBookmarkManager BookmarkManager { get; }
+    public IConferenceManager ConferenceManager { get; }
 
-    public JabberNetXmppClient(
-        JabberClient client,
-        ConferenceManager conferenceManager)
+    public JabberNetXmppClient(JabberClient client)
     {
         this.client = client;
-        this.conferenceManager = conferenceManager;
+        conferenceManager = new ConferenceManager { Stream = client };
 
         IqQueryManager = new JabberNetIqQueryManager(client);
         BookmarkManager = new JabberNetBookmarkManager(new BookmarkManager
@@ -36,6 +35,7 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
             AutoPrivate = false,
             ConferenceManager = conferenceManager
         });
+        ConferenceManager = new JabberNetConferenceManager(conferenceManager);
 
         InitializeEvents();
     }
