@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel;
+using System.Globalization;
 using System.Xml;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
@@ -12,12 +13,13 @@ using jabber.client;
 using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+using jabber.protocol.stream;
 using MessageType = Cyclops.Xmpp.Protocol.MessageType;
 using VCard = Cyclops.Xmpp.Data.VCard;
 
 namespace Cyclops.Xmpp.JabberNet.Client;
 
-public sealed class JabberNetXmppClient : IXmppClient, IDisposable
+public sealed class JabberNetXmppClient : IXmppClient
 {
     private readonly JabberClient client;
     private readonly ConferenceManager conferenceManager;
@@ -27,9 +29,17 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     public IBookmarkManager BookmarkManager { get; }
     public IConferenceManager ConferenceManager { get; }
 
-    public JabberNetXmppClient(JabberClient client)
+    public JabberNetXmppClient(ISynchronizeInvoke synchronizer)
     {
-        this.client = client;
+        client = new JabberClient
+        {
+            InvokeControl = synchronizer,
+            AutoReconnect = -1,
+            AutoPresence = true,
+            AutoRoster = false,
+            [Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5,
+            KeepAlive = 20F
+        };
         conferenceManager = new ConferenceManager { Stream = client };
         discoManager = new DiscoManager { Stream = client };
 

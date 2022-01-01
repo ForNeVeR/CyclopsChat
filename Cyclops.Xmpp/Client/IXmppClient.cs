@@ -5,7 +5,7 @@ using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Xmpp.Client;
 
-public interface IXmppClient
+public interface IXmppClient : IDisposable
 {
     IIqQueryManager IqQueryManager { get; }
     IBookmarkManager BookmarkManager { get; }

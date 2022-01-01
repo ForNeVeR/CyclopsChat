@@ -11,11 +11,7 @@ using Cyclops.Core.Security;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
-using Cyclops.Xmpp.JabberNet.Client;
 using Cyclops.Xmpp.Protocol;
-using jabber.client;
-using jabber.connection;
-using jabber.protocol.stream;
 
 namespace Cyclops.Core.Resource
 {
@@ -23,7 +19,6 @@ namespace Cyclops.Core.Resource
     {
         private readonly ILogger logger;
         private readonly IXmppDataExtractor dataExtractor;
-        private readonly JabberNetXmppClient xmppClient;
 
         /// <summary>
         /// Timer for reconnect
@@ -45,27 +40,17 @@ namespace Cyclops.Core.Resource
             IXmppDataExtractor dataExtractor,
             IStringEncryptor stringEncryptor,
             IChatObjectsValidator commonValidator,
-            Dispatcher dispatcher)
+            IXmppClient xmppClient)
         {
             this.logger = logger;
             this.dataExtractor = dataExtractor;
-
-            AutoReconnect = true;
-            Dispatcher = dispatcher;
-            Conferences = new InternalObservableCollection<IConference>();
-            PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
             this.stringEncryptor = stringEncryptor;
             this.commonValidator = commonValidator;
-            JabberClient = new JabberClient
-            {
-                InvokeControl = new SynchronizeInvokeImpl(Dispatcher),
-                AutoReconnect = -1,
-                AutoPresence = true,
-                AutoRoster = false,
-                [Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5,
-                KeepAlive = 20F
-            };
-            xmppClient = new JabberNetXmppClient(JabberClient);
+            XmppClient = xmppClient;
+
+            AutoReconnect = true;
+            Conferences = new InternalObservableCollection<IConference>();
+            PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
 
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
             SubscribeToEvents();
@@ -74,8 +59,7 @@ namespace Cyclops.Core.Resource
             status = "CyclopsChat " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
         }
 
-        public IXmppClient XmppClient => xmppClient;
-        private JabberClient JabberClient { get; }
+        public IXmppClient XmppClient { get; }
 
         #region IUserSession Members
 
@@ -140,9 +124,6 @@ namespace Cyclops.Core.Resource
                 OnPropertyChanged("IsAuthenticated");
             }
         }
-
-        internal Dispatcher Dispatcher { get; set; }
-
 
         public Jid CurrentUserId
         {
@@ -219,11 +200,12 @@ namespace Cyclops.Core.Resource
             {
                 XmppClient.Disconnect();
             }
-            catch
+            catch(Exception ex)
             {
+                logger.LogError("Error during session close.", ex);
             }
 
-            xmppClient.Dispose();
+            XmppClient.Dispose();
         }
 
         public void Reconnect()

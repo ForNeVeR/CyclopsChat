@@ -1,4 +1,5 @@
-﻿using Cyclops.Core.Modularity;
+﻿using System.ComponentModel;
+using Cyclops.Core.Modularity;
 using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;
 using Cyclops.Core.Security;
@@ -17,7 +18,8 @@ namespace Cyclops.Core.Resource.Composition
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()
                 .RegisterType<IChatLogger, ChatLogger>()
-                .RegisterType<IUserSession, UserSession>();
+                .RegisterType<IUserSession, UserSession>()
+                .RegisterType<ISynchronizeInvoke, SynchronizeInvokeImpl>();
         }
     }
 }
