@@ -32,4 +32,7 @@ public interface IXmppClient
     Task<ClientInfo?> GetClientInfo(Jid jid);
 
     IRoom GetRoom(Jid roomJid);
+
+    Task<IDiscoNode?> DiscoverItems(Jid jid, string node);
+    Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri);
 }

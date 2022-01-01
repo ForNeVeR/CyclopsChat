@@ -2,6 +2,7 @@
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
+using Cyclops.Xmpp.JabberNet.Data;
 using Cyclops.Xmpp.JabberNet.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Elements;
 using Cyclops.Xmpp.JabberNet.Protocol;
@@ -18,6 +19,7 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 {
     private readonly JabberClient client;
     private readonly ConferenceManager conferenceManager;
+    private readonly DiscoManager discoManager;
 
     public IIqQueryManager IqQueryManager { get; }
     public IBookmarkManager BookmarkManager { get; }
@@ -27,6 +29,7 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     {
         this.client = client;
         conferenceManager = new ConferenceManager { Stream = client };
+        discoManager = new DiscoManager { Stream = client };
 
         IqQueryManager = new JabberNetIqQueryManager(client);
         BookmarkManager = new JabberNetBookmarkManager(new BookmarkManager
@@ -162,4 +165,38 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     }
 
     public IRoom GetRoom(Jid roomJid) => conferenceManager.GetRoom(roomJid.Map()).Wrap();
+
+    public Task<IDiscoNode?> DiscoverItems(Jid jid, string node)
+    {
+        var task = new TaskCompletionSource<IDiscoNode?>();
+        discoManager.BeginGetItems(jid.Map(), node, (_, discoNode, _) =>
+        {
+            try
+            {
+                task.SetResult(discoNode.Wrap());
+            }
+            catch (Exception ex)
+            {
+                task.SetException(ex);
+            }
+        }, null, false);
+        return task.Task;
+    }
+
+    public Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri)
+    {
+        var task = new TaskCompletionSource<IDiscoNode?>();
+        discoManager.BeginFindServiceWithFeature(featureUri, (_, discoNode, _) =>
+        {
+            try
+            {
+                task.SetResult(discoNode.Wrap());
+            }
+            catch (Exception ex)
+            {
+                task.SetException(ex);
+            }
+        }, null);
+        return task.Task;
+    }
 }

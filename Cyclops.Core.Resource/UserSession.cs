@@ -8,6 +8,7 @@ using System.Windows.Threading;
 using System.Xml;
 using Cyclops.Configuration;
 using Cyclops.Core.CustomEventArgs;
+using Cyclops.Core.Helpers;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
 using Cyclops.Xmpp.Client;
@@ -16,10 +17,8 @@ using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Client;
 using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
-using jabber;
 using jabber.client;
 using jabber.connection;
-using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.stream;
 
@@ -65,7 +64,6 @@ namespace Cyclops.Core.Resource
             JabberClient = new JabberClient();
             xmppClient = new JabberNetXmppClient(JabberClient);
 
-            DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
             SubscribeToEvents();
 
@@ -75,7 +73,6 @@ namespace Cyclops.Core.Resource
 
         public IXmppClient XmppClient => xmppClient;
         public JabberClient JabberClient { get; set; }
-        internal DiscoManager DiscoManager { get; set; }
 
         #region IUserSession Members
 
@@ -413,12 +410,24 @@ namespace Cyclops.Core.Resource
                                                      });
         }
 
-        public void GetConferenceListAsync(string service = null)
+        public void RefreshConferenceList(string? service = null)
         {
-            if (!string.IsNullOrEmpty(service))
-                DiscoManager.BeginGetItems(new DiscoNode(new JID(service), URI.MUC), DiscoHandlerFindServiceWithFeature, new object());
-            else
-                DiscoManager.BeginFindServiceWithFeature(URI.MUC, DiscoHandlerFindServiceWithFeature, new object());
+            async Task DoRefresh()
+            {
+                var node = string.IsNullOrEmpty(service)
+                    ? await XmppClient.DiscoverItemsWithFeature(StandardUris.Muc)
+                    : await XmppClient.DiscoverItems(Jid.Parse(service), StandardUris.Muc);
+
+                if (node != null)
+                    ConferenceServiceId = node.Jid;
+
+                var subnode = await XmppClient.DiscoverItems(node.Jid, node.Node);
+                var result = subnode.Children.Select(dn => new Tuple<Jid, string>(dn.Jid, dn.Name)).ToList();
+
+                ConferencesListReceived(null, new ConferencesListEventArgs(result));
+            }
+
+            DoRefresh().NoAwait(logger);
         }
 
         public void StartPrivate(Jid conferenceUserId)
@@ -448,20 +457,6 @@ namespace Cyclops.Core.Resource
         }
 
         public Jid ConferenceServiceId { get; private set; }
-
-        void DiscoHandlerFindServiceWithFeature(DiscoManager sender, DiscoNode node, object state)
-        {
-            if (node != null)
-                ConferenceServiceId = node.JID.Map();
-            DiscoManager.BeginGetItems(node, DiscoHandlerGetItems, state);
-        }
-
-        void DiscoHandlerGetItems(DiscoManager sender, DiscoNode node, object state)
-        {
-            var result = (from DiscoNode childNode in node.Children
-                            select new Tuple<Jid, string>(childNode.JID.Map(), childNode.Name)).ToList();
-            ConferencesListReceived(null, new ConferencesListEventArgs(result));
-        }
 
         public void RaiseBookmarksReceived()
         {

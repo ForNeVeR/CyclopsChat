@@ -139,7 +139,7 @@ namespace Cyclops.MainApplication.ViewModel
                 }
                 else
                 {
-                    Session.GetConferenceListAsync(value.ConferenceService);
+                    Session.RefreshConferenceList(value.ConferenceService);
                 }
 
             }

@@ -11,19 +11,15 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
-
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Xml;
 using System.Threading;
-
-using bedrock.util;
+using System.Xml;
 using bedrock.collections;
-
+using bedrock.util;
 using jabber.protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
@@ -373,7 +369,7 @@ namespace jabber.connection
 
         /// <summary>
         /// Add a callback for when features are received.
-        /// 
+        ///
         /// Calls the callback immediately if the features have already been retrieved.
         /// </summary>
         /// <param name="manager"></param>
@@ -401,7 +397,7 @@ namespace jabber.connection
 
         /// <summary>
         /// Add a callback for when items are received.
-        /// 
+        ///
         /// Calls the callback immediately if the items have already been retrieved.
         /// </summary>
         /// <param name="manager"></param>
@@ -429,7 +425,7 @@ namespace jabber.connection
 
         /// <summary>
         /// Add a callback for when identities are received.
-        /// 
+        ///
         /// Calls the callback immediately if the features have already been retrieved.
         /// </summary>
         /// <param name="manager"></param>
@@ -660,7 +656,7 @@ namespace jabber.connection
         {
             if (Features == null)
                 Features = new StringSet();
-            
+
             Features.Add(feature);
         }
 
@@ -668,7 +664,7 @@ namespace jabber.connection
         /// Remove a single feature from the node.
         /// Does not fire OnFeatures, since this should mostly be used by
         /// things that are not querying externally.
-        /// 
+        ///
         /// No exception should be thrown if the feature doesn't exist.
         /// </summary>
         /// <param name="feature">The feature URI to remove</param>
@@ -896,7 +892,7 @@ namespace jabber.connection
         /// </summary>
         public DiscoNode Root
         {
-            get 
+            get
             {
                 if (m_root != null)
                     return m_root;
@@ -904,7 +900,7 @@ namespace jabber.connection
                     return null;
                 // GetNode locks.
                 m_root = GetNode(m_stream.Server);
-                return m_root; 
+                return m_root;
             }
         }
 
@@ -1200,7 +1196,7 @@ namespace jabber.connection
         /// <summary>
         /// Retrieves the features associated with this node and
         /// then calls back on the handler.
-        /// 
+        ///
         /// If caching is specified, items already in the cache call the handler
         /// immediately.
         /// </summary>
@@ -1250,7 +1246,7 @@ namespace jabber.connection
         /// <summary>
         /// Retrieves the child items associated with this node,
         /// and then calls back on the handler.
-        /// 
+        ///
         /// If caching is specified, items already in the cache call the handler
         /// immediately.
         /// </summary>
@@ -1259,7 +1255,7 @@ namespace jabber.connection
         /// <param name="handler">Callback that gets called with the items.</param>
         /// <param name="state">Context to pass back to caller when complete</param>
         /// <param name="cache">Should caching be performed on this request?</param>
-        public void BeginGetItems(JID jid, string node, DiscoNodeHandler handler, object state, bool cache)
+        public void BeginGetItems(JID jid, string node, DiscoNodeHandler handler, object? state, bool cache)
         {
             DiscoNode dn = cache ? GetNode(jid, node) : new DiscoNode(jid, node);
             BeginGetItems(dn, handler, state);
@@ -1328,7 +1324,7 @@ namespace jabber.connection
         /// <param name="featureURI">Feature to look for.</param>
         /// <param name="handler">Callback to use when finished.</param>
         /// <param name="state">Context to pass back to caller when complete</param>
-        public void BeginFindServiceWithFeature(string featureURI, DiscoNodeHandler handler, object state)
+        public void BeginFindServiceWithFeature(string featureURI, DiscoNodeHandler handler, object? state)
         {
             if (handler == null)
                 return;  // prove I *didn't* call it. :)
