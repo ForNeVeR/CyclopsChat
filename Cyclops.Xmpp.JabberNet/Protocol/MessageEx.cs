@@ -30,4 +30,14 @@ public static class MessageEx
         jabber.protocol.client.MessageType.headline => MessageType.Headline,
         _ => throw new ArgumentException($"Unknown message type: {type}.", nameof(type))
     };
+
+    public static jabber.protocol.client.MessageType Map(this MessageType type) => type switch
+    {
+        MessageType.Normal => jabber.protocol.client.MessageType.normal,
+        MessageType.Error => jabber.protocol.client.MessageType.error,
+        MessageType.Chat => jabber.protocol.client.MessageType.chat,
+        MessageType.GroupChat => jabber.protocol.client.MessageType.groupchat,
+        MessageType.Headline => jabber.protocol.client.MessageType.headline,
+        _ => throw new ArgumentException($"Unknown message type: {type}.", nameof(type))
+    };
 }

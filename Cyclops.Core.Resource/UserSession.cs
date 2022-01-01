@@ -16,7 +16,6 @@ using Cyclops.Xmpp.Protocol;
 using jabber.client;
 using jabber.connection;
 using jabber.protocol.stream;
-using MessageType = jabber.protocol.client.MessageType;
 
 namespace Cyclops.Core.Resource
 {
@@ -57,7 +56,15 @@ namespace Cyclops.Core.Resource
             PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
             this.stringEncryptor = stringEncryptor;
             this.commonValidator = commonValidator;
-            JabberClient = new JabberClient();
+            JabberClient = new JabberClient
+            {
+                InvokeControl = new SynchronizeInvokeImpl(Dispatcher),
+                AutoReconnect = -1,
+                AutoPresence = true,
+                AutoRoster = false,
+                [Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5,
+                KeepAlive = 20F
+            };
             xmppClient = new JabberNetXmppClient(JabberClient);
 
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
@@ -192,47 +199,25 @@ namespace Cyclops.Core.Resource
             if (!commonValidator.ValidateConfig(info))
                 return;
 
-            JabberClient.Server = info.Server;
-            JabberClient.NetworkHost = info.NetworkHost;
-            JabberClient.User = info.User;
-            JabberClient.Password = stringEncryptor.DecryptString(info.EncodedPassword);
-            JabberClient.Port = info.Port;
-            JabberClient.Resource = "cyclops_v." + Assembly.GetAssembly(GetType()).GetName().Version.ToString(3);
+            var resource = "cyclops_v." + Assembly.GetAssembly(GetType()).GetName().Version.ToString(3);
+            currentUserId = new Jid(info.User ?? "", info.Server ?? "", resource);
 
-            if (Dispatcher != null)
-                JabberClient.InvokeControl = new SynchronizeInvokeImpl(Dispatcher);
-
-            currentUserId = new Jid(info.User ?? "", info.Server ?? "", JabberClient.Resource);
-            ConnectionConfig = info;
-
-            // some default settings
-            JabberClient.AutoReconnect = -1;
-            JabberClient.AutoPresence = true;
-
-            bool isVkServer = info.Server.Equals("vk.com", StringComparison.InvariantCultureIgnoreCase);
-            if (isVkServer)
-            {
-                JabberClient.AutoRoster = true;
-            }
-            else
-            {
-                JabberClient.AutoRoster = false;
-                JabberClient.Priority = 0;// -1;
-            }
-
-            JabberClient[Options.SASL_MECHANISMS] = MechanismType.DIGEST_MD5;
-            JabberClient.KeepAlive = 20F;
-
-            //let's go!
             IsAuthenticated = true;
-            JabberClient.Connect();
+            XmppClient.Connect(
+                server: info.Server,
+                host: info.NetworkHost,
+                user: info.User,
+                password: stringEncryptor.DecryptString(info.EncodedPassword),
+                port: info.Port,
+                resource: resource
+            );
         }
 
         public void Close()
         {
             try
             {
-                JabberClient.Close(true);
+                XmppClient.Disconnect();
             }
             catch
             {
@@ -251,10 +236,8 @@ namespace Cyclops.Core.Resource
                 AuthenticateAsync(ConnectionConfig);
         }
 
-        public void SendPrivate(Jid target, string body)
-        {
-            JabberClient.Message(MessageType.chat, target.ToString(), body);
-        }
+        public void SendPrivate(Jid target, string body) =>
+            XmppClient.SendMessage(MessageType.Chat, target, body);
 
         /// <summary>
         /// Raised when authentication complete (success or not)
@@ -305,7 +288,7 @@ namespace Cyclops.Core.Resource
             reconnectTimer.Start();
         }
 
-        private void OnDisconnect(object _, object __)
+        private void OnDisconnected(object _, object __)
         {
             reconnectTimer.Start();
         }
@@ -348,7 +331,7 @@ namespace Cyclops.Core.Resource
 
             XmppClient.Authenticated += OnAuthenticated;
             XmppClient.AuthenticationError += OnAuthenticationError;
-            XmppClient.Disconnect += OnDisconnect;
+            XmppClient.Disconnected += OnDisconnected;
 
             XmppClient.Error += OnError;
             XmppClient.StreamError += OnStreamError;

@@ -11,8 +11,8 @@ public interface IXmppClient
     IBookmarkManager BookmarkManager { get; }
     IConferenceManager ConferenceManager { get; }
 
-    event EventHandler Connect;
-    event EventHandler Disconnect;
+    event EventHandler Connected;
+    event EventHandler Disconnected;
     event EventHandler<string> ReadRawMessage;
     event EventHandler<string> WriteRawMessage;
     event EventHandler<Exception> Error;
@@ -27,10 +27,14 @@ public interface IXmppClient
 
     bool IsAuthenticated { get; }
 
+    void Connect(string server, string host, string user, string password, int port, string resource);
+    void Disconnect();
+
     void SendElement(XmlElement element);
 
     void SendPresence(PresenceDetails presence);
     void SendIq(IIq iq);
+    void SendMessage(MessageType type, Jid target, string body);
 
     Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer);
 

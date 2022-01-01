@@ -37,7 +37,7 @@ namespace Cyclops.Console.ViewModel
 
         private void Initialize()
         {
-            client.Connect += OnConnect;
+            client.Connected += OnConnected;
             client.ReadRawMessage += OnReadText;
             client.WriteRawMessage += OnWriteText;
             client.Error += OnError;
@@ -45,13 +45,13 @@ namespace Cyclops.Console.ViewModel
 
         public override void Cleanup()
         {
-            client.Connect -= OnConnect;
+            client.Connected -= OnConnected;
             client.ReadRawMessage -= OnReadText;
             client.WriteRawMessage -= OnWriteText;
             client.Error -= OnError;
         }
 
-        private void OnConnect(object sender, object _)
+        private void OnConnected(object sender, object _)
         {
             Entries.Add("CONNECTION ESTABLISHED");
         }

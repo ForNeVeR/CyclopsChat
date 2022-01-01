@@ -12,6 +12,7 @@ using jabber.client;
 using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.iq;
+using MessageType = Cyclops.Xmpp.Protocol.MessageType;
 using VCard = Cyclops.Xmpp.Data.VCard;
 
 namespace Cyclops.Xmpp.JabberNet.Client;
@@ -46,8 +47,8 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 
     public void Dispose() => client.Dispose();
 
-    public event EventHandler? Connect;
-    public event EventHandler? Disconnect;
+    public event EventHandler? Connected;
+    public event EventHandler? Disconnected;
     public event EventHandler<string>? ReadRawMessage;
     public event EventHandler<string>? WriteRawMessage;
     public event EventHandler<Exception>? Error;
@@ -62,8 +63,8 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 
     private void InitializeEvents()
     {
-        client.OnConnect += delegate { Connect?.Invoke(this, null); };
-        client.OnDisconnect += delegate { Disconnect?.Invoke(this, null); };
+        client.OnConnect += delegate { Connected?.Invoke(this, null); };
+        client.OnDisconnect += delegate { Disconnected?.Invoke(this, null); };
         client.OnReadText += (_, text) => ReadRawMessage?.Invoke(this, text);
         client.OnWriteText += (_, text) => WriteRawMessage?.Invoke(this, text);
         client.OnError += (_, error) => Error?.Invoke(this, error);
@@ -78,6 +79,19 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     }
 
     public bool IsAuthenticated => client.IsAuthenticated;
+
+    public void Connect(string server, string host, string user, string password, int port, string resource)
+    {
+        client.Server = server;
+        client.NetworkHost = host;
+        client.User = user;
+        client.Password = password;
+        client.Port = port;
+        client.Resource = resource;
+        client.Connect();
+    }
+
+    public void Disconnect() => client.Close(true);
 
     public void SendElement(XmlElement element)
     {
@@ -127,6 +141,9 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         var protocolIq = iq.Unwrap();
         client.Write(protocolIq);
     }
+
+    public void SendMessage(MessageType type, Jid target, string body) =>
+        client.Message(type.Map(), target.ToString(), body);
 
     public async Task<IIq> SendCaptchaAnswer(Jid conferenceId, string challenge, string answer)
     {
