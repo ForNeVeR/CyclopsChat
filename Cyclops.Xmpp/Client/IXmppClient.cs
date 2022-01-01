@@ -19,6 +19,8 @@ public interface IXmppClient
     event EventHandler<IPresence> Presence;
     event EventHandler RoomMessage;
 
+    bool IsAuthenticated { get; }
+
     void SendElement(XmlElement element);
 
     void SendPresence(PresenceDetails presence);

@@ -64,6 +64,8 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         conferenceManager.OnRoomMessage += (_, _) => RoomMessage?.Invoke(this, null);
     }
 
+    public bool IsAuthenticated => client.IsAuthenticated;
+
     public void SendElement(XmlElement element)
     {
         client.Write(element);

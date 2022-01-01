@@ -174,7 +174,7 @@ namespace Cyclops.Core.Resource
             conferenceManager.Status = status;
             conferenceManager.StatusType = type;
 
-            if (!IsAuthenticated || !JabberClient.IsAuthenticated)
+            if (!IsAuthenticated || !XmppClient.IsAuthenticated)
                 return;
 
             JabberClient.Presence(PresenceType.available, status, type.Map(), 30);
