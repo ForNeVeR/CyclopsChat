@@ -66,8 +66,8 @@ namespace Cyclops.Core.Resource
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
-            BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = false, ConferenceManager = ConferenceManager };
-            xmppClient = new JabberNetXmppClient(JabberClient, ConferenceManager, BookmarkManager);
+            xmppClient = new JabberNetXmppClient(JabberClient, ConferenceManager);
+            BookmarkManager = XmppClient.BookmarkManager;
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
@@ -81,7 +81,7 @@ namespace Cyclops.Core.Resource
         public JabberClient JabberClient { get; set; }
         internal ConferenceManager ConferenceManager { get; set; }
         internal DiscoManager DiscoManager { get; set; }
-        internal BookmarkManager BookmarkManager { get; set; }
+        internal IBookmarkManager BookmarkManager { get; set; }
 
         #region IUserSession Members
 
@@ -273,10 +273,10 @@ namespace Cyclops.Core.Resource
         public event EventHandler PublicMessage = delegate { };
         public event EventHandler<ErrorEventArgs> ErrorMessageRecieved = delegate { };
 
-        public void RemoveFromBookmarks(Jid conferenceId) => XmppClient.RemoveBookmark(conferenceId.Bare);
+        public void RemoveFromBookmarks(Jid conferenceId) => XmppClient.BookmarkManager.RemoveBookmark(conferenceId.Bare);
 
         public void AddToBookmarks(Jid conferenceId) =>
-            XmppClient.AddBookmark(conferenceId.Bare, conferenceId.Local, true, conferenceId.Resource);
+            XmppClient.BookmarkManager.AddBookmark(conferenceId.Bare, conferenceId.Local, true, conferenceId.Resource);
 
         #endregion
 
@@ -370,19 +370,17 @@ namespace Cyclops.Core.Resource
 
             ConferenceManager.BeforeRoomPresenceOut += ConferenceManager_BeforeRoomPresenceOut;
 
-            BookmarkManager.OnConferenceAdd += BookmarkManager_OnConferenceAdd;
+            BookmarkManager.BookmarkAdded += OnBookmarkAdded;
 
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
         }
 
-        void BookmarkManager_OnConferenceAdd(BookmarkManager manager, BookmarkConference conference)
+        private void OnBookmarkAdded(object _, IBookmark bookmark)
         {
-            JID conferenceJid = conference.JID;
-            conferenceJid.Resource = conference.Nick;
-            if (conference.AutoJoin)
-                OpenConference(conferenceJid.Map());
-            conference.AutoJoin = false;
+            var conferenceJid = bookmark.ConferenceJid.WithResource(bookmark.Nick);
+            if (bookmark.AutoJoin)
+                OpenConference(conferenceJid);
         }
 
         void ConferenceManager_BeforeRoomPresenceOut(object sender, RoomPresenceEventArgs e)
@@ -477,7 +475,7 @@ namespace Cyclops.Core.Resource
 
         public void RaiseBookmarksReceived()
         {
-            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<Jid, string>(i.Key.Map().WithResource(i.Value.Nick), i.Value.Value)).ToList()));
+            ConferencesListReceived(null, new ConferencesListEventArgs(BookmarkManager.Bookmarks.Select(i => new Tuple<Jid, string>(i.ConferenceJid.WithResource(i.Nick), i.Name)).ToList()));
         }
 
         public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { };

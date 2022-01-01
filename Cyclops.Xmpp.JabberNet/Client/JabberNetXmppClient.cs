@@ -18,20 +18,24 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
 {
     private readonly JabberClient client;
     private readonly ConferenceManager conferenceManager;
-    private readonly BookmarkManager bookmarkManager;
 
     public IIqQueryManager IqQueryManager { get; }
+    public IBookmarkManager BookmarkManager { get; }
 
     public JabberNetXmppClient(
         JabberClient client,
-        ConferenceManager conferenceManager,
-        BookmarkManager bookmarkManager)
+        ConferenceManager conferenceManager)
     {
         this.client = client;
         this.conferenceManager = conferenceManager;
-        this.bookmarkManager = bookmarkManager;
 
         IqQueryManager = new JabberNetIqQueryManager(client);
+        BookmarkManager = new JabberNetBookmarkManager(new BookmarkManager
+        {
+            Stream = client,
+            AutoPrivate = false,
+            ConferenceManager = conferenceManager
+        });
 
         InitializeEvents();
     }
@@ -101,12 +105,6 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         var protocolIq = iq.Unwrap();
         client.Write(protocolIq);
     }
-
-    public void AddBookmark(Jid roomId, string name, bool autoJoin, string nickname) =>
-        bookmarkManager.AddConference(roomId.Bare.Map(), name, autoJoin, nickname);
-
-    public void RemoveBookmark(Jid roomId) =>
-        bookmarkManager[roomId.Bare.Map()] = null;
 
     public async Task<IIq> SendCaptchaAnswer(Jid conferenceId, string challenge, string answer)
     {

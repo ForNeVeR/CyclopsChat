@@ -8,6 +8,7 @@ namespace Cyclops.Xmpp.Client;
 public interface IXmppClient
 {
     IIqQueryManager IqQueryManager { get; }
+    IBookmarkManager BookmarkManager { get; }
 
     event EventHandler Connect;
     event EventHandler<string> ReadRawMessage;
@@ -21,9 +22,6 @@ public interface IXmppClient
 
     void SendPresence(PresenceDetails presence);
     void SendIq(IIq iq);
-
-    void AddBookmark(Jid roomId, string name, bool autoJoin, string nickname);
-    void RemoveBookmark(Jid roomId);
 
     Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer);
 
