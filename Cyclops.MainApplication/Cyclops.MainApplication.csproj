@@ -116,5 +116,6 @@
             <Name>Cyclops.MainApplication.Options</Name>
         </ProjectReference>
         <ProjectReference Include="..\Cyclops.Windows\Cyclops.Windows.csproj" />
+        <ProjectReference Include="..\Cyclops.Xmpp.SharpXmpp\Cyclops.Xmpp.SharpXmpp.csproj" />
     </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 using Cyclops.Core.Modularity;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
+using Cyclops.MainApplication.Composition;
 using Cyclops.Xmpp.Registration;
 using Microsoft.Practices.ServiceLocation;
 
@@ -13,9 +14,9 @@ namespace Cyclops.MainApplication
             new IModule[]
                 {
                     new Cyclops.Core.Composition.Module(),
-                    new Cyclops.Xmpp.JabberNet.Composition.Module(),
+                    new SharpXmppClientModule(),
                     new Core.Resource.Composition.Module(),
-                    new Composition.Module(),
+                    new Module(),
                     new Console.Composition.Module()
                 });
 
