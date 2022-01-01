@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Globalization;
+using System.Xml;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
@@ -74,6 +75,8 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     public void SendPresence(PresenceDetails presence)
     {
         var presenceToSend = new Presence(client.Document);
+        if (presence.Type != null)
+            presenceToSend.Type = presence.Type.Value.Map();
         if (presence.To != null)
             presenceToSend.To = presence.To.Value.Map();
         if (presence.StatusText != null)
@@ -82,6 +85,8 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
             presenceToSend.Show = presence.StatusType?.Map();
         if (presence.PhotoHash != null)
             presenceToSend.AddChild(new PhotoX(client.Document) { PhotoHash = presence.PhotoHash });
+        if (presence.Priority != null)
+            presenceToSend.Priority = presence.Priority.Value.ToString(CultureInfo.InvariantCulture);
 
         client.Write(presenceToSend);
     }

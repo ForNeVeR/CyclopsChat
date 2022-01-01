@@ -21,6 +21,7 @@ using jabber.client;
 using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.stream;
+using PresenceType = Cyclops.Xmpp.Data.PresenceType;
 
 namespace Cyclops.Core.Resource
 {
@@ -177,7 +178,13 @@ namespace Cyclops.Core.Resource
             if (!IsAuthenticated || !XmppClient.IsAuthenticated)
                 return;
 
-            JabberClient.Presence(PresenceType.available, status, type.Map(), 30);
+            XmppClient.SendPresence(new PresenceDetails
+            {
+                Type = PresenceType.Available,
+                StatusType = type,
+                StatusText = status,
+                Priority = 30
+            });
         }
 
         public void OpenConference(Jid id)
