@@ -11,16 +11,16 @@
  * Jabber-Net is licensed under the LGPL.
  * See LICENSE.txt for details.
  * --------------------------------------------------------------------------*/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-
+using System.Xml;
 using bedrock.util;
 using jabber.connection;
 using jabber.protocol.client;
 using jabber.protocol.iq;
-using System.Xml;
 
 namespace jabber.client
 {
@@ -35,7 +35,7 @@ namespace jabber.client
     /// Manager bookmarks on the server, with the old-style iq:private.
     /// TODO: add support for new-style PEP.
     /// </summary>
-    [SVN(@"$Id: BookmarkManager.cs 735 2008-09-07 23:08:30Z hildjj $")]    
+    [SVN(@"$Id: BookmarkManager.cs 735 2008-09-07 23:08:30Z hildjj $")]
     public class BookmarkManager : jabber.connection.StreamComponent
 	{
         private bool m_autoPrivate = true;
@@ -183,7 +183,7 @@ namespace jabber.client
         /// </summary>
         /// <param name="jid"></param>
         /// <returns></returns>
-        public BookmarkConference this[JID jid]
+        public BookmarkConference? this[JID jid]
         {
             get { return m_conferences[jid]; }
             set
@@ -274,7 +274,7 @@ namespace jabber.client
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>

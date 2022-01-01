@@ -4,7 +4,7 @@ namespace Cyclops.Xmpp.JabberNet.Protocol;
 
 internal static class ErrorEx
 {
-    public class Error : IError
+    private class Error : IError
     {
         private jabber.protocol.client.Error error;
         public Error(jabber.protocol.client.Error error)

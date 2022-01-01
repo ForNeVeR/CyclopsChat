@@ -5,7 +5,7 @@ using jabber.protocol;
 namespace Cyclops.Xmpp.JabberNet.Elements;
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
-public class PhotoX : Element
+internal class PhotoX : Element
 {
     public PhotoX(XmlDocument doc) : base("x", "vcard-temp:x:update", doc)
     {

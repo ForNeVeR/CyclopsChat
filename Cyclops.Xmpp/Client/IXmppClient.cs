@@ -22,6 +22,9 @@ public interface IXmppClient
     void SendPresence(PresenceDetails presence);
     void SendIq(IIq iq);
 
+    void AddBookmark(Jid roomId, string name, bool autoJoin, string nickname);
+    void RemoveBookmark(Jid roomId);
+
     Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer);
 
     Task<VCard> GetVCard(Jid jid);

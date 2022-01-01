@@ -8,7 +8,7 @@ using jabber.protocol.x;
 
 namespace Cyclops.Xmpp.JabberNet.Data;
 
-public class JabberNetDataExtractor : IXmppDataExtractor
+internal class JabberNetDataExtractor : IXmppDataExtractor
 {
     public CaptchaRequest? GetCaptchaRequest(IMessage message)
     {

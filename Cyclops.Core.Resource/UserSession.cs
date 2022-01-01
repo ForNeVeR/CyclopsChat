@@ -66,8 +66,8 @@ namespace Cyclops.Core.Resource
             this.commonValidator = commonValidator;
             JabberClient = new JabberClient();
             ConferenceManager = new ConferenceManager {Stream = JabberClient};
-            xmppClient = new JabberNetXmppClient(JabberClient, ConferenceManager);
             BookmarkManager = new BookmarkManager {Stream = JabberClient, AutoPrivate = false, ConferenceManager = ConferenceManager };
+            xmppClient = new JabberNetXmppClient(JabberClient, ConferenceManager, BookmarkManager);
 
             DiscoManager = new DiscoManager {Stream = JabberClient};
             reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
@@ -273,15 +273,10 @@ namespace Cyclops.Core.Resource
         public event EventHandler PublicMessage = delegate { };
         public event EventHandler<ErrorEventArgs> ErrorMessageRecieved = delegate { };
 
-        public void RemoveFromBookmarks(Jid conferenceId)
-        {
-            BookmarkManager[conferenceId.Bare.Map()] = null;
-        }
+        public void RemoveFromBookmarks(Jid conferenceId) => XmppClient.RemoveBookmark(conferenceId.Bare);
 
-        public void AddToBookmarks(Jid conferenceId)
-        {
-            BookmarkManager.AddConference(conferenceId.Bare.Map(), conferenceId.Local, true, conferenceId.Resource);
-        }
+        public void AddToBookmarks(Jid conferenceId) =>
+            XmppClient.AddBookmark(conferenceId.Bare, conferenceId.Local, true, conferenceId.Resource);
 
         #endregion
 
