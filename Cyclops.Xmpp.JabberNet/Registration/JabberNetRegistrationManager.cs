@@ -1,5 +1,4 @@
 ﻿using Cyclops.Configuration;
-using Cyclops.Core;
 using Cyclops.Core.Security;
 using Cyclops.Xmpp.Registration;
 using jabber;
@@ -12,12 +11,10 @@ namespace Cyclops.Xmpp.JabberNet.Registration;
 
 internal class JabberNetRegistrationManager : IRegistrationManager
 {
-    private readonly ILogger logger;
     private readonly IStringEncryptor encryptor;
 
-    public JabberNetRegistrationManager(ILogger logger, IStringEncryptor encryptor)
+    public JabberNetRegistrationManager(IStringEncryptor encryptor)
     {
-        this.logger = logger;
         this.encryptor = encryptor;
     }
 
