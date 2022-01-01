@@ -39,6 +39,7 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
     public event EventHandler<Exception>? Error;
 
     public event EventHandler<IPresence>? Presence;
+    public event EventHandler? RoomMessage;
 
     private void InitializeEvents()
     {
@@ -48,6 +49,7 @@ public sealed class JabberNetXmppClient : IXmppClient, IDisposable
         client.OnError += (_, error) => Error?.Invoke(this, error);
 
         client.OnPresence += (_, presence) => Presence?.Invoke(this, presence.Wrap());
+        conferenceManager.OnRoomMessage += (_, _) => RoomMessage?.Invoke(this, null);
     }
 
     public void SendElement(XmlElement element)

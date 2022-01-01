@@ -356,6 +356,7 @@ namespace Cyclops.Core.Resource
         private void SubscribeToEvents()
         {
             XmppClient.Presence += (_, presence) => Presence?.Invoke(this, presence);
+            XmppClient.RoomMessage += (_, _) => PublicMessage.Invoke(this, EventArgs.Empty);
 
             XmppClient.IqQueryManager.TimeQueried += (_, iq) => IqCommonHandler.HandleTime(this, iq);
             XmppClient.IqQueryManager.LastQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
@@ -372,18 +373,12 @@ namespace Cyclops.Core.Resource
             JabberClient.OnWriteText += JabberClient_OnWriteText;
             JabberClient.OnReadText += JabberClient_OnReadText;
 
-            ConferenceManager.OnJoin += ConferenceManager_OnJoin;
-            ConferenceManager.OnRoomMessage += ConferenceManager_OnRoomMessage;
             ConferenceManager.BeforeRoomPresenceOut += ConferenceManager_BeforeRoomPresenceOut;
 
             BookmarkManager.OnConferenceAdd += BookmarkManager_OnConferenceAdd;
 
             JabberClient.OnMessage += JabberClient_OnMessage;
             reconnectTimer.Tick += ReconnectTimerTick;
-        }
-
-        void ConferenceManager_OnJoin(Room room)
-        {
         }
 
         void BookmarkManager_OnConferenceAdd(BookmarkManager manager, BookmarkConference conference)
@@ -433,11 +428,6 @@ namespace Cyclops.Core.Resource
                                                          AuthorNick = msg.From.Resource,
                                                          Body = msg.Body,
                                                      });
-        }
-
-        private void ConferenceManager_OnRoomMessage(object sender, Message msg)
-        {
-            PublicMessage(this, EventArgs.Empty);
         }
 
         public void GetConferenceListAsync(string service = null)

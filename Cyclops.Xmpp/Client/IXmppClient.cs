@@ -15,6 +15,7 @@ public interface IXmppClient
     event EventHandler<Exception> Error;
 
     event EventHandler<IPresence> Presence;
+    event EventHandler RoomMessage;
 
     void SendElement(XmlElement element);
 
