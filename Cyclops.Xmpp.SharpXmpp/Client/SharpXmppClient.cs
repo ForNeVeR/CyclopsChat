@@ -57,11 +57,7 @@ public class SharpXmppClient : IXmppClient
     public event EventHandler? AuthenticationError;
     public event EventHandler<IPresence>? Presence;
     public event EventHandler? RoomMessage;
-    public event EventHandler<IMessage>? Message
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<IMessage>? Message;
 
     public bool IsAuthenticated => throw new NotImplementedException();
 
@@ -135,6 +131,8 @@ public class SharpXmppClient : IXmppClient
         var wrapped = message.Wrap();
         if (wrapped.Type == MessageType.GroupChat)
             RoomMessage?.Invoke(this, null);
+
+        Message?.Invoke(this, message.Wrap());
     }
 
     private void OnConnectionFailed(XmppConnection _, ConnFailedArgs e)
