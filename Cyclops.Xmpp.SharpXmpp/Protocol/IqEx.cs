@@ -99,26 +99,4 @@ internal static class IqEx
     }
 
     public static IVersionIq WrapVersion(this XMPPIq iq) => new VersionIq(iq);
-
-    private static XElement GetOrCreateChildElement(this XContainer parent, XName name)
-    {
-        var child = parent.Element(name);
-        if (child != null) return child;
-
-        child = new XElement(name);
-        parent.Add(child);
-
-        return child;
-    }
-
-    private static XAttribute GetOrCreateAttribute(this XElement element, XName name)
-    {
-        var attribute = element.Attribute(name);
-        if (attribute != null) return attribute;
-
-        attribute = new XAttribute(name, "");
-        element.Add(attribute);
-
-        return attribute;
-    }
 }

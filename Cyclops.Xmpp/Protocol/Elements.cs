@@ -14,7 +14,11 @@ public static class Elements
     /// <remarks>XEP-0048: Bookmarks</remarks>
     public const string Storage = "storage";
 
+    /// <remarks>XEP-0153: vCard-Based Avatars</remarks>
+    public const string Photo = "photo";
+
     public const string Tz = "tz";
     public const string Utc = "utc";
     public const string Version = "version";
+    public const string X = "x";
 }

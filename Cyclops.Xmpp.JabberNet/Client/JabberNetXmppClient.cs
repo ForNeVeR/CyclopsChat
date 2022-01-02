@@ -106,23 +106,23 @@ internal class JabberNetXmppClient : IXmppClient
         client.Write(element);
     }
 
-    public void SendPresence(PresenceDetails presence)
+    public void SendPresence(PresenceDetails presenceDetails)
     {
-        var presenceToSend = new Presence(client.Document);
-        if (presence.Type != null)
-            presenceToSend.Type = presence.Type.Value.Map();
-        if (presence.To != null)
-            presenceToSend.To = presence.To.Value.Map();
-        if (presence.StatusText != null)
-            presenceToSend.Status = presence.StatusText;
-        if (presence.StatusType != null)
-            presenceToSend.Show = presence.StatusType?.Map();
-        if (presence.PhotoHash != null)
-            presenceToSend.AddChild(new PhotoX(client.Document) { PhotoHash = presence.PhotoHash });
-        if (presence.Priority != null)
-            presenceToSend.Priority = presence.Priority.Value.ToString(CultureInfo.InvariantCulture);
+        var presence = new Presence(client.Document);
+        if (presenceDetails.Type != null)
+            presence.Type = presenceDetails.Type.Value.Map();
+        if (presenceDetails.To != null)
+            presence.To = presenceDetails.To.Value.Map();
+        if (presenceDetails.StatusText != null)
+            presence.Status = presenceDetails.StatusText;
+        if (presenceDetails.StatusType != null)
+            presence.Show = presenceDetails.StatusType?.Map();
+        if (presenceDetails.PhotoHash != null)
+            presence.AddChild(new PhotoX(client.Document) { PhotoHash = presenceDetails.PhotoHash });
+        if (presenceDetails.Priority != null)
+            presence.Priority = presenceDetails.Priority.Value.ToString(CultureInfo.InvariantCulture);
 
-        client.Write(presenceToSend);
+        client.Write(presence);
     }
 
     private Task<IQ> SendIq(IQ request)

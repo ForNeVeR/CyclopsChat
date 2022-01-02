@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System.Globalization;
+using System.Xml;
+using System.Xml.Linq;
 using Cyclops.Core;
 using Cyclops.Core.Helpers;
 using Cyclops.Xmpp.Client;
@@ -26,7 +28,7 @@ public class SharpXmppClient : IXmppClient
         this.logger = logger;
         iqQueryManager = new SharpXmppIqQueryManager();
         bookmarkManager = new SharpXmppBookmarkManager(logger);
-        ConferenceManager = new SharpXmppConferenceManager();
+        ConferenceManager = new SharpXmppConferenceManager(this);
     }
 
     public void Dispose()
@@ -157,9 +159,42 @@ public class SharpXmppClient : IXmppClient
         throw new NotImplementedException();
     }
 
-    public void SendPresence(PresenceDetails presence)
+    public void SendPresence(PresenceDetails presenceDetails)
     {
-        throw new NotImplementedException();
+        var presence = new XMPPPresence();
+        if (presenceDetails.Type != null)
+            presence.SetAttributeValue("type", presenceDetails.Type.Value.Map());
+        if (presenceDetails.To != null)
+            presence.To = presenceDetails.To.Value.Map();
+
+        if (presenceDetails.StatusText != null)
+        {
+            var status = presence.GetOrCreateChildElement(XNamespace.Get(Namespaces.JabberClient) + "status");
+            status.Value = presenceDetails.StatusText;
+        }
+
+        if (presenceDetails.StatusType != null)
+        {
+            var show = presence.GetOrCreateChildElement(XNamespace.Get(Namespaces.JabberClient) + "show");
+            show.Value = presenceDetails.StatusType.Value.Map();
+        }
+
+        if (presenceDetails.PhotoHash != null)
+        {
+            var x = presence.GetOrCreateChildElement(
+                XNamespace.Get(Cyclops.Xmpp.Protocol.Namespaces.VCardTempXUpdate) + Elements.X);
+            var photo = x.GetOrCreateChildElement(
+                XNamespace.Get(Cyclops.Xmpp.Protocol.Namespaces.VCardTempXUpdate) + Elements.Photo);
+            photo.Value = presenceDetails.PhotoHash;
+        }
+
+        if (presenceDetails.Priority != null)
+        {
+            var priority = presence.GetOrCreateChildElement(XNamespace.Get(Namespaces.JabberClient) + "priority");
+            priority.Value = presenceDetails.Priority.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        currentClient!.Send(presence);
     }
 
     public void SendIq(IIq iq)

@@ -31,7 +31,7 @@ public interface IXmppClient : IDisposable
 
     void SendElement(XmlElement element);
 
-    void SendPresence(PresenceDetails presence);
+    void SendPresence(PresenceDetails presenceDetails);
     void SendIq(IIq iq);
     void SendMessage(MessageType type, Jid target, string body);
 
