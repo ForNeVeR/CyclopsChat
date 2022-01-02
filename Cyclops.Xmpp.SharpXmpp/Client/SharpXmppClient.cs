@@ -66,11 +66,7 @@ public class SharpXmppClient : IXmppClient
     }
     public event EventHandler? AuthenticationError;
     public event EventHandler<IPresence>? Presence;
-    public event EventHandler? RoomMessage
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler? RoomMessage;
     public event EventHandler<IMessage>? Message
     {
         add => throw new NotImplementedException();
@@ -109,14 +105,23 @@ public class SharpXmppClient : IXmppClient
     private void SubscribeToEvents(XmppClient currentClient)
     {
         currentClient.Presence += OnPresence;
+        currentClient.Message += OnMessage;
     }
 
     private void UnsubscribeFromEvents(XmppClient currentClient)
     {
         currentClient.Presence -= OnPresence;
+        currentClient.Message -= OnMessage;
     }
 
     private void OnPresence(XmppConnection _, XMPPPresence presence) => Presence?.Invoke(this, presence.Wrap());
+
+    private void OnMessage(XmppConnection _, XMPPMessage message)
+    {
+        var wrapped = message.Wrap();
+        if (wrapped.Type == MessageType.GroupChat)
+            RoomMessage?.Invoke(this, null);
+    }
 
     public void Disconnect()
     {
