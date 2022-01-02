@@ -7,19 +7,20 @@ public static class MessageEx
 {
     private class Message : Stanza, IMessage
     {
-        private readonly JNMessage message;
+        public readonly JNMessage OriginalMessage;
         public Message(JNMessage message) : base(message)
         {
-            this.message = message;
+            OriginalMessage = message;
         }
 
-        public string? Subject => message.Subject;
-        public string? Body => message.Body;
-        public IError? Error => message.Error?.Wrap();
-        public MessageType Type => message.Type.Map();
+        public string? Subject => OriginalMessage.Subject;
+        public string? Body => OriginalMessage.Body;
+        public IError? Error => OriginalMessage.Error?.Wrap();
+        public MessageType Type => OriginalMessage.Type.Map();
     }
 
     public static IMessage Wrap(this JNMessage message) => new Message(message);
+    public static JNMessage Unwrap(this IMessage message) => ((Message)message).OriginalMessage;
 
     private static MessageType Map(this jabber.protocol.client.MessageType type) => type switch
     {

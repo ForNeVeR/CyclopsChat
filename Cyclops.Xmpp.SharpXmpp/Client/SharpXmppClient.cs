@@ -1,15 +1,25 @@
 ﻿using System.Xml;
+using Cyclops.Core;
+using Cyclops.Core.Helpers;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Protocol;
+using SharpXMPP;
+using SharpXMPP.XMPP;
+using SharpXMPP.XMPP.Client.Elements;
 
 namespace Cyclops.Xmpp.SharpXmpp.Client;
 
 public class SharpXmppClient : IXmppClient
 {
-    public SharpXmppClient()
+    private readonly ILogger logger;
+    private XmppClient? client;
+
+    public SharpXmppClient(ILogger logger)
     {
+        this.logger = logger;
         IqQueryManager = new SharpXmppIqQueryManager();
         BookmarkManager = new SharpXmppBookmarkManager();
         ConferenceManager = new SharpXmppConferenceManager();
@@ -23,11 +33,7 @@ public class SharpXmppClient : IXmppClient
     public IBookmarkManager BookmarkManager { get; }
     public IConferenceManager ConferenceManager { get; }
 
-    public event EventHandler? Connected
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler? Connected;
     public event EventHandler? Disconnected
     {
         add => throw new NotImplementedException();
@@ -58,16 +64,8 @@ public class SharpXmppClient : IXmppClient
         add => throw new NotImplementedException();
         remove => throw new NotImplementedException();
     }
-    public event EventHandler? AuthenticationError
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IPresence>? Presence
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler? AuthenticationError;
+    public event EventHandler<IPresence>? Presence;
     public event EventHandler? RoomMessage
     {
         add => throw new NotImplementedException();
@@ -83,8 +81,42 @@ public class SharpXmppClient : IXmppClient
 
     public void Connect(string server, string host, string user, string password, int port, string resource)
     {
-        throw new NotImplementedException();
+        if (client != null)
+        {
+            UnsubscribeFromEvents(client);
+            client?.Dispose();
+        }
+
+        client = new XmppClient(new JID($"{user}@{server}"), password);
+        SubscribeToEvents(client);
+
+        DoConnect().NoAwait(logger);
+        async Task DoConnect()
+        {
+            try
+            {
+                await client.ConnectAsync();
+                Connected?.Invoke(this, null);
+            }
+            catch (Exception)
+            {
+                AuthenticationError?.Invoke(this, null);
+                throw;
+            }
+        }
     }
+
+    private void SubscribeToEvents(XmppClient currentClient)
+    {
+        currentClient.Presence += OnPresence;
+    }
+
+    private void UnsubscribeFromEvents(XmppClient currentClient)
+    {
+        currentClient.Presence -= OnPresence;
+    }
+
+    private void OnPresence(XmppConnection _, XMPPPresence presence) => Presence?.Invoke(this, presence.Wrap());
 
     public void Disconnect()
     {

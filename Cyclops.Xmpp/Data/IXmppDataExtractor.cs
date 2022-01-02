@@ -5,6 +5,7 @@ namespace Cyclops.Xmpp.Data;
 public interface IXmppDataExtractor
 {
     IExtendedUserData? GetExtendedUserData(IPresence presence);
+    PhotoData? GetPhotoData(IPresence presence);
 
     DateTime? GetDelayStamp(IMessage message);
     CaptchaRequest? GetCaptchaRequest(IMessage message);

@@ -31,7 +31,7 @@ namespace Cyclops.Core.Resource
             session.ConnectionDropped += OnConnectionDropped;
             Members = new InternalObservableCollection<IConferenceMember>();
             Messages = new InternalObservableCollection<IConferenceMessage>();
-            AvatarsManager = new AvatarsManager(logger, session);
+            AvatarsManager = new AvatarsManager(logger, session, dataExtractor);
             AvatarsManager.AvatarChange += AvatarsManagerAvatarChange;
 
             //if we are currently authenticated lets join to the channel imidiatly

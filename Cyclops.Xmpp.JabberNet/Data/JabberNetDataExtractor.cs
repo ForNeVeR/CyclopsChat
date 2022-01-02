@@ -29,10 +29,25 @@ internal class JabberNetDataExtractor : IXmppDataExtractor
         return null;
     }
 
-    public IExtendedUserData? GetExtendedUserData(IPresence presence) => (presence["x"] as UserX)?.Wrap();
+    public IExtendedUserData? GetExtendedUserData(IPresence presence) => (presence.Unwrap()["x"] as UserX)?.Wrap();
+
+    public PhotoData? GetPhotoData(IPresence presence)
+    {
+        var photoTagParent = presence.Unwrap().Cast<XmlNode>()
+            .FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
+        if (photoTagParent != null)
+        {
+            var sha1Hash = photoTagParent["photo"]?.InnerText;
+            if (sha1Hash != null)
+                return new PhotoData(sha1Hash);
+        }
+
+        return null;
+    }
+
     public DateTime? GetDelayStamp(IMessage message)
     {
-        var delay = message.Nodes.OfType<Delay>().SingleOrDefault();
+        var delay = message.Unwrap().Cast<XmlNode>().OfType<Delay>().SingleOrDefault();
         var stamp = delay?.Stamp;
         return stamp == DateTime.MinValue ? null : stamp;
     }

@@ -2,13 +2,13 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
+using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core.Resource.Avatars
@@ -19,11 +19,14 @@ namespace Cyclops.Core.Resource.Avatars
     {
         private readonly ILogger logger;
         private readonly IUserSession session;
+        private readonly IXmppDataExtractor dataExtractor;
 
-        public AvatarsManager(ILogger logger, IUserSession session)
+        public AvatarsManager(ILogger logger, IUserSession session, IXmppDataExtractor dataExtractor)
         {
             this.logger = logger;
             this.session = session;
+            this.dataExtractor = dataExtractor;
+
             var currentDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             AvatarsFolder = Path.Combine(currentDir, AvatarsFolder);
             defaultAvatar = FromFile(Path.Combine(AvatarsFolder, DefaultAvatar));
@@ -112,15 +115,13 @@ namespace Cyclops.Core.Resource.Avatars
             try
             {
                 bool hasAvatar = false;
-                var photoTagParent = pres.Nodes.FirstOrDefault(i => i.Name == "x" && i["photo"] != null);
-                if (photoTagParent != null)
+                var photoData = dataExtractor.GetPhotoData(pres);
+                if (photoData != null)
                 {
                     var from = pres.From.Equals(session.CurrentUserId) ? conferenceId : pres.From!.Value;
-
-                    string sha1Hash = photoTagParent["photo"].InnerText;
-                    if (!string.IsNullOrWhiteSpace(sha1Hash) && sha1Hash.Length == 40)
+                    var sha1Hash = photoData.PhotoSha1;
+                    if (sha1Hash is { Length: 40 })
                     {
-
                         hasAvatar = true;
                         if (DoesCacheContain(sha1Hash))
                             AvatarChange(this, new AvatarChangedEventArgs(from, GetFromCache(sha1Hash)));
@@ -133,9 +134,9 @@ namespace Cyclops.Core.Resource.Avatars
 
                 return hasAvatar;
             }
-            catch
+            catch(Exception ex)
             {
-                //todo: log an exception
+                logger.LogError("Error during avatar processing.", ex);
                 return false;
             }
         }

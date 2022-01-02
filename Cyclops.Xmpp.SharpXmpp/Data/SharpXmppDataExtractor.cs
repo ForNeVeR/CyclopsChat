@@ -10,6 +10,11 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
         throw new NotImplementedException();
     }
 
+    public PhotoData? GetPhotoData(IPresence presence)
+    {
+        throw new NotImplementedException();
+    }
+
     public DateTime? GetDelayStamp(IMessage message)
     {
         throw new NotImplementedException();

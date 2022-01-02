@@ -7,6 +7,7 @@
         <PackageReference Include="SharpXMPP" Version="0.3.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />
       <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
     </ItemGroup>
 </Project>
