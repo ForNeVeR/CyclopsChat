@@ -26,7 +26,7 @@ public class SharpXmppClient : IXmppClient
     {
         this.logger = logger;
         iqQueryManager = new SharpXmppIqQueryManager();
-        bookmarkManager = new SharpXmppBookmarkManager();
+        bookmarkManager = new SharpXmppBookmarkManager(logger);
         ConferenceManager = new SharpXmppConferenceManager();
     }
 
@@ -72,6 +72,7 @@ public class SharpXmppClient : IXmppClient
         currentClient = new XmppClient(new JID($"{user}@{server}"), password);
         SubscribeToEvents(currentClient);
         iqQueryManager.IqManager = currentClient.IqManager;
+        bookmarkManager.Connection = currentClient;
         bookmarkManager.BookmarkManager = currentClient.BookmarkManager;
 
         DoConnect().NoAwait(logger);
