@@ -3,6 +3,7 @@ namespace Cyclops.Xmpp.Protocol;
 public static class Elements
 {
     public const string Display = "display";
+    public const string Error = "error";
     public const string Name = "name";
     public const string Os = "os";
     public const string Query = "query";

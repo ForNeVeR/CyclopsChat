@@ -5,10 +5,12 @@ using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Errors;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
 using SharpXMPP;
 using SharpXMPP.XMPP;
 using SharpXMPP.XMPP.Client.Elements;
+using Namespaces = SharpXMPP.Namespaces;
 
 namespace Cyclops.Xmpp.SharpXmpp.Client;
 
@@ -28,6 +30,7 @@ public class SharpXmppClient : IXmppClient
 
     public void Dispose()
     {
+        client?.Dispose();
     }
 
     public IIqQueryManager IqQueryManager => iqQueryManager;
@@ -35,11 +38,7 @@ public class SharpXmppClient : IXmppClient
     public IConferenceManager ConferenceManager { get; }
 
     public event EventHandler? Connected;
-    public event EventHandler? Disconnected
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler? Disconnected;
     public event EventHandler<string>? ReadRawMessage
     {
         add => throw new NotImplementedException();
@@ -50,21 +49,9 @@ public class SharpXmppClient : IXmppClient
         add => throw new NotImplementedException();
         remove => throw new NotImplementedException();
     }
-    public event EventHandler<Exception>? Error
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler? StreamError
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler? Authenticated
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<Exception>? Error;
+    public event EventHandler? StreamError;
+    public event EventHandler? Authenticated;
     public event EventHandler? AuthenticationError;
     public event EventHandler<IPresence>? Presence;
     public event EventHandler? RoomMessage;
@@ -94,11 +81,11 @@ public class SharpXmppClient : IXmppClient
             try
             {
                 await client.ConnectAsync();
-                Connected?.Invoke(this, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 AuthenticationError?.Invoke(this, null);
+                Error?.Invoke(this, ex);
                 throw;
             }
         }
@@ -106,15 +93,37 @@ public class SharpXmppClient : IXmppClient
 
     private void SubscribeToEvents(XmppClient currentClient)
     {
+        currentClient.StreamStart += OnStreamStart;
+        currentClient.Element += OnElement;
+        currentClient.SignedIn += OnSignedIn;
         currentClient.Presence += OnPresence;
         currentClient.Message += OnMessage;
+        currentClient.ConnectionFailed += OnConnectionFailed;
     }
 
     private void UnsubscribeFromEvents(XmppClient currentClient)
     {
+        currentClient.StreamStart -= OnStreamStart;
+        currentClient.Element -= OnElement;
+        currentClient.SignedIn -= OnSignedIn;
         currentClient.Presence -= OnPresence;
         currentClient.Message -= OnMessage;
+        currentClient.ConnectionFailed -= OnConnectionFailed;
     }
+
+    private void OnStreamStart(XmppConnection _, string __) => Connected?.Invoke(this, null);
+
+    private void OnElement(XmppConnection _, ElementArgs e)
+    {
+        switch (e)
+        {
+            case { IsInput: true, Stanza.Name: { NamespaceName: Namespaces.Streams, LocalName: Elements.Error } }:
+                StreamError?.Invoke(this, null);
+                break;
+        }
+    }
+
+    private void OnSignedIn(XmppConnection sender, SignedInArgs e) => Authenticated?.Invoke(this, null);
 
     private void OnPresence(XmppConnection _, XMPPPresence presence) => Presence?.Invoke(this, presence.Wrap());
 
@@ -123,6 +132,18 @@ public class SharpXmppClient : IXmppClient
         var wrapped = message.Wrap();
         if (wrapped.Type == MessageType.GroupChat)
             RoomMessage?.Invoke(this, null);
+    }
+
+    private void OnConnectionFailed(XmppConnection _, ConnFailedArgs e)
+    {
+        // NOTE: ideally, we shouldn't log the exception here since we're able to propagate it further. But,
+        // unfortunately, in such case we may lose e.Message (since only e.Exception gets propagated). So we have to log
+        // e.Message here. And if we're doing this, then it would be odd to only log e.Message without e.Exception.
+        if (e.Message != null)
+            logger.LogError($"Connection failed: {e.Message}.", e.Exception);
+
+        Disconnected?.Invoke(this, null);
+        Error?.Invoke(this, e.Exception ?? new MessageOnlyException(e.Message));
     }
 
     public void Disconnect()

@@ -4,7 +4,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
-        <InternalsVisibleTo Include="Cyclops.Tests"/>
+        <InternalsVisibleTo Include="Cyclops.Tests" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="SharpXMPP" Version="0.3.0" />

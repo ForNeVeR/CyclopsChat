@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 
 namespace Cyclops.Core.Resource
 {
@@ -10,16 +11,19 @@ namespace Cyclops.Core.Resource
         private readonly object errorLocker = new();
         private readonly object infoLocker = new();
 
-        public void LogError(string message, Exception exception)
+        public void LogError(string message, Exception? exception)
         {
             lock (errorLocker)
             {
-                File.AppendAllText(
-                    "errors.log",
-                    $"\n============\n{DateTime.Now}\n============\n{message}\n{exception.Message}\n{exception.StackTrace}\n\n");
+                StringBuilder error = new StringBuilder();
+                error.Append($"\n============\n{DateTime.Now}\n============\n{message}\n");
+                if (exception != null)
+                    error.Append($"{exception.Message}\n{exception.StackTrace}\n");
+                error.Append('\n');
+                File.AppendAllText("errors.log", error.ToString());
             }
 
-            if (exception.InnerException != null)
+            if (exception?.InnerException != null)
                 LogError("InnerException", exception.InnerException);
         }
 
