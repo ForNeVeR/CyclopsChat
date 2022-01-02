@@ -1,8 +1,8 @@
 using System;
 using System.Xml;
 using System.Xml.Linq;
-using Cyclops.Xmpp;
 using Cyclops.Xmpp.JabberNet.Protocol;
+using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
 using jabber.protocol.client;
 using jabber.protocol.iq;
@@ -29,9 +29,7 @@ public class TimeIqTests
 
     private static IQ CreateJabberNetTimeIq(DateTime dateTime, TimeZoneInfo timeZone)
     {
-        var document = new XmlDocument();
-        var iq = new TimeIQ(document);
-
+        var iq = new TimeIQ(new XmlDocument());
         var wrapped = iq.WrapTime();
         wrapped.Time = (dateTime, timeZone);
         return Xmpp.JabberNet.Protocol.IqEx.Unwrap(wrapped);
@@ -40,9 +38,6 @@ public class TimeIqTests
     private static XMPPIq CreateSharpXmppTimeIq(DateTime dateTime, TimeZoneInfo timeZone)
     {
         var iq = new XMPPIq(XMPPIq.IqTypes.get);
-        var query = new XElement(XNamespace.Get(Namespaces.Time) + Elements.Query);
-        iq.Add(query);
-
         var wrapped = iq.WrapTime();
         wrapped.Time = (dateTime, timeZone);
         return wrapped.Unwrap();

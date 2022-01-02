@@ -16,7 +16,7 @@ internal class JabberNetIqQueryManager : IIqQueryManager
     }
 
     public event EventHandler<ITimeIq>? TimeQueried;
-    public event EventHandler<ILastIq>? LastQueried;
+    public event EventHandler<ILastIq>? LastActivityQueried;
     public event EventHandler<IVersionIq>? VersionQueried;
 
     private void ProcessIq(IQ iq)
@@ -30,7 +30,7 @@ internal class JabberNetIqQueryManager : IIqQueryManager
                 TimeQueried?.Invoke(this, iq.WrapTime());
                 break;
             case Last:
-                LastQueried?.Invoke(this, iq.WrapLast());
+                LastActivityQueried?.Invoke(this, iq.WrapLast());
                 break;
             case Version:
                 VersionQueried?.Invoke(this, iq.WrapVersion());

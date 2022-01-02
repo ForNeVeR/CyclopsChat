@@ -1,10 +1,12 @@
 using System.Xml.Linq;
 using Cyclops.Xmpp.Client;
+using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.Protocol.IqQueries;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
 using SharpXMPP;
 using SharpXMPP.XMPP.Client;
 using SharpXMPP.XMPP.Client.Elements;
+using Namespaces = Cyclops.Xmpp.Protocol.Namespaces;
 
 namespace Cyclops.Xmpp.SharpXmpp.Client;
 
@@ -48,19 +50,25 @@ public class SharpXmppIqQueryManager : IIqQueryManager
                 return true;
             }
 
+            var lastActivityQuery = iq.Element(XNamespace.Get(Namespaces.Last) + Elements.Query);
+            if (lastActivityQuery != null)
+            {
+                LastActivityQueried?.Invoke(this, iq.WrapLast());
+                return true;
+            }
+
+            var versionQuery = iq.Element(XNamespace.Get(Namespaces.Version) + Elements.Query);
+            if (versionQuery != null)
+            {
+                VersionQueried?.Invoke(this, iq.WrapVersion());
+                return true;
+            }
+
             return false;
         }));
     }
 
     public event EventHandler<ITimeIq>? TimeQueried;
-    public event EventHandler<ILastIq>? LastQueried
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IVersionIq>? VersionQueried
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<ILastIq>? LastActivityQueried;
+    public event EventHandler<IVersionIq>? VersionQueried;
 }

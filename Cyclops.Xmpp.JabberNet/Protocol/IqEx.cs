@@ -55,10 +55,9 @@ internal static class IqEx
         public ILastIq CreateResponse() =>
             IqValue.GetResponse(IqValue.OwnerDocument!).WrapLast();
 
-        public int Seconds
+        public int? Seconds
         {
-            get => ((Last)IqValue.Query).Seconds;
-            set => ((Last)IqValue.Query).Seconds = value;
+            set => ((Last)IqValue.Query).Seconds = value ?? -1;
         }
     }
 
@@ -73,11 +72,6 @@ internal static class IqEx
 
         public ClientInfo ClientInfo
         {
-            get
-            {
-                var query = (Version)IqValue.Query;
-                return new ClientInfo(query.OS, query.Ver, query.EntityName);
-            }
             set
             {
                 var query = (Version)IqValue.Query;

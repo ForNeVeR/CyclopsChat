@@ -308,7 +308,7 @@ namespace Cyclops.Core.Resource
             XmppClient.RoomMessage += (_, _) => PublicMessage.Invoke(this, EventArgs.Empty);
 
             XmppClient.IqQueryManager.TimeQueried += (_, iq) => IqCommonHandler.HandleTime(this, iq);
-            XmppClient.IqQueryManager.LastQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
+            XmppClient.IqQueryManager.LastActivityQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
             XmppClient.IqQueryManager.VersionQueried += (_, iq) => IqCommonHandler.HandleVersion(this, iq);
 
             XmppClient.Authenticated += OnAuthenticated;
