@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using Cyclops.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
+using Cyclops.Core.Resource.Helpers;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
 using Cyclops.Xmpp.Client;
@@ -18,6 +19,7 @@ namespace Cyclops.Core.Resource
     public class UserSession : NotifyPropertyChangedBase, IUserSession
     {
         private readonly ILogger logger;
+        private readonly Dispatcher dispatcher;
         private readonly IXmppDataExtractor dataExtractor;
 
         /// <summary>
@@ -37,12 +39,14 @@ namespace Cyclops.Core.Resource
 
         public UserSession(
             ILogger logger,
+            Dispatcher dispatcher,
             IXmppDataExtractor dataExtractor,
             IStringEncryptor stringEncryptor,
             IChatObjectsValidator commonValidator,
             IXmppClient xmppClient)
         {
             this.logger = logger;
+            this.dispatcher = dispatcher;
             this.dataExtractor = dataExtractor;
             this.stringEncryptor = stringEncryptor;
             this.commonValidator = commonValidator;
@@ -247,65 +251,78 @@ namespace Cyclops.Core.Resource
 
         private void OnStreamError(object _, object __)
         {
-            if (IsAuthenticated)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                IsAuthenticated = false;
-                Authenticated(this, new AuthenticationEventArgs(
-                                        ConnectionErrorKind.UnknownError,
-                                        ErrorMessageResources.CommonAuthenticationErrorMessage));
-            }
-            else
-                ConnectionDropped(this, new AuthenticationEventArgs(
-                                            ConnectionErrorKind.ConnectionError,
-                                            ErrorMessageResources.CommonAuthenticationErrorMessage));
-            reconnectTimer.Start();
+                if (IsAuthenticated)
+                {
+                    IsAuthenticated = false;
+                    Authenticated(this, new AuthenticationEventArgs(
+                        ConnectionErrorKind.UnknownError,
+                        ErrorMessageResources.CommonAuthenticationErrorMessage));
+                }
+                else
+                    ConnectionDropped(this, new AuthenticationEventArgs(
+                        ConnectionErrorKind.ConnectionError,
+                        ErrorMessageResources.CommonAuthenticationErrorMessage));
+
+                reconnectTimer.Start();
+            });
         }
 
         private void OnError(object sender, Exception ex)
         {
             logger.LogError("Error from the XMPP client.", ex);
-            if (IsAuthenticated)
-                IsAuthenticated = false;
-            ConnectionDropped(this, new AuthenticationEventArgs(ConnectionErrorKind.ConnectionError, ex.Message));
-            reconnectTimer.Start();
+            dispatcher.InvokeAsyncIfRequired(() =>
+            {
+                if (IsAuthenticated)
+                    IsAuthenticated = false;
+                ConnectionDropped(this, new AuthenticationEventArgs(ConnectionErrorKind.ConnectionError, ex.Message));
+                reconnectTimer.Start();
+            });
         }
 
         private void OnDisconnected(object _, object __)
         {
-            reconnectTimer.Start();
+            dispatcher.InvokeAsyncIfRequired(() =>
+                reconnectTimer.Start());
         }
 
         private void OnAuthenticationError(object _, object __)
         {
-            Authenticated(this,
-                          new AuthenticationEventArgs(ConnectionErrorKind.InvalidPasswordOrUserName,
-                                                      ErrorMessageResources.InvalidLoginOrPasswordMessage));
+            dispatcher.InvokeAsyncIfRequired(() =>
+                Authenticated(this,
+                    new AuthenticationEventArgs(
+                        ConnectionErrorKind.InvalidPasswordOrUserName,
+                        ErrorMessageResources.InvalidLoginOrPasswordMessage)));
         }
 
         private bool firstAuthentigation = true;
 
         private void OnAuthenticated(object _, object __)
         {
-            IsAuthenticated = true;
-            Authenticated(this, new AuthenticationEventArgs());
-
-            if (firstAuthentigation)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                XmppClient.BookmarkManager.RequestBookmarks();
-                firstAuthentigation = false;
-            }
+                IsAuthenticated = true;
+                Authenticated(this, new AuthenticationEventArgs());
 
-            //TODO: remove this shit:)
-            OnPropertyChanged("Status");
-            OnPropertyChanged("StatusType");
+                if (firstAuthentigation)
+                {
+                    XmppClient.BookmarkManager.RequestBookmarks();
+                    firstAuthentigation = false;
+                }
+
+                //TODO: remove this shit:)
+                OnPropertyChanged("Status");
+                OnPropertyChanged("StatusType");
+            });
         }
 
         #endregion
 
         private void SubscribeToEvents()
         {
-            XmppClient.Presence += (_, presence) => Presence?.Invoke(this, presence);
-            XmppClient.RoomMessage += (_, _) => PublicMessage.Invoke(this, EventArgs.Empty);
+            XmppClient.Presence += (_, presence) => dispatcher.InvokeAsyncIfRequired(() => Presence?.Invoke(this, presence));
+            XmppClient.RoomMessage += (_, _) => dispatcher.InvokeAsyncIfRequired(() => PublicMessage.Invoke(this, EventArgs.Empty));
 
             XmppClient.IqQueryManager.TimeQueried += (_, iq) => IqCommonHandler.HandleTime(this, iq);
             XmppClient.IqQueryManager.LastActivityQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
@@ -326,9 +343,12 @@ namespace Cyclops.Core.Resource
 
         private void OnBookmarkAdded(object _, IBookmark bookmark)
         {
-            var conferenceJid = bookmark.ConferenceJid.WithResource(bookmark.Nick);
-            if (bookmark.AutoJoin)
-                OpenConference(conferenceJid);
+            dispatcher.InvokeAsyncIfRequired(() =>
+            {
+                var conferenceJid = bookmark.ConferenceJid.WithResource(bookmark.Nick);
+                if (bookmark.AutoJoin)
+                    OpenConference(conferenceJid);
+            });
         }
 
         public Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer) =>
@@ -336,22 +356,25 @@ namespace Cyclops.Core.Resource
 
         private void OnMessage(object sender, IMessage msg)
         {
-            //some conferences are not allowed to send privates
-            if (msg.Error != null)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                ErrorMessageRecieved(this, new ErrorEventArgs(msg.From, msg.Error.Message));
-                return;
-            }
+                //some conferences are not allowed to send privates
+                if (msg.Error != null)
+                {
+                    ErrorMessageRecieved(this, new ErrorEventArgs(msg.From, msg.Error.Message));
+                    return;
+                }
 
-            if (msg.Type != Xmpp.Protocol.MessageType.Chat)
-                return;
+                if (msg.Type != Xmpp.Protocol.MessageType.Chat)
+                    return;
 
-            PrivateMessages.AsInternalImpl().Add(new PrivateMessage
-                                                     {
-                                                         AuthorId = msg.From.Value,
-                                                         AuthorNick = msg.From.Value.Resource,
-                                                         Body = msg.Body,
-                                                     });
+                PrivateMessages.AsInternalImpl().Add(new PrivateMessage
+                {
+                    AuthorId = msg.From.Value,
+                    AuthorNick = msg.From.Value.Resource,
+                    Body = msg.Body,
+                });
+            });
         }
 
         public void RefreshConferenceList(string? service = null)
