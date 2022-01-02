@@ -8,14 +8,51 @@ namespace Cyclops.Xmpp.SharpXmpp.Data.Rooms;
 public class SharpXmppRoom : IRoom
 {
     private readonly IXmppClient client;
+
+    private readonly object stateLock = new();
+    private bool isJoined;
+
     public SharpXmppRoom(IXmppClient client, Jid roomJid)
     {
         this.client = client;
         Jid = roomJid;
+
+        SubscribeToEvents();
     }
 
-    public void Dispose()
+    public void Dispose() => UnsubscribeFromEvents();
+
+    private void SubscribeToEvents()
     {
+        client.Presence += OnPresence;
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        client.Presence -= OnPresence;
+    }
+
+    private void OnPresence(object _, IPresence presence)
+    {
+        if (presence.From?.Bare != Jid) return;
+        if (presence.Error != null)
+        {
+            PresenceError?.Invoke(this, presence);
+            return;
+        }
+
+        if (ShouldFireJoinEvent())
+            Joined?.Invoke(this, null);
+
+        bool ShouldFireJoinEvent()
+        {
+            lock (stateLock)
+            {
+                if (isJoined) return false;
+                isJoined = true;
+                return true;
+            }
+        }
     }
 
     public void Join(string? password = null)
@@ -36,11 +73,7 @@ public class SharpXmppRoom : IRoom
         throw new NotImplementedException();
     }
 
-    public event EventHandler? Joined
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler? Joined;
     public event EventHandler<IPresence>? Left
     {
         add => throw new NotImplementedException();
@@ -51,11 +84,7 @@ public class SharpXmppRoom : IRoom
         add => throw new NotImplementedException();
         remove => throw new NotImplementedException();
     }
-    public event EventHandler<IPresence>? PresenceError
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<IPresence>? PresenceError;
     public event EventHandler<IMessage>? SelfMessage
     {
         add => throw new NotImplementedException();
