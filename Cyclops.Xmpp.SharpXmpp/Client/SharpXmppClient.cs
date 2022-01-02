@@ -18,23 +18,25 @@ public class SharpXmppClient : IXmppClient
 {
     private readonly ILogger logger;
     private readonly SharpXmppIqQueryManager iqQueryManager;
-    private XmppClient? client;
+    private readonly SharpXmppBookmarkManager bookmarkManager;
+
+    private XmppClient? currentClient;
 
     public SharpXmppClient(ILogger logger)
     {
         this.logger = logger;
         iqQueryManager = new SharpXmppIqQueryManager();
-        BookmarkManager = new SharpXmppBookmarkManager();
+        bookmarkManager = new SharpXmppBookmarkManager();
         ConferenceManager = new SharpXmppConferenceManager();
     }
 
     public void Dispose()
     {
-        client?.Dispose();
+        currentClient?.Dispose();
     }
 
     public IIqQueryManager IqQueryManager => iqQueryManager;
-    public IBookmarkManager BookmarkManager { get; }
+    public IBookmarkManager BookmarkManager => bookmarkManager;
     public IConferenceManager ConferenceManager { get; }
 
     public event EventHandler? Connected;
@@ -65,22 +67,23 @@ public class SharpXmppClient : IXmppClient
 
     public void Connect(string server, string host, string user, string password, int port, string resource)
     {
-        if (client != null)
+        if (currentClient != null)
         {
-            UnsubscribeFromEvents(client);
-            client?.Dispose();
+            UnsubscribeFromEvents(currentClient);
+            currentClient?.Dispose();
         }
 
-        client = new XmppClient(new JID($"{user}@{server}"), password);
-        SubscribeToEvents(client);
-        iqQueryManager.IqManager = client.IqManager;
+        currentClient = new XmppClient(new JID($"{user}@{server}"), password);
+        SubscribeToEvents(currentClient);
+        iqQueryManager.IqManager = currentClient.IqManager;
+        bookmarkManager.BookmarkManager = currentClient.BookmarkManager;
 
         DoConnect().NoAwait(logger);
         async Task DoConnect()
         {
             try
             {
-                await client.ConnectAsync();
+                await currentClient.ConnectAsync();
             }
             catch (Exception ex)
             {
@@ -91,24 +94,24 @@ public class SharpXmppClient : IXmppClient
         }
     }
 
-    private void SubscribeToEvents(XmppClient currentClient)
+    private void SubscribeToEvents(XmppConnection connection)
     {
-        currentClient.StreamStart += OnStreamStart;
-        currentClient.Element += OnElement;
-        currentClient.SignedIn += OnSignedIn;
-        currentClient.Presence += OnPresence;
-        currentClient.Message += OnMessage;
-        currentClient.ConnectionFailed += OnConnectionFailed;
+        connection.StreamStart += OnStreamStart;
+        connection.Element += OnElement;
+        connection.SignedIn += OnSignedIn;
+        connection.Presence += OnPresence;
+        connection.Message += OnMessage;
+        connection.ConnectionFailed += OnConnectionFailed;
     }
 
-    private void UnsubscribeFromEvents(XmppClient currentClient)
+    private void UnsubscribeFromEvents(XmppConnection connection)
     {
-        currentClient.StreamStart -= OnStreamStart;
-        currentClient.Element -= OnElement;
-        currentClient.SignedIn -= OnSignedIn;
-        currentClient.Presence -= OnPresence;
-        currentClient.Message -= OnMessage;
-        currentClient.ConnectionFailed -= OnConnectionFailed;
+        connection.StreamStart -= OnStreamStart;
+        connection.Element -= OnElement;
+        connection.SignedIn -= OnSignedIn;
+        connection.Presence -= OnPresence;
+        connection.Message -= OnMessage;
+        connection.ConnectionFailed -= OnConnectionFailed;
     }
 
     private void OnStreamStart(XmppConnection _, string __) => Connected?.Invoke(this, null);

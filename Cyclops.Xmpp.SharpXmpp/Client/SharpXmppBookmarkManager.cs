@@ -1,16 +1,39 @@
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Data;
+using SharpXMPP.XMPP.Client.MUC.Bookmarks;
 
 namespace Cyclops.Xmpp.SharpXmpp.Client;
 
-public class SharpXmppBookmarkManager : IBookmarkManager
+internal class SharpXmppBookmarkManager : IBookmarkManager
 {
-    public event EventHandler<IBookmark>? BookmarkAdded
+    private BookmarksManager? currentBookmarkManager;
+    public BookmarksManager BookmarkManager
     {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
+        set
+        {
+            if (currentBookmarkManager != null)
+                throw new NotSupportedException(
+                    $"Reinitialization of {nameof(SharpXmppIqQueryManager)} is not supported.");
+
+            currentBookmarkManager = value;
+            SubscribeToEvents(currentBookmarkManager);
+        }
     }
+
+    private void SubscribeToEvents(BookmarksManager bookmarkManager)
+    {
+        bookmarkManager.BookmarksSynced += _ =>
+        {
+            foreach (var bookmark in bookmarkManager.Rooms)
+            {
+                BookmarkAdded?.Invoke(this, bookmark.Wrap());
+            }
+        };
+    }
+
+    public event EventHandler<IBookmark>? BookmarkAdded;
 
     public void RequestBookmarks()
     {
