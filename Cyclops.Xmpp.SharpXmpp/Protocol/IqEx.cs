@@ -65,7 +65,7 @@ internal static class IqEx
             set
             {
                 var query = Original.GetOrCreateChildElement(XNamespace.Get(Namespaces.Last) + Elements.Query);
-                var attribute = query.GetOrCreateAttribute(XNamespace.Get(Namespaces.Last) + Attributes.Seconds);
+                var attribute = query.GetOrCreateAttribute(Attributes.Seconds);
                 if (value == null) attribute.Remove();
                 else attribute.Value = value.Value.ToString(CultureInfo.InvariantCulture);
             }

@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using Cyclops.Xmpp.Protocol;
 using SharpXMPP.XMPP.Client.Elements;
 
@@ -26,7 +25,7 @@ public static class MessageEx
 
     private static MessageType GetMessageType(this XMPPMessage message)
     {
-        var typeName = message.Attribute(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + "type")?.Value;
+        var typeName = message.Attribute("type")?.Value;
         return typeName switch
         {
             "chat" => MessageType.Chat,
