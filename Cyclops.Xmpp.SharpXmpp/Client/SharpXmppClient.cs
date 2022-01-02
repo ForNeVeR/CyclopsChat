@@ -15,12 +15,13 @@ namespace Cyclops.Xmpp.SharpXmpp.Client;
 public class SharpXmppClient : IXmppClient
 {
     private readonly ILogger logger;
+    private readonly SharpXmppIqQueryManager iqQueryManager;
     private XmppClient? client;
 
     public SharpXmppClient(ILogger logger)
     {
         this.logger = logger;
-        IqQueryManager = new SharpXmppIqQueryManager();
+        iqQueryManager = new SharpXmppIqQueryManager();
         BookmarkManager = new SharpXmppBookmarkManager();
         ConferenceManager = new SharpXmppConferenceManager();
     }
@@ -29,7 +30,7 @@ public class SharpXmppClient : IXmppClient
     {
     }
 
-    public IIqQueryManager IqQueryManager { get; }
+    public IIqQueryManager IqQueryManager => iqQueryManager;
     public IBookmarkManager BookmarkManager { get; }
     public IConferenceManager ConferenceManager { get; }
 
@@ -85,6 +86,7 @@ public class SharpXmppClient : IXmppClient
 
         client = new XmppClient(new JID($"{user}@{server}"), password);
         SubscribeToEvents(client);
+        iqQueryManager.IqManager = client.IqManager;
 
         DoConnect().NoAwait(logger);
         async Task DoConnect()
