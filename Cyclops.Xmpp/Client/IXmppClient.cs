@@ -1,6 +1,5 @@
 using System.Xml;
 using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Xmpp.Client;
@@ -42,8 +41,6 @@ public interface IXmppClient : IDisposable
     Task<IIq> UpdateVCard(VCard vCard);
 
     Task<ClientInfo?> GetClientInfo(Jid jid);
-
-    IRoom GetRoom(Jid roomJid);
 
     Task<IDiscoNode?> DiscoverItems(Jid jid, string node);
     Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri);

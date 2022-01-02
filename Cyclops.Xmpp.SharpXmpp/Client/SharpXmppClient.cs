@@ -3,7 +3,6 @@ using Cyclops.Core;
 using Cyclops.Core.Helpers;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.SharpXmpp.Errors;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
@@ -189,11 +188,6 @@ public class SharpXmppClient : IXmppClient
     }
 
     public Task<ClientInfo?> GetClientInfo(Jid jid)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IRoom GetRoom(Jid roomJid)
     {
         throw new NotImplementedException();
     }

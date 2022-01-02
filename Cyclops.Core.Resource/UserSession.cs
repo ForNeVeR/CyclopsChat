@@ -440,6 +440,6 @@ namespace Cyclops.Core.Resource
             Reconnect();
         }
 
-        public IRoom GetRoom(Jid roomId) => XmppClient.GetRoom(roomId);
+        public IRoom GetRoom(Jid roomId) => XmppClient.ConferenceManager.GetRoom(roomId);
     }
 }

@@ -3,9 +3,7 @@ using System.Globalization;
 using System.Xml;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
-using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Data;
-using Cyclops.Xmpp.JabberNet.Data.Rooms;
 using Cyclops.Xmpp.JabberNet.Elements;
 using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
@@ -209,8 +207,6 @@ internal class JabberNetXmppClient : IXmppClient
         var versionInfo = response?.Instruction;
         return versionInfo == null ? null : new ClientInfo(versionInfo.OS, versionInfo.Ver, versionInfo.EntityName);
     }
-
-    public IRoom GetRoom(Jid roomJid) => conferenceManager.GetRoom(roomJid.Map()).Wrap();
 
     public Task<IDiscoNode?> DiscoverItems(Jid jid, string node)
     {
