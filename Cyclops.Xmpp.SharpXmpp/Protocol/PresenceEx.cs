@@ -7,18 +7,19 @@ internal static class PresenceEx
 {
     private class Presence : IPresence
     {
-        private readonly XMPPPresence presence;
-        public Presence(XMPPPresence presence)
+        internal readonly XMPPPresence Original;
+        public Presence(XMPPPresence original)
         {
-            this.presence = presence;
+            Original = original;
         }
 
-        public Jid? From => presence.From.Map();
-        public Jid? To => presence.To.Map();
+        public Jid? From => Original.From.Map();
+        public Jid? To => Original.To.Map();
         public string? Status => throw new NotImplementedException();
         public string? Show => throw new NotImplementedException();
         public IError? Error => throw new NotImplementedException();
     }
 
     public static IPresence Wrap(this XMPPPresence presence) => new Presence(presence);
+    public static XMPPPresence Unwrap(this IPresence presence) => ((Presence)presence).Original;
 }

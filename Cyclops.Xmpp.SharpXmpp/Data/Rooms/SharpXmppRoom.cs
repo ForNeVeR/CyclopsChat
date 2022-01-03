@@ -1,7 +1,10 @@
+using System.Globalization;
+using System.Xml.Linq;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Protocol;
 
 namespace Cyclops.Xmpp.SharpXmpp.Data.Rooms;
 
@@ -41,6 +44,15 @@ public class SharpXmppRoom : IRoom
             return;
         }
 
+        var xmlPresence = presence.Unwrap();
+        var type = xmlPresence.Attribute("type")?.Value;
+        var states = xmlPresence.Element(XNamespace.Get(Namespaces.MucUser) + Elements.X)
+            ?.Elements(XNamespace.Get(Namespaces.MucUser) + Elements.Status);
+        var statusCodes = states?.Select(
+            s => (MucUserStatus)int.Parse(s.Attribute(Attributes.Code)?.Value!, CultureInfo.InvariantCulture))
+            ?? Enumerable.Empty<MucUserStatus>();
+        var isSelfPresence = statusCodes.Contains(MucUserStatus.SelfReferringPresence);
+
         if (ShouldFireJoinEvent())
             Joined?.Invoke(this, null);
 
@@ -48,7 +60,8 @@ public class SharpXmppRoom : IRoom
         {
             lock (stateLock)
             {
-                if (isJoined) return false;
+                if (isJoined || type == PresenceTypes.Unavailable || !isSelfPresence) return false;
+
                 isJoined = true;
                 return true;
             }

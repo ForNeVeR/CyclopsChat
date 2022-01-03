@@ -17,6 +17,9 @@ public static class Elements
     /// <remarks>XEP-0153: vCard-Based Avatars</remarks>
     public const string Photo = "photo";
 
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Status = "status";
+
     public const string Tz = "tz";
     public const string Utc = "utc";
     public const string Version = "version";

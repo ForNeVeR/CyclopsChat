@@ -7,6 +7,9 @@ public static class Namespaces
     /// <remarks>XEP-0012: Last Activity</remarks>
     public const string Last = "jabber:iq:last";
 
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string MucUser = "http://jabber.org/protocol/muc#user";
+
     /// <remarks>XEP-0049: Private XML Storage</remarks>
     public const string Private = "jabber:iq:private";
 
