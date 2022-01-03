@@ -120,7 +120,7 @@ namespace Cyclops.MainApplication.ViewModel
             Photo = obj.Photo;
             Nick = obj.Nick;
             FullName = obj.FullName;
-            Birthday = obj.Birthday;
+            Birthday = obj.Birthday ?? DateTime.MinValue;
             Comments = obj.Comments;
             Email = obj.Email;
             IsBusy = false;

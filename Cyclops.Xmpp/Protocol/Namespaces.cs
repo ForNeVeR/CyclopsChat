@@ -21,6 +21,9 @@ public static class Namespaces
 
     public const string Time = "jabber:iq:time";
 
+    /// <remarks>XEP-0054: vcard-temp</remarks>
+    public const string VCardTemp = "vcard-temp";
+
     /// <remarks>XEP-0153: vCard-Based Avatars</remarks>
     public const string VCardTempXUpdate = "vcard-temp:x:update";
 

@@ -192,7 +192,7 @@ internal class JabberNetXmppClient : IXmppClient
         photo.Image = vCard.Photo;
         iq.VCard.Photo = photo;
         iq.VCard.Description = vCard.Comments;
-        iq.VCard.Birthday = vCard.Birthday;
+        iq.VCard.Birthday = vCard.Birthday ?? DateTime.MinValue;
         iq.VCard.FullName = vCard.FullName;
 
         var response = await SendIq(iq);

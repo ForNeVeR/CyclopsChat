@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Drawing;
+using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
 using Cyclops.Core;
@@ -220,7 +221,66 @@ public class SharpXmppClient : IXmppClient
 
     public Task<VCard> GetVCard(Jid jid)
     {
-        throw new NotImplementedException();
+        var iq = new XMPPIq(XMPPIq.IqTypes.get)
+        {
+            To = jid.Map()
+        };
+        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
+
+        var result = new TaskCompletionSource<VCard>();
+        currentClient!.Query(iq, response =>
+        {
+            try
+            {
+                var vCardElement = response.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
+                var photoElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto);
+                var fullNameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFn);
+                var emailElement = vCardElement?.Elements(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)
+                    ?.FirstOrDefault();
+                var birthDateElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardBDay);
+                var nicknameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardNickname);
+                var descriptionElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardDesc);
+
+                var photo = photoElement == null ? null : ReadPhoto(photoElement);
+                var birthDate =
+                    birthDateElement == null ? null
+                    : DateTime.TryParse(birthDateElement.Value, CultureInfo.InvariantCulture,
+                        DateTimeStyles.RoundtripKind, out var bd) ? (DateTime?)bd : null;
+
+                result.SetResult(new VCard
+                {
+                    Photo = photo,
+                    FullName = fullNameElement?.Value,
+                    Email = emailElement?.Value,
+                    Birthday = birthDate,
+                    Nick = nicknameElement?.Value,
+                    Comments = descriptionElement?.Value
+                });
+            }
+            catch (Exception ex)
+            {
+                result.SetException(ex);
+            }
+        });
+        return result.Task;
+
+        Image? ReadPhoto(XElement photo)
+        {
+            var binVal = photo.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhotoBinVal);
+            if (binVal == null) return null;
+            try
+            {
+                var bytes = Convert.FromBase64String(binVal.Value);
+                if (bytes.Length == 0) return null;
+                using var stream = new MemoryStream(bytes);
+                return Image.FromStream(stream);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Error while processing avatar of user {iq.From}.", ex);
+                return null;
+            }
+        }
     }
 
     public Task<IIq> UpdateVCard(VCard vCard)
