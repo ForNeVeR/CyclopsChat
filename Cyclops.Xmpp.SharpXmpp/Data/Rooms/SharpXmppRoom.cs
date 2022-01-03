@@ -11,21 +11,27 @@ namespace Cyclops.Xmpp.SharpXmpp.Data.Rooms;
 public class SharpXmppRoom : IRoom
 {
     private readonly SharpXmppClient client;
+    private readonly SharpXmppConferenceManager conferenceManager;
 
     private readonly object stateLock = new();
     private bool isJoined;
     private string? currentNickname;
     private readonly Dictionary<string, MucParticipant> participants = new();
 
-    public SharpXmppRoom(SharpXmppClient client, Jid roomJid)
+    public SharpXmppRoom(SharpXmppClient client, SharpXmppConferenceManager conferenceManager, Jid roomJid)
     {
         this.client = client;
+        this.conferenceManager = conferenceManager;
         BareJid = roomJid.Bare;
 
         SubscribeToEvents();
     }
 
-    public void Dispose() => UnsubscribeFromEvents();
+    public void Dispose()
+    {
+        conferenceManager.UnregisterRoom(this);
+        UnsubscribeFromEvents();
+    }
 
     private void SubscribeToEvents()
     {
