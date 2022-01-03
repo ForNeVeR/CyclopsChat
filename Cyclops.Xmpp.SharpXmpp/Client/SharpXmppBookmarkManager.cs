@@ -7,7 +7,6 @@ using Cyclops.Xmpp.SharpXmpp.Data;
 using SharpXMPP;
 using SharpXMPP.XMPP;
 using SharpXMPP.XMPP.Client.Elements;
-using SharpXMPP.XMPP.Client.MUC.Bookmarks;
 using SharpXMPP.XMPP.Client.MUC.Bookmarks.Elements;
 using Namespaces = Cyclops.Xmpp.Protocol.Namespaces;
 
@@ -26,34 +25,6 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
     }
 
     public XmppConnection? Connection { get; set; }
-
-    private BookmarksManager? currentBookmarkManager;
-    public BookmarksManager BookmarkManager
-    {
-        set
-        {
-            if (currentBookmarkManager != null)
-                throw new NotSupportedException(
-                    $"Reinitialization of {nameof(SharpXmppIqQueryManager)} is not supported.");
-
-            currentBookmarkManager = value;
-            SubscribeToEvents(currentBookmarkManager);
-        }
-    }
-
-    private void SubscribeToEvents(BookmarksManager bookmarkManager)
-    {
-        bookmarkManager.BookmarksSynced += _ =>
-        {
-            lock (bookmarksLock)
-            {
-                currentBookmarks.Clear();
-                currentBookmarks.AddRange(bookmarkManager.Rooms);
-            }
-
-            NotifyAllBookmarksAdded();
-        };
-    }
 
     public event EventHandler<IBookmark>? BookmarkAdded;
 

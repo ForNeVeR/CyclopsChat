@@ -74,7 +74,6 @@ public class SharpXmppClient : IXmppClient
         SubscribeToEvents(currentClient);
         iqQueryManager.IqManager = currentClient.IqManager;
         bookmarkManager.Connection = currentClient;
-        bookmarkManager.BookmarkManager = currentClient.BookmarkManager;
 
         DoConnect().NoAwait(logger);
         async Task DoConnect()
