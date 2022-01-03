@@ -913,7 +913,7 @@ namespace jabber.protocol.iq
         /// <summary>
         /// The reason the room was destroyed.  May be null.
         /// </summary>
-        public string Reason
+        public string? Reason
         {
             get { return GetElem("reason"); }
             set { SetElem("reason", value); }

@@ -10,8 +10,8 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
     public IExtendedUserData? GetExtendedUserData(IPresence presence)
     {
         var xmppPresence = presence.Unwrap();
-        var x = xmppPresence.Element(XNamespace.Get(Namespaces.Muc) + Elements.X);
-        return x.WrapUserData();
+        var x = xmppPresence.Element(XNamespace.Get(Namespaces.MucUser) + Elements.X);
+        return x?.WrapAsUserData();
     }
 
     public PhotoData? GetPhotoData(IPresence presence)

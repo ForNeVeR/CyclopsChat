@@ -15,7 +15,7 @@ internal static class RoomItemEx
         }
 
         public Jid? ActorJid => roomItem.Actor?.JID?.Map();
-        public string Reason => roomItem.Reason;
+        public string? Reason => roomItem.Reason;
         public MucRole? Role => roomItem.Role.Map();
         public MucAffiliation? Affiliation => roomItem.Affiliation.Map();
     }
