@@ -7,7 +7,7 @@ namespace Cyclops.Core.Modularity
 {
     public static class Bootstrapper
     {
-        public static IServiceLocator Run(IEnumerable<IModule> modules)
+        public static IServiceLocator Run(IEnumerable<IModule> modules, bool verboseLogging)
         {
             var unity = new UnityContainer();
             unity.AddNewExtension<LazySupportExtension>();
@@ -19,6 +19,8 @@ namespace Cyclops.Core.Modularity
 
             IEnumerable<IModule> modulesRaw = GetAllModulesRaw(modules);
             modulesRaw.ForEach(module => module.Initialize(unity));
+
+            locator.GetInstance<ILogger>().VerboseLogging = verboseLogging;
 
             return locator;
         }

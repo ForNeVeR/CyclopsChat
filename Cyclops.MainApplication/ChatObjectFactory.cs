@@ -1,4 +1,5 @@
-﻿using Cyclops.Core;
+﻿using System.Configuration;
+using Cyclops.Core;
 using Cyclops.Core.Modularity;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
@@ -18,7 +19,7 @@ namespace Cyclops.MainApplication
                     new Core.Resource.Composition.Module(),
                     new Module(),
                     new Console.Composition.Module()
-                });
+                }, ConfigurationManager.AppSettings["VerboseLogging"].StringToBool());
 
         private static IUserSession session;
 

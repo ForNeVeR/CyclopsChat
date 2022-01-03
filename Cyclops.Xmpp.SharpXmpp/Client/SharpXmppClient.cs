@@ -107,6 +107,8 @@ public class SharpXmppClient : IXmppClient
 
     private void OnElement(XmppConnection _, ElementArgs e)
     {
+        logger.LogVerbose($"{(e.IsInput ? "IN:" : "OUT:")}\n{e.Stanza}");
+
         if (e.IsInput)
             ReadRawMessage?.Invoke(this, e.Stanza.ToString());
         else

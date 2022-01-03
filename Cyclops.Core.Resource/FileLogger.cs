@@ -10,6 +10,14 @@ namespace Cyclops.Core.Resource
     {
         private readonly object errorLocker = new();
         private readonly object infoLocker = new();
+        private readonly object verboseLocker = new();
+
+        private volatile bool verboseLogging;
+        public bool VerboseLogging
+        {
+            get => verboseLogging;
+            set => verboseLogging = value;
+        }
 
         public void LogError(string message, Exception? exception)
         {
@@ -35,6 +43,13 @@ namespace Cyclops.Core.Resource
                     "info.log",
                     $"\n============\n{DateTime.Now}\n============\n{string.Format(message, args)}\n\n");
             }
+        }
+
+        public void LogVerbose(string message, params object[] args)
+        {
+            if (!verboseLogging) return;
+            lock (verboseLocker)
+                File.AppendAllText("verbose.log", $"[{DateTime.Now:s}] {string.Format(message, args)}\n");
         }
     }
 }
