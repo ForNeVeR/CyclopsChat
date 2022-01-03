@@ -32,6 +32,9 @@ public static class Elements
     public const string Photo = "photo";
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Show = "show";
+
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Status = "status";
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>

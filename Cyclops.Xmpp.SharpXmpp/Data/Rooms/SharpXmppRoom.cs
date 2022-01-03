@@ -185,7 +185,14 @@ public class SharpXmppRoom : IRoom
     public Jid BareJid { get; }
     private Jid JidWithNick => BareJid.WithResource(currentNickname);
 
-    public IReadOnlyList<IMucParticipant> Participants => throw new NotImplementedException();
+    public IReadOnlyList<IMucParticipant> Participants
+    {
+        get
+        {
+            lock (stateLock)
+                return participants.Values.ToList();
+        }
+    }
     public Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation)
     {
         throw new NotImplementedException();
