@@ -53,5 +53,5 @@ internal class JabberNetDataExtractor : IXmppDataExtractor
     }
 
     public IAdminItem? GetAdminItem(IExtendedUserData nickChange) =>
-        nickChange.Nodes.OfType<AdminItem>().SingleOrDefault()?.Map();
+        nickChange.Unwrap().OfType<AdminItem>().SingleOrDefault()?.Map();
 }
