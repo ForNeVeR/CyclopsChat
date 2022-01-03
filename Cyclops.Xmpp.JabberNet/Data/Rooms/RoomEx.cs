@@ -70,7 +70,7 @@ internal static class RoomEx
             room.Subject = subject;
         }
 
-        public Jid Jid => room.JID.Map();
+        public Jid BareJid => room.JID.Map();
 
         public IReadOnlyList<IMucParticipant> Participants =>
             room.Participants.Cast<RoomParticipant>().Select(r => r.Wrap()).ToList();

@@ -23,12 +23,6 @@ public static class MessageEx
         public MessageType Type => original.GetMessageType();
     }
 
-    private class XmppError : IError
-    {
-        public int Code => throw new NotImplementedException();
-        public string? Message => throw new NotImplementedException();
-    }
-
     public static IMessage Wrap(this XMPPMessage message) => new XmppMessage(message);
 
     private static MessageType GetMessageType(this XMPPMessage message)
@@ -44,6 +38,4 @@ public static class MessageEx
             _ => throw new NotSupportedException($"Unknown message type: {typeName}.")
         };
     }
-
-    private static IError WrapAsError(this XElement error) => new XmppError();
 }

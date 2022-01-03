@@ -21,7 +21,7 @@ namespace Cyclops.Core.Resource
             this.userSession = userSession;
             this.room = room;
             this.msg = msg;
-            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(room.Jid));
+            Conference = userSession.Conferences.FirstOrDefault(i => i.ConferenceId.BaresEqual(room.BareJid));
             IsFromHistory = dataExtractor.GetDelayStamp(msg) != null;
         }
 

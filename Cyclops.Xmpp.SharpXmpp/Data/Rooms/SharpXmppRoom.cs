@@ -20,7 +20,7 @@ public class SharpXmppRoom : IRoom
     public SharpXmppRoom(SharpXmppClient client, Jid roomJid)
     {
         this.client = client;
-        Jid = roomJid;
+        BareJid = roomJid.Bare;
 
         SubscribeToEvents();
     }
@@ -41,7 +41,7 @@ public class SharpXmppRoom : IRoom
 
     private void OnPresence(object _, IPresence presence)
     {
-        if (presence.From?.Bare != Jid) return;
+        if (presence.From?.Bare != BareJid) return;
         if (presence.Error != null)
         {
             PresenceError?.Invoke(this, presence);
@@ -82,7 +82,7 @@ public class SharpXmppRoom : IRoom
 
     private void OnMessage(object sender, IMessage message)
     {
-        if (message.From?.Bare != Jid) return;
+        if (message.From?.Bare != BareJid) return;
         if (message.Subject != null)
         {
             SubjectChange?.Invoke(this, message);
@@ -182,8 +182,8 @@ public class SharpXmppRoom : IRoom
     public event EventHandler<IMucParticipant>? ParticipantLeave;
     public event EventHandler<IMucParticipant>? ParticipantPresenceChange;
 
-    public Jid Jid { get; }
-    private Jid JidWithNick => Jid.WithResource(currentNickname);
+    public Jid BareJid { get; }
+    private Jid JidWithNick => BareJid.WithResource(currentNickname);
 
     public IReadOnlyList<IMucParticipant> Participants => throw new NotImplementedException();
     public Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation)
