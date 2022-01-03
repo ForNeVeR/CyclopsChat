@@ -22,4 +22,7 @@ public static class Attributes
 
     /// <remarks>XEP-0012: Last Activity</remarks>
     public const string Seconds = "seconds";
+
+    /// <remarks>XEP-0203: Delayed Delivery</remarks>
+    public const string Stamp = "stamp";
 }

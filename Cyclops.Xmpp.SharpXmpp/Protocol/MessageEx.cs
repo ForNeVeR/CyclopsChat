@@ -9,21 +9,22 @@ public static class MessageEx
 {
     private class XmppMessage : IMessage
     {
-        private readonly XMPPMessage original;
+        internal readonly XMPPMessage Original;
         public XmppMessage(XMPPMessage original)
         {
-            this.original = original;
+            Original = original;
         }
 
-        public Jid? From => original.From.Map();
-        public Jid? To => original.To.Map();
-        public string? Subject => original.Element(XNamespace.Get(Namespaces.JabberClient) + Elements.Subject)?.Value;
-        public string? Body => original.Text;
-        public IError? Error => original.Element(XNamespace.Get(Namespaces.JabberClient) + Elements.Error)?.WrapAsError();
-        public MessageType Type => original.GetMessageType();
+        public Jid? From => Original.From.Map();
+        public Jid? To => Original.To.Map();
+        public string? Subject => Original.Element(XNamespace.Get(Namespaces.JabberClient) + Elements.Subject)?.Value;
+        public string? Body => Original.Text;
+        public IError? Error => Original.Element(XNamespace.Get(Namespaces.JabberClient) + Elements.Error)?.WrapAsError();
+        public MessageType Type => Original.GetMessageType();
     }
 
     public static IMessage Wrap(this XMPPMessage message) => new XmppMessage(message);
+    public static XMPPMessage Unwrap(this IMessage message) => ((XmppMessage)message).Original;
 
     private static MessageType GetMessageType(this XMPPMessage message)
     {

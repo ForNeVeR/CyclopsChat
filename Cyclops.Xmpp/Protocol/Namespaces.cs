@@ -4,6 +4,9 @@ public static class Namespaces
 {
     public const string Bookmarks = "storage:bookmarks";
 
+    /// <remarks>XEP-0203: Delayed Delivery</remarks>
+    public const string Delay = "urn:xmpp:delay";
+
     /// <remarks>XEP-0012: Last Activity</remarks>
     public const string Last = "jabber:iq:last";
 

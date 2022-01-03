@@ -121,7 +121,7 @@ public class SharpXmppRoom : IRoom
                     ParticipantPresenceChange?.Invoke(this, existingParticipant);
                     break;
                 case (_, null) when type != PresenceTypes.Unavailable:
-                    var newParticipant = new MucParticipant();
+                    var newParticipant = new MucParticipant(presence);
                     participants.Add(nickname, newParticipant);
                     ParticipantJoin?.Invoke(this, newParticipant);
                     break;

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Xml.Linq;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
@@ -21,7 +22,17 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
 
     public DateTime? GetDelayStamp(IMessage message)
     {
-        throw new NotImplementedException();
+        var xmlMessage = message.Unwrap();
+        var delay = xmlMessage.Element(XNamespace.Get(Namespaces.Delay) + Elements.Delay);
+        var stamp = delay?.Attribute(Attributes.Stamp)?.Value;
+        if (string.IsNullOrEmpty(stamp)) return null;
+        return DateTime.TryParseExact(
+            stamp,
+            "yyyy-MM-ddTHH:mm:ssZ",
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out var dateTime)
+            ? dateTime
+            : null;
     }
 
     public CaptchaRequest? GetCaptchaRequest(IMessage message)

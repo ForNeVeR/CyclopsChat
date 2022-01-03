@@ -8,6 +8,9 @@ public static class Elements
     /// <remarks>XEP-0048: Bookmarks</remarks>
     public const string Conference = "conference";
 
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Delay = "delay";
+
     public const string Display = "display";
     public const string Error = "error";
 
