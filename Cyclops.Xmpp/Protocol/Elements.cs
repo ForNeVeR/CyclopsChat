@@ -31,6 +31,9 @@ public static class Elements
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Status = "status";
 
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Subject = "subject";
+
     public const string Tz = "tz";
     public const string Utc = "utc";
     public const string Version = "version";
