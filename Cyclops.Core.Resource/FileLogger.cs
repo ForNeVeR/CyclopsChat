@@ -12,6 +12,12 @@ namespace Cyclops.Core.Resource
         private readonly object infoLocker = new();
         private readonly object verboseLocker = new();
 
+        public FileLogger()
+        {
+            if (File.Exists("verbose.log"))
+                File.Delete("verbose.log");
+        }
+
         private volatile bool verboseLogging;
         public bool VerboseLogging
         {
