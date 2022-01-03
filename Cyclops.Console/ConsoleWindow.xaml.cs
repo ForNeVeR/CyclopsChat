@@ -22,7 +22,7 @@ namespace Cyclops.Console
             DataContext?.Cleanup();
 
             var client = ((UserSession)session).XmppClient;
-            DataContext = new ConsoleViewModel(client);
+            DataContext = new ConsoleViewModel(Dispatcher, client);
             Show();
         }
     }

@@ -42,16 +42,8 @@ public class SharpXmppClient : IXmppClient
 
     public event EventHandler? Connected;
     public event EventHandler? Disconnected;
-    public event EventHandler<string>? ReadRawMessage
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<string>? WriteRawMessage
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<string>? ReadRawMessage;
+    public event EventHandler<string>? WriteRawMessage;
     public event EventHandler<Exception>? Error;
     public event EventHandler? StreamError;
     public event EventHandler? Authenticated;
@@ -115,6 +107,10 @@ public class SharpXmppClient : IXmppClient
 
     private void OnElement(XmppConnection _, ElementArgs e)
     {
+        if (e.IsInput)
+            ReadRawMessage?.Invoke(this, e.Stanza.ToString());
+        else
+            WriteRawMessage?.Invoke(this, e.Stanza.ToString());
         switch (e)
         {
             case { IsInput: true, Stanza.Name: { NamespaceName: Namespaces.Streams, LocalName: Elements.Error } }:

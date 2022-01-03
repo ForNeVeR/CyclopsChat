@@ -1,7 +1,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Xml;
+using Cyclops.Core.Resource.Helpers;
 using Cyclops.Xmpp.Client;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -10,6 +12,7 @@ namespace Cyclops.Console.ViewModel
 {
     public class ConsoleViewModel : ViewModelBase
     {
+        private readonly Dispatcher dispatcher;
         private readonly IXmppClient client;
 
         public ObservableCollection<string> Entries { get; } = new();
@@ -28,8 +31,9 @@ namespace Cyclops.Console.ViewModel
 
         public ICommand Send { get; }
 
-        public ConsoleViewModel(IXmppClient client)
+        public ConsoleViewModel(Dispatcher dispatcher, IXmppClient client)
         {
+            this.dispatcher = dispatcher;
             this.client = client;
             Send = new RelayCommand(SendCommand);
             Initialize();
@@ -53,22 +57,22 @@ namespace Cyclops.Console.ViewModel
 
         private void OnConnected(object sender, object _)
         {
-            Entries.Add("CONNECTION ESTABLISHED");
+            dispatcher.InvokeAsyncIfRequired(() => Entries.Add("CONNECTION ESTABLISHED"));
         }
 
         private void OnReadText(object sender, string txt)
         {
-            Entries.Add($"RECV: {txt}");
+            dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"RECV: {txt}"));
         }
 
         private void OnWriteText(object sender, string txt)
         {
-            Entries.Add($"SEND: {txt}");
+            dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"SEND: {txt}"));
         }
 
         private void OnError(object sender, Exception ex)
         {
-            Entries.Add($"ERROR: {ex.Message}");
+            dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"ERROR: {ex.Message}"));
         }
 
         private void SendCommand()
