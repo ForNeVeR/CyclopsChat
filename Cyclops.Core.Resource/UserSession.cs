@@ -382,8 +382,8 @@ namespace Cyclops.Core.Resource
             async Task DoRefresh()
             {
                 var node = string.IsNullOrEmpty(service)
-                    ? await XmppClient.DiscoverItemsWithFeature(StandardUris.Muc)
-                    : await XmppClient.DiscoverItems(Jid.Parse(service), StandardUris.Muc);
+                    ? await XmppClient.DiscoverItemsWithFeature(Namespaces.Muc)
+                    : await XmppClient.DiscoverItems(Jid.Parse(service), Namespaces.Muc);
 
                 if (node != null)
                     ConferenceServiceId = node.Jid;

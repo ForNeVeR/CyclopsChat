@@ -8,6 +8,9 @@ public static class Namespaces
     public const string Last = "jabber:iq:last";
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Muc = "http://jabber.org/protocol/muc";
+
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string MucUser = "http://jabber.org/protocol/muc#user";
 
     /// <remarks>XEP-0049: Private XML Storage</remarks>

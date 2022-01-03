@@ -1,5 +1,7 @@
+using System.Xml.Linq;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Protocol;
 
 namespace Cyclops.Xmpp.SharpXmpp.Data;
 
@@ -7,7 +9,9 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
 {
     public IExtendedUserData? GetExtendedUserData(IPresence presence)
     {
-        throw new NotImplementedException();
+        var xmppPresence = presence.Unwrap();
+        var x = xmppPresence.Element(XNamespace.Get(Namespaces.Muc) + Elements.X);
+        return x.WrapUserData();
     }
 
     public PhotoData? GetPhotoData(IPresence presence)
