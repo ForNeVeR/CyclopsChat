@@ -14,6 +14,7 @@ public class SharpXmppRoom : IRoom
 
     private readonly object stateLock = new();
     private bool isJoined;
+    private string? currentNickname;
 
     public SharpXmppRoom(IXmppClient client, Jid roomJid)
     {
@@ -28,11 +29,13 @@ public class SharpXmppRoom : IRoom
     private void SubscribeToEvents()
     {
         client.Presence += OnPresence;
+        client.Message += OnMessage;
     }
 
     private void UnsubscribeFromEvents()
     {
         client.Presence -= OnPresence;
+        client.Message -= OnMessage;
     }
 
     private void OnPresence(object _, IPresence presence)
@@ -56,6 +59,9 @@ public class SharpXmppRoom : IRoom
         if (ShouldFireJoinEvent())
             Joined?.Invoke(this, null);
 
+        if (ShouldFireLeaveEvent())
+            Left?.Invoke(this, presence);
+
         bool ShouldFireJoinEvent()
         {
             lock (stateLock)
@@ -66,6 +72,30 @@ public class SharpXmppRoom : IRoom
                 return true;
             }
         }
+
+        bool ShouldFireLeaveEvent() => isSelfPresence && type == PresenceTypes.Unavailable;
+    }
+
+    private void OnMessage(object sender, IMessage message)
+    {
+        if (message.From?.Bare != Jid) return;
+        if (message.Subject != null)
+        {
+            SubjectChange?.Invoke(this, message);
+            return;
+        }
+        if (message.From == JidWithNick)
+        {
+            SelfMessage?.Invoke(this, message);
+            return;
+        }
+        if (message.From?.Resource == null)
+        {
+            AdminMessage?.Invoke(this, message);
+            return;
+        }
+
+        RoomMessage?.Invoke(this, message);
     }
 
     public void Join(string? password = null)
@@ -78,8 +108,12 @@ public class SharpXmppRoom : IRoom
         throw new NotImplementedException();
     }
 
-    public void SetNickname(string nickname) =>
+    public void SetNickname(string nickname)
+    {
+        lock (stateLock)
+            currentNickname = nickname;
         client.SendPresence(new PresenceDetails { To = Jid.WithResource(nickname) });
+    }
 
     public void SetSubject(string subject)
     {
@@ -87,32 +121,12 @@ public class SharpXmppRoom : IRoom
     }
 
     public event EventHandler? Joined;
-    public event EventHandler<IPresence>? Left
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IMessage>? SubjectChange
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<IPresence>? Left;
+    public event EventHandler<IMessage>? SubjectChange;
     public event EventHandler<IPresence>? PresenceError;
-    public event EventHandler<IMessage>? SelfMessage
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IMessage>? AdminMessage
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IMessage>? RoomMessage
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<IMessage>? SelfMessage;
+    public event EventHandler<IMessage>? AdminMessage;
+    public event EventHandler<IMessage>? RoomMessage;
     public event EventHandler<IMucParticipant>? ParticipantJoin
     {
         add => throw new NotImplementedException();
@@ -128,7 +142,10 @@ public class SharpXmppRoom : IRoom
         add => throw new NotImplementedException();
         remove => throw new NotImplementedException();
     }
+
     public Jid Jid { get; }
+    private Jid JidWithNick => Jid.WithResource(currentNickname);
+
     public IReadOnlyList<IMucParticipant> Participants => throw new NotImplementedException();
     public Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation)
     {
