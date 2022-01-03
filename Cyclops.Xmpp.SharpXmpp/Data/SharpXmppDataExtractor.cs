@@ -17,7 +17,11 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
 
     public PhotoData? GetPhotoData(IPresence presence)
     {
-        throw new NotImplementedException();
+        var xmlPresence = presence.Unwrap();
+        var hash = xmlPresence.Element(XNamespace.Get(Namespaces.VCardTempXUpdate) + Elements.X)?
+            .Element(XNamespace.Get(Namespaces.VCardTempXUpdate) + Elements.Photo)?
+            .Value;
+        return hash == null ? null : new PhotoData(hash);
     }
 
     public DateTime? GetDelayStamp(IMessage message)
