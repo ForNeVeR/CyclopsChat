@@ -15,6 +15,7 @@ public class SharpXmppRoom : IRoom
     private readonly object stateLock = new();
     private bool isJoined;
     private string? currentNickname;
+    private readonly Dictionary<string, MucParticipant> participants = new();
 
     public SharpXmppRoom(IXmppClient client, Jid roomJid)
     {
@@ -62,6 +63,9 @@ public class SharpXmppRoom : IRoom
         if (ShouldFireLeaveEvent())
             Left?.Invoke(this, presence);
 
+        if (presence.From != JidWithNick)
+            ProcessParticipant(presence, type);
+
         bool ShouldFireJoinEvent()
         {
             lock (stateLock)
@@ -98,6 +102,36 @@ public class SharpXmppRoom : IRoom
         RoomMessage?.Invoke(this, message);
     }
 
+    private void ProcessParticipant(IPresence presence, string? type)
+    {
+        var nickname = presence.From?.Resource;
+        if (nickname == null) return;
+
+        lock (stateLock)
+        {
+            var existingParticipant = participants.TryGetValue(nickname, out var p) ? p : null;
+            switch (type, existingParticipant)
+            {
+                case (PresenceTypes.Unavailable, { }):
+                    participants.Remove(nickname);
+                    ParticipantLeave?.Invoke(this, existingParticipant);
+                    break;
+                case (_, { }):
+                    existingParticipant.UpdateFrom(presence);
+                    ParticipantPresenceChange?.Invoke(this, existingParticipant);
+                    break;
+                case (_, null) when type != PresenceTypes.Unavailable:
+                    var newParticipant = new MucParticipant();
+                    participants.Add(nickname, newParticipant);
+                    ParticipantJoin?.Invoke(this, newParticipant);
+                    break;
+                case (PresenceTypes.Unavailable, null):
+                    // Leaving notification from non-existing participant; ignore.
+                    break;
+            }
+        }
+    }
+
     public void Join(string? password = null)
     {
         throw new NotImplementedException();
@@ -127,21 +161,9 @@ public class SharpXmppRoom : IRoom
     public event EventHandler<IMessage>? SelfMessage;
     public event EventHandler<IMessage>? AdminMessage;
     public event EventHandler<IMessage>? RoomMessage;
-    public event EventHandler<IMucParticipant>? ParticipantJoin
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IMucParticipant>? ParticipantLeave
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
-    public event EventHandler<IMucParticipant>? ParticipantPresenceChange
-    {
-        add => throw new NotImplementedException();
-        remove => throw new NotImplementedException();
-    }
+    public event EventHandler<IMucParticipant>? ParticipantJoin;
+    public event EventHandler<IMucParticipant>? ParticipantLeave;
+    public event EventHandler<IMucParticipant>? ParticipantPresenceChange;
 
     public Jid Jid { get; }
     private Jid JidWithNick => Jid.WithResource(currentNickname);
