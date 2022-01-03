@@ -1,23 +1,23 @@
 using System.Globalization;
 using System.Xml.Linq;
-using Cyclops.Xmpp.Client;
-using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Client;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
+using SharpXMPP.XMPP.Client.Elements;
 
 namespace Cyclops.Xmpp.SharpXmpp.Data.Rooms;
 
 public class SharpXmppRoom : IRoom
 {
-    private readonly IXmppClient client;
+    private readonly SharpXmppClient client;
 
     private readonly object stateLock = new();
     private bool isJoined;
     private string? currentNickname;
     private readonly Dictionary<string, MucParticipant> participants = new();
 
-    public SharpXmppRoom(IXmppClient client, Jid roomJid)
+    public SharpXmppRoom(SharpXmppClient client, Jid roomJid)
     {
         this.client = client;
         Jid = roomJid;
@@ -132,9 +132,23 @@ public class SharpXmppRoom : IRoom
         }
     }
 
+    private void SendRoomPresence()
+    {
+        var presence = new XMPPPresence
+        {
+            To = JidWithNick.Map()
+        };
+        presence.Add(new XElement(XNamespace.Get(SharpXMPP.Namespaces.MUC) + Elements.X));
+
+        client.SendPresence(presence);
+    }
+
     public void Join(string? password = null)
     {
-        throw new NotImplementedException();
+        if (password != null)
+            throw new NotImplementedException();
+
+        SendRoomPresence();
     }
 
     public void Leave(string? reason)
@@ -145,8 +159,11 @@ public class SharpXmppRoom : IRoom
     public void SetNickname(string nickname)
     {
         lock (stateLock)
+        {
             currentNickname = nickname;
-        client.SendPresence(new PresenceDetails { To = Jid.WithResource(nickname) });
+            if (isJoined)
+                SendRoomPresence();
+        }
     }
 
     public void SetSubject(string subject)

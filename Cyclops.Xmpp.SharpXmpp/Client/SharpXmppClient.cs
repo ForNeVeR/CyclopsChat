@@ -197,6 +197,13 @@ public class SharpXmppClient : IXmppClient
         currentClient!.Send(presence);
     }
 
+    internal void SendPresence(XMPPPresence presence)
+    {
+        presence.GetOrCreateAttribute(Attributes.From).Value ??= currentClient!.Jid?.FullJid;
+
+        currentClient!.Send(presence);
+    }
+
     public void SendIq(IIq iq)
     {
         throw new NotImplementedException();
