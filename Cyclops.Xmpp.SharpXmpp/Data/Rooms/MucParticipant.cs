@@ -10,23 +10,26 @@ internal class MucParticipant : IMucParticipant
     public MucParticipant(IPresence presence)
     {
         Presence = presence;
-        RoomParticipantJid = presence.From!.Value;
+        var jidWithNick = presence.From!.Value;
 
-        var extendedData = presence.Unwrap().Element(XNamespace.Get(Namespaces.MucUser) + Elements.X)?.WrapAsUserData();
-        var roomItem = extendedData?.RoomItem;
-        Role = roomItem?.Role;
-        Affiliation = roomItem?.Affiliation;
+        RoomParticipantJid = jidWithNick;
+        Nick = jidWithNick.Resource!;
+
+        UpdateFrom(presence);
     }
 
     public Jid RoomParticipantJid { get; }
     public Jid? RealJid => throw new NotImplementedException();
-    public MucRole? Role { get; }
-    public MucAffiliation? Affiliation { get; }
+    public MucRole? Role { get; private set; }
+    public MucAffiliation? Affiliation { get; private set; }
     public IPresence Presence { get; }
-    public string Nick => throw new NotImplementedException();
+    public string Nick { get; }
 
     public void UpdateFrom(IPresence presence)
     {
-        throw new NotImplementedException();
+        var extendedData = presence.Unwrap().Element(XNamespace.Get(Namespaces.MucUser) + Elements.X)?.WrapAsUserData();
+        var roomItem = extendedData?.RoomItem;
+        Role = roomItem?.Role;
+        Affiliation = roomItem?.Affiliation;
     }
 }
