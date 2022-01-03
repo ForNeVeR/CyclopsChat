@@ -17,7 +17,10 @@ public static class Elements
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Item = "item";
 
+    /// <remarks>XEP-0092: Software Version</remarks>
     public const string Name = "name";
+
+    /// <remarks>XEP-0092: Software Version</remarks>
     public const string Os = "os";
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
@@ -42,6 +45,8 @@ public static class Elements
 
     public const string Tz = "tz";
     public const string Utc = "utc";
+
+    /// <remarks>XEP-0092: Software Version</remarks>
     public const string Version = "version";
     public const string X = "x";
 }

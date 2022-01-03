@@ -11,7 +11,7 @@ using Cyclops.Xmpp.SharpXmpp.Protocol;
 using SharpXMPP;
 using SharpXMPP.XMPP;
 using SharpXMPP.XMPP.Client.Elements;
-using Namespaces = SharpXMPP.Namespaces;
+using Namespaces = Cyclops.Xmpp.Protocol.Namespaces;
 
 namespace Cyclops.Xmpp.SharpXmpp.Client;
 
@@ -115,7 +115,7 @@ public class SharpXmppClient : IXmppClient
             WriteRawMessage?.Invoke(this, e.Stanza.ToString());
         switch (e)
         {
-            case { IsInput: true, Stanza.Name: { NamespaceName: Namespaces.Streams, LocalName: Elements.Error } }:
+            case { IsInput: true, Stanza.Name: { NamespaceName: SharpXMPP.Namespaces.Streams, LocalName: Elements.Error } }:
                 StreamError?.Invoke(this, null);
                 break;
         }
@@ -166,28 +166,30 @@ public class SharpXmppClient : IXmppClient
 
         if (presenceDetails.StatusText != null)
         {
-            var status = presence.GetOrCreateChildElement(XNamespace.Get(Namespaces.JabberClient) + "status");
+            var status = presence.GetOrCreateChildElement(
+                XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + "status");
             status.Value = presenceDetails.StatusText;
         }
 
         if (presenceDetails.StatusType != null)
         {
-            var show = presence.GetOrCreateChildElement(XNamespace.Get(Namespaces.JabberClient) + "show");
+            var show = presence.GetOrCreateChildElement(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + "show");
             show.Value = presenceDetails.StatusType.Value.Map();
         }
 
         if (presenceDetails.PhotoHash != null)
         {
             var x = presence.GetOrCreateChildElement(
-                XNamespace.Get(Cyclops.Xmpp.Protocol.Namespaces.VCardTempXUpdate) + Elements.X);
+                XNamespace.Get(Namespaces.VCardTempXUpdate) + Elements.X);
             var photo = x.GetOrCreateChildElement(
-                XNamespace.Get(Cyclops.Xmpp.Protocol.Namespaces.VCardTempXUpdate) + Elements.Photo);
+                XNamespace.Get(Namespaces.VCardTempXUpdate) + Elements.Photo);
             photo.Value = presenceDetails.PhotoHash;
         }
 
         if (presenceDetails.Priority != null)
         {
-            var priority = presence.GetOrCreateChildElement(XNamespace.Get(Namespaces.JabberClient) + "priority");
+            var priority = presence.GetOrCreateChildElement(
+                XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + "priority");
             priority.Value = presenceDetails.Priority.Value.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -228,7 +230,28 @@ public class SharpXmppClient : IXmppClient
 
     public Task<ClientInfo?> GetClientInfo(Jid jid)
     {
-        throw new NotImplementedException();
+        var iq = new XMPPIq(XMPPIq.IqTypes.get);
+        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.Version) + Elements.Query);
+
+        var result = new TaskCompletionSource<ClientInfo?>();
+        currentClient!.Query(iq, response =>
+        {
+            try
+            {
+                var query = response.Element(XNamespace.Get(Namespaces.Version) + Elements.Query);
+                var name = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Name);
+                var version = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Version);
+                var os = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Os);
+
+                var clientInfo = new ClientInfo(os?.Value, version?.Value, name?.Value);
+                result.SetResult(clientInfo);
+            }
+            catch (Exception ex)
+            {
+                result.SetException(ex);
+            }
+        });
+        return result.Task;
     }
 
     public Task<IDiscoNode?> DiscoverItems(Jid jid, string node)
