@@ -176,7 +176,7 @@ namespace Cyclops.Core.Resource
 
         public void OpenConference(Jid id)
         {
-            Conferences.AsInternalImpl().Add(new Conference(logger, this, dataExtractor, id));
+            Conferences.AsInternalImpl().Add(new Conference(logger, dispatcher, this, dataExtractor, id));
         }
 
         public void AuthenticateAsync(ConnectionConfig info)

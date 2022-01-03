@@ -2,10 +2,12 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.Avatars;
+using Cyclops.Core.Resource.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Xmpp.Data;
@@ -17,13 +19,20 @@ namespace Cyclops.Core.Resource
     public class Conference : NotifyPropertyChangedBase, IConference
     {
         private readonly ILogger logger;
+        private readonly Dispatcher dispatcher;
         private readonly IXmppDataExtractor dataExtractor;
         private readonly UserSession session;
         private IRoom? room;
 
-        internal Conference(ILogger logger, UserSession session, IXmppDataExtractor dataExtractor, Jid conferenceId)
+        internal Conference(
+            ILogger logger,
+            Dispatcher dispatcher,
+            UserSession session,
+            IXmppDataExtractor dataExtractor,
+            Jid conferenceId)
         {
             this.logger = logger;
+            this.dispatcher = dispatcher;
             this.session = session;
             this.dataExtractor = dataExtractor;
             ConferenceId = conferenceId;
@@ -145,175 +154,198 @@ namespace Cyclops.Core.Resource
         private bool waitingForPassword = false;
         private void room_OnPresenceError(object _, IPresence pres)
         {
-            if (pres.Error == null)
-                return;
-
-            if (captchaMode || (waitingForPassword && pres.Error.Code != 401))
-                return;
-
-            switch (pres.Error.Code)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                case 409: //conflict
-                    if (!isNickConflictMode)
-                    {
-                        isNickConflictMode = true;
-                        Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.NickConflict,
-                                                                 ErrorMessageResources.NickConflictErrorMessage));
-                    }
-                    break;
+                if (pres.Error == null)
+                    return;
 
-                case 403: //banned
-                    Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.Banned,
-                                                             ErrorMessageResources.BannedErrorMessage));
-                    break;
+                if (captchaMode || (waitingForPassword && pres.Error.Code != 401))
+                    return;
 
-                case 401:
-                    ConferenceJoinErrorKind error;
-                    if (waitingForPassword)
-                        error = ConferenceJoinErrorKind.PasswordRequired;
-                    else
-                        error = ConferenceJoinErrorKind.PasswordRequired;
+                switch (pres.Error.Code)
+                {
+                    case 409: //conflict
+                        if (!isNickConflictMode)
+                        {
+                            isNickConflictMode = true;
+                            Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.NickConflict,
+                                ErrorMessageResources.NickConflictErrorMessage));
+                        }
 
-                    waitingForPassword = true;
-                    Joined(this, new ConferenceJoinEventArgs(error, pres.Error.Message));
-                    break;
+                        break;
 
-                case 407:
-                    AccessDenied(this, EventArgs.Empty);
-                    break;
+                    case 403: //banned
+                        Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.Banned,
+                            ErrorMessageResources.BannedErrorMessage));
+                        break;
 
-                case 503:
-                    ServiceUnavailable(this, EventArgs.Empty);
-                    break;
+                    case 401:
+                        ConferenceJoinErrorKind error;
+                        if (waitingForPassword)
+                            error = ConferenceJoinErrorKind.PasswordRequired;
+                        else
+                            error = ConferenceJoinErrorKind.PasswordRequired;
 
-                case 405://i.e. changing nickname if one is visitor and this action is not allowed at the conference
-                    MethodNotAllowedError(this, EventArgs.Empty);
-                    break;
+                        waitingForPassword = true;
+                        Joined(this, new ConferenceJoinEventArgs(error, pres.Error.Message));
+                        break;
 
-                case 404:
-                    NotFound(this, EventArgs.Empty);
-                    break;
+                    case 407:
+                        AccessDenied(this, EventArgs.Empty);
+                        break;
+
+                    case 503:
+                        ServiceUnavailable(this, EventArgs.Empty);
+                        break;
+
+                    case 405
+                        : //i.e. changing nickname if one is visitor and this action is not allowed at the conference
+                        MethodNotAllowedError(this, EventArgs.Empty);
+                        break;
+
+                    case 404:
+                        NotFound(this, EventArgs.Empty);
+                        break;
 #if DEBUG
-                default:
-                    Debugger.Break();
-                break;
+                    default:
+                        Debugger.Break();
+                        break;
 #endif
-            }
+                }
+            });
         }
 
         private void room_OnLeave(object _, IPresence pres)
         {
-            var userX = dataExtractor.GetExtendedUserData(pres);
-            if (userX?.Status.IsNullOrEmpty() == false)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                if (userX.Status.Any(i => i == MucUserStatus.Kicked))
-                    Kicked(this, new KickedEventArgs(null, userX.RoomItem?.Reason));
-                else if (userX.Status.Any(i => i == MucUserStatus.Banned))
-                    Banned(this, new BannedEventArgs(null, userX.RoomItem.Reason));
-            }
+                var userX = dataExtractor.GetExtendedUserData(pres);
+                if (userX?.Status.IsNullOrEmpty() == false)
+                {
+                    if (userX.Status.Any(i => i == MucUserStatus.Kicked))
+                        Kicked(this, new KickedEventArgs(null, userX.RoomItem?.Reason));
+                    else if (userX.Status.Any(i => i == MucUserStatus.Banned))
+                        Banned(this, new BannedEventArgs(null, userX.RoomItem.Reason));
+                }
 
-            Members.AsInternalImpl().Clear();
-            IsInConference = false;
+                Members.AsInternalImpl().Clear();
+                IsInConference = false;
+            });
         }
 
         private void room_OnJoin(object sender, object __)
         {
-            var senderRoom = (IRoom)sender;
-            if (waitingForPassword)
-                waitingForPassword = false;
-
-            Joined(this, new ConferenceJoinEventArgs());
-            foreach (var participant in senderRoom.Participants)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
-                    Members.AsInternalImpl().Add(new ConferenceMember(logger, session, this, participant, senderRoom)
-                                                     {
-                                                         AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
-                                                     });
-            }
-            IsInConference = true;
+                var senderRoom = (IRoom)sender;
+                if (waitingForPassword)
+                    waitingForPassword = false;
+
+                Joined(this, new ConferenceJoinEventArgs());
+                foreach (var participant in senderRoom.Participants)
+                {
+                    if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
+                        Members.AsInternalImpl().Add(
+                            new ConferenceMember(logger, session, this, participant, senderRoom)
+                            {
+                                AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
+                            });
+                }
+
+                IsInConference = true;
+            });
         }
 
         private void room_OnParticipantLeave(object sender, IMucParticipant participant)
         {
-            var senderRoom = (IRoom)sender;
-
-            //HANDLE NICK CHANGE
-            bool nickChangeAction = false;
-            string newNick = string.Empty;
-
-            var memberObj = Members.FirstOrDefault(i => i.Nick == participant.Nick);
-            if (memberObj == null)
-                return;
-            var userX = dataExtractor.GetExtendedUserData(participant.Presence);
-            var nickChange = userX?.Status.Contains(MucUserStatus.NewRoomNickname) == true ? userX : null;
-            var adminItem = nickChange == null ? null : dataExtractor.GetAdminItem(nickChange);
-            if (!string.IsNullOrEmpty(adminItem?.Nick))
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                newNick = adminItem!.Nick;
-                string oldNick = participant.Nick;
-                NickChange(this, new NickChangeEventArgs(oldNick, newNick));
-                nickChangeAction = true;
-            }
+                var senderRoom = (IRoom)sender;
 
-            if (nickChangeAction && participant.RoomParticipantJid == ConferenceId)
-            {
-                ProcessParticipant().NoAwait(logger);
-                async Task ProcessParticipant()
+                //HANDLE NICK CHANGE
+                bool nickChangeAction = false;
+                string newNick = string.Empty;
+
+                var memberObj = Members.FirstOrDefault(i => i.Nick == participant.Nick);
+                if (memberObj == null)
+                    return;
+                var userX = dataExtractor.GetExtendedUserData(participant.Presence);
+                var nickChange = userX?.Status.Contains(MucUserStatus.NewRoomNickname) == true ? userX : null;
+                var adminItem = nickChange == null ? null : dataExtractor.GetAdminItem(nickChange);
+                if (!string.IsNullOrEmpty(adminItem?.Nick))
                 {
-                    var member = memberObj;
-
-                    // a small hack:
-                    var _ = await senderRoom.GetParticipants(participant.Affiliation);
-                    var newParticipant = senderRoom.Participants.FirstOrDefault(i => i.Nick == newNick);
-                    if (newParticipant == null)
-                    {
-                        //LOG?
-                        return;
-                    }
-
-                    Members.AsInternalImpl().Add(
-                        new ConferenceMember(logger, session, this, newParticipant, senderRoom)
-                        {
-                            AvatarUrl = member.AvatarUrl
-                        });
+                    newNick = adminItem!.Nick;
+                    string oldNick = participant.Nick;
+                    NickChange(this, new NickChangeEventArgs(oldNick, newNick));
+                    nickChangeAction = true;
                 }
 
-                ConferenceId = ConferenceId.WithResource(newNick);
-            }
-            //HANDLE NICK CHANGE (END)
+                if (nickChangeAction && participant.RoomParticipantJid == ConferenceId)
+                {
+                    ProcessParticipant().NoAwait(logger);
 
-            if (!nickChangeAction)
-                ParticipantLeave(this, new ConferenceMemberEventArgs(memberObj));
+                    async Task ProcessParticipant()
+                    {
+                        var member = memberObj;
 
-            Members.AsInternalImpl().Remove(i => participant.RoomParticipantJid.Equals(i.ConferenceUserId));
+                        // a small hack:
+                        var _ = await senderRoom.GetParticipants(participant.Affiliation);
+                        var newParticipant = senderRoom.Participants.FirstOrDefault(i => i.Nick == newNick);
+                        if (newParticipant == null)
+                        {
+                            //LOG?
+                            return;
+                        }
+
+                        Members.AsInternalImpl().Add(
+                            new ConferenceMember(logger, session, this, newParticipant, senderRoom)
+                            {
+                                AvatarUrl = member.AvatarUrl
+                            });
+                    }
+
+                    ConferenceId = ConferenceId.WithResource(newNick);
+                }
+                //HANDLE NICK CHANGE (END)
+
+                if (!nickChangeAction)
+                    ParticipantLeave(this, new ConferenceMemberEventArgs(memberObj));
+
+                Members.AsInternalImpl().Remove(i => participant.RoomParticipantJid.Equals(i.ConferenceUserId));
+            });
         }
 
         private void room_OnParticipantJoin(object sender, IMucParticipant participant)
         {
-            var senderRoom = (IRoom)sender;
-
-            if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                var member = new ConferenceMember(logger, session, this, participant, senderRoom)
-                                 {
-                                     AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
-                                 };
-                Members.AsInternalImpl().Add(member);
-                if (IsInConference) //hack :)
-                    ParticipantJoin(this, new ConferenceMemberEventArgs(member));
-            }
+                var senderRoom = (IRoom)sender;
+
+                if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
+                {
+                    var member = new ConferenceMember(logger, session, this, participant, senderRoom)
+                    {
+                        AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
+                    };
+                    Members.AsInternalImpl().Add(member);
+                    if (IsInConference) //hack :)
+                        ParticipantJoin(this, new ConferenceMemberEventArgs(member));
+                }
+            });
         }
 
         private void room_OnRoomMessage(object sender, IMessage msg)
         {
-            var senderRoom = (IRoom)sender;
-            if (string.IsNullOrEmpty(msg.Body)) return;
-
-            var stamp = dataExtractor.GetDelayStamp(msg) ?? DateTime.Now;
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, senderRoom, msg)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                Timestamp = stamp
+                var senderRoom = (IRoom)sender;
+                if (string.IsNullOrEmpty(msg.Body)) return;
+
+                var stamp = dataExtractor.GetDelayStamp(msg) ?? DateTime.Now;
+                Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, senderRoom, msg)
+                {
+                    Timestamp = stamp
+                });
             });
         }
 
@@ -324,48 +356,57 @@ namespace Cyclops.Core.Resource
 
         private void room_OnAdminMessage(object sender, IMessage msg)
         {
-            // CAPTCHA required
-            var captcha =  dataExtractor.GetCaptchaRequest(msg);
-            if (captcha != null)
+            dispatcher.InvokeAsyncIfRequired(() =>
             {
-                captchaChallenge = captcha.CaptchaChallenge;
-                CaptchaRequirment(
-                    this,
-                    new CaptchaEventArgs(ImageUtils.Base64ToBitmapImage(captcha.CaptchaImageBodyBase64)));
-                captchaMode = true;
-                return;
-            }
+                // CAPTCHA required
+                var captcha = dataExtractor.GetCaptchaRequest(msg);
+                if (captcha != null)
+                {
+                    captchaChallenge = captcha.CaptchaChallenge;
+                    CaptchaRequirment(
+                        this,
+                        new CaptchaEventArgs(ImageUtils.Base64ToBitmapImage(captcha.CaptchaImageBodyBase64)));
+                    captchaMode = true;
+                    return;
+                }
 
-            //Not allowed to change subject
-            if (msg.Error != null && !string.IsNullOrEmpty(msg.Subject))
-            {
-                CantChangeSubject(this, EventArgs.Empty);
-                return;
-            }
+                //Not allowed to change subject
+                if (msg.Error != null && !string.IsNullOrEmpty(msg.Subject))
+                {
+                    CantChangeSubject(this, EventArgs.Empty);
+                    return;
+                }
 
-            //not allowed to send messages
-            if (msg.Error != null && msg.Error.Code == 403)
-            {
-                MethodNotAllowedError(this, EventArgs.Empty);
-                return;
-            }
+                //not allowed to send messages
+                if (msg.Error != null && msg.Error.Code == 403)
+                {
+                    MethodNotAllowedError(this, EventArgs.Empty);
+                    return;
+                }
 
-            //unknown:
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, (IRoom)sender, msg));
+                //unknown:
+                Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, (IRoom)sender, msg));
+            });
         }
 
         private void room_OnSelfMessage(object _, IMessage msg)
         {
-            if (string.IsNullOrEmpty(msg.Body)) return;
-            Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, msg, true));
+            dispatcher.InvokeAsyncIfRequired(() =>
+            {
+                if (string.IsNullOrEmpty(msg.Body)) return;
+                Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, msg, true));
+            });
         }
 
         private void room_OnSubjectChange(object sender, IMessage msg)
         {
-            if (msg.From != null && !string.IsNullOrEmpty(msg.From?.Resource))
-                SubjectChanged(this, new SubjectChangedEventArgs(msg.From!.Value.Resource, msg.Subject));
+            dispatcher.InvokeAsyncIfRequired(() =>
+            {
+                if (msg.From != null && !string.IsNullOrEmpty(msg.From?.Resource))
+                    SubjectChanged(this, new SubjectChangedEventArgs(msg.From!.Value.Resource, msg.Subject));
 
-            Subject = msg.Subject;
+                Subject = msg.Subject;
+            });
         }
 
         #region Implementation of ISessionHolder
