@@ -237,11 +237,14 @@ namespace Cyclops.Core.Resource
                 foreach (var participant in senderRoom.Participants)
                 {
                     if (!Members.Any(i => i.ConferenceUserId == participant.RoomParticipantJid))
-                        Members.AsInternalImpl().Add(
-                            new ConferenceMember(logger, session, this, participant, senderRoom)
-                            {
-                                AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
-                            });
+                    {
+                        var member = new ConferenceMember(logger, session, this, participant, senderRoom)
+                        {
+                            AvatarUrl = AvatarsManager.GetFromCache(string.Empty)
+                        };
+                        Members.AsInternalImpl().Add(member);
+                        ProcessAvatar(participant.Presence, member);
+                    }
                 }
 
                 IsInConference = true;
