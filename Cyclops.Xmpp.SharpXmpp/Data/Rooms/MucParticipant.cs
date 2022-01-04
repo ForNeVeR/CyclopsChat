@@ -19,7 +19,18 @@ internal class MucParticipant : IMucParticipant
     }
 
     public Jid RoomParticipantJid { get; }
-    public Jid? RealJid => throw new NotImplementedException();
+
+    public Jid? RealJid
+    {
+        get
+        {
+            var item = Presence.Unwrap().Element(XNamespace.Get(Namespaces.MucUser) + Elements.X)?
+                .Element(XNamespace.Get(Namespaces.MucUser) + Elements.Item);
+
+            var jid = item?.Attribute(Attributes.Jid)?.Value;
+            return jid == null ? null : Jid.Parse(jid);
+        }
+    }
     public MucRole? Role { get; private set; }
     public MucAffiliation? Affiliation { get; private set; }
     public IPresence Presence { get; set; }
