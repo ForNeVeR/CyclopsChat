@@ -12,7 +12,7 @@ internal static class ErrorEx
             this.error = error;
         }
 
-        public int Code => error.Code;
+        public int? Code => error.Code;
         public string? Message => error.Message;
     }
 
