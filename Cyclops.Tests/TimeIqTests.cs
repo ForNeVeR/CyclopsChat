@@ -12,7 +12,7 @@ public class TimeIqTests
     [Fact]
     public void TimeIqProperlyPresented()
     {
-        var dateTime = new DateTime(2020, 1, 1);
+        var dateTime = new DateTime(2020, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         var timeZone = TimeZoneInfo.Utc;
         var sharpXmppIq = CreateSharpXmppTimeIq(dateTime, timeZone);
 
@@ -21,7 +21,7 @@ public class TimeIqTests
         var display = sharpXmppQuery.Element(sharpXmppQuery.Name.Namespace + "display")!.Value;
         var tz = sharpXmppQuery.Element(sharpXmppQuery.Name.Namespace + "tz")!.Value;
 
-        Assert.Equal("20191231T17:00:00", utc);
+        Assert.Equal("20200101T00:00:00", utc);
         Assert.Equal("2020-01-01T00:00:00", display);
         Assert.Equal(timeZone.StandardName, tz);
     }
