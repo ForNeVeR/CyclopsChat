@@ -1,7 +1,5 @@
 using System;
-using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
-using jabber;
 using Xunit;
 
 namespace Cyclops.Tests;
@@ -18,11 +16,9 @@ public class JidTests
     [InlineData("foo/bar@baz")]
     public void CheckParsesCorrectly(string jid)
     {
-        var jabberNetJid = new JID(jid);
         var cyclopsJid = Jid.Parse(jid);
 
-        Assert.Equal(jabberNetJid.Map(), cyclopsJid);
-        Assert.Equal(jabberNetJid.ToString(), cyclopsJid.ToString());
+        Assert.Equal(jid, cyclopsJid.ToString());
     }
 
     [Theory]
@@ -33,7 +29,6 @@ public class JidTests
     [InlineData("foo@bar/")]
     public void CheckParsesWithException(string jid)
     {
-        Assert.Throws<JIDFormatException>(() => new JID(jid));
         Assert.Throws<ArgumentException>(() => Jid.Parse(jid));
     }
 }

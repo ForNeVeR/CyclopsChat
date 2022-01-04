@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.MainApplication", "Cyclops.MainApplication\Cyclops.MainApplication.csproj", "{08CEBA92-6628-4818-85EB-7C24C531F1D2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jabber-net", "Jabber-net", "{1164E110-8696-43FE-878F-C8F39BD7882B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2005-jabber-net", "Jabber-net\2005-jabber-net.csproj", "{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "netlib.Dns", "Jabber-net\netlib.Dns\netlib.Dns.csproj", "{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Core", "Cyclops.Core\Cyclops.Core.csproj", "{61356ED8-D17B-4940-943D-812B8FCDA911}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Core.Resource", "Cyclops.Core.Resource\Cyclops.Core.Resource.csproj", "{3D3E964F-34F2-423B-B22D-865DFE640182}"
@@ -36,8 +30,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Console", "Cyclops.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Xmpp", "Cyclops.Xmpp\Cyclops.Xmpp.csproj", "{FC66EBD9-FF45-4200-8708-A5E484E45302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Xmpp.JabberNet", "Cyclops.Xmpp.JabberNet\Cyclops.Xmpp.JabberNet.csproj", "{C19FDFF9-15FC-4E80-BCEA-3C15C280BACA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Windows", "Cyclops.Windows\Cyclops.Windows.csproj", "{51E7C768-8486-423E-8638-347EBF85AD35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Configuration", "Cyclops.Configuration\Cyclops.Configuration.csproj", "{570D6692-6C4D-44BC-A0A3-30FCB0843B3B}"
@@ -52,14 +44,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61356ED8-D17B-4940-943D-812B8FCDA911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61356ED8-D17B-4940-943D-812B8FCDA911}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61356ED8-D17B-4940-943D-812B8FCDA911}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -88,10 +72,6 @@ Global
 		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC66EBD9-FF45-4200-8708-A5E484E45302}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C19FDFF9-15FC-4E80-BCEA-3C15C280BACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C19FDFF9-15FC-4E80-BCEA-3C15C280BACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C19FDFF9-15FC-4E80-BCEA-3C15C280BACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C19FDFF9-15FC-4E80-BCEA-3C15C280BACA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51E7C768-8486-423E-8638-347EBF85AD35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51E7C768-8486-423E-8638-347EBF85AD35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E7C768-8486-423E-8638-347EBF85AD35}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -113,8 +93,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{6CAE854A-F202-4D2B-B10E-E8D8E81E5EF5} = {1164E110-8696-43FE-878F-C8F39BD7882B}
-		{40AC7A7C-D3E5-46DF-B740-06BD9D2A00E1} = {1164E110-8696-43FE-878F-C8F39BD7882B}
 		{83BF8062-55BF-4925-B88F-804DCE42F7BA} = {11D748C8-33AE-4AE8-BA78-D368A8DF70D3}
 	EndGlobalSection
 EndGlobal

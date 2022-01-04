@@ -21,10 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Cyclops.Xmpp.JabberNet\Cyclops.Xmpp.JabberNet.csproj" />
       <ProjectReference Include="..\Cyclops.Xmpp.SharpXmpp\Cyclops.Xmpp.SharpXmpp.csproj" />
       <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
-      <ProjectReference Include="..\Jabber-net\2005-jabber-net.csproj" />
     </ItemGroup>
 
 </Project>

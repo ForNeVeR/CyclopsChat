@@ -1,11 +1,7 @@
 using System;
-using System.Xml;
 using System.Xml.Linq;
-using Cyclops.Xmpp.JabberNet.Protocol;
 using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
-using jabber.protocol.client;
-using jabber.protocol.iq;
 using SharpXMPP.XMPP.Client.Elements;
 using Xunit;
 
@@ -14,25 +10,20 @@ namespace Cyclops.Tests;
 public class TimeIqTests
 {
     [Fact]
-    public void TimeIqEquallyPresented()
+    public void TimeIqProperlyPresented()
     {
         var dateTime = new DateTime(2020, 1, 1);
         var timeZone = TimeZoneInfo.Utc;
-        var jabberNetIq = CreateJabberNetTimeIq(dateTime, timeZone);
         var sharpXmppIq = CreateSharpXmppTimeIq(dateTime, timeZone);
 
-        var jabberNetQuery = XDocument.Parse(jabberNetIq.Query.ToString()!).Root;
-        var sharpXmppQuery = sharpXmppIq.Element(XNamespace.Get(Namespaces.Time) + Elements.Query);
+        var sharpXmppQuery = sharpXmppIq.Element(XNamespace.Get(Namespaces.Time) + Elements.Query)!;
+        var utc = sharpXmppQuery.Element(sharpXmppQuery.Name.Namespace + "utc")!.Value;
+        var display = sharpXmppQuery.Element(sharpXmppQuery.Name.Namespace + "display")!.Value;
+        var tz = sharpXmppQuery.Element(sharpXmppQuery.Name.Namespace + "tz")!.Value;
 
-        Assert.Equal(jabberNetQuery!.ToString(), sharpXmppQuery!.ToString());
-    }
-
-    private static IQ CreateJabberNetTimeIq(DateTime dateTime, TimeZoneInfo timeZone)
-    {
-        var iq = new TimeIQ(new XmlDocument());
-        var wrapped = iq.WrapTime();
-        wrapped.Time = (dateTime, timeZone);
-        return Xmpp.JabberNet.Protocol.IqEx.Unwrap(wrapped);
+        Assert.Equal("20191231T17:00:00", utc);
+        Assert.Equal("2020-01-01T00:00:00", display);
+        Assert.Equal(timeZone.StandardName, tz);
     }
 
     private static XMPPIq CreateSharpXmppTimeIq(DateTime dateTime, TimeZoneInfo timeZone)
@@ -40,6 +31,6 @@ public class TimeIqTests
         var iq = new XMPPIq(XMPPIq.IqTypes.get);
         var wrapped = iq.WrapTime();
         wrapped.Time = (dateTime, timeZone);
-        return Xmpp.SharpXmpp.Protocol.IqEx.Unwrap(wrapped);
+        return wrapped.Unwrap();
     }
 }

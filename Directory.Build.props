@@ -9,13 +9,11 @@
             generated $(MSBuildProjectName)_<something>.csproj file generated during XAML processing.
         -->
         <TreatWarningsAsErrors Condition="
-            '$(MSBuildProjectName)' != '2005-jabber-net'
-            And '$(MSBuildProjectName)' != 'Cyclops.Core'
+            '$(MSBuildProjectName)' != 'Cyclops.Core'
             And '$(MSBuildProjectName)' != 'Cyclops.Core.Resource'
             And '$(MSBuildProjectName)' != 'Cyclops.MainApplication'
             And '$(MSBuildProjectName)' != 'Cyclops.MainApplication.Localization'
             And '$(MSBuildProjectName)' != 'Cyclops.MainApplication.Options'
-            And '$(MSBuildProjectName)' != 'netlib.Dns'
             And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication_'))
             And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication.Localization_'))
             And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication.Options_'))
