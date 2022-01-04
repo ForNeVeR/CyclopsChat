@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -377,16 +378,19 @@ namespace Cyclops.Core.Resource
             });
         }
 
-        public void RefreshConferenceList(string? service = null)
+        public void RefreshConferenceList(string service)
         {
             async Task DoRefresh()
             {
-                var node = string.IsNullOrEmpty(service)
-                    ? await XmppClient.DiscoverItemsWithFeature(Namespaces.Muc)
-                    : await XmppClient.DiscoverItems(Jid.Parse(service), Namespaces.Muc);
 
-                if (node != null)
-                    ConferenceServiceId = node.Jid!.Value;
+                var node = await XmppClient.DiscoverItems(Jid.Parse(service), Namespaces.Muc);
+                if (node == null)
+                {
+                    ConferencesListReceived(null, new ConferencesListEventArgs(new List<Tuple<Jid, string>>()));
+                    return;
+                }
+
+                ConferenceServiceId = node.Jid!.Value;
 
                 var subnode = await XmppClient.DiscoverItems(node.Jid!.Value, node.Node);
                 var result = subnode.Children.Select(dn => new Tuple<Jid, string>(dn.Jid!.Value, dn.Name)).ToList();

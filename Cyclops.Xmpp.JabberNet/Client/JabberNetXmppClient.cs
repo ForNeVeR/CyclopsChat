@@ -224,21 +224,4 @@ internal class JabberNetXmppClient : IXmppClient
         }, null, false);
         return task.Task;
     }
-
-    public Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri)
-    {
-        var task = new TaskCompletionSource<IDiscoNode?>();
-        discoManager.BeginFindServiceWithFeature(featureUri, (_, discoNode, _) =>
-        {
-            try
-            {
-                task.SetResult(discoNode.Wrap());
-            }
-            catch (Exception ex)
-            {
-                task.SetException(ex);
-            }
-        }, null);
-        return task.Task;
-    }
 }

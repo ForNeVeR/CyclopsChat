@@ -29,7 +29,7 @@ namespace Cyclops.Core
         void Close();
         void Reconnect();
         void SendPrivate(Jid target, string body);
-        void RefreshConferenceList(string? conferenceService = null);
+        void RefreshConferenceList(string conferenceService);
         void RaiseBookmarksReceived();
         void StartPrivate(Jid conferenceUserId);
 

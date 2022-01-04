@@ -43,5 +43,4 @@ public interface IXmppClient : IDisposable
     Task<ClientInfo?> GetClientInfo(Jid jid);
 
     Task<IDiscoNode?> DiscoverItems(Jid jid, string node);
-    Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri);
 }

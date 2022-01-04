@@ -353,19 +353,4 @@ public class SharpXmppClient : IXmppClient
         var items = query.Elements(XNamespace.Get(Namespaces.DiscoItems) + Elements.Item);
         return new DiscoNode(jid, node, null, items);
     }
-
-    public async Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri)
-    {
-        var iq = new XMPPIq(XMPPIq.IqTypes.get);
-        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.DiscoItems) + Elements.Query);
-
-        var featuresResponse = await SendIq(iq);
-        var features = featuresResponse.Element(XNamespace.Get(Namespaces.DiscoItems) + Elements.Query)?
-            .Elements(XNamespace.Get(Namespaces.DiscoItems) + Elements.Feature) ?? Enumerable.Empty<XElement>();
-        var hasFeature = features.Any(f => f.Attribute(Attributes.Var)?.Value == featureUri);
-        if (!hasFeature)
-            return null;
-
-        throw new NotImplementedException();
-    }
 }
