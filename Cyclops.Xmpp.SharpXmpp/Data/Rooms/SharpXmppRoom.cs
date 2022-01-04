@@ -150,6 +150,18 @@ public class SharpXmppRoom : IRoom
         };
         presence.Add(new XElement(XNamespace.Get(SharpXMPP.Namespaces.MUC) + Elements.X));
 
+        if (conferenceManager.Status != null)
+        {
+            presence.GetOrCreateChildElement(presence.Name.Namespace + Elements.Status)
+                .Value = conferenceManager.Status;
+        }
+
+        if (conferenceManager.StatusType != null)
+        {
+            presence.GetOrCreateChildElement(presence.Name.Namespace + Elements.Show)
+                .Value = conferenceManager.StatusType.Value.Map();
+        }
+
         client.SendPresence(presence);
     }
 
@@ -171,12 +183,16 @@ public class SharpXmppRoom : IRoom
 
     public void SetNickname(string nickname)
     {
+        var shouldSendPresence = false;
         lock (stateLock)
         {
             currentNickname = nickname;
             if (isJoined)
-                SendRoomPresence();
+                shouldSendPresence = true;
         }
+
+        if (shouldSendPresence)
+            SendRoomPresence();
     }
 
     public void SetSubject(string subject)

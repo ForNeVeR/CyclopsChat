@@ -21,8 +21,8 @@ public class SharpXmppConferenceManager : IConferenceManager
         this.client = client;
     }
 
-    public string? Status { set => throw new NotImplementedException(); }
-    public StatusType? StatusType { set => throw new NotImplementedException(); }
+    public string? Status { get; set; }
+    public StatusType? StatusType { get; set; }
 
     public IRoom GetRoom(Jid roomJid)
     {
