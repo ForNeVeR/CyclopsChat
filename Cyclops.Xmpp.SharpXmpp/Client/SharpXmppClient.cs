@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.Xml;
 using System.Xml.Linq;
@@ -162,12 +163,14 @@ public class SharpXmppClient : IXmppClient
 
     public void Disconnect()
     {
-        throw new NotImplementedException();
+        currentClient!.Close();
+        currentClient.Dispose();
+        currentClient = null;
     }
 
     public void SendElement(XmlElement element)
     {
-        throw new NotImplementedException();
+        currentClient!.Send(XElement.Parse(element.ToString()));
     }
 
     public void SendPresence(PresenceDetails presenceDetails)
@@ -219,7 +222,7 @@ public class SharpXmppClient : IXmppClient
 
     public void SendIq(IIq iq)
     {
-        throw new NotImplementedException();
+        SendIq(iq.Unwrap()).NoAwait(logger);
     }
 
     public void SendMessage(MessageType type, Jid target, string body)
@@ -300,9 +303,9 @@ public class SharpXmppClient : IXmppClient
 
         var vCardElement = response.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
         var photoElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto);
-        var fullNameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFn);
-        var emailElement = vCardElement?.Elements(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)
-            .FirstOrDefault();
+        var fullNameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFullName);
+        var emailElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)?
+            .Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmailInternet);
         var birthDateElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardBDay);
         var nicknameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardNickname);
         var descriptionElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardDesc);
@@ -323,9 +326,9 @@ public class SharpXmppClient : IXmppClient
             Comments = descriptionElement?.Value
         };
 
-        Image? ReadPhoto(XElement photo)
+        Image? ReadPhoto(XElement photoEl)
         {
-            var binVal = photo.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhotoBinVal);
+            var binVal = photoEl.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhotoBinVal);
             if (binVal == null) return null;
             try
             {
@@ -342,9 +345,53 @@ public class SharpXmppClient : IXmppClient
         }
     }
 
-    public Task<IIq> UpdateVCard(VCard vCard)
+    public async Task<IIq> UpdateVCard(VCard vCard)
     {
-        throw new NotImplementedException();
+        var iq = new XMPPIq(XMPPIq.IqTypes.set);
+        var query = iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
+
+        if (vCard.Photo != null)
+        {
+            var binVal = query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto)
+                .GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhotoBinVal);
+            using var stream = new MemoryStream();
+            vCard.Photo.Save(stream, ImageFormat.Png);
+            binVal.Value = Convert.ToBase64String(stream.ToArray());
+        }
+
+        if (vCard.FullName != null)
+        {
+            query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFullName)
+                .Value = vCard.FullName;
+        }
+
+        if (vCard.Email != null)
+        {
+            query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)
+                .GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmailInternet)
+                .Value = vCard.Email;
+        }
+
+        if (vCard.Birthday != null)
+        {
+            query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardBDay)
+                .Value = vCard.Birthday.Value.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture);
+        }
+
+        if (vCard.Nick != null)
+        {
+            query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardNickname)
+                .Value = vCard.Nick;
+        }
+
+        if (vCard.Comments != null)
+        {
+            query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardDesc)
+                .Value = vCard.Comments;
+        }
+
+        var response = await SendIq(iq, false);
+        return response.Wrap();
     }
 
     public async Task<ClientInfo?> GetClientInfo(Jid jid)

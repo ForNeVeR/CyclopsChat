@@ -40,6 +40,6 @@ public class TimeIqTests
         var iq = new XMPPIq(XMPPIq.IqTypes.get);
         var wrapped = iq.WrapTime();
         wrapped.Time = (dateTime, timeZone);
-        return wrapped.Unwrap();
+        return Xmpp.SharpXmpp.Protocol.IqEx.Unwrap(wrapped);
     }
 }

@@ -23,6 +23,7 @@ internal static class IqEx
     }
 
     public static IIq Wrap(this XMPPIq iq) => new Iq(iq);
+    public static XMPPIq Unwrap(this IIq iq) => ((Iq)iq).Original;
 
     private class TimeIq : Iq, ITimeIq
     {
@@ -50,7 +51,6 @@ internal static class IqEx
     }
 
     public static ITimeIq WrapTime(this XMPPIq iq) => new TimeIq(iq);
-    public static XMPPIq Unwrap(this ITimeIq iq) => ((Iq)iq).Original;
 
 
     private class LastIq : Iq, ILastIq

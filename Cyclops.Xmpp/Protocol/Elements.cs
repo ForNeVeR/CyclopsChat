@@ -77,7 +77,10 @@ public static class Elements
     public const string VCardEmail = "EMAIL";
 
     /// <remarks>XEP-0054: vcard-temp</remarks>
-    public const string VCardFn = "FN";
+    public const string VCardEmailInternet = "INTERNET";
+
+    /// <remarks>XEP-0054: vcard-temp</remarks>
+    public const string VCardFullName = "FN";
 
     /// <remarks>XEP-0153: vCard-Based Avatars</remarks>
     public const string VCardNickname = "NICKNAME";

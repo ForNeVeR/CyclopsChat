@@ -14,7 +14,7 @@ internal static class PresenceEx
         }
 
         public Jid? From => Original.From.Map();
-        public Jid? To => Original.To.Map();
+        public Jid? To => Original.To?.Map();
         public string? Status => Original.Element(Original.Name.Namespace + Elements.Status)?.Value;
         public string? Show => Original.Element(Original.Name.Namespace + Elements.Show)?.Value;
         public IError? Error => Original.Element(Original.Name.Namespace + Elements.Error)?.WrapAsError();
