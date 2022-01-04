@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Xml.Linq;
+using Cyclops.Core;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.SharpXmpp.Client;
@@ -10,6 +11,7 @@ namespace Cyclops.Xmpp.SharpXmpp.Data.Rooms;
 
 public class SharpXmppRoom : IRoom
 {
+    private readonly ILogger logger;
     private readonly SharpXmppClient client;
     private readonly SharpXmppConferenceManager conferenceManager;
 
@@ -18,8 +20,9 @@ public class SharpXmppRoom : IRoom
     private string? currentNickname;
     private readonly Dictionary<string, MucParticipant> participants = new();
 
-    public SharpXmppRoom(SharpXmppClient client, SharpXmppConferenceManager conferenceManager, Jid roomJid)
+    public SharpXmppRoom(ILogger logger, SharpXmppClient client, SharpXmppConferenceManager conferenceManager, Jid roomJid)
     {
+        this.logger = logger;
         this.client = client;
         this.conferenceManager = conferenceManager;
         BareJid = roomJid.Bare;
@@ -50,6 +53,7 @@ public class SharpXmppRoom : IRoom
         if (presence.From?.Bare != BareJid) return;
         if (presence.Error != null)
         {
+            logger.LogVerbose($"{BareJid}: error presence from {presence.From}.");
             PresenceError?.Invoke(this, presence);
             return;
         }

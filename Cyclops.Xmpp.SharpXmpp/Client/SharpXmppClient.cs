@@ -29,7 +29,7 @@ public class SharpXmppClient : IXmppClient
         this.logger = logger;
         iqQueryManager = new SharpXmppIqQueryManager();
         bookmarkManager = new SharpXmppBookmarkManager(logger);
-        ConferenceManager = new SharpXmppConferenceManager(this);
+        ConferenceManager = new SharpXmppConferenceManager(logger, this);
     }
 
     public void Dispose()

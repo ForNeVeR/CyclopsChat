@@ -1,3 +1,4 @@
+using Cyclops.Core;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
@@ -8,13 +9,15 @@ namespace Cyclops.Xmpp.SharpXmpp.Client;
 
 public class SharpXmppConferenceManager : IConferenceManager
 {
+    private readonly ILogger logger;
     private readonly SharpXmppClient client;
 
     private readonly object stateLock = new();
     private readonly Dictionary<Jid, IRoom> rooms = new();
 
-    public SharpXmppConferenceManager(SharpXmppClient client)
+    public SharpXmppConferenceManager(ILogger logger, SharpXmppClient client)
     {
+        this.logger = logger;
         this.client = client;
     }
 
@@ -27,7 +30,7 @@ public class SharpXmppConferenceManager : IConferenceManager
         {
             if (!rooms.TryGetValue(roomJid.Bare, out var room))
             {
-                room = new SharpXmppRoom(client, this, roomJid.Bare);
+                room = new SharpXmppRoom(logger, client, this, roomJid.Bare);
                 rooms.Add(roomJid, room);
             }
 
