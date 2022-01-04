@@ -23,7 +23,7 @@
 					<RowDefinition />
 				</Grid.RowDefinitions>
 				<Image Source="..\Resources\users.png" Grid.RowSpan="2" Height="28" VerticalAlignment="Top" />
-				<TextBlock x:Name="roomName" Grid.Column="1" Grid.Row="0" Text="{Binding Id.User}" FontSize="13.333" FontWeight="Bold" Foreground="#FF6A6A6A" Margin="0,-3,0,2" />
+				<TextBlock x:Name="roomName" Grid.Column="1" Grid.Row="0" Text="{Binding Id.Local}" FontSize="13.333" FontWeight="Bold" Foreground="#FF6A6A6A" Margin="0,-3,0,2" />
 				<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}" Foreground="#FF858585" Margin="0,-4,0,0" />
 			</Grid>
             <DataTemplate.Triggers>

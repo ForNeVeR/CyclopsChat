@@ -397,8 +397,7 @@ namespace Cyclops.Core.Resource
 
                 ConferenceServiceId = node.Jid!.Value;
 
-                var subnode = await XmppClient.DiscoverItems(node.Jid!.Value, node.Node);
-                var result = subnode.Children.Select(dn => new Tuple<Jid, string>(dn.Jid!.Value, dn.Name)).ToList();
+                var result = node.Children.Select(dn => new Tuple<Jid, string>(dn.Jid!.Value, dn.Name)).ToList();
 
                 ConferencesListReceived(null, new ConferencesListEventArgs(result));
             }
