@@ -225,6 +225,8 @@ public class SharpXmppClient : IXmppClient
         SendIq(iq.Unwrap()).NoAwait(logger);
     }
 
+    internal void SendMessage(XMPPMessage message) => currentClient!.Send(message);
+
     public void SendMessage(MessageType type, Jid target, string body)
     {
         var message = new XMPPMessage
@@ -235,7 +237,7 @@ public class SharpXmppClient : IXmppClient
         if (type != MessageType.Normal)
             message.GetOrCreateAttribute(Attributes.Type).Value = type.Map();
 
-        currentClient!.Send(message);
+        SendMessage(message);
     }
 
     public async Task<IIq> SendCaptchaAnswer(Jid roomId, string challenge, string answer)

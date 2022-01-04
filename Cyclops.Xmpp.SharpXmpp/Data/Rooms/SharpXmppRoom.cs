@@ -197,7 +197,14 @@ public class SharpXmppRoom : IRoom
 
     public void SetSubject(string subject)
     {
-        throw new NotImplementedException();
+        var message = new XMPPMessage
+        {
+            To = BareJid.Map(),
+        };
+        message.GetOrCreateAttribute(Attributes.Type).Value = MessageType.GroupChat.Map();
+        message.GetOrCreateChildElement(message.Name.Namespace + Elements.Subject).Value = subject;
+
+        client.SendMessage(message);
     }
 
     public event EventHandler? Joined;
