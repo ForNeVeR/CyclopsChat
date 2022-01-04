@@ -276,7 +276,7 @@ public class SharpXmppClient : IXmppClient
             {
                 var bytes = Convert.FromBase64String(binVal.Value);
                 if (bytes.Length == 0) return null;
-                using var stream = new MemoryStream(bytes);
+                var stream = new MemoryStream(bytes);
                 return Image.FromStream(stream);
             }
             catch (Exception ex)
