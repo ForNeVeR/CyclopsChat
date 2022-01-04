@@ -11,11 +11,18 @@ public static class Attributes
     /// <remarks>
     /// Not found in XEP-0045: Multi-User Chat.
     /// TODO: clarify if such attribute exists; it was defined in Jabber-Net.
+    /// XEP-0030: Service Discovery
     /// </remarks>
     public const string Jid = "jid";
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string From = "from";
+
+    /// <remarks>XEP-0030: Service Discovery</remarks>
+    public const string Name = "name";
+
+    /// <remarks>XEP-0030: Service Discovery</remarks>
+    public const string Node = "node";
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Role = "role";
@@ -28,4 +35,7 @@ public static class Attributes
 
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Type = "type";
+
+    /// <remarks>XEP-0030: Service Discovery</remarks>
+    public const string Var = "var";
 }

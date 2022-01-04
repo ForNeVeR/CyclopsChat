@@ -13,7 +13,7 @@ internal static class DiscoNodeEx
             this.discoNode = discoNode;
         }
 
-        public Jid Jid => discoNode.JID.Map();
+        public Jid? Jid => discoNode.JID.Map();
         public string Node => discoNode.Node;
         public string Name => discoNode.Name;
         public IEnumerable<IDiscoNode> Children => discoNode.Children.Cast<jabber.connection.DiscoNode>()

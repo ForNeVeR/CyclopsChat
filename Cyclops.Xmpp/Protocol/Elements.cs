@@ -14,7 +14,10 @@ public static class Elements
     public const string Display = "display";
     public const string Error = "error";
 
-    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    /// <remarks>XEP-0030: Service Discovery</remarks>
+    public const string Feature = "feature";
+
+    /// <remarks>XEP-0045: Multi-User Chat, XEP-0030: Service Discovery</remarks>
     public const string Item = "item";
 
     /// <remarks>XEP-0092: Software Version</remarks>

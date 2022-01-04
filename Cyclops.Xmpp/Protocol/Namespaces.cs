@@ -7,6 +7,9 @@ public static class Namespaces
     /// <remarks>XEP-0203: Delayed Delivery</remarks>
     public const string Delay = "urn:xmpp:delay";
 
+    /// <remarks>XEP-0030: Service Discovery</remarks>
+    public const string DiscoItems = "http://jabber.org/protocol/disco#items";
+
     /// <remarks>XEP-0012: Last Activity</remarks>
     public const string Last = "jabber:iq:last";
 

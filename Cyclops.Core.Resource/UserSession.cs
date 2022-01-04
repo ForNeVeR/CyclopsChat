@@ -386,10 +386,10 @@ namespace Cyclops.Core.Resource
                     : await XmppClient.DiscoverItems(Jid.Parse(service), Namespaces.Muc);
 
                 if (node != null)
-                    ConferenceServiceId = node.Jid;
+                    ConferenceServiceId = node.Jid!.Value;
 
-                var subnode = await XmppClient.DiscoverItems(node.Jid, node.Node);
-                var result = subnode.Children.Select(dn => new Tuple<Jid, string>(dn.Jid, dn.Name)).ToList();
+                var subnode = await XmppClient.DiscoverItems(node.Jid!.Value, node.Node);
+                var result = subnode.Children.Select(dn => new Tuple<Jid, string>(dn.Jid!.Value, dn.Name)).ToList();
 
                 ConferencesListReceived(null, new ConferencesListEventArgs(result));
             }

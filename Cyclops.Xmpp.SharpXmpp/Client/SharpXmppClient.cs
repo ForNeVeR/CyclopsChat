@@ -7,6 +7,7 @@ using Cyclops.Core.Helpers;
 using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.SharpXmpp.Data;
 using Cyclops.Xmpp.SharpXmpp.Errors;
 using Cyclops.Xmpp.SharpXmpp.Protocol;
 using SharpXMPP;
@@ -239,43 +240,18 @@ public class SharpXmppClient : IXmppClient
         throw new NotImplementedException();
     }
 
-    public Task<VCard> GetVCard(Jid jid)
+    private Task<XMPPIq> SendIq(XMPPIq iq)
     {
-        var iq = new XMPPIq(XMPPIq.IqTypes.get)
-        {
-            To = jid.Map()
-        };
-        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
-
-        var result = new TaskCompletionSource<VCard>();
+        var result = new TaskCompletionSource<XMPPIq>();
         currentClient!.Query(iq, response =>
         {
             try
             {
-                var vCardElement = response.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
-                var photoElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto);
-                var fullNameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFn);
-                var emailElement = vCardElement?.Elements(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)
-                    .FirstOrDefault();
-                var birthDateElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardBDay);
-                var nicknameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardNickname);
-                var descriptionElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardDesc);
+                var error = response.Element(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + Elements.Error);
+                if (error != null)
+                    throw new Exception("XMPP error: " + error);
 
-                var photo = photoElement == null ? null : ReadPhoto(photoElement);
-                var birthDate =
-                    birthDateElement == null ? null
-                    : DateTime.TryParse(birthDateElement.Value, CultureInfo.InvariantCulture,
-                        DateTimeStyles.RoundtripKind, out var bd) ? (DateTime?)bd : null;
-
-                result.SetResult(new VCard
-                {
-                    Photo = photo,
-                    FullName = fullNameElement?.Value,
-                    Email = emailElement?.Value,
-                    Birthday = birthDate,
-                    Nick = nicknameElement?.Value,
-                    Comments = descriptionElement?.Value
-                });
+                result.SetResult(response);
             }
             catch (Exception ex)
             {
@@ -283,6 +259,42 @@ public class SharpXmppClient : IXmppClient
             }
         });
         return result.Task;
+    }
+
+    public async Task<VCard> GetVCard(Jid jid)
+    {
+        var iq = new XMPPIq(XMPPIq.IqTypes.get)
+        {
+            To = jid.Map()
+        };
+        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
+
+        var response = await SendIq(iq).ConfigureAwait(false);
+
+        var vCardElement = response.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
+        var photoElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto);
+        var fullNameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFn);
+        var emailElement = vCardElement?.Elements(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)
+            .FirstOrDefault();
+        var birthDateElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardBDay);
+        var nicknameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardNickname);
+        var descriptionElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardDesc);
+
+        var photo = photoElement == null ? null : ReadPhoto(photoElement);
+        var birthDate =
+            birthDateElement == null ? null
+            : DateTime.TryParse(birthDateElement.Value, CultureInfo.InvariantCulture,
+                DateTimeStyles.RoundtripKind, out var bd) ? (DateTime?)bd : null;
+
+        return new VCard
+        {
+            Photo = photo,
+            FullName = fullNameElement?.Value,
+            Email = emailElement?.Value,
+            Birthday = birthDate,
+            Nick = nicknameElement?.Value,
+            Comments = descriptionElement?.Value
+        };
 
         Image? ReadPhoto(XElement photo)
         {
@@ -308,39 +320,52 @@ public class SharpXmppClient : IXmppClient
         throw new NotImplementedException();
     }
 
-    public Task<ClientInfo?> GetClientInfo(Jid jid)
+    public async Task<ClientInfo?> GetClientInfo(Jid jid)
     {
         var iq = new XMPPIq(XMPPIq.IqTypes.get);
         iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.Version) + Elements.Query);
 
-        var result = new TaskCompletionSource<ClientInfo?>();
-        currentClient!.Query(iq, response =>
+        var response = await SendIq(iq);
+
+        var query = response.Element(XNamespace.Get(Namespaces.Version) + Elements.Query);
+        var name = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Name);
+        var version = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Version);
+        var os = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Os);
+
+        return new ClientInfo(os?.Value, version?.Value, name?.Value);
+    }
+
+    public async Task<IDiscoNode?> DiscoverItems(Jid jid, string node)
+    {
+        var iq = new XMPPIq(XMPPIq.IqTypes.get)
         {
-            try
-            {
-                var query = response.Element(XNamespace.Get(Namespaces.Version) + Elements.Query);
-                var name = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Name);
-                var version = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Version);
-                var os = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Os);
+            To = jid.Map()
+        };
+        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.DiscoItems) + Elements.Query)
+            .GetOrCreateAttribute(Attributes.Node).Value = node;
 
-                var clientInfo = new ClientInfo(os?.Value, version?.Value, name?.Value);
-                result.SetResult(clientInfo);
-            }
-            catch (Exception ex)
-            {
-                result.SetException(ex);
-            }
-        });
-        return result.Task;
+        var response = await SendIq(iq);
+
+        var query = response.Element(XNamespace.Get(Namespaces.DiscoItems) + Elements.Query);
+        if (query == null)
+            throw new Exception("Cannot find query in the IQ response.");
+
+        var items = query.Elements(XNamespace.Get(Namespaces.DiscoItems) + Elements.Item);
+        return new DiscoNode(jid, node, null, items);
     }
 
-    public Task<IDiscoNode?> DiscoverItems(Jid jid, string node)
+    public async Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri)
     {
-        throw new NotImplementedException();
-    }
+        var iq = new XMPPIq(XMPPIq.IqTypes.get);
+        iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.DiscoItems) + Elements.Query);
 
-    public Task<IDiscoNode?> DiscoverItemsWithFeature(string featureUri)
-    {
+        var featuresResponse = await SendIq(iq);
+        var features = featuresResponse.Element(XNamespace.Get(Namespaces.DiscoItems) + Elements.Query)?
+            .Elements(XNamespace.Get(Namespaces.DiscoItems) + Elements.Feature) ?? Enumerable.Empty<XElement>();
+        var hasFeature = features.Any(f => f.Attribute(Attributes.Var)?.Value == featureUri);
+        if (!hasFeature)
+            return null;
+
         throw new NotImplementedException();
     }
 }
