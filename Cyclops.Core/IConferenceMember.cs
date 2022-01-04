@@ -11,7 +11,7 @@ namespace Cyclops.Core
         bool IsMe { get; }
         string StatusText { get; }
         string StatusType { get; }
-        bool IsSubscribed { get; }
+        bool IsSubscribed { get; set; }
 
         Role Role { get; }
         ClientInfo ClientInfo { get; }

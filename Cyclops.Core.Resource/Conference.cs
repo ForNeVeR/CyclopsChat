@@ -122,15 +122,7 @@ namespace Cyclops.Core.Resource
             if (member == null)
                 return;
 
-
-            bool successHandling = ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(pres, ConferenceId);
-            if (!member.IsSubscribed)
-            {
-                if (!successHandling)
-                    AvatarsManager.SendAvatarRequest(from.Value).NoAwait(logger);
-                ((ConferenceMember)member).IsSubscribed = true;
-            }
-
+            ProcessAvatar(pres, member);
         }
 
         private void UnSubscribeToEvents()
@@ -330,6 +322,8 @@ namespace Cyclops.Core.Resource
                     Members.AsInternalImpl().Add(member);
                     if (IsInConference) //hack :)
                         ParticipantJoin(this, new ConferenceMemberEventArgs(member));
+
+                    ProcessAvatar(participant.Presence, member);
                 }
             });
         }
@@ -407,6 +401,17 @@ namespace Cyclops.Core.Resource
 
                 Subject = msg.Subject;
             });
+        }
+
+        private void ProcessAvatar(IPresence presence, IConferenceMember member)
+        {
+            var hasAvatar = ((AvatarsManager)AvatarsManager).ProcessAvatarChangeHash(presence, ConferenceId);
+            if (member.IsSubscribed) return;
+
+            if (!hasAvatar)
+                AvatarsManager.SendAvatarRequest(member.ConferenceUserId).NoAwait(logger);
+
+            member.IsSubscribed = true;
         }
 
         #region Implementation of ISessionHolder
