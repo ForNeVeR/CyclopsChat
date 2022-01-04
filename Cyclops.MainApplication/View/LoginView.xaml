@@ -78,7 +78,8 @@
                     <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Margin="178,0,0,0" Command="{Binding Authenticate}" CommandParameter="{Binding ElementName=passwordBox}"
                             IsDefault="True" Content="{Binding Path=Login.Connect, Source={StaticResource ResourceWrapper}}" />
                     <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Command="{Binding Register}" CommandParameter="{Binding ElementName=passwordBox}"
-                            Content="{Binding Path=Login.RegisterAccount, Source={StaticResource ResourceWrapper}}" Margin="282,2,0,2" Width="155"/>
+                            Content="{Binding Path=Login.RegisterAccount, Source={StaticResource ResourceWrapper}}" Margin="282,2,0,2" Width="155"
+                            Visibility="Collapsed"/> <!-- TODO: Support registration -->
                     <Expander Grid.Row="3" Grid.Column="1" x:Name="expander" Header="{Binding Path=Login.AdvancedSettings, Source={StaticResource ResourceWrapper}}"
 							  VerticalAlignment="Top" Foreground="White" FontSize="15" Margin="3,4,0,6" >
                         <Grid Background="#2E000000" Margin="-165,0,0,0">
