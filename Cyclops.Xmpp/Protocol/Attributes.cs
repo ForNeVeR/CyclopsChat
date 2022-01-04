@@ -24,6 +24,9 @@ public static class Attributes
     /// <remarks>XEP-0030: Service Discovery</remarks>
     public const string Name = "name";
 
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Nick = "nick";
+
     /// <remarks>XEP-0030: Service Discovery</remarks>
     public const string Node = "node";
 

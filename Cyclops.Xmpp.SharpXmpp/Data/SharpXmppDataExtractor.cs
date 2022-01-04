@@ -56,8 +56,20 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
         return new CaptchaRequest(challenge.Value, data.Value);
     }
 
+    private class AdminItem : IAdminItem
+    {
+        public AdminItem(XElement item)
+        {
+            Nick = item.Attribute(Attributes.Nick)?.Value;
+        }
+
+        public string? Nick { get; }
+    }
+
     public IAdminItem? GetAdminItem(IExtendedUserData nickChange)
     {
-        throw new NotImplementedException();
+        var x = nickChange.Unwrap();
+        var item = x.Element(XNamespace.Get(Namespaces.MucAdmin) + Elements.Item);
+        return item == null ? null : new AdminItem(item);
     }
 }

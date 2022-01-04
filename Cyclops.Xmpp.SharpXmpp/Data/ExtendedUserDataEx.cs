@@ -10,15 +10,15 @@ internal static class ExtendedUserDataEx
 {
     private class ExtendedUserData : IExtendedUserData
     {
-        private readonly XElement x;
-        public ExtendedUserData(XElement x)
+        internal readonly XElement Element;
+        public ExtendedUserData(XElement element)
         {
-            this.x = x;
-            RoomItem = x.Elements(XNamespace.Get(Namespaces.MucUser) + Elements.Item)
+            Element = element;
+            RoomItem = element.Elements(XNamespace.Get(Namespaces.MucUser) + Elements.Item)
                 .SingleOrDefault()?.WrapAsRoomItem();
         }
 
-        public IReadOnlyList<MucUserStatus?> Status => x.Elements(XNamespace.Get(Namespaces.Muc) + "status")
+        public IReadOnlyList<MucUserStatus?> Status => Element.Elements(XNamespace.Get(Namespaces.Muc) + "status")
             .Select(e => MapStatusCode(e.Attribute(Attributes.Code)?.Value))
             .ToList();
 
@@ -51,6 +51,8 @@ internal static class ExtendedUserDataEx
     }
 
     public static IExtendedUserData WrapAsUserData(this XElement x) => new ExtendedUserData(x);
+    public static XElement Unwrap(this IExtendedUserData x) => ((ExtendedUserData)x).Element;
+
     private static IRoomItem WrapAsRoomItem(this XElement item) => new XmppRoomItem(item);
 
     private static MucUserStatus? MapStatusCode(string? code)
