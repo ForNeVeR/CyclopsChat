@@ -277,20 +277,15 @@ namespace Cyclops.Core.Resource
 
                 if (nickChangeAction && participant.RoomParticipantJid == ConferenceId)
                 {
-                    ProcessParticipant().NoAwait(logger);
+                    var member = memberObj;
 
-                    async Task ProcessParticipant()
+                    var newParticipant = senderRoom.Participants.FirstOrDefault(i => i.Nick == newNick);
+                    if (newParticipant == null)
                     {
-                        var member = memberObj;
-
-                        // a small hack:
-                        var _ = await senderRoom.GetParticipants(participant.Affiliation);
-                        var newParticipant = senderRoom.Participants.FirstOrDefault(i => i.Nick == newNick);
-                        if (newParticipant == null)
-                        {
-                            //LOG?
-                            return;
-                        }
+                        //LOG?
+                    }
+                    else
+                    {
 
                         Members.AsInternalImpl().Add(
                             new ConferenceMember(logger, session, this, newParticipant, senderRoom)

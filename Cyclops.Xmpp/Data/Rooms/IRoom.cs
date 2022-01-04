@@ -24,7 +24,5 @@ public interface IRoom : IDisposable
     Jid BareJid { get; }
     IReadOnlyList<IMucParticipant> Participants { get; }
 
-    Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation);
-
     void SendPublicMessage(string body);
 }

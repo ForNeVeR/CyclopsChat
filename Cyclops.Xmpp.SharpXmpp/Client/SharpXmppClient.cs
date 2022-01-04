@@ -293,7 +293,7 @@ public class SharpXmppClient : IXmppClient
         return result.Task;
     }
 
-    public async Task<VCard> GetVCard(Jid jid)
+    public async Task<VCard?> GetVCard(Jid jid)
     {
         var iq = new XMPPIq(XMPPIq.IqTypes.get)
         {
@@ -301,7 +301,10 @@ public class SharpXmppClient : IXmppClient
         };
         iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
 
-        var response = await SendIq(iq).ConfigureAwait(false);
+        var response = await SendIq(iq, false).ConfigureAwait(false);
+        var error = response.Element(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + Elements.Error);
+        if (error != null)
+            return null;
 
         var vCardElement = response.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCard);
         var photoElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto);
@@ -401,7 +404,10 @@ public class SharpXmppClient : IXmppClient
         var iq = new XMPPIq(XMPPIq.IqTypes.get);
         iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.Version) + Elements.Query);
 
-        var response = await SendIq(iq);
+        var response = await SendIq(iq, false);
+        var error = response.Element(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + Elements.Error);
+        if (error != null)
+            return null;
 
         var query = response.Element(XNamespace.Get(Namespaces.Version) + Elements.Query);
         var name = query?.Element(XNamespace.Get(Namespaces.Version) + Elements.Name);

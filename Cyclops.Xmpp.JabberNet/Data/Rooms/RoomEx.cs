@@ -75,28 +75,6 @@ internal static class RoomEx
         public IReadOnlyList<IMucParticipant> Participants =>
             room.Participants.Cast<RoomParticipant>().Select(r => r.Wrap()).ToList();
 
-        public Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation)
-        {
-            var task = new TaskCompletionSource<IReadOnlyList<IMucParticipant>>();
-            room.RetrieveListByAffiliation(
-                participantAffiliation.Map(),
-                (_, participants, _) =>
-                {
-                    try
-                    {
-                        var mapped = participants.Cast<RoomParticipant>().Select(rp => rp.Wrap()).ToList();
-                        task.SetResult(mapped);
-                    }
-                    catch (Exception ex)
-                    {
-                        task.SetException(ex);
-                    }
-                },
-                null);
-
-            return task.Task;
-        }
-
         public void SendPublicMessage(string body) => room.PublicMessage(body);
 
         private void OnJoin(jabber.connection.Room _) => Joined?.Invoke(this, null);

@@ -37,7 +37,7 @@ public interface IXmppClient : IDisposable
 
     Task<IIq> SendCaptchaAnswer(Jid roomId, string challenge, string answer);
 
-    Task<VCard> GetVCard(Jid jid);
+    Task<VCard?> GetVCard(Jid jid);
     Task<IIq> UpdateVCard(VCard vCard);
 
     Task<ClientInfo?> GetClientInfo(Jid jid);

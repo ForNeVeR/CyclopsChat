@@ -229,10 +229,6 @@ public class SharpXmppRoom : IRoom
                 return participants.Values.ToList();
         }
     }
-    public Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation)
-    {
-        throw new NotImplementedException();
-    }
 
     public void SendPublicMessage(string body) => client.SendMessage(MessageType.GroupChat, BareJid, body);
 }

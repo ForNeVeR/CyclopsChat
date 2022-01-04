@@ -168,7 +168,7 @@ internal class JabberNetXmppClient : IXmppClient
         return response.Wrap();
     }
 
-    public async Task<VCard> GetVCard(Jid jid)
+    public async Task<VCard?> GetVCard(Jid jid)
     {
         var vCardIq = new VCardIQ(client.Document)
         {
