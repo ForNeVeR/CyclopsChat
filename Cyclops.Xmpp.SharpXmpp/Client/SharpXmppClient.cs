@@ -53,10 +53,16 @@ public class SharpXmppClient : IXmppClient
     public event EventHandler? RoomMessage;
     public event EventHandler<IMessage>? Message;
 
-    public bool IsAuthenticated => throw new NotImplementedException();
+    private volatile bool isAuthenticated;
+    public bool IsAuthenticated
+    {
+        get => isAuthenticated;
+        private set => isAuthenticated = value;
+    }
 
     public void Connect(string server, string host, string user, string password, int port, string resource)
     {
+        IsAuthenticated = false;
         if (currentClient != null)
         {
             UnsubscribeFromEvents(currentClient);
@@ -124,6 +130,7 @@ public class SharpXmppClient : IXmppClient
 
     private void OnSignedIn(XmppConnection sender, SignedInArgs e)
     {
+        IsAuthenticated = true;
         Authenticated?.Invoke(this, null);
         sender.Send(new XMPPPresence());
     }
@@ -147,6 +154,7 @@ public class SharpXmppClient : IXmppClient
         if (e.Message != null)
             logger.LogError($"Connection failed: {e.Message}.", e.Exception);
 
+        IsAuthenticated = false;
         Disconnected?.Invoke(this, null);
         Error?.Invoke(this, e.Exception ?? new MessageOnlyException(e.Message));
     }
