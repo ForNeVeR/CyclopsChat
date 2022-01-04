@@ -25,4 +25,7 @@ public static class Attributes
 
     /// <remarks>XEP-0203: Delayed Delivery</remarks>
     public const string Stamp = "stamp";
+
+    /// <remarks>XEP-0045: Multi-User Chat</remarks>
+    public const string Type = "type";
 }

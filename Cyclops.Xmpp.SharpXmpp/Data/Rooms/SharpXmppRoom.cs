@@ -207,10 +207,7 @@ public class SharpXmppRoom : IRoom
         throw new NotImplementedException();
     }
 
-    public void SendPublicMessage(string body)
-    {
-        throw new NotImplementedException();
-    }
+    public void SendPublicMessage(string body) => client.SendMessage(MessageType.GroupChat, BareJid, body);
 
     public void SendPrivateMessage(string nick, string body)
     {

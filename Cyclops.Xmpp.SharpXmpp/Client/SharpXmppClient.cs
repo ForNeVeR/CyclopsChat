@@ -223,7 +223,15 @@ public class SharpXmppClient : IXmppClient
 
     public void SendMessage(MessageType type, Jid target, string body)
     {
-        throw new NotImplementedException();
+        var message = new XMPPMessage
+        {
+            To = target.Map(),
+            Text = body
+        };
+        if (type != MessageType.Normal)
+            message.GetOrCreateAttribute(Attributes.Type).Value = type.Map();
+
+        currentClient!.Send(message);
     }
 
     public Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer)

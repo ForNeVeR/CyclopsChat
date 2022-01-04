@@ -39,4 +39,14 @@ public static class MessageEx
             _ => throw new NotSupportedException($"Unknown message type: {typeName}.")
         };
     }
+
+    public static string Map(this MessageType messageType) => messageType switch
+    {
+        MessageType.Chat => "chat",
+        MessageType.Error => "error",
+        MessageType.GroupChat => "groupchat",
+        MessageType.Headline => "headline",
+        MessageType.Normal => "normal",
+        _ => throw new ArgumentException($"Invalid message type: {messageType}.", nameof(messageType))
+    };
 }
