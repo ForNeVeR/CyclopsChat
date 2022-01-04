@@ -378,11 +378,16 @@ namespace Cyclops.Core.Resource
             });
         }
 
-        public void RefreshConferenceList(string service)
+        public void RefreshConferenceList(string? service)
         {
+            if (service == null)
+            {
+                ConferencesListReceived(null, new ConferencesListEventArgs(new List<Tuple<Jid, string>>()));
+                return;
+            }
+
             async Task DoRefresh()
             {
-
                 var node = await XmppClient.DiscoverItems(Jid.Parse(service), Namespaces.Muc);
                 if (node == null)
                 {
