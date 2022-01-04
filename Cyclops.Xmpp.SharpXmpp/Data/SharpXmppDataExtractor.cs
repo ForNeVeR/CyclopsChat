@@ -41,7 +41,19 @@ public class SharpXmppDataExtractor : IXmppDataExtractor
 
     public CaptchaRequest? GetCaptchaRequest(IMessage message)
     {
-        throw new NotImplementedException();
+        var xmlMessage = message.Unwrap();
+        var captcha = xmlMessage.Element(XNamespace.Get(Namespaces.Captcha) + Elements.Captcha);
+        if (captcha == null) return null;
+
+        var challenge = captcha.Element(XNamespace.Get(Namespaces.Data) + Elements.X)?
+            .Elements(XNamespace.Get(Namespaces.Data) + Elements.Field)?
+            .FirstOrDefault(f => f.Attribute(Attributes.Var)?.Value == "challenge");
+        if (challenge == null) throw new Exception("Couldn't find a challenge field inside of a CAPTCHA form.");
+
+        var data = xmlMessage.Element(XNamespace.Get(Namespaces.BitsOfBinary) + Elements.Data);
+        if (data == null) throw new Exception("Couldn't find a data element inside of a CAPTCHA request message.");
+
+        return new CaptchaRequest(challenge.Value, data.Value);
     }
 
     public IAdminItem? GetAdminItem(IExtendedUserData nickChange)

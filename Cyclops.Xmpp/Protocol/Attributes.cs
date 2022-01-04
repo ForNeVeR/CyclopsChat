@@ -5,6 +5,9 @@ public static class Attributes
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Affiliation = "affiliation";
 
+    /// <remarks>XEP-0048: Bookmarks</remarks>
+    public const string AutoJoin = "autojoin";
+
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Code = "code";
 
@@ -36,6 +39,9 @@ public static class Attributes
     /// <remarks>XEP-0045: Multi-User Chat</remarks>
     public const string Type = "type";
 
-    /// <remarks>XEP-0030: Service Discovery</remarks>
+    /// <remarks>
+    /// XEP-0030: Service Discovery
+    /// XEP-0158: CAPTCHA Forms
+    /// </remarks>
     public const string Var = "var";
 }

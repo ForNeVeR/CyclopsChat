@@ -1,4 +1,3 @@
-using System.Xml;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.Protocol.IqQueries;
@@ -20,7 +19,7 @@ internal static class IqEx
             IqValue = iq;
         }
 
-        public XmlElement? Error => IqValue.Error;
+        public IError? Error => IqValue.Error?.Wrap();
     }
 
     private class TimeIq : Iq, ITimeIq

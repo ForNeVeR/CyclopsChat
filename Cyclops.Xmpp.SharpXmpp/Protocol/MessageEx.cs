@@ -35,7 +35,7 @@ public static class MessageEx
             "error" => MessageType.Error,
             "groupchat" => MessageType.GroupChat,
             "headline" => MessageType.Headline,
-            "normal" => MessageType.Normal,
+            null or "" or "normal" => MessageType.Normal,
             _ => throw new NotSupportedException($"Unknown message type: {typeName}.")
         };
     }

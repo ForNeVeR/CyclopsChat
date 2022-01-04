@@ -2,7 +2,16 @@ namespace Cyclops.Xmpp.Protocol;
 
 public static class Namespaces
 {
+    /// <remarks>XEP-0231: Bits of Binary</remarks>
+    public const string BitsOfBinary = "urn:xmpp:bob";
+
     public const string Bookmarks = "storage:bookmarks";
+
+    /// <remarks>XEP-0158: CAPTCHA Forms</remarks>
+    public const string Captcha = "urn:xmpp:captcha";
+
+    /// <remarks>XEP-0158: CAPTCHA Forms</remarks>
+    public const string Data = "jabber:x:data";
 
     /// <remarks>XEP-0203: Delayed Delivery</remarks>
     public const string Delay = "urn:xmpp:delay";

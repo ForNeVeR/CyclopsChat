@@ -4,6 +4,7 @@ using Cyclops.Xmpp.Client;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.SharpXmpp.Data;
+using Cyclops.Xmpp.SharpXmpp.Protocol;
 using SharpXMPP;
 using SharpXMPP.XMPP;
 using SharpXMPP.XMPP.Client.Elements;
@@ -81,12 +82,35 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
 
     public void AddBookmark(Jid roomId, string name, bool autoJoin, string nickname)
     {
-        throw new NotImplementedException();
+        var bookmark = new BookmarkedConference
+        {
+            JID = roomId.Map()
+        };
+
+        bookmark.SetAttributeValue(Attributes.Name, name);
+        bookmark.GetOrCreateChildElement(XNamespace.Get(Namespaces.Bookmarks) + Elements.Nick).Value = nickname;
+        bookmark.SetAttributeValue(Attributes.AutoJoin, autoJoin.ToString().ToLowerInvariant());
+
+        List<BookmarkedConference> allBookmarks;
+        lock (currentBookmarks)
+        {
+            currentBookmarks.Add(bookmark);
+            allBookmarks = currentBookmarks.ToList();
+        }
+
+        StoreBookmarks(allBookmarks);
     }
 
     public void RemoveBookmark(Jid roomId)
     {
-        throw new NotImplementedException();
+        List<BookmarkedConference> allBookmarks;
+        lock (currentBookmarks)
+        {
+            currentBookmarks.RemoveAll(bc => bc.JID.Map() == roomId.Bare);
+            allBookmarks = currentBookmarks.ToList();
+        }
+
+        StoreBookmarks(allBookmarks);
     }
 
     private void NotifyAllBookmarksAdded()
@@ -96,5 +120,19 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
             foreach (var bookmark in currentBookmarks)
                 BookmarkAdded?.Invoke(this, bookmark.Wrap());
         }
+    }
+
+    private void StoreBookmarks(IEnumerable<BookmarkedConference> bookmarks)
+    {
+        var iq = new XMPPIq(XMPPIq.IqTypes.get);
+        var storageQuery = new XElement(
+            XNamespace.Get(Namespaces.Private) + Elements.Query,
+            new XElement(XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Storage));
+        iq.Add(storageQuery);
+
+        foreach (var bc in bookmarks)
+            storageQuery.Add(bc);
+
+        Connection!.Send(iq);
     }
 }

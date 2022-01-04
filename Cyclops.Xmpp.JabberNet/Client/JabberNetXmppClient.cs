@@ -153,16 +153,16 @@ internal class JabberNetXmppClient : IXmppClient
     public void SendMessage(MessageType type, Jid target, string body) =>
         client.Message(type.Map(), target.ToString(), body);
 
-    public async Task<IIq> SendCaptchaAnswer(Jid conferenceId, string challenge, string answer)
+    public async Task<IIq> SendCaptchaAnswer(Jid roomId, string challenge, string answer)
     {
         var iq = new TypedIQ<CaptchaAnswer>(client.Document)
         {
-            To = conferenceId.Bare.Map(),
+            To = roomId.Bare.Map(),
             Type = IQType.set,
         };
 
         iq.Instruction!.CaptchaAnswerX = new CaptchaAnswerX(client.Document);
-        iq.Instruction.CaptchaAnswerX.FillAnswer(answer, conferenceId.Map(), challenge);
+        iq.Instruction.CaptchaAnswerX.FillAnswer(answer, roomId.Map(), challenge);
 
         var response = await SendIq(iq);
         return response.Wrap();

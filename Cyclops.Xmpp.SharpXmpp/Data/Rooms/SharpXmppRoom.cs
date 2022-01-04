@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Xml.Linq;
 using Cyclops.Core;
+using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Data.Rooms;
 using Cyclops.Xmpp.Protocol;
 using Cyclops.Xmpp.SharpXmpp.Client;
@@ -160,10 +161,13 @@ public class SharpXmppRoom : IRoom
         SendRoomPresence();
     }
 
-    public void Leave(string? reason)
-    {
-        throw new NotImplementedException();
-    }
+    public void Leave(string? reason) =>
+        client.SendPresence(new PresenceDetails
+        {
+            To = BareJid,
+            StatusText = reason,
+            Type = PresenceType.Unavailable
+        });
 
     public void SetNickname(string nickname)
     {

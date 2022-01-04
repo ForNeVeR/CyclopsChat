@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Xml;
 using System.Xml.Linq;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
@@ -10,18 +9,20 @@ namespace Cyclops.Xmpp.SharpXmpp.Protocol;
 
 internal static class IqEx
 {
-    private abstract class Iq : IIq
+    private class Iq : IIq
     {
         protected internal readonly XMPPIq Original;
-        protected Iq(XMPPIq original)
+        public Iq(XMPPIq original)
         {
             Original = original;
         }
 
         public Jid? From => Original.From.Map();
         public Jid? To => Original.To.Map();
-        public XmlElement? Error => throw new NotImplementedException();
+        public IError? Error => Original.Element(Original.Name.Namespace + Elements.Error)?.WrapAsError();
     }
+
+    public static IIq Wrap(this XMPPIq iq) => new Iq(iq);
 
     private class TimeIq : Iq, ITimeIq
     {

@@ -235,21 +235,48 @@ public class SharpXmppClient : IXmppClient
         currentClient!.Send(message);
     }
 
-    public Task<IIq> SendCaptchaAnswer(Jid mucId, string challenge, string answer)
+    public async Task<IIq> SendCaptchaAnswer(Jid roomId, string challenge, string answer)
     {
-        throw new NotImplementedException();
+        var iq = new XMPPIq(XMPPIq.IqTypes.set)
+        {
+            To = roomId.Bare.Map()
+        };
+
+        var form = iq.GetOrCreateChildElement(XNamespace.Get(Namespaces.Captcha) + Elements.Captcha)
+            .GetOrCreateChildElement(XNamespace.Get(Namespaces.Data) + Elements.X);
+        form.SetAttributeValue(Attributes.Type, "submit");
+
+        void AddField(string name, string value)
+        {
+            var field = new XElement(form.Name.Namespace + Elements.Field);
+            field.SetAttributeValue(Attributes.Var, name);
+            field.GetOrCreateChildElement(form.Name.Namespace + Elements.Value).Value = value;
+            form.Add(field);
+        }
+
+        AddField("FORM_TYPE", Namespaces.Captcha);
+        AddField("from", roomId.ToString());
+        AddField("challenge", challenge);
+        AddField("sid", "");
+        AddField("ocr", answer);
+
+        var response = await SendIq(iq, false);
+        return response.Wrap();
     }
 
-    private Task<XMPPIq> SendIq(XMPPIq iq)
+    private Task<XMPPIq> SendIq(XMPPIq iq, bool throwOnError = true)
     {
         var result = new TaskCompletionSource<XMPPIq>();
         currentClient!.Query(iq, response =>
         {
             try
             {
-                var error = response.Element(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + Elements.Error);
-                if (error != null)
-                    throw new Exception("XMPP error: " + error);
+                if (throwOnError)
+                {
+                    var error = response.Element(XNamespace.Get(SharpXMPP.Namespaces.JabberClient) + Elements.Error);
+                    if (error != null)
+                        throw new Exception("XMPP error: " + error);
+                }
 
                 result.SetResult(response);
             }
