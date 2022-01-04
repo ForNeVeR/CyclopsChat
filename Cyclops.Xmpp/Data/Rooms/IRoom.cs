@@ -27,5 +27,4 @@ public interface IRoom : IDisposable
     Task<IReadOnlyList<IMucParticipant>> GetParticipants(MucAffiliation? participantAffiliation);
 
     void SendPublicMessage(string body);
-    void SendPrivateMessage(string nick, string body);
 }

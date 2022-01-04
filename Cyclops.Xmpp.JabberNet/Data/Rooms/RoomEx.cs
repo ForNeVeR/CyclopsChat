@@ -98,7 +98,6 @@ internal static class RoomEx
         }
 
         public void SendPublicMessage(string body) => room.PublicMessage(body);
-        public void SendPrivateMessage(string nick, string body) => room.PrivateMessage(nick, body);
 
         private void OnJoin(jabber.connection.Room _) => Joined?.Invoke(this, null);
         private void OnLeave(jabber.connection.Room _, Presence presence) => Left?.Invoke(this, presence.Wrap());

@@ -22,7 +22,6 @@ namespace Cyclops.Core
         void ChangeSubject(string s);
         Task SendPublicMessage(string body);
         bool ChangeNick(string value);
-        void SendPrivateMessage(Jid target, string body);
         void RejoinWithNewNick(string nick);
         void ChangeNickAndStatus(string nick, StatusType statusType, string status);
 

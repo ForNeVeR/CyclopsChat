@@ -535,11 +535,6 @@ namespace Cyclops.Core.Resource
             return true;
         }
 
-        public void SendPrivateMessage(Jid target, string body)
-        {
-            room.SendPrivateMessage(target.Resource, body);
-        }
-
         private bool isNickConflictMode = false;
 
         public void RejoinWithNewNick(string nick)
