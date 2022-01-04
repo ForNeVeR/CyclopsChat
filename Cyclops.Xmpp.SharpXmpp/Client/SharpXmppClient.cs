@@ -63,7 +63,7 @@ public class SharpXmppClient : IXmppClient
             currentClient?.Dispose();
         }
 
-        currentClient = new XmppClient(new JID($"{user}@{server}"), password);
+        currentClient = new XmppClient(new JID($"{user}@{server}"), password, autoPresence: false);
         SubscribeToEvents(currentClient);
         iqQueryManager.IqManager = currentClient.IqManager;
         bookmarkManager.Connection = currentClient;
@@ -108,7 +108,7 @@ public class SharpXmppClient : IXmppClient
 
     private void OnElement(XmppConnection _, ElementArgs e)
     {
-        logger.LogVerbose($"{(e.IsInput ? "IN:" : "OUT:")}\n{e.Stanza}");
+        logger.LogVerbose("{0}\n{1}", e.IsInput ? "IN:" : "OUT:", e.Stanza);
 
         if (e.IsInput)
             ReadRawMessage?.Invoke(this, e.Stanza.ToString());
@@ -122,7 +122,11 @@ public class SharpXmppClient : IXmppClient
         }
     }
 
-    private void OnSignedIn(XmppConnection sender, SignedInArgs e) => Authenticated?.Invoke(this, null);
+    private void OnSignedIn(XmppConnection sender, SignedInArgs e)
+    {
+        Authenticated?.Invoke(this, null);
+        sender.Send(new XMPPPresence());
+    }
 
     private void OnPresence(XmppConnection _, XMPPPresence presence) => Presence?.Invoke(this, presence.Wrap());
 
@@ -236,7 +240,7 @@ public class SharpXmppClient : IXmppClient
                 var photoElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto);
                 var fullNameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardFn);
                 var emailElement = vCardElement?.Elements(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardEmail)
-                    ?.FirstOrDefault();
+                    .FirstOrDefault();
                 var birthDateElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardBDay);
                 var nicknameElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardNickname);
                 var descriptionElement = vCardElement?.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardDesc);
