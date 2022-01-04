@@ -9,7 +9,7 @@ internal class MucParticipant : IMucParticipant
 {
     public MucParticipant(IPresence presence)
     {
-        Presence = presence;
+        Presence = presence; // technically redundant since UpdateFrom will set this anyway
         var jidWithNick = presence.From!.Value;
 
         RoomParticipantJid = jidWithNick;
@@ -22,11 +22,13 @@ internal class MucParticipant : IMucParticipant
     public Jid? RealJid => throw new NotImplementedException();
     public MucRole? Role { get; private set; }
     public MucAffiliation? Affiliation { get; private set; }
-    public IPresence Presence { get; }
+    public IPresence Presence { get; set; }
     public string Nick { get; }
 
     public void UpdateFrom(IPresence presence)
     {
+        Presence = presence;
+
         var extendedData = presence.Unwrap().Element(XNamespace.Get(Namespaces.MucUser) + Elements.X)?.WrapAsUserData();
         var roomItem = extendedData?.RoomItem;
         Role = roomItem?.Role;

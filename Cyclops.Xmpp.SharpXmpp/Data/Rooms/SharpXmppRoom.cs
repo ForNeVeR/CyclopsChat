@@ -73,8 +73,7 @@ public class SharpXmppRoom : IRoom
         if (ShouldFireLeaveEvent())
             Left?.Invoke(this, presence);
 
-        if (presence.From != JidWithNick)
-            ProcessParticipant(presence, type);
+        ProcessParticipant(presence, type);
 
         bool ShouldFireJoinEvent()
         {
