@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Windows;
 using Cyclops.MainApplication.Helpers;
 
@@ -11,6 +12,8 @@ namespace Cyclops.MainApplication
     {
         public App()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             Dispatcher.UnhandledException += DispatchernhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
         }
