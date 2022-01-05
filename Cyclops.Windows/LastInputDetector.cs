@@ -28,7 +28,7 @@ public class LastInputDetector : IDisposable
         return TimeSpan.FromMilliseconds(currentTime - lastInputInfo.dwTime);
     }
 
-    private void TimerCallback(object _)
+    private void TimerCallback(object? _)
     {
         var inputIdle = GetTimeSinceLastInput();
         if (inputIdle >= idleInterval)
@@ -56,6 +56,6 @@ public class LastInputDetector : IDisposable
         if (disabled || currentlyIdle == false) return;
 
         currentlyIdle = false;
-        LeaveIdleMode?.Invoke(this, null);
+        LeaveIdleMode?.Invoke(this, EventArgs.Empty);
     }
 }
