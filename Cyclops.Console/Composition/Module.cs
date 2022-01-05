@@ -1,6 +1,6 @@
 using Cyclops.Core;
 using Cyclops.Core.Modularity;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Cyclops.Console.Composition
 {

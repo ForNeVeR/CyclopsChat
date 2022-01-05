@@ -5,7 +5,7 @@ using Cyclops.Xmpp.Registration;
 using Cyclops.Xmpp.SharpXmpp.Client;
 using Cyclops.Xmpp.SharpXmpp.Data;
 using Cyclops.Xmpp.SharpXmpp.Registration;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Cyclops.MainApplication.Composition;
 

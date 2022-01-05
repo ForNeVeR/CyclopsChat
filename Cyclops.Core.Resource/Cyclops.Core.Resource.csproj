@@ -6,7 +6,7 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Unity" Version="2.0.0" />
+        <PackageReference Include="Unity" Version="5.11.10" />
         <Reference Include="System.Configuration" />
     </ItemGroup>
     <ItemGroup>

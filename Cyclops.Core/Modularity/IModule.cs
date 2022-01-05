@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Cyclops.Core.Modularity
 {

@@ -1,11 +1,11 @@
 ﻿using System.Configuration;
+using CommonServiceLocator;
 using Cyclops.Core;
 using Cyclops.Core.Modularity;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
 using Cyclops.MainApplication.Composition;
 using Cyclops.Xmpp.Registration;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Cyclops.MainApplication
 {

@@ -12,8 +12,9 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System.Configuration" />
+        <PackageReference Include="CommonServiceLocator" Version="2.0.6" />
         <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
-        <PackageReference Include="Unity" Version="2.0.0" />
+        <PackageReference Include="Unity" Version="5.11.10" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="..\Cyclops.Core\Properties\AssemblyInfo.Shared.cs">

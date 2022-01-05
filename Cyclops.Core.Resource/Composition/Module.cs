@@ -4,7 +4,7 @@ using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;
 using Cyclops.Core.Security;
 using Cyclops.Core.Smiles;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Cyclops.Core.Resource.Composition
 {

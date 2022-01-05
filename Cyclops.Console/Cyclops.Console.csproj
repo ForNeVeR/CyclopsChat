@@ -4,12 +4,12 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj"/>
-        <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj"/>
-        <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj"/>
+        <ProjectReference Include="..\Cyclops.Core.Resource\Cyclops.Core.Resource.csproj" />
+        <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />
+        <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MvvmLightLibs" Version="4.1.27.1"/>
-        <PackageReference Include="Unity" Version="2.0.0"/>
+        <PackageReference Include="MvvmLightLibs" Version="4.1.27.1" />
+        <PackageReference Include="Unity" Version="5.11.10" />
     </ItemGroup>
 </Project>
