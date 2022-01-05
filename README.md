@@ -13,6 +13,11 @@ Cyclops chat is a simple XMPP muc client, it support the following features:
 - Localization (English and Russian)
 - Bookmarks support
 
+Download
+--------
+
+To download a binary distribution, please visit the [GitHub releases page][releases].
+
 Screenshots
 -----------
 
@@ -33,7 +38,9 @@ Documentation
 -------------
 
 - [Changelog][docs.changelog]
+- [Maintainership][docs.maintainership]
 - [License (MIT)][docs.license]
+- [Third-party software ][docs.third-party]
 
 # Acknowledgements
 
@@ -42,5 +49,8 @@ Originally, the project was developed by [@EgorBo][egorbo] and hosted on [CodePl
 [codeplex]: https://cyclopschat.codeplex.com/
 [docs.changelog]: ./CHANGELOG.md
 [docs.license]: ./LICENSE.md
+[docs.maintainership]: ./MAINTAINERSHIP.md
+[docs.third-party]: ./THIRD-PARTY-SOFTWARE.md
 [dotnet-sdk]: https://dotnet.microsoft.com/download
 [egorbo]: https://github.com/EgorBo
+[releases]: https://github.com/ForNeVeR/CyclopsChat/releases
