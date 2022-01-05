@@ -1,4 +1,4 @@
-# CyclopsChat (XMPP muc client)
+# CyclopsChat (WPF XMPP client)
 
 Cyclops chat is a simple XMPP muc client, it support the following features:
 - MUC (user can close/create/join to conferences)
@@ -11,8 +11,6 @@ Cyclops chat is a simple XMPP muc client, it support the following features:
 - Nick and status changing (and displaying it on the user list)
 - Localization (English and Russian)
 - Bookmarks support
-
-It's built using WPF and jabber-net library. Originaly, it was hosted [here](https://cyclopschat.codeplex.com/).
 
 # Screenshots:
 
@@ -32,4 +30,10 @@ $ dotnet build
 
 MIT
 
+# Acknowledgements
+
+Originally, the project was developed by [@EgorBo][egorbo] and hosted on [CodePlex][codeplex].
+
+[codeplex]: https://cyclopschat.codeplex.com/
 [dotnet-sdk]: https://dotnet.microsoft.com/download
+[egorbo]: https://github.com/EgorBo
