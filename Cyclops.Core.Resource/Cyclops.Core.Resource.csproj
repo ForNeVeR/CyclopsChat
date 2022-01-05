@@ -19,7 +19,6 @@
             <Name>Cyclops.Core</Name>
         </ProjectReference>
         <ProjectReference Include="..\Cyclops.Windows\Cyclops.Windows.csproj" />
-        <ProjectReference Include="..\Cyclops.Xmpp.JabberNet\Cyclops.Xmpp.JabberNet.csproj" />
         <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
     </ItemGroup>
     <ItemGroup>
