@@ -9,7 +9,6 @@ Cyclops chat is a simple XMPP muc client, it support the following features:
 - vCard-based avatars (supports caching)
 - Tray, tabs and pop-ups notifications
 - Nick and status changing (and displaying it on the user list)
-- Accounts registration (quick and simple)
 - Localization (English and Russian)
 - Bookmarks support
 
