@@ -1,4 +1,5 @@
-# CyclopsChat (WPF XMPP client)
+CyclopsChat (WPF XMPP client)
+=============================
 
 Cyclops chat is a simple XMPP muc client, it support the following features:
 - MUC (user can close/create/join to conferences)
@@ -12,13 +13,15 @@ Cyclops chat is a simple XMPP muc client, it support the following features:
 - Localization (English and Russian)
 - Bookmarks support
 
-# Screenshots:
+Screenshots
+-----------
 
 ![Main Window Screenshot](Docs/screenshot-1.png)
 
 ![Login Window Screenshot](Docs/screenshot-2.png)
 
-# Build
+Build
+-----
 
 To build the project, install [.NET 6 SDK][dotnet-sdk], and then run the following in the shell:
 
@@ -26,14 +29,18 @@ To build the project, install [.NET 6 SDK][dotnet-sdk], and then run the followi
 $ dotnet build
 ```
 
-# License
+Documentation
+-------------
 
-MIT
+- [Changelog][docs.changelog]
+- [License (MIT)][docs.license]
 
 # Acknowledgements
 
 Originally, the project was developed by [@EgorBo][egorbo] and hosted on [CodePlex][codeplex].
 
 [codeplex]: https://cyclopschat.codeplex.com/
+[docs.changelog]: ./CHANGELOG.md
+[docs.license]: ./LICENSE.md
 [dotnet-sdk]: https://dotnet.microsoft.com/download
 [egorbo]: https://github.com/EgorBo
