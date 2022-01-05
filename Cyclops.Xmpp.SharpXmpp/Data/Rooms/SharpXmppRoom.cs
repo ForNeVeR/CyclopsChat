@@ -49,7 +49,7 @@ public class SharpXmppRoom : IRoom
         client.Message -= OnMessage;
     }
 
-    private void OnPresence(object _, IPresence presence)
+    private void OnPresence(object? _, IPresence presence)
     {
         if (presence.From?.Bare != BareJid) return;
         if (presence.Error != null)
@@ -69,7 +69,7 @@ public class SharpXmppRoom : IRoom
         var isSelfPresence = statusCodes.Contains(MucUserStatus.SelfReferringPresence);
 
         if (ShouldFireJoinEvent())
-            Joined?.Invoke(this, null);
+            Joined?.Invoke(this, EventArgs.Empty);
 
         if (ShouldFireLeaveEvent())
             Left?.Invoke(this, presence);
@@ -90,7 +90,7 @@ public class SharpXmppRoom : IRoom
         bool ShouldFireLeaveEvent() => isSelfPresence && type == PresenceTypes.Unavailable;
     }
 
-    private void OnMessage(object sender, IMessage message)
+    private void OnMessage(object? _, IMessage message)
     {
         if (message.From?.Bare != BareJid) return;
         if (message.Subject != null)

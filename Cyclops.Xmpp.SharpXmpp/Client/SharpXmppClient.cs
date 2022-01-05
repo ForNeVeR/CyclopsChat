@@ -85,7 +85,7 @@ public class SharpXmppClient : IXmppClient
             }
             catch (Exception ex)
             {
-                AuthenticationError?.Invoke(this, null);
+                AuthenticationError?.Invoke(this, EventArgs.Empty);
                 Error?.Invoke(this, ex);
                 throw;
             }
@@ -112,7 +112,7 @@ public class SharpXmppClient : IXmppClient
         connection.ConnectionFailed -= OnConnectionFailed;
     }
 
-    private void OnStreamStart(XmppConnection _, string __) => Connected?.Invoke(this, null);
+    private void OnStreamStart(XmppConnection _, string __) => Connected?.Invoke(this, EventArgs.Empty);
 
     private void OnElement(XmppConnection _, ElementArgs e)
     {
@@ -125,7 +125,7 @@ public class SharpXmppClient : IXmppClient
         switch (e)
         {
             case { IsInput: true, Stanza.Name: { NamespaceName: SharpXMPP.Namespaces.Streams, LocalName: Elements.Error } }:
-                StreamError?.Invoke(this, null);
+                StreamError?.Invoke(this, EventArgs.Empty);
                 break;
         }
     }
@@ -133,7 +133,7 @@ public class SharpXmppClient : IXmppClient
     private void OnSignedIn(XmppConnection sender, SignedInArgs e)
     {
         IsAuthenticated = true;
-        Authenticated?.Invoke(this, null);
+        Authenticated?.Invoke(this, EventArgs.Empty);
         sender.Send(new XMPPPresence());
     }
 
@@ -143,7 +143,7 @@ public class SharpXmppClient : IXmppClient
     {
         var wrapped = message.Wrap();
         if (wrapped.Type == MessageType.GroupChat)
-            RoomMessage?.Invoke(this, null);
+            RoomMessage?.Invoke(this, EventArgs.Empty);
 
         Message?.Invoke(this, message.Wrap());
     }
@@ -157,7 +157,7 @@ public class SharpXmppClient : IXmppClient
             logger.LogError($"Connection failed: {e.Message}.", e.Exception);
 
         IsAuthenticated = false;
-        Disconnected?.Invoke(this, null);
+        Disconnected?.Invoke(this, EventArgs.Empty);
         Error?.Invoke(this, e.Exception ?? new MessageOnlyException(e.Message));
     }
 
@@ -170,7 +170,7 @@ public class SharpXmppClient : IXmppClient
 
     public void SendElement(XmlElement element)
     {
-        currentClient!.Send(XElement.Parse(element.ToString()));
+        currentClient!.Send(XElement.Parse(element.ToString()!));
     }
 
     public void SendPresence(PresenceDetails presenceDetails)
@@ -215,7 +215,9 @@ public class SharpXmppClient : IXmppClient
 
     internal void SendPresence(XMPPPresence presence)
     {
-        presence.GetOrCreateAttribute(Attributes.From).Value ??= currentClient!.Jid?.FullJid;
+        var from = presence.GetOrCreateAttribute(Attributes.From);
+        if (string.IsNullOrEmpty(from.Value))
+            from.Value = currentClient!.Jid.FullJid;
 
         currentClient!.Send(presence);
     }

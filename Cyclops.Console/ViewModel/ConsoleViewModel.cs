@@ -55,22 +55,22 @@ namespace Cyclops.Console.ViewModel
             client.Error -= OnError;
         }
 
-        private void OnConnected(object sender, object _)
+        private void OnConnected(object? _, object __)
         {
             dispatcher.InvokeAsyncIfRequired(() => Entries.Add("CONNECTION ESTABLISHED"));
         }
 
-        private void OnReadText(object sender, string txt)
+        private void OnReadText(object? _, string txt)
         {
             dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"RECV: {txt}"));
         }
 
-        private void OnWriteText(object sender, string txt)
+        private void OnWriteText(object? _, string txt)
         {
             dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"SEND: {txt}"));
         }
 
-        private void OnError(object sender, Exception ex)
+        private void OnError(object? _, Exception ex)
         {
             dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"ERROR: {ex.Message}"));
         }

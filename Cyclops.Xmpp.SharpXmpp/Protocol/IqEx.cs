@@ -92,9 +92,9 @@ internal static class IqEx
                 var version = query.GetOrCreateChildElement(XNamespace.Get(Namespaces.Version) + Elements.Version);
                 var os = query.GetOrCreateChildElement(XNamespace.Get(Namespaces.Version) + Elements.Os);
 
-                name.Value = value.Client;
-                version.Value = value.Version;
-                os.Value = value.Os;
+                name.Value = value.Client ?? "";
+                version.Value = value.Version ?? "";
+                os.Value = value.Os ?? "";
             }
         }
     }
