@@ -96,6 +96,11 @@
         <None Include="Resources\EmptyIcon.ico" />
         <Resource Include="Resources\email.png" />
         <Resource Include="Resources\users.png" />
+        <None Include="../CHANGELOG.md" CopyToPublishDirectory="Always"/>
+        <None Include="../LICENSE.md" CopyToPublishDirectory="Always"/>
+        <None Include="../README.md" CopyToPublishDirectory="Always"/>
+        <None Include="../THIRD-PARTY-SOFTWARE.md" CopyToPublishDirectory="Always"/>
+        <None Include="../third-party/**/*" CopyToPublishDirectory="Always" LinkBase="third-party"/>
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
