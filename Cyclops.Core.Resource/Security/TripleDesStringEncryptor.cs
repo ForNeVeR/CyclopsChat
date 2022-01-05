@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Cyclops.Core.Security;
@@ -22,43 +23,28 @@ namespace Cyclops.Core.Resource.Security
 
         public string EncryptString(string plainText)
         {
-            try
-            {
-                return CryptoHelper.Base64Encode(Transform(plainText, provider.CreateEncryptor(key, iv)));
-            }
-            catch
-            {
-                return plainText;
-            }
+            var plainBytes = Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(Transform(plainBytes, provider.CreateEncryptor(key, iv)));
         }
 
         public string DecryptString(string encryptedText)
         {
-            try
-            {
-                return Transform(CryptoHelper.Base64Decode(encryptedText), provider.CreateDecryptor(key, iv));
-            }
-            catch
-            {
-                return encryptedText;
-            }
+            var encryptedBytes = Convert.FromBase64String(encryptedText);
+            return Encoding.UTF8.GetString(Transform(encryptedBytes, provider.CreateDecryptor(key, iv)));
         }
 
         #endregion
 
-        private static string Transform(string text, ICryptoTransform transform)
+        private static byte[] Transform(byte[] bytes, ICryptoTransform transform)
         {
-            if (text == null)
-                return null;
             using (var stream = new MemoryStream())
             {
                 using (var cryptoStream = new CryptoStream(stream, transform, CryptoStreamMode.Write))
                 {
-                    byte[] input = Encoding.Default.GetBytes(text);
-                    cryptoStream.Write(input, 0, input.Length);
+                    cryptoStream.Write(bytes, 0, bytes.Length);
                     cryptoStream.FlushFinalBlock();
 
-                    return Encoding.Default.GetString(stream.ToArray());
+                    return stream.ToArray();
                 }
             }
         }
