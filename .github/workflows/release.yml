@@ -68,7 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ChangelogAutomation v${{ steps.version.outputs.version }}
+          release_name: CyclopsChat v${{ steps.version.outputs.version }}
           body_path: ./changelog-section.md
 
       - name: Upload the distribution to the releases page
