@@ -3,12 +3,10 @@ using System.Runtime.InteropServices;
 
 //SHARED!
 
-[assembly: AssemblyTitle("RC2")]
-[assembly: AssemblyDescription("RC2")]
-[assembly: AssemblyCompany("CyclopsChat Team")]
-[assembly: AssemblyCopyright("Copyright © CyclopsChat Team 2011")]
+[assembly: AssemblyCompany("CyclopsChat Contributors")]
+[assembly: AssemblyCopyright("Copyright © CyclopsChat Contributors 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.0.9.0")]
-[assembly: AssemblyFileVersion("1.0.9.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]

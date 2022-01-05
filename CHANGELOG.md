@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0]
 ### Removed
 - Special support for vk.com server
 - Registration support ([see #32 for details](https://github.com/ForNeVeR/CyclopsChat/issues/32))
@@ -126,4 +126,5 @@ Initial publicly available release, which supported the following features:
 [1.0.7]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.6...v1.0.7
 [1.0.8-rc1]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.7...v1.0.8-rc1
 [1.0.9]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.8-rc1...v1.0.9
-[Unreleased]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.9...HEAD
+[2.0.0]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.9...v2.0.0
+[Unreleased]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.0...HEAD
