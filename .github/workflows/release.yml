@@ -39,7 +39,7 @@ jobs:
         shell: pwsh
         run: >
           dotnet publish Cyclops.MainApplication --runtime win-x64 --configuration Release --output publish --self-contained
-          && Compress-Archive ./publish -DestinationPath CyclopsChat-v${{ steps.version.outputs.version }}.win-x64.zip
+          && Compress-Archive ./publish/* -DestinationPath CyclopsChat-v${{ steps.version.outputs.version }}.win-x64.zip
 
       - name: Read the changelog
         uses: ForNeVeR/ChangelogAutomation.action@v1
