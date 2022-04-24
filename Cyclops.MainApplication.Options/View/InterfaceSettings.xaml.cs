@@ -1,10 +1,9 @@
-namespace Cyclops.MainApplication.Options.View
+namespace Cyclops.MainApplication.Options.View;
+
+public partial class InterfaceSettings
 {
-    public partial class InterfaceSettings
+    public InterfaceSettings()
     {
-        public InterfaceSettings()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,110 +1,109 @@
-﻿namespace Cyclops.MainApplication.Options.Model
+﻿namespace Cyclops.MainApplication.Options.Model;
+
+partial class ApplicationSettings
 {
-    partial class ApplicationSettings
+    private bool disableAllSounds;
+    private bool soundEvenIfActive;
+    private string? soundOnIncomingPrivate;
+    private string? soundOnIncomingPublic;
+    private string? soundOnStatusChange;
+    private string? soundOnSystemMessage;
+    private string? soundOnUserJoin;
+    private string? soundOnUserLeave;
+
+    public string? SoundOnUserLeave
     {
-        private bool disableAllSounds;
-        private bool soundEvenIfActive;
-        private string soundOnIncomingPrivate;
-        private string soundOnIncomingPublic;
-        private string soundOnStatusChange;
-        private string soundOnSystemMessage;
-        private string soundOnUserJoin;
-        private string soundOnUserLeave;
-
-        public string SoundOnUserLeave
+        get => soundOnUserLeave;
+        set
         {
-            get { return soundOnUserLeave; }
-            set
-            {
-                soundOnUserLeave = value;
-                RaisePropertyChanged("SoundOnUserLeave");
-            }
+            soundOnUserLeave = value;
+            RaisePropertyChanged("SoundOnUserLeave");
         }
+    }
 
-        public string SoundOnUserJoin
+    public string? SoundOnUserJoin
+    {
+        get => soundOnUserJoin;
+        set
         {
-            get { return soundOnUserJoin; }
-            set
-            {
-                soundOnUserJoin = value;
-                RaisePropertyChanged("SoundOnUserJoin");
-            }
+            soundOnUserJoin = value;
+            RaisePropertyChanged("SoundOnUserJoin");
         }
+    }
 
-        public string SoundOnIncomingPrivate
+    public string? SoundOnIncomingPrivate
+    {
+        get => soundOnIncomingPrivate;
+        set
         {
-            get { return soundOnIncomingPrivate; }
-            set
-            {
-                soundOnIncomingPrivate = value;
-                RaisePropertyChanged("SoundOnIncomingPrivate");
-            }
+            soundOnIncomingPrivate = value;
+            RaisePropertyChanged("SoundOnIncomingPrivate");
         }
+    }
 
-        public string SoundOnIncomingPublic
+    public string? SoundOnIncomingPublic
+    {
+        get => soundOnIncomingPublic;
+        set
         {
-            get { return soundOnIncomingPublic; }
-            set
-            {
-                soundOnIncomingPublic = value;
-                RaisePropertyChanged("SoundOnIncomingPublic");
-            }
+            soundOnIncomingPublic = value;
+            RaisePropertyChanged("SoundOnIncomingPublic");
         }
+    }
 
-        public string SoundOnSystemMessage
+    public string? SoundOnSystemMessage
+    {
+        get => soundOnSystemMessage;
+        set
         {
-            get { return soundOnSystemMessage; }
-            set
-            {
-                soundOnSystemMessage = value;
-                RaisePropertyChanged("SoundOnSystemMessage");
-            }
+            soundOnSystemMessage = value;
+            RaisePropertyChanged("SoundOnSystemMessage");
         }
+    }
 
-        public string SoundOnStatusChange
+    public string? SoundOnStatusChange
+    {
+        get => soundOnStatusChange;
+        set
         {
-            get { return soundOnStatusChange; }
-            set
-            {
-                soundOnStatusChange = value;
-                RaisePropertyChanged("SoundOnStatusChange");
-            }
+            soundOnStatusChange = value;
+            RaisePropertyChanged("SoundOnStatusChange");
         }
+    }
 
-        public bool DisableAllSounds
+    public bool DisableAllSounds
+    {
+        get => disableAllSounds;
+        set
         {
-            get { return disableAllSounds; }
-            set
-            {
-                disableAllSounds = value;
-                RaisePropertyChanged("DisableAllSounds");
-            }
+            disableAllSounds = value;
+            RaisePropertyChanged("DisableAllSounds");
         }
+    }
 
-        public bool SoundEvenIfActive
+    public bool SoundEvenIfActive
+    {
+        get => soundEvenIfActive;
+        set
         {
-            get { return soundEvenIfActive; }
-            set
-            {
-                soundEvenIfActive = value;
-                RaisePropertyChanged("SoundEvenIfActive");
-            }
+            soundEvenIfActive = value;
+            RaisePropertyChanged("SoundEvenIfActive");
         }
+    }
 
-        private void CloneSoundsProperties(ApplicationSettings cloneObj)
-        {
-            cloneObj.SoundOnUserLeave = SoundOnUserLeave;
-            cloneObj.SoundOnUserJoin = SoundOnUserJoin;
-            cloneObj.SoundOnIncomingPrivate = SoundOnIncomingPrivate;
-            cloneObj.SoundOnIncomingPublic = SoundOnIncomingPublic;
-            cloneObj.SoundOnSystemMessage = SoundOnSystemMessage;
-            cloneObj.SoundOnStatusChange = SoundOnStatusChange;
-            cloneObj.DisableAllSounds = DisableAllSounds;
-            cloneObj.SoundEvenIfActive = SoundEvenIfActive;
-        }
+    private void CloneSoundsProperties(ApplicationSettings cloneObj)
+    {
+        cloneObj.SoundOnUserLeave = SoundOnUserLeave;
+        cloneObj.SoundOnUserJoin = SoundOnUserJoin;
+        cloneObj.SoundOnIncomingPrivate = SoundOnIncomingPrivate;
+        cloneObj.SoundOnIncomingPublic = SoundOnIncomingPublic;
+        cloneObj.SoundOnSystemMessage = SoundOnSystemMessage;
+        cloneObj.SoundOnStatusChange = SoundOnStatusChange;
+        cloneObj.DisableAllSounds = DisableAllSounds;
+        cloneObj.SoundEvenIfActive = SoundEvenIfActive;
+    }
 
-        private void SetSoundsDefaultValues()
-        {
-        }
+    private void SetSoundsDefaultValues()
+    {
     }
 }

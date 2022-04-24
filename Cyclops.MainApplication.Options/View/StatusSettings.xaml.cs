@@ -1,10 +1,9 @@
-namespace Cyclops.MainApplication.Options.View
+namespace Cyclops.MainApplication.Options.View;
+
+public partial class StatusSettings
 {
-    public partial class StatusSettings
+    public StatusSettings()
     {
-        public StatusSettings()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

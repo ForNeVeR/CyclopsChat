@@ -5,9 +5,11 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="MvvmLightLibs" Version="4.1.27.1">
-            <NoWarn>NU1701</NoWarn> <!-- TODO: Get rid of it -->
+            <NoWarn>NU1701</NoWarn> <!-- TODO[#34]: Get rid of it -->
         </PackageReference>
-        <PackageReference Include="Extended.Wpf.Toolkit" Version="4.2.0" />
+        <PackageReference Include="Extended.Wpf.Toolkit" Version="4.2.0">
+            <NoWarn>NU1701</NoWarn> <!-- TODO[#41]: Get rid of it -->
+        </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />

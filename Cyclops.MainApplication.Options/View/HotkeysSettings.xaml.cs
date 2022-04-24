@@ -1,10 +1,9 @@
-namespace Cyclops.MainApplication.Options.View
+namespace Cyclops.MainApplication.Options.View;
+
+public partial class HotkeysSettings
 {
-    public partial class HotkeysSettings
+    public HotkeysSettings()
     {
-        public HotkeysSettings()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

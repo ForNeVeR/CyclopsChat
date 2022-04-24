@@ -1,52 +1,51 @@
-﻿namespace Cyclops.MainApplication.Options.Model
+﻿namespace Cyclops.MainApplication.Options.Model;
+
+partial class ApplicationSettings
 {
-    partial class ApplicationSettings
-    {
-        private int autoAwayAfter;
-        private int autoExtendedAwayAfter;
-        private bool showStatusChangingMessages;
+    private int autoAwayAfter;
+    private int autoExtendedAwayAfter;
+    private bool showStatusChangingMessages;
         
-        public int AutoAwayAfter
+    public int AutoAwayAfter
+    {
+        get { return autoAwayAfter; }
+        set
         {
-            get { return autoAwayAfter; }
-            set
-            {
-                autoAwayAfter = value;
-                RaisePropertyChanged("AutoAwayAfter");
-            }
+            autoAwayAfter = value;
+            RaisePropertyChanged("AutoAwayAfter");
         }
+    }
 
-        public int AutoExtendedAwayAfter
+    public int AutoExtendedAwayAfter
+    {
+        get { return autoExtendedAwayAfter; }
+        set
         {
-            get { return autoExtendedAwayAfter; }
-            set
-            {
-                autoExtendedAwayAfter = value;
-                RaisePropertyChanged("AutoExtendedAwayAfter");
-            }
+            autoExtendedAwayAfter = value;
+            RaisePropertyChanged("AutoExtendedAwayAfter");
         }
+    }
 
-        public bool ShowStatusChangingMessages
+    public bool ShowStatusChangingMessages
+    {
+        get { return showStatusChangingMessages; }
+        set
         {
-            get { return showStatusChangingMessages; }
-            set
-            {
-                showStatusChangingMessages = value;
-                RaisePropertyChanged("ShowStatusChangingMessages");
-            }
+            showStatusChangingMessages = value;
+            RaisePropertyChanged("ShowStatusChangingMessages");
         }
+    }
 
-        private void CloneStatusProperties(ApplicationSettings cloneObj)
-        {
-            cloneObj.AutoAwayAfter = AutoAwayAfter;
-            cloneObj.AutoExtendedAwayAfter = AutoExtendedAwayAfter;
-            cloneObj.ShowStatusChangingMessages = ShowStatusChangingMessages;
-        }
+    private void CloneStatusProperties(ApplicationSettings cloneObj)
+    {
+        cloneObj.AutoAwayAfter = AutoAwayAfter;
+        cloneObj.AutoExtendedAwayAfter = AutoExtendedAwayAfter;
+        cloneObj.ShowStatusChangingMessages = ShowStatusChangingMessages;
+    }
 
-        private void SetStatusDefaultValues()
-        {
-            AutoAwayAfter = 15;
-            AutoExtendedAwayAfter = 60;
-        }
+    private void SetStatusDefaultValues()
+    {
+        AutoAwayAfter = 15;
+        AutoExtendedAwayAfter = 60;
     }
 }

@@ -12,9 +12,7 @@
             '$(MSBuildProjectName)' != 'Cyclops.Core'
             And '$(MSBuildProjectName)' != 'Cyclops.Core.Resource'
             And '$(MSBuildProjectName)' != 'Cyclops.MainApplication'
-            And '$(MSBuildProjectName)' != 'Cyclops.MainApplication.Options'
             And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication_'))
-            And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication.Options_'))
         ">true</TreatWarningsAsErrors>
     </PropertyGroup>
 </Project>

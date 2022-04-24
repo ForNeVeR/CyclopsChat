@@ -3,153 +3,152 @@ using System.Linq;
 using System.Xml.Serialization;
 using Cyclops.MainApplication.Localization;
 
-namespace Cyclops.MainApplication.Options.Model
+namespace Cyclops.MainApplication.Options.Model;
+
+partial class ApplicationSettings
 {
-    partial class ApplicationSettings
+    private bool blinkOnlyOnPrivates;
+    private bool disableBlinking;
+    private bool enableErrorPopups;
+    private bool enablePrivatePopups;
+    private bool isSmilesAnimated;
+    private int popupStaysOpenning;
+    private string? selectedLanguage;
+    private bool showEntryAndExits;
+    private bool showRoleChanges;
+    private int smilesLimitInMessage;
+
+    [XmlIgnore]
+    public string[] Languages
     {
-        private bool blinkOnlyOnPrivates;
-        private bool disableBlinking;
-        private bool enableErrorPopups;
-        private bool enablePrivatePopups;
-        private bool isSmilesAnimated;
-        private int popupStaysOpenning;
-        private string selectedLanguage;
-        private bool showEntryAndExits;
-        private bool showRoleChanges;
-        private int smilesLimitInMessage;
+        get { return LocalizationManager.Instance.Languages.Select(i => i.Culture).ToArray(); }
+    }
 
-        [XmlIgnore]
-        public string[] Languages
+    public string? SelectedLanguage
+    {
+        get => selectedLanguage;
+        set
         {
-            get { return LocalizationManager.Instance.Languages.Select(i => i.Culture).ToArray(); }
+            selectedLanguage = value;
+            RaisePropertyChanged("SelectedLanguage");
         }
+    }
 
-        public string SelectedLanguage
+    public int SmilesLimitInMessage
+    {
+        get => smilesLimitInMessage;
+        set
         {
-            get { return selectedLanguage; }
-            set
-            {
-                selectedLanguage = value;
-                RaisePropertyChanged("SelectedLanguage");
-            }
+            smilesLimitInMessage = value;
+            RaisePropertyChanged("SmilesLimitInMessage");
         }
+    }
 
-        public int SmilesLimitInMessage
+    public bool EnablePrivatePopups
+    {
+        get => enablePrivatePopups;
+        set
         {
-            get { return smilesLimitInMessage; }
-            set
-            {
-                smilesLimitInMessage = value;
-                RaisePropertyChanged("SmilesLimitInMessage");
-            }
+            enablePrivatePopups = value;
+            RaisePropertyChanged("EnablePrivatePopups");
         }
+    }
 
-        public bool EnablePrivatePopups
+    public bool EnableErrorPopups
+    {
+        get => enableErrorPopups;
+        set
         {
-            get { return enablePrivatePopups; }
-            set
-            {
-                enablePrivatePopups = value;
-                RaisePropertyChanged("EnablePrivatePopups");
-            }
+            enableErrorPopups = value;
+            RaisePropertyChanged("EnableErrorPopups");
         }
+    }
 
-        public bool EnableErrorPopups
+    public int PopupStaysOpenning
+    {
+        get => popupStaysOpenning;
+        set
         {
-            get { return enableErrorPopups; }
-            set
-            {
-                enableErrorPopups = value;
-                RaisePropertyChanged("EnableErrorPopups");
-            }
+            popupStaysOpenning = value;
+            RaisePropertyChanged("PopupStaysOpenning");
         }
+    }
 
-        public int PopupStaysOpenning
+    public bool DisableBlinking
+    {
+        get => disableBlinking;
+        set
         {
-            get { return popupStaysOpenning; }
-            set
-            {
-                popupStaysOpenning = value;
-                RaisePropertyChanged("PopupStaysOpenning");
-            }
+            disableBlinking = value;
+            RaisePropertyChanged("DisableBlinking");
         }
+    }
 
-        public bool DisableBlinking
+    public bool ShowEntryAndExits
+    {
+        get => showEntryAndExits;
+        set
         {
-            get { return disableBlinking; }
-            set
-            {
-                disableBlinking = value;
-                RaisePropertyChanged("DisableBlinking");
-            }
+            showEntryAndExits = value;
+            RaisePropertyChanged("ShowEntryAndExits");
         }
+    }
 
-        public bool ShowEntryAndExits
+    public bool ShowRoleChanges
+    {
+        get => showRoleChanges;
+        set
         {
-            get { return showEntryAndExits; }
-            set
-            {
-                showEntryAndExits = value;
-                RaisePropertyChanged("ShowEntryAndExits");
-            }
+            showRoleChanges = value;
+            RaisePropertyChanged("ShowRoleChanges");
         }
+    }
 
-        public bool ShowRoleChanges
+    public bool BlinkOnlyOnPrivates
+    {
+        get => blinkOnlyOnPrivates;
+        set
         {
-            get { return showRoleChanges; }
-            set
-            {
-                showRoleChanges = value;
-                RaisePropertyChanged("ShowRoleChanges");
-            }
+            blinkOnlyOnPrivates = value;
+            RaisePropertyChanged("BlinkOnlyOnPrivates");
         }
+    }
 
-        public bool BlinkOnlyOnPrivates
+    public bool IsSmilesAnimated
+    {
+        get => isSmilesAnimated;
+        set
         {
-            get { return blinkOnlyOnPrivates; }
-            set
-            {
-                blinkOnlyOnPrivates = value;
-                RaisePropertyChanged("BlinkOnlyOnPrivates");
-            }
+            isSmilesAnimated = value;
+            RaisePropertyChanged("IsSmilesAnimated");
         }
+    }
 
-        public bool IsSmilesAnimated
-        {
-            get { return isSmilesAnimated; }
-            set
-            {
-                isSmilesAnimated = value;
-                RaisePropertyChanged("IsSmilesAnimated");
-            }
-        }
+    private void CloneInterfaceProperties(ApplicationSettings cloneObj)
+    {
+        cloneObj.SelectedLanguage = SelectedLanguage;
+        cloneObj.SmilesLimitInMessage = SmilesLimitInMessage;
+        cloneObj.EnablePrivatePopups = EnablePrivatePopups;
+        cloneObj.EnableErrorPopups = EnableErrorPopups;
+        cloneObj.PopupStaysOpenning = PopupStaysOpenning;
+        cloneObj.DisableBlinking = DisableBlinking;
+        cloneObj.BlinkOnlyOnPrivates = BlinkOnlyOnPrivates;
+        cloneObj.IsSmilesAnimated = IsSmilesAnimated;
+        cloneObj.ShowEntryAndExits = ShowEntryAndExits;
+        cloneObj.ShowRoleChanges = ShowRoleChanges;
+    }
 
-        private void CloneInterfaceProperties(ApplicationSettings cloneObj)
-        {
-            cloneObj.SelectedLanguage = SelectedLanguage;
-            cloneObj.SmilesLimitInMessage = SmilesLimitInMessage;
-            cloneObj.EnablePrivatePopups = EnablePrivatePopups;
-            cloneObj.EnableErrorPopups = EnableErrorPopups;
-            cloneObj.PopupStaysOpenning = PopupStaysOpenning;
-            cloneObj.DisableBlinking = DisableBlinking;
-            cloneObj.BlinkOnlyOnPrivates = BlinkOnlyOnPrivates;
-            cloneObj.IsSmilesAnimated = IsSmilesAnimated;
-            cloneObj.ShowEntryAndExits = ShowEntryAndExits;
-            cloneObj.ShowRoleChanges = ShowRoleChanges;
-        }
-
-        private void SetInterfaceDefaultValues()
-        {
-            SelectedLanguage = CultureInfo.CurrentCulture.Name;
-            SmilesLimitInMessage = 100;
-            EnablePrivatePopups = true;
-            EnableErrorPopups = true;
-            PopupStaysOpenning = 3;
-            DisableBlinking = false;
-            BlinkOnlyOnPrivates = false;
-            IsSmilesAnimated = false;
-            ShowRoleChanges = true;
-            ShowEntryAndExits = true;
-        }
+    private void SetInterfaceDefaultValues()
+    {
+        SelectedLanguage = CultureInfo.CurrentCulture.Name;
+        SmilesLimitInMessage = 100;
+        EnablePrivatePopups = true;
+        EnableErrorPopups = true;
+        PopupStaysOpenning = 3;
+        DisableBlinking = false;
+        BlinkOnlyOnPrivates = false;
+        IsSmilesAnimated = false;
+        ShowRoleChanges = true;
+        ShowEntryAndExits = true;
     }
 }

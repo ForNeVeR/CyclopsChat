@@ -1,10 +1,9 @@
-namespace Cyclops.MainApplication.Options.View
+namespace Cyclops.MainApplication.Options.View;
+
+public partial class SoundsSettings
 {
-    public partial class SoundsSettings
+    public SoundsSettings()
     {
-        public SoundsSettings()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
