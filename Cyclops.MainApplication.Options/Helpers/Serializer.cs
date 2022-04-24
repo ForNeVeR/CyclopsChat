@@ -9,19 +9,14 @@ public class Serializer<T> where T : class, new()
 
     public T? Deserialize(string path)
     {
-        Stream? stream = null;
-        try //using? не, не слышал
+        try
         {
-            stream = File.OpenRead(path);
+            using var stream = File.OpenRead(path);
             return xmlSerializer.Deserialize(stream) as T;
         }
         catch
         {
             return null;
-        }
-        finally
-        {
-            stream?.Close();
         }
     }
 
