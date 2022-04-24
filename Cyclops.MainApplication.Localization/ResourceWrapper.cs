@@ -1,119 +1,119 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
-namespace Cyclops.MainApplication.Localization
-{
-    /// <summary>
-    /// This wrapper allows to change language directly in runtime (including XAML binding)
-    /// </summary>
-    public class ResourceWrapper : INotifyPropertyChanged
+namespace Cyclops.MainApplication.Localization;
+
+/// <summary>
+/// This wrapper allows to change language directly in runtime (including XAML binding)
+/// </summary>
+public class ResourceWrapper : INotifyPropertyChanged
     //EX: Text="{Binding Path=ApplicationStrings.ApplicationName, Source={StaticResource ResourceWrapper}}"
+{
+
+    private Conference conference = new();
+    public Conference Conference
     {
-
-        private Conference conference = new Conference();
-        public Localization.Conference Conference
+        get => conference;
+        set
         {
-            get { return conference; }
-            set
-            {
-                conference = value;
-                OnPropertyChanged("Conference");
-            }
+            conference = value;
+            OnPropertyChanged();
         }
+    }
 
-        private Login login = new Login();
-        public Localization.Login Login
+    private Login login = new();
+    public Login Login
+    {
+        get => login;
+        set
         {
-            get { return login; }
-            set
-            {
-                login = value;
-                OnPropertyChanged("Login");
-            }
+            login = value;
+            OnPropertyChanged();
         }
+    }
 
-        private ContextMenus contextMenu = new ContextMenus();
-        public Localization.ContextMenus ContextMenus
+    private ContextMenus contextMenu = new();
+    public ContextMenus ContextMenus
+    {
+        get => contextMenu;
+        set
         {
-            get { return contextMenu; }
-            set
-            {
-                contextMenu = value;
-                OnPropertyChanged("ContextMenus");
-            }
+            contextMenu = value;
+            OnPropertyChanged();
         }
+    }
 
-        private Common common = new Common();
-        public Common Common
+    private Common common = new();
+    public Common Common
+    {
+        get => common;
+        set
         {
-            get { return common; }
-            set
-            {
-                common = value;
-                OnPropertyChanged("Common");
-            }
+            common = value;
+            OnPropertyChanged();
         }
+    }
 
-        private Vcard vcard = new Vcard();
-        public Vcard Vcard
+    private Vcard vcard = new();
+    public Vcard Vcard
+    {
+        get => vcard;
+        set
         {
-            get { return vcard; }
-            set
-            {
-                vcard = value;
-                OnPropertyChanged("Vcard");
-            }
+            vcard = value;
+            OnPropertyChanged();
         }
-        
-        private ConferenceList conferenceList = new ConferenceList();
-        public Localization.ConferenceList ConferenceList
-        {
-            get { return conferenceList; }
-            set
-            {
-                conferenceList = value;
-                OnPropertyChanged("ConferenceList");
-            }
-        }
+    }
 
-        private Main main = new Main();
-        public Localization.Main Main
+    private ConferenceList conferenceList = new();
+    public ConferenceList ConferenceList
+    {
+        get => conferenceList;
+        set
         {
-            get { return main; }
-            set
-            {
-                main = value;
-                OnPropertyChanged("Main");
-            }
+            conferenceList = value;
+            OnPropertyChanged();
         }
+    }
 
-        private Settings settings = new Settings();
-        public Localization.Settings Settings
+    private Main main = new();
+    public Main Main
+    {
+        get => main;
+        set
         {
-            get { return settings; }
-            set
-            {
-                settings = value;
-                OnPropertyChanged("Settings");
-            }
+            main = value;
+            OnPropertyChanged();
         }
+    }
 
-        public void Refresh()
+    private Settings settings = new();
+    public Settings Settings
+    {
+        get => settings;
+        set
         {
-            Login = new Login();
-            Conference = new Conference();
-            Main = new Main();
-            ConferenceList = new ConferenceList();
-            Common = new Common();
-            Vcard = new Vcard();
-            Settings = new Settings();
-            ContextMenus = new ContextMenus();
+            settings = value;
+            OnPropertyChanged();
         }
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+    public void Refresh()
+    {
+        Login = new Login();
+        Conference = new Conference();
+        Main = new Main();
+        ConferenceList = new ConferenceList();
+        Common = new Common();
+        Vcard = new Vcard();
+        Settings = new Settings();
+        ContextMenus = new ContextMenus();
+    }
 
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string? name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
