@@ -189,6 +189,8 @@ namespace Cyclops.Core.Resource
             currentUserId = new Jid(info.User ?? "", info.Server ?? "", resource);
 
             IsAuthenticated = true;
+            ConnectionConfig = info;
+
             XmppClient.Connect(
                 server: info.Server,
                 host: info.NetworkHost,
