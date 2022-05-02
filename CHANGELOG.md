@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+- Changing the bookmarks in any way no longer clears the bookmark storage
+- Auto-reconnection now works again
+- Invalid bookmarks received from server won't trigger reconnect now
+
 ## [2.0.0] - 2022-01-05
 ### Removed
 - Special support for vk.com server
