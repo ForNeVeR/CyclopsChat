@@ -47,18 +47,21 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
 
                     var query = response.Element(XNamespace.Get(Namespaces.Private) + Elements.Query);
                     if (query == null)
-                        throw new NotSupportedException("Cannot find the query element in the bookmark response.");
+                        logger.LogInfo("Cannot find the query element in the bookmark response.");
                     var storage =
-                        query.Element(XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Storage);
+                        query?.Element(XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Storage);
                     if (storage == null)
-                        throw new NotSupportedException("Cannot find the storage element in the bookmark response.");
-                    var conferences = storage.Elements(
-                        XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Conference);
-
-                    foreach (var conference in conferences)
+                        logger.LogInfo("Cannot find the storage element in the bookmark response.");
+                    else
                     {
-                        var bookmarkedConference = Stanza.Parse<BookmarkedConference>(conference);
-                        currentBookmarks.Add(bookmarkedConference);
+                        var conferences = storage.Elements(
+                            XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Conference);
+
+                        foreach (var conference in conferences)
+                        {
+                            var bookmarkedConference = Stanza.Parse<BookmarkedConference>(conference);
+                            currentBookmarks.Add(bookmarkedConference);
+                        }
                     }
                 }
 
