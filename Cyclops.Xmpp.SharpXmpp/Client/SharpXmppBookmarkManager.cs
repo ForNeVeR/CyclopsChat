@@ -92,7 +92,7 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
         bookmark.SetAttributeValue(Attributes.AutoJoin, autoJoin.ToString().ToLowerInvariant());
 
         List<BookmarkedConference> allBookmarks;
-        lock (currentBookmarks)
+        lock (bookmarksLock)
         {
             currentBookmarks.Add(bookmark);
             allBookmarks = currentBookmarks.ToList();
@@ -104,7 +104,7 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
     public void RemoveBookmark(Jid roomId)
     {
         List<BookmarkedConference> allBookmarks;
-        lock (currentBookmarks)
+        lock (bookmarksLock)
         {
             currentBookmarks.RemoveAll(bc => bc.JID.Map() == roomId.Bare);
             allBookmarks = currentBookmarks.ToList();
@@ -115,7 +115,7 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
 
     private void NotifyAllBookmarksAdded()
     {
-        lock (currentBookmarks)
+        lock (bookmarksLock)
         {
             foreach (var bookmark in currentBookmarks)
                 BookmarkAdded?.Invoke(this, bookmark.Wrap());
