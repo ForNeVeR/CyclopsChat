@@ -127,14 +127,14 @@ internal class SharpXmppBookmarkManager : IBookmarkManager
 
     private void StoreBookmarks(IEnumerable<BookmarkedConference> bookmarks)
     {
-        var iq = new XMPPIq(XMPPIq.IqTypes.get);
-        var storageQuery = new XElement(
-            XNamespace.Get(Namespaces.Private) + Elements.Query,
-            new XElement(XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Storage));
-        iq.Add(storageQuery);
+        var iq = new XMPPIq(XMPPIq.IqTypes.set);
 
+        var storageBookmarks = new XElement(XNamespace.Get(SharpXMPP.Namespaces.StorageBookmarks) + Elements.Storage);
         foreach (var bc in bookmarks)
-            storageQuery.Add(bc);
+            storageBookmarks.Add(bc);
+        var storageQuery = new XElement(XNamespace.Get(Namespaces.Private) + Elements.Query, storageBookmarks);
+
+        iq.Add(storageQuery);
 
         Connection!.Send(iq);
     }
