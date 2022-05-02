@@ -23,23 +23,12 @@ public class SharpXmppIqQueryManager : IIqQueryManager
         public override bool Handle(XmppConnection _, XMPPIq element) => handler(element);
     }
 
+    private readonly LambdaPayloadHandler payloadHandler;
     private IqManager? iqManager;
-    internal IqManager IqManager
-    {
-        set
-        {
-            if (iqManager != null)
-                throw new NotSupportedException(
-                    $"Reinitialization of {nameof(SharpXmppIqQueryManager)} is not supported.");
 
-            iqManager = value;
-            RegisterPayloadHandler(iqManager);
-        }
-    }
-
-    private void RegisterPayloadHandler(IqManager currentIqManager)
+    public SharpXmppIqQueryManager()
     {
-        currentIqManager.PayloadHandlers.Add(new LambdaPayloadHandler(iq =>
+        payloadHandler = new LambdaPayloadHandler(iq =>
         {
             if (iq.IqType != XMPPIq.IqTypes.get) return false;
 
@@ -65,7 +54,29 @@ public class SharpXmppIqQueryManager : IIqQueryManager
             }
 
             return false;
-        }));
+        });
+    }
+
+    internal IqManager IqManager
+    {
+        set
+        {
+            if (iqManager != null)
+                UnregisterPayloadHandler(iqManager);
+
+            iqManager = value;
+            RegisterPayloadHandler(iqManager);
+        }
+    }
+
+    private void UnregisterPayloadHandler(IqManager oldIqManager)
+    {
+        oldIqManager.PayloadHandlers.Remove(payloadHandler);
+    }
+
+    private void RegisterPayloadHandler(IqManager currentIqManager)
+    {
+        currentIqManager.PayloadHandlers.Add(payloadHandler);
     }
 
     public event EventHandler<ITimeIq>? TimeQueried;

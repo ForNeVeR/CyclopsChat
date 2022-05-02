@@ -31,7 +31,7 @@ public class SharpXmppConferenceManager : IConferenceManager
             if (!rooms.TryGetValue(roomJid.Bare, out var room))
             {
                 room = new SharpXmppRoom(logger, client, this, roomJid.Bare);
-                rooms.Add(roomJid, room);
+                rooms.Add(roomJid.Bare, room);
             }
 
             return room;
