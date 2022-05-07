@@ -19,7 +19,7 @@ namespace Cyclops.Core.Resource.Smiles
         public ISmile[] Smiles { get { return SmilesForDeserialization; } }
 
         [XmlElement("icon", typeof(Smile))]
-        public Smile[] SmilesForDeserialization { get; set; }
+        public Smile?[] SmilesForDeserialization { get; set; }
 
         //NOTE: XmlSerializer can't deserialize Interface properties :( (tried to use XmlInclude and etc)
     }

@@ -14,5 +14,8 @@
             And '$(MSBuildProjectName)' != 'Cyclops.MainApplication'
             And !$(MSBuildProjectName.StartsWith('Cyclops.MainApplication_'))
         ">true</TreatWarningsAsErrors>
+
+        <!-- CyclopsChat only supports Windows for now, so suppress warnings from the portability analyzer. -->
+        <NoWarn>CA1416</NoWarn>
     </PropertyGroup>
 </Project>
