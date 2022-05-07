@@ -28,31 +28,39 @@ namespace Cyclops.Core.Resource.Smiles
             return Directory.GetFiles(directory, "*.jisp");
         }
 
-        private static ISmilePack Deserialize(string jispFile)
+        private static ISmilePack? Deserialize(string jispFile)
         {
-            SmilePack smilePack = null;
+            SmilePack smilePack;
             try
             {
                 //*.JISP file is an 7-zip archive
-                using (ZipStorer zip = ZipStorer.Open(jispFile, FileAccess.Read))
+                using var stream = new FileStream(jispFile, FileMode.Open);
+                using (var zip = new ZipArchive(stream, ZipArchiveMode.Read))
                 {
-                    var dir = zip.ReadCentralDir();
-                    var iconDefFile = dir.First(i => string.Equals(Path.GetFileName(i.FilenameInZip), "icondef.xml", StringComparison.InvariantCultureIgnoreCase));
+                    var dir = zip.Entries;
+                    var iconDefFile = dir.First(
+                        i => string.Equals(i.Name, "icondef.xml", StringComparison.InvariantCultureIgnoreCase));
 
-                    using (var ms = new MemoryStream((int)iconDefFile.FileSize))
+                    using (var ms = new MemoryStream((int)iconDefFile.Length))
                     {
-                        zip.ExtractFile(iconDefFile, ms);
+                        using var entryStream = iconDefFile.Open();
+                        entryStream.CopyTo(ms);
                         ms.Position = 0;
                         smilePack = XmlSerializer.Deserialize(ms) as SmilePack;
                     }
 
                     if (smilePack != null)
-                        foreach (var item in dir.Join(smilePack.Smiles, i => Path.GetFileName(i.FilenameInZip), i => i.File, (f, i) => new { Smile = i, ZipEntry = f }))
+                        foreach (var item in dir.Join(
+                                     smilePack.Smiles,
+                                     i => i.Name,
+                                     i => i.File,
+                                     (f, i) => new { Smile = i, ZipEntry = f }))
                         {
                             try
                             {
                                 var ms = new MemoryStream();
-                                zip.ExtractFile(item.ZipEntry, ms);
+                                using var entryStream = item.ZipEntry.Open();
+                                entryStream.CopyTo(ms);
                                 ((Smile) item.Smile).Bitmap = (Bitmap)Image.FromStream(ms);
                                 ((Smile)item.Smile).Stream = ms;
                             }
