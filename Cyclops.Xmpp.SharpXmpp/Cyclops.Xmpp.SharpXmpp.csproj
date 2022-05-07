@@ -7,7 +7,7 @@
         <InternalsVisibleTo Include="Cyclops.Tests" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="SharpXMPP" Version="0.3.0" />
+        <PackageReference Include="SharpXMPP" Version="0.4.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />
