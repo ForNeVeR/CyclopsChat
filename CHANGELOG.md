@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.1] - 2022-05-07
 ### Fixed
 - Changing the bookmarks in any way no longer clears the bookmark storage
 - Auto-reconnection now works again
@@ -133,4 +133,5 @@ Initial publicly available release, which supported the following features:
 [1.0.8-rc1]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.7...v1.0.8-rc1
 [1.0.9]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.8-rc1...v1.0.9
 [2.0.0]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.9...v2.0.0
-[Unreleased]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.0...HEAD
+[2.0.1]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.0...v2.0.1
+[Unreleased]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.1...HEAD
