@@ -104,6 +104,11 @@ public class HyperlinkDecorator : IMessageDecorator
 
     private static void HyperlinkClickHandler(object sender, RoutedEventArgs e)
     {
-        Process.Start(((Hyperlink) sender).NavigateUri.ToString());
+        var uri = ((Hyperlink)sender).NavigateUri;
+        var startInfo = new ProcessStartInfo(uri.ToString())
+        {
+            UseShellExecute = true
+        };
+        Process.Start(startInfo);
     }
 }
