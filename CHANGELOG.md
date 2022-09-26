@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Fixed
-- [#50: Crash when opening a hyperlink](https://github.com/ForNeVeR/CyclopsChat/issues/50))
+- [#50: Crash when opening a hyperlink](https://github.com/ForNeVeR/CyclopsChat/issues/50)
 - Cyrillic hyperlinks aren't highlighted
 
 ## [2.0.1] - 2022-05-07
