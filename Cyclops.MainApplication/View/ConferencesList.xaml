@@ -70,8 +70,13 @@
             <Button IsDefault="True" Command="{Binding OpenConference}" Grid.Row="3" Content="{Binding Path=ConferenceList.Join, Source={StaticResource ResourceWrapper}}" Width="90" HorizontalAlignment="Right" VerticalAlignment="Center" Height="22" Margin="0,0,3,0" />
 
             <!-- room list -->
-			<ListBox x:Name="listBox" Grid.Row="2" ItemsSource="{Binding Conferences}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="False" SelectedItem="{Binding SelectedConference, Mode=TwoWay}" ItemTemplate="{DynamicResource ConferenceDataTemplate}">
-				<i:Interaction.Triggers>
+			<ListBox x:Name="listBox" Grid.Row="2"
+                     ItemTemplate="{DynamicResource ConferenceDataTemplate}"
+                     ItemsSource="{Binding Conferences}"
+                     SelectedItem="{Binding SelectedConference, Mode=TwoWay}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                     VirtualizingStackPanel.ScrollUnit="Pixel">
+                <i:Interaction.Triggers>
 					<i:EventTrigger EventName="MouseDoubleClick" SourceObject="{Binding ElementName=listBox}">
 						<galasoft:EventToCommand Command="{Binding OpenConference}" />
 					</i:EventTrigger>
