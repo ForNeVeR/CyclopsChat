@@ -5,11 +5,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1.0] - 2022-11-19
 ### Fixed
 - [#50: Crash when opening a hyperlink](https://github.com/ForNeVeR/CyclopsChat/issues/50).
 - Cyrillic hyperlinks aren't highlighted.
 - Low performance when adding a lot of conferences into the conference browser.
+
+### Changed
+- Migrate from the ZipStorer library to the standard `ZipArchive` class.
 
 ## [2.0.1] - 2022-05-07
 ### Fixed
@@ -140,4 +143,5 @@ Initial publicly available release, which supported the following features:
 [1.0.9]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.8-rc1...v1.0.9
 [2.0.0]: https://github.com/ForNeVeR/CyclopsChat/compare/v1.0.9...v2.0.0
 [2.0.1]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.0...v2.0.1
-[Unreleased]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.1...HEAD
+[2.1.0]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.0.1...v2.1.0
+[Unreleased]: https://github.com/ForNeVeR/CyclopsChat/compare/v2.1.0...HEAD
