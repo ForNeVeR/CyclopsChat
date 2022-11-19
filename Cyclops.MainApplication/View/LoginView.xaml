@@ -56,7 +56,9 @@
 						<DropShadowEffect ShadowDepth="0" BlurRadius="7"/>
 					</TextBlock.Effect>
                 </TextBlock>
-                <TextBlock Text="2.0.1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="18.667" Margin="312,8,-312,0"/>
+                <TextBlock Text="{Binding ApplicationVersion}"
+                           VerticalAlignment="Top" FontWeight="Bold" Foreground="White" FontSize="18.667"
+                           Margin="312,8,-312,0"/>
                 <TextBlock Grid.Row="2" Foreground="#FFFF7E7E" Text="{Binding ErrorMessage}" FontSize="15"
                        Visibility="{Binding ErrorMessage, Converter={StaticResource isNullConverter}}"
 				       TextWrapping="Wrap" Margin="5,5,5,0"/>

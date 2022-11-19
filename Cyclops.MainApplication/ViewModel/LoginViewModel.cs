@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Cyclops.Configuration;
@@ -61,6 +62,8 @@ namespace Cyclops.MainApplication.ViewModel
         }
 
         public LoginViewModel() : this(ChatObjectFactory.GetDebugLogger()) {}
+
+        public string ApplicationVersion => Assembly.GetExecutingAssembly().GetName().Version?.ToString(3) ?? "N/A";
 
         private bool RegisterCanExecute(PasswordBox obj)
         {
