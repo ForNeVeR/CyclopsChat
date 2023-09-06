@@ -58,10 +58,7 @@ namespace Cyclops.MainApplication.Controls
         [DllImport("gdi32.dll")]
         private static extern bool DeleteObject(IntPtr hObject);
 
-        public bool IsAnimating
-        {
-            get { return _bIsAnimating; }
-        }
+        public bool IsAnimating => _bIsAnimating;
 
         public AnimatedImage()
         {
@@ -88,7 +85,7 @@ namespace Cyclops.MainApplication.Controls
             set { StopAnimate(); SetValue(AnimatedBitmapProperty, value); }
         }
 
-        private static Dictionary<int, BitmapSource[]> cache = new Dictionary<int, BitmapSource[]>(20);
+        private static readonly Dictionary<int, BitmapSource[]> cache = new Dictionary<int, BitmapSource[]>(20);
 
         public bool StaticByDefault { get; set; }
 
@@ -255,10 +252,7 @@ namespace Cyclops.MainApplication.Controls
             }
         }
 
-        private bool IsAnimated
-        {
-            get { return AnimatedBitmap != null && IsGif(AnimatedBitmap); }
-        }
+        private bool IsAnimated => AnimatedBitmap != null && IsGif(AnimatedBitmap);
 
         public void StartAnimate()
         {

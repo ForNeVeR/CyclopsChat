@@ -8,7 +8,7 @@ internal static class ErrorEx
 {
     private class Error : IError
     {
-        private XElement error;
+        private readonly XElement error;
         public Error(XElement error)
         {
             this.error = error;

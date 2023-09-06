@@ -9,17 +9,11 @@ namespace Cyclops.Core
 
         #region IConferenceMessage Members
 
-        public IUserSession Session
-        {
-            get { return null; }
-        }
+        public IUserSession Session => null;
 
         public Jid AuthorId { get; set; }
 
-        public bool IsAuthorModer
-        {
-            get { return false; }
-        }
+        public bool IsAuthorModer => false;
 
         public bool IsFromHistory { get; private set; }
 
@@ -27,15 +21,9 @@ namespace Cyclops.Core
 
         public string Body { get; set; }
 
-        public DateTime Timestamp
-        {
-            get { return DateTime.Now; }
-        }
+        public DateTime Timestamp => DateTime.Now;
 
-        public bool IsCustom
-        {
-            get { return true; }
-        }
+        public bool IsCustom => true;
 
         public bool IsSelfMessage { get; set; }
 

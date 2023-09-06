@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -47,14 +47,11 @@ namespace Cyclops.Core.Resource.Avatars
         public static string AvatarsFolder = @"Data\Avatars";
         public const string DefaultAvatar = "default.png";
 
-        private BitmapImage defaultAvatar;
+        private readonly BitmapImage defaultAvatar;
 
         #region Implementation of ISessionHolder
 
-        public IUserSession Session
-        {
-            get { return session; }
-        }
+        public IUserSession Session => session;
 
         #endregion
 

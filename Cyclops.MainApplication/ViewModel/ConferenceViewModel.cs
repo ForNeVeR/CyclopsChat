@@ -19,8 +19,8 @@ namespace Cyclops.MainApplication.ViewModel
         private ObservableCollection<MessageViewModel> messages;
         private string newNick;
         private IConferenceMember selectedMember;
-        private string statusText;
-        private IChatObjectsValidator validator;
+        private readonly string statusText;
+        private readonly IChatObjectsValidator validator;
 
         public ConferenceViewModel(ILogger logger, IChatAreaView view, IConference conference) : base(view)
         {
@@ -175,10 +175,7 @@ namespace Cyclops.MainApplication.ViewModel
             }
         }
 
-        public override bool IsConference
-        {
-            get { return true; }
-        }
+        public override bool IsConference => true;
 
         public IConference Conference
         {

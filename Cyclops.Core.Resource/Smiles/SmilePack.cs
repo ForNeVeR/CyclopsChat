@@ -10,13 +10,13 @@ namespace Cyclops.Core.Resource.Smiles
     public class SmilePack : ISmilePack
     {
         [XmlIgnore]
-        public ISmilePackMeta Meta { get { return MetaForDeserialization; } }
+        public ISmilePackMeta Meta => MetaForDeserialization;
 
         [XmlElement("meta", typeof(SmilePackMeta))]
         public SmilePackMeta MetaForDeserialization { get; set; }
 
         [XmlIgnore]
-        public ISmile[] Smiles { get { return SmilesForDeserialization; } }
+        public ISmile[] Smiles => SmilesForDeserialization;
 
         [XmlElement("icon", typeof(Smile))]
         public Smile?[] SmilesForDeserialization { get; set; }

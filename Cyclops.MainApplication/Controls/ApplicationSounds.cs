@@ -41,10 +41,7 @@ namespace Cyclops.MainApplication.Controls
             PlaySound(viewModel, Context.Settings.SoundOnIncomingPublic);
         }
 
-        private static ApplicationContext Context
-        {
-            get { return ApplicationContext.Current; }
-        }
+        private static ApplicationContext Context => ApplicationContext.Current;
 
         private static void PlaySound(ChatAreaViewModel viewModel, string file)
         {

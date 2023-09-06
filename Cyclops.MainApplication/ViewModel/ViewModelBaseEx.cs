@@ -10,15 +10,9 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public class ViewModelBaseEx : ViewModelBase
     {
-        public ApplicationSettings Settings
-        {
-            get { return ApplicationContext.Current.ApplicationSettings; }
-        }
+        public ApplicationSettings Settings => ApplicationContext.Current.ApplicationSettings;
 
-        public MainViewModel Main
-        {
-            get { return ApplicationContext.Current.MainViewModel; }
-        }
+        public MainViewModel Main => ApplicationContext.Current.MainViewModel;
 
         //private bool isBusy;
         //public bool IsBusy

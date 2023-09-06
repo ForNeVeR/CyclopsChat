@@ -23,10 +23,7 @@ namespace Cyclops.MainApplication
 
         private static IUserSession session;
 
-        public static IServiceLocator ServiceLocator
-        {
-            get { return serviceLocator; }
-        }
+        public static IServiceLocator ServiceLocator => serviceLocator;
 
         public static IUserSession GetSession()
         {

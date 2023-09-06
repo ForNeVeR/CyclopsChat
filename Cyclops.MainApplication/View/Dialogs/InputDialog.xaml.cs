@@ -19,7 +19,7 @@ namespace Cyclops.MainApplication.View.Dialogs
     /// </summary>
     public partial class InputDialog
     {
-        private string initialValue;
+        private readonly string initialValue;
 
         protected InputDialog(string initialValue, Action<string> okAction, Func<string, bool> validator)
         {

@@ -65,7 +65,7 @@ namespace Cyclops.Core.Resource
         /// <returns>
         /// true if the caller must call <see cref="M:System.ComponentModel.ISynchronizeInvoke.Invoke(System.Delegate,System.Object[])"/>; otherwise, false.
         /// </returns>
-        public bool InvokeRequired { get { return dispatcher.Thread != Thread.CurrentThread; } }
+        public bool InvokeRequired => dispatcher.Thread != Thread.CurrentThread;
 
         #endregion
     }

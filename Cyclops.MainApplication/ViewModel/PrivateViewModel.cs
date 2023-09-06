@@ -7,7 +7,7 @@ namespace Cyclops.MainApplication.ViewModel
 {
     public class PrivateViewModel : ChatAreaViewModel
     {
-        private string currentlyTypedMessage;
+        private readonly string currentlyTypedMessage;
         private ObservableCollection<MessageViewModel> messages;
 
         public PrivateViewModel(IChatAreaView view) : base(view)
@@ -63,10 +63,7 @@ namespace Cyclops.MainApplication.ViewModel
             CurrentlyTypedMessage = string.Empty;
         }
 
-        public override bool IsPrivate
-        {
-            get { return true; }
-        }
+        public override bool IsPrivate => true;
 
         public override string ToString()
         {

@@ -59,29 +59,17 @@ namespace Cyclops.Core.Resource
 
         #region Implementation of ISessionHolder
 
-        public IUserSession Session
-        {
-            get { return session; }
-        }
+        public IUserSession Session => session;
 
         #endregion
 
         #region Implementation of IConferenceMember
 
-        public string Nick
-        {
-            get { return participant.Nick; }
-        }
+        public string Nick => participant.Nick;
 
-        public bool IsModer
-        {
-            get { return Role >= Role.Moder; }
-        }
+        public bool IsModer => Role >= Role.Moder;
 
-        public bool IsMe
-        {
-            get { return ConferenceUserId.Equals(conference.ConferenceId); }
-        }
+        public bool IsMe => ConferenceUserId.Equals(conference.ConferenceId);
 
         public bool IsSubscribed
         {
@@ -160,10 +148,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public Jid? RealUserId
-        {
-            get { return participant.RealJid; }
-        }
+        public Jid? RealUserId => participant.RealJid;
 
         #endregion
 

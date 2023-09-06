@@ -40,10 +40,7 @@ namespace Cyclops.Core.Resource
 
         #region IConferenceMessage Members
 
-        public IUserSession Session
-        {
-            get { return userSession; }
-        }
+        public IUserSession Session => userSession;
 
         public bool IsSelfMessage { get; private set; }
 
@@ -51,10 +48,7 @@ namespace Cyclops.Core.Resource
 
         public IConference Conference { get; private set; }
 
-        public Jid AuthorId
-        {
-            get { return msg.From.Value; }
-        }
+        public Jid AuthorId => msg.From.Value;
 
         public bool IsAuthorModer
         {
@@ -67,15 +61,9 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public string AuthorNick
-        {
-            get { return msg.From?.Resource ?? ""; }
-        }
+        public string AuthorNick => msg.From?.Resource ?? "";
 
-        public string Body
-        {
-            get { return msg.Body; }
-        }
+        public string Body => msg.Body;
 
         private DateTime timestamp = DateTime.MinValue;
         public DateTime Timestamp
@@ -89,10 +77,7 @@ namespace Cyclops.Core.Resource
             set { timestamp = value; }
         }
 
-        public bool IsCustom
-        {
-            get { return false; }
-        }
+        public bool IsCustom => false;
 
         #endregion
     }

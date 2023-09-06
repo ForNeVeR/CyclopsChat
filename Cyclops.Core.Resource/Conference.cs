@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -414,10 +414,7 @@ namespace Cyclops.Core.Resource
 
         #region Implementation of ISessionHolder
 
-        public IUserSession Session
-        {
-            get { return session; }
-        }
+        public IUserSession Session => session;
 
         #endregion
 

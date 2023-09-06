@@ -77,10 +77,7 @@ namespace Cyclops.MainApplication
         {
         }
 
-        public UIElement SmileElement
-        {
-            get { return smilesButton; }
-        }
+        public UIElement SmileElement => smilesButton;
 
         #endregion
     }

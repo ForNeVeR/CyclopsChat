@@ -8,10 +8,7 @@ namespace Cyclops.Core.Modularity
     {
         #region IModule Members
 
-        public virtual IEnumerable<IModule> Children
-        {
-            get { return Enumerable.Empty<IModule>(); }
-        }
+        public virtual IEnumerable<IModule> Children => Enumerable.Empty<IModule>();
 
         public virtual void Initialize(IUnityContainer container)
         {

@@ -36,7 +36,7 @@ namespace Cyclops.MainApplication.Notifications
         private EventHandler arrivedHidden;
         private EventHandler arrivedOpened;
 
-        private object locker = new object();
+        private readonly object locker = new object();
 
         public TaskbarNotifier()
         {

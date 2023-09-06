@@ -19,10 +19,7 @@ partial class ApplicationSettings
     private int smilesLimitInMessage;
 
     [XmlIgnore]
-    public string[] Languages
-    {
-        get { return LocalizationManager.Instance.Languages.Select(i => i.Culture).ToArray(); }
-    }
+    public string[] Languages => LocalizationManager.Instance.Languages.Select(i => i.Culture).ToArray();
 
     public string? SelectedLanguage
     {

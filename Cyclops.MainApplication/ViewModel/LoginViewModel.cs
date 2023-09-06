@@ -23,7 +23,7 @@ public class LoginViewModel : ViewModelBaseEx
     private string? errorMessage;
     private IUserSession session;
     private bool autoLogin;
-    private Profile profile;
+    private readonly Profile profile;
     private readonly IRegistrationManager registrationManager;
     private string password;
 

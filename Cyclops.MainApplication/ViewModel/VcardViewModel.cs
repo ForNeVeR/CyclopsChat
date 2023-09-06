@@ -15,7 +15,7 @@ namespace Cyclops.MainApplication.ViewModel
     {
         private readonly ILogger logger;
         private readonly Action closeAction;
-        private IUserSession session;
+        private readonly IUserSession session;
         private VCard sourceVCard = null;
 
         public VcardViewModel(ILogger logger, Jid target, Action closeAction, bool isEditMode = false)

@@ -13,15 +13,9 @@ namespace Cyclops.MainApplication.ViewModel
         private string currentlyTypedMessage;
         private bool isActive;
 
-        public virtual bool IsPrivate
-        {
-            get { return false; }
-        }
+        public virtual bool IsPrivate => false;
 
-        public virtual bool IsConference
-        {
-            get { return false; }
-        }
+        public virtual bool IsConference => false;
 
         public RelayCommand Close { get; set; }
         public IChatAreaView View { get; set; }

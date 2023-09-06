@@ -111,10 +111,7 @@ namespace Cyclops.MainApplication
             }
         }
 
-        public IUserSession Session
-        {
-            get { return ChatObjectFactory.GetSession(); }
-        }
+        public IUserSession Session => ChatObjectFactory.GetSession();
 
         private Profile currentProfile;
 
