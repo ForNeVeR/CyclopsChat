@@ -25,8 +25,7 @@ namespace Cyclops.MainApplication
 
         private static void DataContextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkElement frameworkElement = d as FrameworkElement;
-            if (frameworkElement == null)
+            if (d is not FrameworkElement frameworkElement)
                 return;
 
             if (frameworkElement.ContextMenu != null)

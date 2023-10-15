@@ -68,20 +68,17 @@ namespace Cyclops.MainApplication.Controls
             SelectedPrivateViewModel = null;
             SelectedConferenceViewModel = null;
 
-            var item = SelectedItem as TabItem;
-            if (item == null)
+            if (SelectedItem is not TabItem item)
                 return;
 
 
-            var conferenceView = item.Content as ConferenceView;
-            if (conferenceView != null)
+            if (item.Content is ConferenceView conferenceView)
             {
                 SelectedConferenceViewModel = conferenceView.ConferenceViewModel;
                 return;
             }
 
-            var privateView = item.Content as PrivateView;
-            if (privateView != null)
+            if (item.Content is PrivateView privateView)
             {
                 SelectedPrivateViewModel = privateView.ConferenceViewModel;
                 return;

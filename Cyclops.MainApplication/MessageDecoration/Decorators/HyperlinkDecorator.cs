@@ -25,8 +25,7 @@ public class HyperlinkDecorator : IMessageDecorator
         for (int i = 0; i < inlines.Count; i++)
         {
             // splite one Inline element (text (Run)) into several inlines (Runs and Hyperlinks)
-            var inline = inlines[i] as Run;
-            if (inline == null)
+            if (inlines[i] is not Run inline)
                 continue;
 
             string[] matches = Regex.Matches(inline.Text, pattern).OfType<Match>().Select(item => item.Value).ToArray();
@@ -71,8 +70,7 @@ public class HyperlinkDecorator : IMessageDecorator
 
     private void HyperlinkMouseRightButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        Hyperlink hyperlink = sender as Hyperlink;
-        if (hyperlink == null || hyperlink.NavigateUri == null || string.IsNullOrEmpty(hyperlink.NavigateUri.ToString()))
+        if (sender is not Hyperlink hyperlink || hyperlink.NavigateUri == null || string.IsNullOrEmpty(hyperlink.NavigateUri.ToString()))
             return;
 
         hyperlink.ContextMenu = GenerateContextMenu(hyperlink.NavigateUri.ToString());

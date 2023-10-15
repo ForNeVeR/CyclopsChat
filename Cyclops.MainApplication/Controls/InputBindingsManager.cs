@@ -29,9 +29,7 @@ namespace Cyclops.MainApplication.Controls
 
         private static void OnUpdatePropertySourceWhenEnterPressedPropertyChanged(DependencyObject dp, DependencyPropertyChangedEventArgs e)
         {
-            UIElement element = dp as UIElement;
-
-            if (element == null)
+            if (dp is not UIElement element)
             {
                 return;
             }
@@ -65,9 +63,8 @@ namespace Cyclops.MainApplication.Controls
                 return;
             }
 
-            UIElement elt = source as UIElement;
 
-            if (elt == null)
+            if (source is not UIElement elt)
             {
                 return;
             }

@@ -69,8 +69,7 @@ public partial class Selector
 
     private static void FileSelectionModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        var selector = d as Selector;
-        if (selector != null && (bool)e.NewValue)
+        if (d is Selector selector && (bool)e.NewValue)
             selector.SetFileSelectionCommand();
     }
         

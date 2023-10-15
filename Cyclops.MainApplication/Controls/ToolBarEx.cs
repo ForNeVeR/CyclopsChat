@@ -17,11 +17,9 @@ namespace Cyclops.MainApplication.Controls
         //removing overflow 
         private void ToolbarExLoaded(object sender, RoutedEventArgs e)
         {
-            ToolBar toolBar = sender as ToolBar;
-            if (toolBar == null)
+            if (sender is not ToolBar toolBar)
                 return;
-            var overflowGrid = toolBar.Template.FindName("OverflowGrid", toolBar) as FrameworkElement;
-            if (overflowGrid != null)
+            if (toolBar.Template.FindName("OverflowGrid", toolBar) is FrameworkElement overflowGrid)
             {
                 overflowGrid.Visibility = Visibility.Collapsed;
             }
