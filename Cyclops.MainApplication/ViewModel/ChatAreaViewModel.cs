@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using Cyclops.MainApplication.MessageDecoration;
+﻿using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using Cyclops.MainApplication.View;
 using Cyclops.Xmpp.Protocol;
@@ -21,7 +20,6 @@ namespace Cyclops.MainApplication.ViewModel
         public IChatAreaView View { get; set; }
         public RelayCommand ClearOutputArea { get; private set; }
         public RelayCommand ShowSettings { get; private set; }
-        public RelayCommand PasteAndSend { get; private set; }
         public RelayCommand SendMessage { get; private set; }
         public RelayCommand InsertSmiles { get; private set; }
 
@@ -31,7 +29,6 @@ namespace Cyclops.MainApplication.ViewModel
             ClearOutputArea = new RelayCommand(() => View.ClearOutputArea());
             Close = new RelayCommand(CloseAction);
             ShowSettings = new RelayCommand(() => ApplicationContext.Current.MainViewModel.ShowSettings());
-            PasteAndSend = new RelayCommand(PasteAndSendAction, PasteAndSendCanExecute);
             SendMessage = new RelayCommand(OnSendMessage, OnSendMessageCanExecute);
             InsertSmiles = new RelayCommand(InsertSmilesAction);
             DecoratorsRegistry.NickClick += DecoratorsRegistryNickClick;
@@ -67,18 +64,6 @@ namespace Cyclops.MainApplication.ViewModel
         protected virtual bool OnSendMessageCanExecute()
         {
             return !string.IsNullOrEmpty(CurrentlyTypedMessage);
-        }
-
-        private void PasteAndSendAction()
-        {
-            AppendText(Clipboard.GetText(TextDataFormat.Text));
-            OnSendMessage();
-        }
-
-        private bool PasteAndSendCanExecute()
-        {
-            string text = Clipboard.GetText(TextDataFormat.Text);
-            return !string.IsNullOrEmpty(text);
         }
 
         private void DecoratorsRegistryNickClick(object sender, NickEventArgs e)

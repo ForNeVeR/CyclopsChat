@@ -138,9 +138,6 @@
   <data name="Paste" xml:space="preserve">
     <value>Вставить (Ctrl+V)</value>
   </data>
-  <data name="PasteAndSend" xml:space="preserve">
-    <value>Вставить и отправить (Ctrl+Shift+V)</value>
-  </data>
   <data name="Quit" xml:space="preserve">
     <value>Выход</value>
   </data>

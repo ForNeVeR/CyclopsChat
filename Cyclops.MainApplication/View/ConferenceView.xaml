@@ -16,9 +16,6 @@
              mc:Ignorable="d" x:Name="mainControl"
              d:DataContext="{d:DesignInstance {x:Type vm:ConferenceViewModelDesignTime}, IsDesignTimeCreatable=True}">
     <UserControl.InputBindings>
-        <KeyBinding Modifiers="Control+Shift"
-                        Key="V"
-                        Command="{Binding ConferenceViewModel.PasteAndSend}" />
         <KeyBinding Modifiers="Control"
                         Key="S"
                         Command="{Binding ConferenceViewModel.InsertSmiles}" />

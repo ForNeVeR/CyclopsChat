@@ -1,33 +1,25 @@
-﻿<UserControl x:Class="Cyclops.MainApplication.View.PrivateView" 
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls" 
+﻿<UserControl x:Class="Cyclops.MainApplication.View.PrivateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls"
              mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
               TextOptions.TextRenderingMode="ClearType"
              TextOptions.TextFormattingMode="Display">
-    <UserControl.InputBindings>
-        <KeyBinding Modifiers="Control+Shift"
-                        Key="V"
-                        Command="{Binding ConferenceViewModel.PasteAndSend}" />
-    </UserControl.InputBindings>
-	<UserControl.Resources>
-    </UserControl.Resources>
-    
 	<Grid>
-        
+
 		<Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
-        
+
 		<Grid.RowDefinitions>
 			<RowDefinition />
 			<RowDefinition Height="40" />
 		</Grid.RowDefinitions>
 
 		<Controls:ChatFlowDocumentScrollViewer>
-            <Controls:ChatFlowDocument x:Name="chatFlowDocument" ContextMenu="{StaticResource privateFlowDocumentMenu}" 
-                                        Messages="{Binding ConferenceViewModel.Messages}" 
+            <Controls:ChatFlowDocument x:Name="chatFlowDocument" ContextMenu="{StaticResource privateFlowDocumentMenu}"
+                                        Messages="{Binding ConferenceViewModel.Messages}"
                                         LineHeight="1" Style="{DynamicResource flowDocumentStyle}" />
 		</Controls:ChatFlowDocumentScrollViewer>
 
@@ -37,13 +29,13 @@
 				<ColumnDefinition Width="65" />
 			</Grid.ColumnDefinitions>
 
-            <Controls:InputBox x:Name="inputBox" 
+            <Controls:InputBox x:Name="inputBox"
                                 ContextMenu="{StaticResource inputMenu}"
-                                Text="{Binding Path=ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Text="{Binding Path=ConferenceViewModel.CurrentlyTypedMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SendCommand="{Binding ConferenceViewModel.SendMessage}" />
-            
-            <Button Grid.Column="1"  
-                    Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}" 
+
+            <Button Grid.Column="1"
+                    Content="{Binding Conference.Send, Source={StaticResource ResourceWrapper}}"
                     Command="{Binding ConferenceViewModel.SendMessage}" />
 		</Grid>
 	</Grid>

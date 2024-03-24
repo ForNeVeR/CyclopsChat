@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
-                    xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel"
                     xmlns:MainApplication="clr-namespace:Cyclops.MainApplication">
 
     <ValueConverters:FalseToCollapsedValueConverter x:Key="falseToCollapsedValueConverter"/>
@@ -48,31 +47,30 @@
             </MenuItem.Icon>
         </MenuItem>
     </ContextMenu>
-    
+
     <ContextMenu x:Key="inputMenu">
         <MenuItem Header="{Binding Path=ContextMenus.Copy, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Copy"/>
         <MenuItem Header="{Binding Path=ContextMenus.Paste, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Paste"/>
         <MenuItem Header="{Binding Path=ContextMenus.Cut, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.Cut"/>
         <MenuItem Header="{Binding Path=ContextMenus.SelectAll, Source={StaticResource ResourceWrapper}}" Command="ApplicationCommands.SelectAll"/>
         <Separator/>
-        <MenuItem Header="{Binding Path=ContextMenus.PasteAndSend, Source={StaticResource ResourceWrapper}}" Command="{Binding ConferenceViewModel.PasteAndSend}" />
     </ContextMenu>
 
     <ContextMenu x:Key="conferenceMenu">
-        <MenuItem Header="{Binding Path=ContextMenus.AddToBookmarks, Source={StaticResource ResourceWrapper}}"  
+        <MenuItem Header="{Binding Path=ContextMenus.AddToBookmarks, Source={StaticResource ResourceWrapper}}"
                   Command="{Binding AddToBookmarks}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\favorite.png" Height="18"/>
             </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{Binding Path=ContextMenus.RemoveFromBookmarks, Source={StaticResource ResourceWrapper}}" 
+        <MenuItem Header="{Binding Path=ContextMenus.RemoveFromBookmarks, Source={StaticResource ResourceWrapper}}"
                   Command="{Binding RemoveFromBookmarks}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\remove.png" Height="18"/>
             </MenuItem.Icon>
         </MenuItem>
         <Separator/>
-        <MenuItem Header="{Binding Path=ContextMenus.Close, Source={StaticResource ResourceWrapper}}" 
+        <MenuItem Header="{Binding Path=ContextMenus.Close, Source={StaticResource ResourceWrapper}}"
                   Command="{Binding Close}">
             <MenuItem.Icon>
                 <Image Source="..\..\Resources\stop.png" Height="18"/>
@@ -81,7 +79,7 @@
     </ContextMenu>
 
     <ContextMenu x:Key="privateMenu">
-        <MenuItem Header="{Binding Path=ContextMenus.Close, Source={StaticResource ResourceWrapper}}" 
+        <MenuItem Header="{Binding Path=ContextMenus.Close, Source={StaticResource ResourceWrapper}}"
                   Command="{Binding Close}" />
     </ContextMenu>
 
