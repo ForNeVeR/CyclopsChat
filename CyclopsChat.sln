@@ -46,6 +46,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Tests", "Cyclops.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.Xmpp.SharpXmpp", "Cyclops.Xmpp.SharpXmpp\Cyclops.Xmpp.SharpXmpp.csproj", "{56587CCE-3196-4364-A1C1-C9EE10D16072}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3CEEF3DD-6EDA-43EC-9D7B-ABC4EEEC8D9E}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\verify-encoding.ps1 = scripts\verify-encoding.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
