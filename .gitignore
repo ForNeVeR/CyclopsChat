@@ -1,9 +1,6 @@
 ﻿/.idea/
-/Jabber-net/2005-jabber-net.xml
 
 bin/
-bin5/
 obj/
-obj5/
 
 *.user
