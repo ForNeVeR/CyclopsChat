@@ -4,7 +4,7 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="MvvmLightLibs" Version="4.1.27.1">
+        <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
             <NoWarn>NU1701</NoWarn> <!-- TODO[#34]: Get rid of it -->
         </PackageReference>
         <PackageReference Include="Extended.Wpf.Toolkit" Version="4.2.0">
