@@ -33,7 +33,7 @@ $lineEndingErrors = @()
 try {
     Push-Location $SourceRoot
     foreach ($file in $textFiles) {
-        if ([IO.Path]::GetExtension($file) -eq '.DotSettings' -or $file.EndsWith('.verified.cs')) {
+        if ([IO.Path]::GetExtension($file) -eq '.DotSettings') {
             continue
         }
 
