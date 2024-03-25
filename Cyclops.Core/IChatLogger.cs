@@ -1,4 +1,4 @@
-﻿using Cyclops.Xmpp.Protocol;
+using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core
 {

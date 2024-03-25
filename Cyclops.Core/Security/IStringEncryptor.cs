@@ -1,4 +1,4 @@
-﻿namespace Cyclops.Core.Security
+namespace Cyclops.Core.Security
 {
     public interface IStringEncryptor
     {

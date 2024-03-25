@@ -1,4 +1,4 @@
-﻿namespace Cyclops.Core.CustomEventArgs
+namespace Cyclops.Core.CustomEventArgs
 {
     /// <summary>
     /// Authentication event arguments

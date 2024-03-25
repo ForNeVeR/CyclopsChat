@@ -1,4 +1,4 @@
-﻿namespace Cyclops.MainApplication.Options.Model;
+namespace Cyclops.MainApplication.Options.Model;
 
 partial class ApplicationSettings
 {

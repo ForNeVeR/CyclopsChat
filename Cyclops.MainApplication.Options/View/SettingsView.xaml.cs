@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using Cyclops.MainApplication.Options.Model;
 using Cyclops.MainApplication.Options.ViewModel;

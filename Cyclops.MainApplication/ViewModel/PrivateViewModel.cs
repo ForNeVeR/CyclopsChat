@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using Cyclops.Core;
 using Cyclops.MainApplication.Controls;
 using Cyclops.Xmpp.Protocol;

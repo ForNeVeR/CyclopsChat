@@ -1,4 +1,4 @@
-﻿using Cyclops.Core.Modularity;
+using Cyclops.Core.Modularity;
 using Unity;
 
 namespace Cyclops.Core.Composition

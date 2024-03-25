@@ -1,4 +1,4 @@
-﻿Microsoft Patent Promise for .NET Libraries and Runtime Components 
+Microsoft Patent Promise for .NET Libraries and Runtime Components 
 
 Microsoft Corporation and its affiliates ("Microsoft") promise not to assert 
 any .NET Patents against you for making, using, selling, offering for sale, 

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Cyclops.Configuration;
 using Cyclops.MainApplication.ViewModel;
 

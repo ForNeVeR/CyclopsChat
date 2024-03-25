@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using CommonServiceLocator;
 using Unity;
 using Unity.Lifetime;

@@ -1,4 +1,4 @@
-﻿using Cyclops.Xmpp.Data.Rooms;
+using Cyclops.Xmpp.Data.Rooms;
 
 namespace Cyclops.Core.Resource
 {

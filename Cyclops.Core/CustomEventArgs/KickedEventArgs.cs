@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cyclops.Xmpp.Protocol;
 
 namespace Cyclops.Core.CustomEventArgs

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using Cyclops.Core.Modularity;
 using Cyclops.Core.Resource.Security;
 using Cyclops.Core.Resource.Smiles;

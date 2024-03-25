@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.CustomEventArgs;

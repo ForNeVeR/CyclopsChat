@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;

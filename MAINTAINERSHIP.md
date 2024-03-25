@@ -1,4 +1,4 @@
-﻿CyclopsChat Maintainership
+CyclopsChat Maintainership
 ==========================
 
 Release

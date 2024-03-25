@@ -1,4 +1,4 @@
-﻿using System.Windows.Documents;
+using System.Windows.Documents;
 using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
 using GalaSoft.MvvmLight;

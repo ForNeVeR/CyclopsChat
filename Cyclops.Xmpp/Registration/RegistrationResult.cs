@@ -1,4 +1,4 @@
-﻿namespace Cyclops.Xmpp.Registration;
+namespace Cyclops.Xmpp.Registration;
 
 public class RegistrationResult
 {

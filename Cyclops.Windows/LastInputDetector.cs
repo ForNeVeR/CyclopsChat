@@ -1,4 +1,4 @@
-﻿using static Cyclops.Windows.User32;
+using static Cyclops.Windows.User32;
 
 namespace Cyclops.Windows;
 

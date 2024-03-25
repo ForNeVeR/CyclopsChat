@@ -1,4 +1,4 @@
-﻿namespace Cyclops.Core
+namespace Cyclops.Core
 {
     public interface ISessionHolder
     {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cyclops.Core;
 using Cyclops.MainApplication.View.Dialogs;
 using Cyclops.Xmpp.Data;

@@ -1,4 +1,4 @@
-﻿using System.Xml.Serialization;
+using System.Xml.Serialization;
 using Cyclops.Core.Smiles;
 
 namespace Cyclops.Core.Resource.Smiles

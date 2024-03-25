@@ -1,4 +1,4 @@
-﻿namespace Cyclops.Core.Smiles
+namespace Cyclops.Core.Smiles
 {
     public interface ISmilePack
     {

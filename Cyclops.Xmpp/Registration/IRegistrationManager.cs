@@ -1,4 +1,4 @@
-﻿using Cyclops.Configuration;
+using Cyclops.Configuration;
 
 namespace Cyclops.Xmpp.Registration;
 

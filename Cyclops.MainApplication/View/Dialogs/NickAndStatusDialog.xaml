@@ -1,4 +1,4 @@
-﻿<Window x:Class="Cyclops.MainApplication.View.Dialogs.NickAndStatusDialog"
+<Window x:Class="Cyclops.MainApplication.View.Dialogs.NickAndStatusDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:extToolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"

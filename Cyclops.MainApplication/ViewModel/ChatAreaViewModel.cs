@@ -1,4 +1,4 @@
-﻿using Cyclops.MainApplication.MessageDecoration;
+using Cyclops.MainApplication.MessageDecoration;
 using Cyclops.MainApplication.MessageDecoration.Decorators;
 using Cyclops.MainApplication.View;
 using Cyclops.Xmpp.Protocol;

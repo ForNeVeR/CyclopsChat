@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Media.Imaging;
 using Cyclops.Xmpp.Protocol;
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using Cyclops.MainApplication.View.Dialogs;
 using GalaSoft.MvvmLight.Command;

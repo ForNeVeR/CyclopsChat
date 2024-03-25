@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using CommonServiceLocator;
 using Cyclops.Core;
 using Cyclops.Core.Modularity;

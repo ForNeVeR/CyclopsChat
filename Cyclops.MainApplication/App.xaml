@@ -1,4 +1,4 @@
-﻿<Application x:Class="Cyclops.MainApplication.App"
+<Application x:Class="Cyclops.MainApplication.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Localization1="clr-namespace:Cyclops.MainApplication.Localization;assembly=Cyclops.MainApplication.Localization"

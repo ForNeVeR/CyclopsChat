@@ -1,4 +1,4 @@
-﻿<Window x:Class="Cyclops.MainApplication.View.Dialogs.InputDialog"
+<Window x:Class="Cyclops.MainApplication.View.Dialogs.InputDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Title" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 

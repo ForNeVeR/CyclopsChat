@@ -1,4 +1,4 @@
-﻿<n:TaskbarNotifier x:Class="Cyclops.MainApplication.View.Popups.ErrorNotification"
+<n:TaskbarNotifier x:Class="Cyclops.MainApplication.View.Popups.ErrorNotification"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:n="clr-namespace:Cyclops.MainApplication.Notifications" 

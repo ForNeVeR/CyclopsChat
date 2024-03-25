@@ -1,4 +1,4 @@
-﻿using Cyclops.MainApplication.ViewModel;
+using Cyclops.MainApplication.ViewModel;
 using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.View

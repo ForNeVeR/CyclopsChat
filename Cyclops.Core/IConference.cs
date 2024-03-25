@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
