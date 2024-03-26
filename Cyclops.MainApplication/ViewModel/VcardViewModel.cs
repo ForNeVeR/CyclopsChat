@@ -115,6 +115,7 @@ namespace Cyclops.MainApplication.ViewModel
         private async Task GetVCardInfo(Jid target)
         {
             var obj = await session.GetVCard(target);
+            if (obj == null) return;
 
             sourceVCard = obj;
             Photo = obj.Photo;

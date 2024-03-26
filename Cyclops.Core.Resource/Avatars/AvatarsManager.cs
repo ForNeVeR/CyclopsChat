@@ -75,7 +75,7 @@ namespace Cyclops.Core.Resource.Avatars
         {
             var vCard = await Session.GetVCard(id);
             var image = defaultAvatar;
-            if (vCard.Photo != null)
+            if (vCard?.Photo != null)
             {
                 try
                 {

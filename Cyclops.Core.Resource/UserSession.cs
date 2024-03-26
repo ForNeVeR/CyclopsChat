@@ -414,7 +414,7 @@ namespace Cyclops.Core.Resource
 
         public Task<ClientInfo?> GetClientInfo(Jid jid) => XmppClient.GetClientInfo(jid);
 
-        public Task<VCard> GetVCard(Jid target) => XmppClient.GetVCard(target);
+        public Task<VCard?> GetVCard(Jid target) => XmppClient.GetVCard(target);
 
         public async Task UpdateVCard(VCard vCard)
         {
