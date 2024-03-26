@@ -38,6 +38,7 @@ Documentation
 -------------
 
 - [Changelog][docs.changelog]
+- [Contributor Guide][docs.contributing]
 - [Maintainership][docs.maintainership]
 - [License (MIT)][docs.license]
 - [Third-party software ][docs.third-party]
@@ -48,6 +49,7 @@ Originally, the project was developed by [@EgorBo][egorbo] and hosted on [CodePl
 
 [codeplex]: https://cyclopschat.codeplex.com/
 [docs.changelog]: ./CHANGELOG.md
+[docs.contributing]: CONTRIBUTING.md
 [docs.license]: ./LICENSE.md
 [docs.maintainership]: ./MAINTAINERSHIP.md
 [docs.third-party]: ./THIRD-PARTY-SOFTWARE.md
