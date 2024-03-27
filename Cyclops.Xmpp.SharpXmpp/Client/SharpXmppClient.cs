@@ -137,7 +137,7 @@ public class SharpXmppClient : IXmppClient
         sender.Send(new XMPPPresence());
     }
 
-    private void OnPresence(XmppConnection _, XMPPPresence presence) => Presence?.Invoke(this, presence.Wrap());
+    protected void OnPresence(XmppConnection? _, XMPPPresence presence) => Presence?.Invoke(this, presence.Wrap());
 
     private void OnMessage(XmppConnection _, XMPPMessage message)
     {

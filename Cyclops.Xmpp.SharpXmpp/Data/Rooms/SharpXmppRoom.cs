@@ -60,7 +60,7 @@ public class SharpXmppRoom : IRoom
         }
 
         var xmlPresence = presence.Unwrap();
-        var type = xmlPresence.Attribute("type")?.Value;
+        var type = xmlPresence.Attribute(Attributes.Type)?.Value;
         var states = xmlPresence.Element(XNamespace.Get(Namespaces.MucUser) + Elements.X)
             ?.Elements(XNamespace.Get(Namespaces.MucUser) + Elements.Status);
         var statusCodes = states?.Select(
@@ -87,7 +87,15 @@ public class SharpXmppRoom : IRoom
             }
         }
 
-        bool ShouldFireLeaveEvent() => isSelfPresence && type == PresenceTypes.Unavailable;
+        bool ShouldFireLeaveEvent()
+        {
+            if (!isSelfPresence || type != PresenceTypes.Unavailable) return false;
+            lock (stateLock)
+            {
+                isJoined = false;
+                return true;
+            }
+        }
     }
 
     private void OnMessage(object? _, IMessage message)

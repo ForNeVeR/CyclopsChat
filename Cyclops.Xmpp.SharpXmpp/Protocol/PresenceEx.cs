@@ -13,7 +13,7 @@ internal static class PresenceEx
             Original = original;
         }
 
-        public Jid? From => Original.From.Map();
+        public Jid? From => Original.From?.Map();
         public Jid? To => Original.To?.Map();
         public string? Status => Original.Element(Original.Name.Namespace + Elements.Status)?.Value;
         public string? Show => Original.Element(Original.Name.Namespace + Elements.Show)?.Value;
