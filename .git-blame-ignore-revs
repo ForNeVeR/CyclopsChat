@@ -1,2 +1,5 @@
 # Code cleanup: fix UTF-8 BOM and line endings in all the files
 1e91df3eaae39263f5fc7d91321b376202520acb
+
+# Code style: update namespaces in recently changed files
+dc125b41be5ddd79f3eabbb794a378b8c69dc544
