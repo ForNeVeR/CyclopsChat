@@ -1,8 +1,8 @@
 using System;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.Core;
 using Cyclops.MainApplication.View.Dialogs;
 using Cyclops.Xmpp.Data;
-using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -37,7 +37,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 nick = value;
-                RaisePropertyChanged("Nick");
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 status = value;
-                RaisePropertyChanged("Status");
+                OnPropertyChanged();
             }
         }
 
@@ -57,7 +57,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 statusType = value;
-                RaisePropertyChanged("StatusType");
+                OnPropertyChanged();
             }
         }
 

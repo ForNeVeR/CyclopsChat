@@ -10,6 +10,7 @@ using Cyclops.MainApplication.Options.Model;
 using Cyclops.MainApplication.ViewModel;
 using Cyclops.Windows;
 using Cyclops.Xmpp.Data;
+using static Cyclops.Wpf.DesignerUtil;
 
 namespace Cyclops.MainApplication
 {
@@ -34,9 +35,9 @@ namespace Cyclops.MainApplication
             lastInputDetector.LeaveIdleMode += (_, _) => dispatcher.InvokeAsync(OnLeaveIdleMode);
         }
 
-        public override void Cleanup()
+        protected override void OnDeactivated()
         {
-            base.Cleanup();
+            base.OnDeactivated();
             lastInputDetector.Dispose();
         }
 
@@ -107,7 +108,7 @@ namespace Cyclops.MainApplication
             set
             {
                 smilePacks = value;
-                RaisePropertyChanged("SmilePacks");
+                OnPropertyChanged();
             }
         }
 
@@ -124,7 +125,7 @@ namespace Cyclops.MainApplication
             set
             {
                 currentProfile = value;
-                RaisePropertyChanged("CurrentProfile");
+                OnPropertyChanged();
             }
         }
 
@@ -135,7 +136,7 @@ namespace Cyclops.MainApplication
             set
             {
                 mainViewModel = value;
-                RaisePropertyChanged("MainViewModel");
+                OnPropertyChanged();
             }
         }
 
@@ -146,7 +147,7 @@ namespace Cyclops.MainApplication
             set
             {
                 applicationSettings = value;
-                RaisePropertyChanged("ApplicationSettings");
+                OnPropertyChanged();
             }
         }
 
@@ -166,7 +167,7 @@ namespace Cyclops.MainApplication
             set
             {
                 disableAllSounds = value;
-                RaisePropertyChanged("DisableAllSounds");
+                OnPropertyChanged();
             }
         }
 

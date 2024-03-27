@@ -17,7 +17,7 @@ partial class ApplicationSettings
         set
         {
             soundOnUserLeave = value;
-            RaisePropertyChanged("SoundOnUserLeave");
+            OnPropertyChanged();
         }
     }
 
@@ -27,7 +27,7 @@ partial class ApplicationSettings
         set
         {
             soundOnUserJoin = value;
-            RaisePropertyChanged("SoundOnUserJoin");
+            OnPropertyChanged();
         }
     }
 
@@ -37,7 +37,7 @@ partial class ApplicationSettings
         set
         {
             soundOnIncomingPrivate = value;
-            RaisePropertyChanged("SoundOnIncomingPrivate");
+            OnPropertyChanged();
         }
     }
 
@@ -47,7 +47,7 @@ partial class ApplicationSettings
         set
         {
             soundOnIncomingPublic = value;
-            RaisePropertyChanged("SoundOnIncomingPublic");
+            OnPropertyChanged();
         }
     }
 
@@ -57,7 +57,7 @@ partial class ApplicationSettings
         set
         {
             soundOnSystemMessage = value;
-            RaisePropertyChanged("SoundOnSystemMessage");
+            OnPropertyChanged();
         }
     }
 
@@ -67,7 +67,7 @@ partial class ApplicationSettings
         set
         {
             soundOnStatusChange = value;
-            RaisePropertyChanged("SoundOnStatusChange");
+            OnPropertyChanged();
         }
     }
 
@@ -77,7 +77,7 @@ partial class ApplicationSettings
         set
         {
             disableAllSounds = value;
-            RaisePropertyChanged("DisableAllSounds");
+            OnPropertyChanged();
         }
     }
 
@@ -87,7 +87,7 @@ partial class ApplicationSettings
         set
         {
             soundEvenIfActive = value;
-            RaisePropertyChanged("SoundEvenIfActive");
+            OnPropertyChanged();
         }
     }
 

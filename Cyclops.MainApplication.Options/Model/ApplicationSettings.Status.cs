@@ -5,14 +5,14 @@ partial class ApplicationSettings
     private int autoAwayAfter;
     private int autoExtendedAwayAfter;
     private bool showStatusChangingMessages;
-        
+
     public int AutoAwayAfter
     {
         get { return autoAwayAfter; }
         set
         {
             autoAwayAfter = value;
-            RaisePropertyChanged("AutoAwayAfter");
+            OnPropertyChanged();
         }
     }
 
@@ -22,7 +22,7 @@ partial class ApplicationSettings
         set
         {
             autoExtendedAwayAfter = value;
-            RaisePropertyChanged("AutoExtendedAwayAfter");
+            OnPropertyChanged();
         }
     }
 
@@ -32,7 +32,7 @@ partial class ApplicationSettings
         set
         {
             showStatusChangingMessages = value;
-            RaisePropertyChanged("ShowStatusChangingMessages");
+            OnPropertyChanged();
         }
     }
 

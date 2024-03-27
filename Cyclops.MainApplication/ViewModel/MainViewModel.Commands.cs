@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.MainApplication.Notifications;
 using Cyclops.MainApplication.View;
-using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {

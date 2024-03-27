@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Cyclops.Core;
 using Cyclops.MainApplication.ViewModel;
-using GalaSoft.MvvmLight;
+using static Cyclops.Wpf.DesignerUtil;
 
 namespace Cyclops.MainApplication.View.Popups
 {
@@ -36,7 +34,7 @@ namespace Cyclops.MainApplication.View.Popups
             set
             {
                 privateMessage = value;
-                RaisePropertyChanged("PrivateMessage");
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +45,7 @@ namespace Cyclops.MainApplication.View.Popups
             set
             {
                 avatar = value;
-                RaisePropertyChanged("Avatar");
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +61,7 @@ namespace Cyclops.MainApplication.View.Popups
             window.Activate();
             window.Topmost = true;  // important
             window.Topmost = false; // important
-            window.Focus();   
+            window.Focus();
         }
     }
 }

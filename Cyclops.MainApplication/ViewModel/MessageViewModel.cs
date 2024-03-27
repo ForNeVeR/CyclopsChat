@@ -1,7 +1,6 @@
 using System.Windows.Documents;
 using Cyclops.Core;
 using Cyclops.MainApplication.MessageDecoration;
-using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.ViewModel
 {

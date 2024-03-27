@@ -1,10 +1,10 @@
 using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Cyclops.MainApplication.Options.Helpers;
-using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.Options.Model;
 
-public partial class ApplicationSettings : ViewModelBase, ICloneable
+public partial class ApplicationSettings : ObservableRecipient, ICloneable
 {
     #region Implementation of ICloneable
 

@@ -1,6 +1,7 @@
 using System;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.MainApplication.Options.Model;
-using GalaSoft.MvvmLight.Command;
+using static Cyclops.Wpf.DesignerUtil;
 
 namespace Cyclops.MainApplication.Options.ViewModel;
 
@@ -41,7 +42,7 @@ public class SettingsViewModel : ApplicationSettings
         set
         {
             settings = value;
-            RaisePropertyChanged("Settings");
+            OnPropertyChanged();
         }
     }
 }

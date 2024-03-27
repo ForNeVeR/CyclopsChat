@@ -2,7 +2,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 
 namespace Cyclops.MainApplication.Options.Controls;
@@ -60,7 +60,7 @@ public partial class Selector
         get { return (bool) GetValue(FileSelectionModeProperty); }
         set { SetValue(FileSelectionModeProperty, value); }
     }
-        
+
     public string FileSelectionFilter
     {
         get { return (string) GetValue(FileSelectionFilterProperty); }
@@ -72,7 +72,7 @@ public partial class Selector
         if (d is Selector selector && (bool)e.NewValue)
             selector.SetFileSelectionCommand();
     }
-        
+
     private void SetFileSelectionCommand()
     {
         Command = new RelayCommand(FileSelectAction);

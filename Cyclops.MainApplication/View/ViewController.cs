@@ -1,8 +1,8 @@
 using System;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Cyclops.MainApplication.ViewModel;
-using GalaSoft.MvvmLight;
 
 namespace Cyclops.MainApplication.View
 {
@@ -26,7 +26,7 @@ namespace Cyclops.MainApplication.View
 
         private static void ViewControllerLoginAuthenticated(object sender, EventArgs e)
         {
-            ((ICleanup) loginView.DataContext).Cleanup();
+            ((ObservableRecipient) loginView.DataContext).IsActive = false;
             SetActiveView(mainView = new MainView());
         }
 

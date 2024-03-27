@@ -1,30 +1,29 @@
-using Cyclops.MainApplication.ViewModel;
-using GalaSoft.MvvmLight;
+﻿using Cyclops.MainApplication.ViewModel;
+using static Cyclops.Wpf.DesignerUtil;
 
-namespace Cyclops.MainApplication.View
+namespace Cyclops.MainApplication.View;
+
+/// <summary>
+/// Interaction logic for ConferencesList.xaml
+/// </summary>
+public partial class ConferencesList
 {
-    /// <summary>
-    /// Interaction logic for ConferencesList.xaml
-    /// </summary>
-    public partial class ConferencesList
+    public ConferencesList()
     {
-        public ConferencesList()
+        if (IsInDesignMode)
         {
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                DataContext = new ConferenceViewModelDesignTime();
-                InitializeComponent();
-                return;
-            }
+            DataContext = new ConferenceViewModelDesignTime();
             InitializeComponent();
-            ((ConferencesListViewModel) DataContext).Close += (s, e) => DialogResult = true;
+            return;
         }
+        InitializeComponent();
+        ((ConferencesListViewModel) DataContext).Close += (s, e) => DialogResult = true;
+    }
 
-        protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.Escape)
-                Close();
-            base.OnKeyDown(e);
-        }
+    protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == System.Windows.Input.Key.Escape)
+            Close();
+        base.OnKeyDown(e);
     }
 }

@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.MainApplication.View.Dialogs;
-using Cyclops.Xmpp;
 using Cyclops.Xmpp.Protocol;
-using GalaSoft.MvvmLight.Command;
+using static Cyclops.Wpf.DesignerUtil;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -100,7 +100,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 isBusy = value;
-                RaisePropertyChanged("IsBusy");
+                OnPropertyChanged();
             }
         }
 
@@ -110,7 +110,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 conferences = value;
-                RaisePropertyChanged("Conferences");
+                OnPropertyChanged();
             }
         }
 
@@ -120,7 +120,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 conferenceServices = value;
-                RaisePropertyChanged("Conferences");
+                OnPropertyChanged("Conferences");
             }
         }
 
@@ -130,7 +130,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 selectedService = value;
-                RaisePropertyChanged("Conferences");
+                OnPropertyChanged("Conferences");
 
                 IsBusy = true;
                 if (selectedService.ConferenceService != null && selectedService.ConferenceService.Equals(Namespaces.Bookmarks))
@@ -151,7 +151,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 selectedConference = value;
-                RaisePropertyChanged("SelectedConference");
+                OnPropertyChanged();
             }
         }
 
@@ -161,7 +161,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 filter = value;
-                RaisePropertyChanged("Filter");
+                OnPropertyChanged();
                 if (string.IsNullOrEmpty(value))
                     Conferences = sourceConferences.ToArray();
                 else
@@ -177,7 +177,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 openWithNick = value;
-                RaisePropertyChanged("OpenWithNick");
+                OnPropertyChanged();
             }
         }
 

@@ -5,10 +5,9 @@
              xmlns:Controls="clr-namespace:Cyclops.MainApplication.Controls"
              xmlns:vm="clr-namespace:Cyclops.MainApplication.ViewModel"
              xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:MainApplication="clr-namespace:Cyclops.MainApplication"
              xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
-             xmlns:galasoft="http://www.galasoft.ch/mvvmlight"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              x:Class="Cyclops.MainApplication.ConferenceView"
              IsVisibleChanged="UserControlIsVisibleChanged"
              d:DesignHeight="800" d:DesignWidth="500"
@@ -170,11 +169,11 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                  SelectedItem="{Binding ConferenceViewModel.SelectedMember, Mode=TwoWay}"
                  ItemContainerStyle="{StaticResource ListBoxItemStyle}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <galasoft:EventToCommand Command="{Binding ConferenceViewModel.StartPrivateWithSelectedMember}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="MouseDoubleClick">
+                        <b:InvokeCommandAction Command="{Binding ConferenceViewModel.StartPrivateWithSelectedMember}"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
             </ListBox>
         </Grid>
 		<Grid Grid.Row="2" Grid.ColumnSpan="2">

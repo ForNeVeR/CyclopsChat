@@ -13,9 +13,7 @@
     <ItemGroup>
         <Reference Include="System.Configuration" />
         <PackageReference Include="CommonServiceLocator" Version="2.0.7" />
-        <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
-            <NoWarn>NU1701</NoWarn> <!-- TODO: Get rid of it -->
-        </PackageReference>
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
         <PackageReference Include="Unity" Version="5.11.10" />
     </ItemGroup>
     <ItemGroup>

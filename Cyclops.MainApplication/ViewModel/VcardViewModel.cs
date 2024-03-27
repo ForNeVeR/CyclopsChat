@@ -2,11 +2,11 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.Core;
 using Cyclops.Core.Helpers;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
-using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 
 namespace Cyclops.MainApplication.ViewModel
@@ -133,7 +133,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 photo = value;
-                RaisePropertyChanged("Photo");
+                OnPropertyChanged();
             }
         }
 
@@ -144,7 +144,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 isBusy = value;
-                RaisePropertyChanged("IsBusy");
+                OnPropertyChanged();
             }
         }
 
@@ -155,7 +155,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 nick = value;
-                RaisePropertyChanged("Nick");
+                OnPropertyChanged();
             }
         }
 
@@ -166,7 +166,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 isEditMode = value;
-                RaisePropertyChanged("IsEditMode");
+                OnPropertyChanged();
             }
         }
 
@@ -177,7 +177,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 email = value;
-                RaisePropertyChanged("Email");
+                OnPropertyChanged();
             }
         }
 
@@ -188,7 +188,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 birthday = value;
-                RaisePropertyChanged("Birthday");
+                OnPropertyChanged();
             }
         }
 
@@ -199,7 +199,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 fullName = value;
-                RaisePropertyChanged("FullName");
+                OnPropertyChanged();
             }
         }
 
@@ -210,7 +210,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 comments = value;
-                RaisePropertyChanged("Comments");
+                OnPropertyChanged();
             }
         }
     }

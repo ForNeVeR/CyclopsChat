@@ -11,7 +11,7 @@ partial class ApplicationSettings
         set
         {
             startWithWindows = value;
-            RaisePropertyChanged("StartWithWindows");
+            OnPropertyChanged();
         }
     }
 
@@ -21,7 +21,7 @@ partial class ApplicationSettings
         set
         {
             hideOnWindowClosing = value;
-            RaisePropertyChanged("HideOnWindowClosing");
+            OnPropertyChanged();
         }
     }
 

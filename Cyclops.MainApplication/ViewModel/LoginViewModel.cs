@@ -3,13 +3,14 @@ using System.Configuration;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.Configuration;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
 using Cyclops.MainApplication.Configuration;
 using Cyclops.Xmpp.Registration;
-using GalaSoft.MvvmLight.Command;
+using static Cyclops.Wpf.DesignerUtil;
 
 namespace Cyclops.MainApplication.ViewModel;
 
@@ -125,7 +126,7 @@ public class LoginViewModel : ViewModelBaseEx
         set
         {
             name = value;
-            RaisePropertyChanged("Name");
+            OnPropertyChanged();
         }
     }
 
@@ -135,7 +136,7 @@ public class LoginViewModel : ViewModelBaseEx
         set
         {
             server = value;
-            RaisePropertyChanged("Server");
+            OnPropertyChanged();
         }
     }
 
@@ -145,7 +146,7 @@ public class LoginViewModel : ViewModelBaseEx
         set
         {
             isBusy = value;
-            RaisePropertyChanged("IsBusy");
+            OnPropertyChanged();
         }
     }
 
@@ -155,7 +156,7 @@ public class LoginViewModel : ViewModelBaseEx
         set
         {
             autoLogin = value;
-            RaisePropertyChanged("AutoLogin");
+            OnPropertyChanged();
         }
     }
 
@@ -165,7 +166,7 @@ public class LoginViewModel : ViewModelBaseEx
         set
         {
             errorMessage = value;
-            RaisePropertyChanged("ErrorMessage");
+            OnPropertyChanged();
         }
     }
 
@@ -175,7 +176,7 @@ public class LoginViewModel : ViewModelBaseEx
         set
         {
             session = value;
-            RaisePropertyChanged("Session");
+            OnPropertyChanged();
         }
     }
 
@@ -240,7 +241,7 @@ public class LoginViewModel : ViewModelBaseEx
         Session.AuthenticateAsync(connectionConfig);
     }
 
-    public override void Cleanup()
+    protected override void OnDeactivated()
     {
         Session.Authenticated -= SessionAuthenticated;
         Session.ConnectionDropped -= SessionConnectionDropped;

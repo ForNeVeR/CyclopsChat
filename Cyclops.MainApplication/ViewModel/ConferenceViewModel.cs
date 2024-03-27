@@ -171,7 +171,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 selectedMember = value;
-                RaisePropertyChanged("SelectedMember");
+                OnPropertyChanged();
             }
         }
 
@@ -183,7 +183,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 conference = value;
-                RaisePropertyChanged("Conference");
+                OnPropertyChanged();
             }
         }
 
@@ -193,7 +193,7 @@ namespace Cyclops.MainApplication.ViewModel
             set
             {
                 messages = value;
-                RaisePropertyChanged("Messages");
+                OnPropertyChanged();
             }
         }
 
@@ -207,7 +207,7 @@ namespace Cyclops.MainApplication.ViewModel
                     newNick = value;
                     Conference.ChangeNick(value);
                 }
-                RaisePropertyChanged("NewNick");
+                OnPropertyChanged();
             }
         }
 

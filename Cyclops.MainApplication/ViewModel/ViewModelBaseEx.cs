@@ -1,28 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cyclops.MainApplication.Configuration;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Cyclops.MainApplication.Options.Model;
-using GalaSoft.MvvmLight;
 
-namespace Cyclops.MainApplication.ViewModel
+namespace Cyclops.MainApplication.ViewModel;
+
+public class ViewModelBaseEx : ObservableRecipient
 {
-    public class ViewModelBaseEx : ViewModelBase
-    {
-        public ApplicationSettings Settings => ApplicationContext.Current.ApplicationSettings;
+    public ApplicationSettings Settings => ApplicationContext.Current.ApplicationSettings;
 
-        public MainViewModel Main => ApplicationContext.Current.MainViewModel;
+    public MainViewModel Main => ApplicationContext.Current.MainViewModel;
 
-        //private bool isBusy;
-        //public bool IsBusy
-        //{
-        //    get { return isBusy; }
-        //    set
-        //    {
-        //        isBusy = value;
-        //        RaisePropertyChanged("IsBusy");
-        //    }
-        //}
-    }
+    //private bool isBusy;
+    //public bool IsBusy
+    //{
+    //    get { return isBusy; }
+    //    set
+    //    {
+    //        isBusy = value;
+    //        RaisePropertyChanged("IsBusy");
+    //    }
+    //}
 }

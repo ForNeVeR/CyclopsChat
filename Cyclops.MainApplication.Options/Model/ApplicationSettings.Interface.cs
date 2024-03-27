@@ -27,7 +27,7 @@ partial class ApplicationSettings
         set
         {
             selectedLanguage = value;
-            RaisePropertyChanged("SelectedLanguage");
+            OnPropertyChanged();
         }
     }
 
@@ -37,7 +37,7 @@ partial class ApplicationSettings
         set
         {
             smilesLimitInMessage = value;
-            RaisePropertyChanged("SmilesLimitInMessage");
+            OnPropertyChanged();
         }
     }
 
@@ -47,7 +47,7 @@ partial class ApplicationSettings
         set
         {
             enablePrivatePopups = value;
-            RaisePropertyChanged("EnablePrivatePopups");
+            OnPropertyChanged();
         }
     }
 
@@ -57,7 +57,7 @@ partial class ApplicationSettings
         set
         {
             enableErrorPopups = value;
-            RaisePropertyChanged("EnableErrorPopups");
+            OnPropertyChanged();
         }
     }
 
@@ -67,7 +67,7 @@ partial class ApplicationSettings
         set
         {
             popupStaysOpenning = value;
-            RaisePropertyChanged("PopupStaysOpenning");
+            OnPropertyChanged();
         }
     }
 
@@ -77,7 +77,7 @@ partial class ApplicationSettings
         set
         {
             disableBlinking = value;
-            RaisePropertyChanged("DisableBlinking");
+            OnPropertyChanged();
         }
     }
 
@@ -87,7 +87,7 @@ partial class ApplicationSettings
         set
         {
             showEntryAndExits = value;
-            RaisePropertyChanged("ShowEntryAndExits");
+            OnPropertyChanged();
         }
     }
 
@@ -97,7 +97,7 @@ partial class ApplicationSettings
         set
         {
             showRoleChanges = value;
-            RaisePropertyChanged("ShowRoleChanges");
+            OnPropertyChanged();
         }
     }
 
@@ -107,7 +107,7 @@ partial class ApplicationSettings
         set
         {
             blinkOnlyOnPrivates = value;
-            RaisePropertyChanged("BlinkOnlyOnPrivates");
+            OnPropertyChanged();
         }
     }
 
@@ -117,7 +117,7 @@ partial class ApplicationSettings
         set
         {
             isSmilesAnimated = value;
-            RaisePropertyChanged("IsSmilesAnimated");
+            OnPropertyChanged();
         }
     }
 

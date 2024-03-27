@@ -9,9 +9,7 @@
         <ProjectReference Include="..\Cyclops.Xmpp\Cyclops.Xmpp.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
-            <NoWarn>NU1701</NoWarn> <!-- TODO: Get rid of it -->
-        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
         <PackageReference Include="Unity" Version="5.11.10" />
     </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
-using System;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.MainApplication.View.Dialogs;
-using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.MainApplication.ViewModel
 {

@@ -3,73 +3,72 @@ using Cyclops.Core;
 using Cyclops.MainApplication.Controls;
 using Cyclops.Xmpp.Protocol;
 
-namespace Cyclops.MainApplication.ViewModel
+namespace Cyclops.MainApplication.ViewModel;
+
+public class PrivateViewModel : ChatAreaViewModel
 {
-    public class PrivateViewModel : ChatAreaViewModel
+    private readonly string currentlyTypedMessage;
+    private ObservableCollection<MessageViewModel> messages;
+
+    public PrivateViewModel(IChatAreaView view) : base(view)
     {
-        private readonly string currentlyTypedMessage;
-        private ObservableCollection<MessageViewModel> messages;
+        Messages = new ObservableCollection<MessageViewModel>();
+        Messages.CollectionChanged += MessagesCollectionChanged;
+    }
 
-        public PrivateViewModel(IChatAreaView view) : base(view)
+    void MessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        if (!IsActive)
         {
-            Messages = new ObservableCollection<MessageViewModel>();
-            Messages.CollectionChanged += MessagesCollectionChanged;
+            UnreadMessagesCount++;
         }
 
-        void MessagesCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        ApplicationSounds.PlayOnIcomingPrivate(this);
+    }
+
+
+    protected override void CloseAction()
+    {
+        ApplicationContext.Current.MainViewModel.PrivateViewModels.Remove(this);
+    }
+
+    public Jid Participant { get; set; }
+
+    public IConference Conference { get; set; }
+
+    public ObservableCollection<MessageViewModel> Messages
+    {
+        get { return messages; }
+        set
         {
-            if (!IsActive)
-            {
-                UnreadMessagesCount++;
-            }
-
-            ApplicationSounds.PlayOnIcomingPrivate(this);
+            messages = value;
+            OnPropertyChanged();
         }
+    }
+
+    protected override void OnSendMessage()
+    {
+        if (string.IsNullOrEmpty(CurrentlyTypedMessage))
+            return;
 
 
-        protected override void CloseAction()
+        ChatObjectFactory.GetSession().SendPrivate(Participant, CurrentlyTypedMessage);
+
+        Messages.Add(new MessageViewModel(new PrivateMessage
         {
-            ApplicationContext.Current.MainViewModel.PrivateViewModels.Remove(this);
-        }
+            AuthorNick = Localization.Conference.Me,
+            IsSelfMessage = true,
+            Body = RemoveEndNewLineSymbol(CurrentlyTypedMessage)
+        }));
+        CurrentlyTypedMessage = string.Empty;
+    }
 
-        public Jid Participant { get; set; }
+    public override bool IsPrivate => true;
 
-        public IConference Conference { get; set; }
-
-        public ObservableCollection<MessageViewModel> Messages
-        {
-            get { return messages; }
-            set
-            {
-                messages = value;
-                RaisePropertyChanged("Messages");
-            }
-        }
-
-        protected override void OnSendMessage()
-        {
-            if (string.IsNullOrEmpty(CurrentlyTypedMessage))
-                return;
-
-
-            ChatObjectFactory.GetSession().SendPrivate(Participant, CurrentlyTypedMessage);
-
-            Messages.Add(new MessageViewModel(new PrivateMessage
-                                                  {
-                                                      AuthorNick = Localization.Conference.Me,
-                                                      IsSelfMessage = true,
-                                                      Body = RemoveEndNewLineSymbol(CurrentlyTypedMessage)
-                                                  }));
-            CurrentlyTypedMessage = string.Empty;
-        }
-
-        public override bool IsPrivate => true;
-
-        public override string ToString()
-        {
-            if (string.IsNullOrEmpty(Participant.Resource))
-                return Participant.Local;
-            return string.Format("{0} ({1})", Participant.Resource, Participant.Local);
-        }
+    public override string ToString()
+    {
+        if (string.IsNullOrEmpty(Participant.Resource))
+            return Participant.Local;
+        return string.Format("{0} ({1})", Participant.Resource, Participant.Local);
     }
 }

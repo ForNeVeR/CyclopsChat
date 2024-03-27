@@ -3,14 +3,14 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Cyclops.Core.Resource.Helpers;
 using Cyclops.Xmpp.Client;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 
 namespace Cyclops.Console.ViewModel
 {
-    public class ConsoleViewModel : ViewModelBase
+    public class ConsoleViewModel : ObservableRecipient
     {
         private readonly Dispatcher dispatcher;
         private readonly IXmppClient client;
@@ -25,7 +25,7 @@ namespace Cyclops.Console.ViewModel
             {
                 if (value == xmlToSend) return;
                 xmlToSend = value;
-                RaisePropertyChanged(nameof(XmlToSend));
+                OnPropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace Cyclops.Console.ViewModel
             client.Error += OnError;
         }
 
-        public override void Cleanup()
+        protected override void OnDeactivated()
         {
             client.Connected -= OnConnected;
             client.ReadRawMessage -= OnReadText;

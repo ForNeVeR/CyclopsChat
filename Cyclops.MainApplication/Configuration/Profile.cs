@@ -29,7 +29,7 @@ namespace Cyclops.MainApplication.Configuration
             set
             {
                 name = value;
-                RaisePropertyChanged("Name");
+                OnPropertyChanged();
             }
         }
 
@@ -39,7 +39,7 @@ namespace Cyclops.MainApplication.Configuration
             set
             {
                 autoLogin = value;
-                RaisePropertyChanged("AutoLogin");
+                OnPropertyChanged();
             }
         }
 
@@ -52,7 +52,7 @@ namespace Cyclops.MainApplication.Configuration
             set
             {
                 theme = value;
-                RaisePropertyChanged("Theme");
+                OnPropertyChanged();
             }
         }
 
@@ -65,7 +65,7 @@ namespace Cyclops.MainApplication.Configuration
             set
             {
                 connectionConfig = value;
-                RaisePropertyChanged("ConnectionConfig");
+                OnPropertyChanged();
             }
         }
 
@@ -75,7 +75,7 @@ namespace Cyclops.MainApplication.Configuration
             set
             {
                 friendlyConferencesServices = value;
-                RaisePropertyChanged("FriendlyConferencesServices");
+                OnPropertyChanged();
             }
         }
 

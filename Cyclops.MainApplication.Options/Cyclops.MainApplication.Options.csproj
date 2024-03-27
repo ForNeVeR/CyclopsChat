@@ -1,12 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
-            <NoWarn>NU1701</NoWarn> <!-- TODO[#34]: Get rid of it -->
-        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
         <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.0">
             <NoWarn>NU1701</NoWarn> <!-- TODO[#41]: Get rid of it -->
         </PackageReference>
@@ -14,6 +12,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Cyclops.Core\Cyclops.Core.csproj" />
         <ProjectReference Include="..\Cyclops.MainApplication.Localization\Cyclops.MainApplication.Localization.csproj" />
+        <ProjectReference Include="..\Cyclops.Wpf\Cyclops.Wpf.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Resource Include="Resources\connect.png" />
