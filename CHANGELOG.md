@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 - [#45: After changing the nickname, the user list becomes empty](https://github.com/ForNeVeR/CyclopsChat/issues/45).
 - Issues when interacting with users without valid VCards.
+- Fixed a typo in the tooltip for the **Clear** button in the English localization.
 
 ### Changed
 - Update the library dependencies.

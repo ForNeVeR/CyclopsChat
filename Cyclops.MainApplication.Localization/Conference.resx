@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -142,7 +142,7 @@
     <value>Clear</value>
   </data>
   <data name="ClearTip" xml:space="preserve">
-    <value>Clears the output are</value>
+      <value>Clears the output area</value>
   </data>
   <data name="CopyText" xml:space="preserve">
     <value>Copy (Ctrl+C)</value>
