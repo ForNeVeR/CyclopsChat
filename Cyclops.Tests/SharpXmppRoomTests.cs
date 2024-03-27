@@ -34,7 +34,7 @@ public class SharpXmppRoomTests
         var lifetime = ld.Lifetime;
 
         var joined = 0;
-        EventHandler onJoin = (_, _) => Interlocked.Increment(ref joined);
+        EventHandler<IPresence> onJoin = (_, _) => Interlocked.Increment(ref joined);
         EventHandler<IPresence> onLeave = (_, _) => Interlocked.Decrement(ref joined);
         lifetime.Bracket(
             () => room.Joined += onJoin,
