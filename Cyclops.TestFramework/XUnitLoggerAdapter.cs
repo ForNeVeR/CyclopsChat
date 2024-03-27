@@ -1,4 +1,4 @@
-﻿using Cyclops.Core;
+using Cyclops.Core;
 using Xunit.Abstractions;
 
 namespace Cyclops.TestFramework;
