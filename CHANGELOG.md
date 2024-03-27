@@ -9,6 +9,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 - **Paste and Send** action (`Ctrl+Shift+V`).
 
+### Fixed
+- Issues when interacting with users without valid VCards.
+
+### Changed
+- Update the library dependencies.
+
 ## [2.1.0] - 2022-11-19
 ### Fixed
 - [#50: Crash when opening a hyperlink](https://github.com/ForNeVeR/CyclopsChat/issues/50).
