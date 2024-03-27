@@ -23,6 +23,7 @@ namespace Cyclops.Core.Resource
         private readonly IXmppDataExtractor dataExtractor;
         private readonly UserSession session;
         private IRoom? room;
+        private object _stateLock = new();
 
         internal Conference(
             ILogger logger,
@@ -225,8 +226,11 @@ namespace Cyclops.Core.Resource
             });
         }
 
-        private void room_OnJoin(object sender, object __)
+        private void room_OnJoin(object sender, IPresence presence)
         {
+            if (presence.From is {} from)
+                ConferenceId = from;
+
             dispatcher.InvokeAsyncIfRequired(() =>
             {
                 var senderRoom = (IRoom)sender;
@@ -448,10 +452,16 @@ namespace Cyclops.Core.Resource
         private Jid conferenceId;
         public Jid ConferenceId
         {
-            get { return conferenceId; }
+            get
+            {
+                lock(_stateLock)
+                    return conferenceId;
+            }
             private set
             {
-                conferenceId = value;
+                lock (_stateLock)
+                    conferenceId = value;
+
                 OnPropertyChanged("ConferenceId");
             }
         }

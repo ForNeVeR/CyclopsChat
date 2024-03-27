@@ -10,7 +10,7 @@ public interface IRoom : IDisposable
     void SetNickname(string nickname);
     void SetSubject(string subject);
 
-    event EventHandler Joined;
+    event EventHandler<IPresence> Joined;
     event EventHandler<IPresence> Left;
     event EventHandler<IMessage> SubjectChange;
     event EventHandler<IPresence> PresenceError;

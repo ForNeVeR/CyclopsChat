@@ -69,7 +69,7 @@ public class SharpXmppRoom : IRoom
         var isSelfPresence = statusCodes.Contains(MucUserStatus.SelfReferringPresence);
 
         if (ShouldFireJoinEvent())
-            Joined?.Invoke(this, EventArgs.Empty);
+            Joined?.Invoke(this, presence);
 
         if (ShouldFireLeaveEvent())
             Left?.Invoke(this, presence);
@@ -215,7 +215,7 @@ public class SharpXmppRoom : IRoom
         client.SendMessage(message);
     }
 
-    public event EventHandler? Joined;
+    public event EventHandler<IPresence>? Joined;
     public event EventHandler<IPresence>? Left;
     public event EventHandler<IMessage>? SubjectChange;
     public event EventHandler<IPresence>? PresenceError;
