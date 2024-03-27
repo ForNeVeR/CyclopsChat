@@ -3,3 +3,6 @@
 
 # Code style: update namespaces in recently changed files
 dc125b41be5ddd79f3eabbb794a378b8c69dc544
+
+# Code cleanup: migrate to new-style namespace
+92b7e9cb5159cdba7018869f2b59d98554c80de6
