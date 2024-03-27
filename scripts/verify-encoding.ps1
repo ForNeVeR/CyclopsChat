@@ -33,7 +33,7 @@ $lineEndingErrors = @()
 try {
     Push-Location $SourceRoot
     foreach ($file in $textFiles) {
-        if ([IO.Path]::GetExtension($file) -eq '.DotSettings') {
+        if (@('.dotsettings', '.resx') -contains [IO.Path]::GetExtension($file).ToLowerInvariant()) {
             continue
         }
 
