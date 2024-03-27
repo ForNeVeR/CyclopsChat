@@ -2,7 +2,7 @@ using System;
 using Cyclops.Core;
 using Cyclops.MainApplication.View.Dialogs;
 using Cyclops.Xmpp.Data;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace Cyclops.MainApplication.ViewModel
 {

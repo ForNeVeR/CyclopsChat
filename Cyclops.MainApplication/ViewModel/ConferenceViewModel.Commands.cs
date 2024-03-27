@@ -1,7 +1,6 @@
-using System;
 using System.Windows;
 using Cyclops.MainApplication.View.Dialogs;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace Cyclops.MainApplication.ViewModel
 {

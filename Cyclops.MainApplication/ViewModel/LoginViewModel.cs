@@ -9,7 +9,7 @@ using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
 using Cyclops.MainApplication.Configuration;
 using Cyclops.Xmpp.Registration;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace Cyclops.MainApplication.ViewModel;
 

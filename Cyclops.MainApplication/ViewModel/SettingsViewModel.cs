@@ -1,7 +1,6 @@
 using System;
-using Cyclops.MainApplication.Configuration;
 using Cyclops.MainApplication.Options.Model;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace Cyclops.MainApplication.ViewModel
 {
@@ -27,7 +26,7 @@ namespace Cyclops.MainApplication.ViewModel
 
             LoadSettings();
         }
-        
+
         private void CancelAction()
         {
             cancelAction();

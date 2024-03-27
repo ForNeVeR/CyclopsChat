@@ -5,9 +5,8 @@ using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.MainApplication.View.Dialogs;
-using Cyclops.Xmpp;
 using Cyclops.Xmpp.Protocol;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace Cyclops.MainApplication.ViewModel
 {

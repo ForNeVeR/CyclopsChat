@@ -6,7 +6,7 @@ using System.Xml;
 using Cyclops.Core.Resource.Helpers;
 using Cyclops.Xmpp.Client;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace Cyclops.Console.ViewModel
 {

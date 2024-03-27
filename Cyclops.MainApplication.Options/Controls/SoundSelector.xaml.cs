@@ -1,9 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Windows;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 
 namespace Cyclops.MainApplication.Options.Controls;
