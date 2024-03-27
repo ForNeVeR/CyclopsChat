@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **Paste and Send** action (`Ctrl+Shift+V`).
 
 ### Fixed
+- [#45: After changing the nickname, the user list becomes empty](https://github.com/ForNeVeR/CyclopsChat/issues/45).
 - Issues when interacting with users without valid VCards.
 
 ### Changed
