@@ -10,16 +10,14 @@ namespace Cyclops.MainApplication.View.Dialogs;
 /// </summary>
 public partial class InputDialog
 {
-    private readonly string initialValue;
-
     protected InputDialog(string initialValue, Action<string> okAction, Func<string, bool> validator)
     {
-        TextValue = this.initialValue = initialValue;
+        TextValue = initialValue;
         Ok = new RelayCommand(() =>
         {
             okAction(TextValue);
             DialogResult = true;
-        }, () => initialValue != TextValue && validator(TextValue));
+        }, () => initialValue != TextValue && validator(TextValue), keepTargetAlive: true);
         Cancel = new RelayCommand(CancelAction);
         DataContext = this;
         InitializeComponent();
