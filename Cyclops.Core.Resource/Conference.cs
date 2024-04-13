@@ -161,8 +161,13 @@ public class Conference : NotifyPropertyChangedBase, IConference
                     if (!isNickConflictMode)
                     {
                         isNickConflictMode = true;
-                        Joined(this, new ConferenceJoinEventArgs(ConferenceJoinErrorKind.NickConflict,
-                            ErrorMessageResources.NickConflictErrorMessage));
+
+                        var eventArgs = new ConferenceJoinEventArgs(
+                            ConferenceJoinErrorKind.NickConflict,
+                            ErrorMessageResources.NickConflictErrorMessage,
+                            pres);
+
+                        Joined(this, eventArgs);
                     }
 
                     break;

@@ -264,8 +264,12 @@ namespace Cyclops.MainApplication.ViewModel
                 text = string.Format(
                     Localization.Conference.NickConflictMessage,
                     Conference.ConferenceId.Resource);
+
                 AddSystemMessage(text);
-                ChangeConflictedNick();
+
+                var conflictedNick = e.Presence?.From?.Resource ?? NewNick;
+                ChangeConflictedNick(conflictedNick);
+
                 return;
             }
             if (e.ErrorKind == ConferenceJoinErrorKind.Banned)
@@ -281,10 +285,10 @@ namespace Cyclops.MainApplication.ViewModel
                 AddNotifyMessage(Localization.Conference.EnteredToTheRoom);
         }
 
-        private void ChangeConflictedNick()
+        private void ChangeConflictedNick(string conflictedNick)
         {
             InputDialog.ShowForEdit(string.Format(Localization.Conference.NewNick, Conference.ConferenceId.Local),
-                Conference.ConferenceId.Resource, TryRejoinWithNewNick, NewNickValidator);
+                conflictedNick, TryRejoinWithNewNick, nick => NewNickValidator(conflictedNick, nick));
         }
 
         private void TryRejoinWithNewNick(string nick)
@@ -292,9 +296,9 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.RejoinWithNewNick(nick);
         }
 
-        private bool NewNickValidator(string nick)
+        private bool NewNickValidator(string conflictedNick, string nick)
         {
-            return !string.IsNullOrWhiteSpace(nick) && Conference.ConferenceId.Resource != nick && nick.Length < 30;
+            return !string.IsNullOrWhiteSpace(nick) && conflictedNick != nick && nick.Length < 30;
         }
 
         private void ConferenceDisconnected(object sender, DisconnectEventArgs e)

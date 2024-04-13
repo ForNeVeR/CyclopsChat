@@ -1,3 +1,5 @@
+using Cyclops.Xmpp.Protocol;
+
 namespace Cyclops.Core.CustomEventArgs
 {
     /// <summary>
@@ -5,13 +7,16 @@ namespace Cyclops.Core.CustomEventArgs
     /// </summary>
     public class ConferenceJoinEventArgs : OperationResult<ConferenceJoinErrorKind>
     {
-        public ConferenceJoinEventArgs()
-        {
-        }
+        public IPresence? Presence { get; }
 
-        public ConferenceJoinEventArgs(ConferenceJoinErrorKind errorKind, string errorMessage) :
-            base(errorKind, errorMessage)
-        {
-        }
+        public ConferenceJoinEventArgs()
+        { }
+
+        public ConferenceJoinEventArgs(
+            ConferenceJoinErrorKind errorKind,
+            string errorMessage,
+            IPresence? presence = null)
+            : base(errorKind, errorMessage)
+            => Presence = presence;
     }
 }
