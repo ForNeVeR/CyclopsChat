@@ -30,7 +30,7 @@ namespace Cyclops.Core
         event EventHandler<ConferenceMemberEventArgs> SomebodyChangedHisStatus;
         event EventHandler<DisconnectEventArgs> Disconnected;
         event EventHandler<ConferenceJoinEventArgs> Joined;
-        event EventHandler<CaptchaEventArgs> CaptchaRequirment;
+        event EventHandler<CaptchaEventArgs> CaptchaRequirement;
         event EventHandler<KickedEventArgs> Kicked;
         event EventHandler<BannedEventArgs> Banned;
         event EventHandler InvalidCaptchaCode;
