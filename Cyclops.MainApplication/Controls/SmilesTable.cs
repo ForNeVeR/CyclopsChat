@@ -26,10 +26,10 @@ namespace Cyclops.MainApplication.Controls
 
         // Using a DependencyProperty as the backing store for SmilePack.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SmilePackProperty =
-            DependencyProperty.Register("SmilePack", typeof(ISmilePack), typeof(SmilesGrid), new UIPropertyMetadata(OnInitializSmilePackStatic));
+            DependencyProperty.Register("SmilePack", typeof(ISmilePack), typeof(SmilesGrid), new UIPropertyMetadata(OnInitializeSmilePackStatic));
 
 
-        private static void OnInitializSmilePackStatic(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnInitializeSmilePackStatic(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is SmilesGrid)
                 ((SmilesGrid)d).OnInitializeSmilePack();
