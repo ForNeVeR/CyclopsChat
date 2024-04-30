@@ -218,7 +218,7 @@ public class ConferencesListViewModel : ViewModelBaseEx
         {
             if (existsConference.IsInConference)
             {
-                MessageBox.Show(Localization.ConferenceList.AlreadyInRoom, "Warrning", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(Localization.ConferenceList.AlreadyInRoom, "Warning", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             existsConference.LeaveAndClose();
