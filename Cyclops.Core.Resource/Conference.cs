@@ -350,7 +350,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
         });
     }
 
-    public event EventHandler<CaptchaEventArgs> CaptchaRequirment = delegate { };
+    public event EventHandler<CaptchaEventArgs> CaptchaRequirement = delegate { };
 
     private bool captchaMode = false;
     private string captchaChallenge = null;
@@ -364,7 +364,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
             if (captcha != null)
             {
                 captchaChallenge = captcha.CaptchaChallenge;
-                CaptchaRequirment(
+                CaptchaRequirement(
                     this,
                     new CaptchaEventArgs(ImageUtils.Base64ToBitmapImage(captcha.CaptchaImageBodyBase64)));
                 captchaMode = true;
