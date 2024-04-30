@@ -61,7 +61,7 @@ namespace Cyclops.MainApplication.ViewModel
             Conference.StartReconnectTimer += ConferenceStartReconnectTimer;
             Conference.CantChangeSubject += ConferenceCantChangeSubject;
             Conference.SubjectChanged += ConferenceSubjectChanged;
-            Conference.CaptchaRequirment += ConferenceCaptchaRequirment;
+            Conference.CaptchaRequirement += ConferenceCaptchaRequirment;
             Conference.MethodNotAllowedError += ConferenceMethodNotAllowedError;
             Conference.ParticipantJoin += ConferenceParticipantJoin;
             Conference.SomebodyChangedHisStatus += ConferenceSomebodyChangedHisStatus;
