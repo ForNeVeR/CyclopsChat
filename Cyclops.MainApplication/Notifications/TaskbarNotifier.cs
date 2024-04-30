@@ -141,7 +141,7 @@ namespace Cyclops.MainApplication.Notifications
 
         private int leftOffset = 0;
         /// <summary>
-        /// The space, if any, between the left side of the TaskNotifer window and the right side of the screen.
+        /// The space, if any, between the left side of the TaskNotifier window and the right side of the screen.
         /// </summary>
         public int LeftOffset
         {
@@ -206,7 +206,7 @@ namespace Cyclops.MainApplication.Notifications
         {
             // The display state has changed.
 
-            // Unless the stortboard as already been created, nothing can be done yet.
+            // Unless the storyboard as already been created, nothing can be done yet.
             if (this.storyboard == null)
                 return;
 
@@ -230,7 +230,7 @@ namespace Cyclops.MainApplication.Notifications
             {
                 // The window has just arrived at the opened state.
 
-                // Because the inital settings of this TaskNotifier depend on the screen's working area,
+                // Because the initial settings of this TaskNotifier depend on the screen's working area,
                 // it is best to reset these occasionally in case the screen size has been adjusted.
                 this.SetInitialLocations(true);
 
@@ -252,7 +252,7 @@ namespace Cyclops.MainApplication.Notifications
                 // Because the window may already be partially open, the rate at which
                 // it opens may be a fraction of the normal rate.
                 // This must be calculated.
-                int milliseconds = this.CalculateMillseconds(this.openingMilliseconds, this.openedTop);
+                int milliseconds = this.CalculateMilliseconds(this.openingMilliseconds, this.openedTop);
 
                 if (milliseconds < 1)
                 {
@@ -278,7 +278,7 @@ namespace Cyclops.MainApplication.Notifications
                 // Because the window may already be partially hidden, the rate at which
                 // it hides may be a fraction of the normal rate.
                 // This must be calculated.
-                int milliseconds = this.CalculateMillseconds(this.hidingMilliseconds, this.hiddenTop);
+                int milliseconds = this.CalculateMilliseconds(this.hidingMilliseconds, this.hiddenTop);
 
                 if (milliseconds < 1)
                 {
@@ -308,7 +308,7 @@ namespace Cyclops.MainApplication.Notifications
             }
         }
 
-        private int CalculateMillseconds(int totalMillsecondsNormally, double destination)
+        private int CalculateMilliseconds(int totalMillisecondsNormally, double destination)
         {
             if (this.Top == destination)
             {
@@ -320,7 +320,7 @@ namespace Cyclops.MainApplication.Notifications
             double percentDone = distanceRemaining / this.ActualHeight;
 
             // Determine the percentage of normal milliseconds that are actually required.
-            return (int)(totalMillsecondsNormally * percentDone);
+            return (int)(totalMillisecondsNormally * percentDone);
         }
 
         protected virtual void Storyboard_ArrivedHidden(object sender, EventArgs e)
