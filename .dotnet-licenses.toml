@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2024 Friedrich von Never <friedrich@fornever.me>
+#
+# SPDX-License-Identifier: MIT
+
+# This file describes the licenses of the files that are packaged in the resulting NuGet package.
+# Note that these are not necessarily all the licenses used by the project; only those related to the packaged files.
+
+metadata_sources = [
+    { type = "nuget", include = "CyclopsChat.sln" },
+    { type = "license", spdx = "MIT", copyright = "CyclopsChat contributors <https://github.com/ForNeVeR/CyclopsChat>", patterns_covered = [
+        { type = "nuget" },
+        { type = "msbuild", include = "CyclopsChat.sln" }
+    ] }
+]
+
+lock_file = ".dotnet-licenses.lock.toml"
+license_storage_path = "package-licenses"
+packaged_files = [
+    { type = "directory", path = "publish" }
+]
