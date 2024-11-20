@@ -42,7 +42,7 @@ jobs:
           && Compress-Archive ./publish/* -DestinationPath CyclopsChat-v${{ steps.version.outputs.version }}.win-x64.zip
 
       - name: Read the changelog
-        uses: ForNeVeR/ChangelogAutomation.action@v1
+        uses: ForNeVeR/ChangelogAutomation.action@v2
         with:
           input: ./CHANGELOG.md
           output: ./changelog-section.md
