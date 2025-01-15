@@ -103,7 +103,7 @@
         <None Include="../third-party/**/*" CopyToPublishDirectory="Always" LinkBase="third-party"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="System.Resources.Extensions" Version="9.0.0" />
+        <PackageReference Include="System.Resources.Extensions" Version="9.0.1" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Cyclops.Console\Cyclops.Console.csproj" />
