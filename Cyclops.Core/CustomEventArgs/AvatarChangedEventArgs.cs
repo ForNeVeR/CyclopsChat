@@ -1,18 +1,17 @@
 using System;
-using System.Windows.Media.Imaging;
+using System.Drawing;
 using Cyclops.Xmpp.Protocol;
 
-namespace Cyclops.Core.CustomEventArgs
-{
-    public class AvatarChangedEventArgs : EventArgs
-    {
-        public Jid UserId { get; private set; }
-        public BitmapImage BitmapImage { get; private set; }
+namespace Cyclops.Core.CustomEventArgs;
 
-        public AvatarChangedEventArgs(Jid userId, BitmapImage bitmapImage)
-        {
-            UserId = userId;
-            BitmapImage = bitmapImage;
-        }
+public class AvatarChangedEventArgs : EventArgs
+{
+    public Jid UserId { get; private set; }
+    public Image BitmapImage { get; private set; }
+
+    public AvatarChangedEventArgs(Jid userId, Image bitmapImage)
+    {
+        UserId = userId;
+        BitmapImage = bitmapImage;
     }
 }

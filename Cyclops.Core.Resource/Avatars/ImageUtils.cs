@@ -110,18 +110,11 @@ namespace Cyclops.Core.Resource
         /// <summary>
         /// Convert System.Drawing.Image into wpf BitmapImage
         /// </summary>
-        public static BitmapImage Base64ToBitmapImage(string base64)
+        public static Image Base64ToBitmapImage(string base64)
         {
             byte[] imageBytes = Convert.FromBase64String(base64);
             var ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
-            ms.Seek(0, SeekOrigin.Begin);
-            var bi = new BitmapImage();
-            bi.BeginInit();
-            bi.StreamSource = ms;
-            bi.EndInit();
-            RenderOptions.SetBitmapScalingMode(bi, BitmapScalingMode.LowQuality);
-            bi.Freeze();
-            return bi;
+            return Image.FromStream(new MemoryStream(imageBytes));
         }
     }
 }

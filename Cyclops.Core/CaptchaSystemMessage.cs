@@ -1,14 +1,13 @@
-using System.Windows.Media.Imaging;
+using System.Drawing;
 
-namespace Cyclops.Core
+namespace Cyclops.Core;
+
+public class CaptchaSystemMessage : SystemConferenceMessage
 {
-    public class CaptchaSystemMessage : SystemConferenceMessage
+    public CaptchaSystemMessage()
     {
-        public CaptchaSystemMessage()
-        {
-            IsErrorMessage = true;
-        }
-
-        public BitmapImage Bitmap { get; set; }
+        IsErrorMessage = true;
     }
+
+    public Image Bitmap { get; set; }
 }

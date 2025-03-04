@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Imaging;
 using Cyclops.Core;
+using Cyclops.Core.Resource;
 
 namespace Cyclops.MainApplication.View.Popups
 {
@@ -23,7 +24,7 @@ namespace Cyclops.MainApplication.View.Popups
             {
                 var member = fromConference.Members.FirstOrDefault(i => i.ConferenceUserId.Equals(privateMessage.AuthorId));
                 if (member != null)
-                    avatar = member.AvatarUrl;
+                    avatar = member.AvatarUrl.ToBitmapImage();
             }
 
             var privateNotificationViewModel = new PrivateNotificationViewModel();
