@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
-    <ItemGroup>
-      <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
-    </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Cyclops.Configuration\Cyclops.Configuration.csproj" />
     </ItemGroup>
