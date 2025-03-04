@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Cyclops.Configuration\Cyclops.Configuration.csproj" />

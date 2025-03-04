@@ -16,7 +16,7 @@ namespace Cyclops.Core.Resource
         private readonly Conference conference;
         private string? statusText;
         private string? statusType;
-        private Image avatarUrl;
+        private byte[] avatarUrl;
         private bool isSubscribed;
 
         internal ConferenceMember(
@@ -127,7 +127,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public Image AvatarUrl
+        public byte[] AvatarUrl
         {
             get { return avatarUrl; }
             internal set

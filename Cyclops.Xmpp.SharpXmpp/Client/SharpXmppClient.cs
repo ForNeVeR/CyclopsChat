@@ -333,7 +333,7 @@ public class SharpXmppClient : IXmppClient
             Comments = descriptionElement?.Value
         };
 
-        Image? ReadPhoto(XElement photoEl)
+        byte[]? ReadPhoto(XElement photoEl)
         {
             var binVal = photoEl.Element(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhotoBinVal);
             if (binVal == null) return null;
@@ -341,8 +341,7 @@ public class SharpXmppClient : IXmppClient
             {
                 var bytes = Convert.FromBase64String(binVal.Value);
                 if (bytes.Length == 0) return null;
-                var stream = new MemoryStream(bytes);
-                return Image.FromStream(stream);
+                return bytes;
             }
             catch (Exception ex)
             {
@@ -362,7 +361,7 @@ public class SharpXmppClient : IXmppClient
             var binVal = query.GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhoto)
                 .GetOrCreateChildElement(XNamespace.Get(Namespaces.VCardTemp) + Elements.VCardPhotoBinVal);
             using var stream = new MemoryStream();
-            vCard.Photo.Save(stream, ImageFormat.Png);
+            Image.FromStream(new MemoryStream(vCard.Photo)).Save(stream, ImageFormat.Png);
             binVal.Value = Convert.ToBase64String(stream.ToArray());
         }
 
