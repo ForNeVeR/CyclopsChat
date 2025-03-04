@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using Cyclops.Core;
+using Cyclops.Core.Resource;
 
 namespace Cyclops.MainApplication.MessageDecoration.Decorators
 {
@@ -55,7 +56,7 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
             {
                 var imageControl = new Image();
                 BitmapImage image;
-                imageControl.Source = image =(((CaptchaSystemMessage)msg).Bitmap);
+                imageControl.Source = image = ((CaptchaSystemMessage)msg).Bitmap.ToBitmapImage();
                 imageControl.Width = image.Width;
                 imageControl.Height = image.Height;
                 Span span = new Span();

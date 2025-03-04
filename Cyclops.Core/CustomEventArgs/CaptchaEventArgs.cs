@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Media.Imaging;
+using System.Drawing;
 
-namespace Cyclops.Core.CustomEventArgs
+namespace Cyclops.Core.CustomEventArgs;
+
+public class CaptchaEventArgs : EventArgs
 {
-    public class CaptchaEventArgs : EventArgs
-    {
-        public BitmapImage BitmapImage { get; private set; }
+    public Image BitmapImage { get; private set; }
 
-        public CaptchaEventArgs(BitmapImage bitmapImage)
-        {
-            this.BitmapImage = bitmapImage;
-        }
+    public CaptchaEventArgs(Image bitmapImage)
+    {
+        this.BitmapImage = bitmapImage;
     }
 }

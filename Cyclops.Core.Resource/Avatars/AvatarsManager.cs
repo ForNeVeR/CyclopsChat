@@ -4,7 +4,6 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
@@ -32,11 +31,11 @@ public class AvatarsManager : IAvatarsManager
         defaultAvatar = FromFile(Path.Combine(AvatarsFolder, DefaultAvatar));
     }
 
-    private static BitmapImage FromFile(string file)
+    private static Image FromFile(string file)
     {
         try
         {
-            return Image.FromFile(file).ToBitmapImage();
+            return Image.FromFile(file);
         }
         catch
         {
@@ -47,7 +46,7 @@ public class AvatarsManager : IAvatarsManager
     public static string AvatarsFolder = @"Data\Avatars";
     public const string DefaultAvatar = "default.png";
 
-    private readonly BitmapImage defaultAvatar;
+    private readonly Image defaultAvatar;
 
     #region Implementation of ISessionHolder
 
@@ -63,7 +62,7 @@ public class AvatarsManager : IAvatarsManager
         return File.Exists(file);
     }
 
-    public BitmapImage GetFromCache(string hash)
+    public Image GetFromCache(string hash)
     {
         string file = BuildPath(hash);
         if (!File.Exists(file))
@@ -89,7 +88,7 @@ public class AvatarsManager : IAvatarsManager
                         return;
                     }
                 vCard.Photo.Save(file, ImageFormat.Png);
-                image = vCard.Photo.ToBitmapImage();
+                image = vCard.Photo;
             }
             catch
             {

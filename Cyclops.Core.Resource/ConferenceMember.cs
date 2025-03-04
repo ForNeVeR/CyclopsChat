@@ -1,5 +1,5 @@
+using System.Drawing;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Xmpp.Data;
@@ -16,7 +16,7 @@ namespace Cyclops.Core.Resource
         private readonly Conference conference;
         private string? statusText;
         private string? statusType;
-        private BitmapImage avatarUrl;
+        private Image avatarUrl;
         private bool isSubscribed;
 
         internal ConferenceMember(
@@ -127,7 +127,7 @@ namespace Cyclops.Core.Resource
             }
         }
 
-        public BitmapImage AvatarUrl
+        public Image AvatarUrl
         {
             get { return avatarUrl; }
             internal set
