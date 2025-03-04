@@ -366,7 +366,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
                 captchaChallenge = captcha.CaptchaChallenge;
                 CaptchaRequirement(
                     this,
-                    new CaptchaEventArgs(ImageUtils.Base64ToBitmapImage(captcha.CaptchaImageBodyBase64)));
+                    new CaptchaEventArgs(Convert.FromBase64String(captcha.CaptchaImageBodyBase64)));
                 captchaMode = true;
                 return;
             }

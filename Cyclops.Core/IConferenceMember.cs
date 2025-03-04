@@ -1,4 +1,3 @@
-using System.Drawing;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 
@@ -15,7 +14,7 @@ public interface IConferenceMember : ISessionHolder
 
     Role Role { get; }
     ClientInfo ClientInfo { get; }
-    Image AvatarUrl { get; }
+    byte[] AvatarUrl { get; }
 
     Jid ConferenceUserId { get; }
     Jid? RealUserId { get; }

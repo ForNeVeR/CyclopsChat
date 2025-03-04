@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Cyclops.Core;
 using Cyclops.Core.Helpers;
+using Cyclops.Core.Resource;
 using Cyclops.Xmpp.Data;
 using Cyclops.Xmpp.Protocol;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -59,7 +60,7 @@ public class VcardViewModel : ViewModelBaseEx
                 {
                     img = img.ResizeImageInProportionIfLarge(100);
                 }
-                Photo = img;
+                Photo = ImageUtils.ImageToByte(img);
                 avatarsChanged = true;
             }
             catch
@@ -78,7 +79,7 @@ public class VcardViewModel : ViewModelBaseEx
             Comments = Comments,
             Email = Email,
             FullName = FullName,
-            Photo = Photo?.Clone() as Image,
+            Photo = Photo?.Clone() as byte[],
         };
 
         DoAction().NoAwait(logger);
@@ -127,8 +128,8 @@ public class VcardViewModel : ViewModelBaseEx
         IsBusy = false;
     }
 
-    private Image? photo;
-    public Image? Photo
+    private byte[]? photo;
+    public byte[]? Photo
     {
         get { return photo; }
         set

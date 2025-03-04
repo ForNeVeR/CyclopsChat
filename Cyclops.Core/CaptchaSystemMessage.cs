@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace Cyclops.Core;
 
 public class CaptchaSystemMessage : SystemConferenceMessage
@@ -9,5 +7,5 @@ public class CaptchaSystemMessage : SystemConferenceMessage
         IsErrorMessage = true;
     }
 
-    public Image Bitmap { get; set; }
+    public byte[] Bitmap { get; set; }
 }

@@ -31,11 +31,11 @@ public class AvatarsManager : IAvatarsManager
         defaultAvatar = FromFile(Path.Combine(AvatarsFolder, DefaultAvatar));
     }
 
-    private static Image FromFile(string file)
+    private static byte[] FromFile(string file)
     {
         try
         {
-            return Image.FromFile(file);
+            return File.ReadAllBytes(file);
         }
         catch
         {
@@ -46,7 +46,7 @@ public class AvatarsManager : IAvatarsManager
     public static string AvatarsFolder = @"Data\Avatars";
     public const string DefaultAvatar = "default.png";
 
-    private readonly Image defaultAvatar;
+    private readonly byte[] defaultAvatar;
 
     #region Implementation of ISessionHolder
 
@@ -62,7 +62,7 @@ public class AvatarsManager : IAvatarsManager
         return File.Exists(file);
     }
 
-    public Image GetFromCache(string hash)
+    public byte[] GetFromCache(string hash)
     {
         string file = BuildPath(hash);
         if (!File.Exists(file))
@@ -87,7 +87,7 @@ public class AvatarsManager : IAvatarsManager
                     {
                         return;
                     }
-                vCard.Photo.Save(file, ImageFormat.Png);
+                Image.FromStream(new MemoryStream(vCard.Photo)).Save(file, ImageFormat.Png);
                 image = vCard.Photo;
             }
             catch

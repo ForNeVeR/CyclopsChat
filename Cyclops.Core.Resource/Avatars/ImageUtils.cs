@@ -32,15 +32,14 @@ namespace Cyclops.Core.Resource
         }
 
 
-        public static string CalculateSha1HashOfAnImage(Image image)
+        public static string CalculateSha1HashOfAnImage(byte[] image)
         {
-            byte[] buffer = ImageToByte(image);
             var cryptoTransformSha1 = new SHA1CryptoServiceProvider();
-            string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(buffer)).Replace("-", "").ToLower();
+            string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(image)).Replace("-", "").ToLower();
             return hash;
         }
 
-        private static byte[] ImageToByte(Image img)
+        public static byte[] ImageToByte(Image img)
         {
             var converter = new ImageConverter();
             return (byte[])converter.ConvertTo(img, typeof(byte[])); //sometimes it threws an exception (i did'nt solve it yet :) i.e. on avatar of dotnet@conference.jabber.ru/Finn
@@ -92,29 +91,18 @@ namespace Cyclops.Core.Resource
         /// <summary>
         /// Convert System.Drawing.Image into wpf BitmapImage
         /// </summary>
-        public static BitmapImage ToBitmapImage(this Image image)
+        public static BitmapImage ToBitmapImage(this byte[] image)
         {
             var bi = new BitmapImage();
             bi.BeginInit();
             var ms = new MemoryStream();
-            image.Save(ms, ImageFormat.Bmp);
+            Image.FromStream(new MemoryStream(image)).Save(ms, ImageFormat.Bmp);
             ms.Seek(0, SeekOrigin.Begin);
             bi.StreamSource = ms;
             bi.EndInit();
             RenderOptions.SetBitmapScalingMode(bi, BitmapScalingMode.LowQuality);
             bi.Freeze();
             return bi;
-        }
-
-
-        /// <summary>
-        /// Convert System.Drawing.Image into wpf BitmapImage
-        /// </summary>
-        public static Image Base64ToBitmapImage(string base64)
-        {
-            byte[] imageBytes = Convert.FromBase64String(base64);
-            var ms = new MemoryStream(imageBytes, 0, imageBytes.Length);
-            return Image.FromStream(new MemoryStream(imageBytes));
         }
     }
 }
