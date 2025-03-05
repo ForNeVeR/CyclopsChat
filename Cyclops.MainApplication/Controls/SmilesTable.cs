@@ -49,18 +49,19 @@ namespace Cyclops.MainApplication.Controls
             {
                 AnimatedImage smileElement = new AnimatedImage();
                 smileElement.StaticByDefault = true;
-                smileElement.AnimatedBitmap = smile.Bitmap;
+                var bitmap = (Bitmap)System.Drawing.Image.FromStream(smile.Stream);
+                smileElement.AnimatedBitmap = bitmap;
                 smileElement.MaxWidth = 50;
                 smileElement.MaxHeight = 50;
                 smileElement.MinWidth = 22;
                 smileElement.MinHeight = 22;
                 smileElement.ToolTip = string.Join("  ", smile.Masks);
-                smileElement.Width = smile.Bitmap.Width;
+                smileElement.Width = bitmap.Width;
                 smileElement.Tag = smile.Masks.First();
                 smileElement.Stretch = Stretch.None;
 
                 RenderOptions.SetBitmapScalingMode(smileElement, BitmapScalingMode.LowQuality);
-                smileElement.Height = smile.Bitmap.Height;
+                smileElement.Height = bitmap.Height;
                 smileElement.MouseLeftButtonDown += InlineMouseLeftButtonDown;
 
 
