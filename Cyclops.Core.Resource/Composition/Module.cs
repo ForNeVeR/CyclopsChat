@@ -18,8 +18,7 @@ namespace Cyclops.Core.Resource.Composition
                 .RegisterType<ISmilesManager, SmilesManager>()
                 .RegisterType<IStringEncryptor, TripleDesStringEncryptor>()
                 .RegisterType<IChatLogger, ChatLogger>()
-                .RegisterType<IUserSession, UserSession>()
-                .RegisterType<ISynchronizeInvoke, SynchronizeInvokeImpl>();
+                .RegisterType<IUserSession, UserSession>();
         }
     }
 }

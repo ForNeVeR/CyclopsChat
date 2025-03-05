@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml;
-using Cyclops.Core.Resource.Helpers;
 using Cyclops.Xmpp.Client;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
@@ -57,22 +56,22 @@ public class ConsoleViewModel : ViewModelBase
 
     private void OnConnected(object? _, object __)
     {
-        dispatcher.InvokeAsyncIfRequired(() => Entries.Add("CONNECTION ESTABLISHED"));
+        InvokeAsyncIfRequired(dispatcher, () => Entries.Add("CONNECTION ESTABLISHED"));
     }
 
     private void OnReadText(object? _, string txt)
     {
-        dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"RECV: {txt}"));
+        InvokeAsyncIfRequired(dispatcher, () => Entries.Add($"RECV: {txt}"));
     }
 
     private void OnWriteText(object? _, string txt)
     {
-        dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"SEND: {txt}"));
+        InvokeAsyncIfRequired(dispatcher, () => Entries.Add($"SEND: {txt}"));
     }
 
     private void OnError(object? _, Exception ex)
     {
-        dispatcher.InvokeAsyncIfRequired(() => Entries.Add($"ERROR: {ex.Message}"));
+        InvokeAsyncIfRequired(dispatcher, () => Entries.Add($"ERROR: {ex.Message}"));
     }
 
     private void SendCommand()
@@ -92,5 +91,13 @@ public class ConsoleViewModel : ViewModelBase
         {
             // ignore
         }
+    }
+
+    private static void InvokeAsyncIfRequired(Dispatcher dispatcher, Action action)
+    {
+        if (dispatcher.CheckAccess())
+            action();
+        else
+            dispatcher.InvokeAsync(action);
     }
 }

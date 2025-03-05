@@ -2,12 +2,10 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Cyclops.Core.Avatars;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
 using Cyclops.Core.Resource.Avatars;
-using Cyclops.Core.Resource.Helpers;
 using Cyclops.Core.Resource.JabberNetExtensions;
 using Cyclops.Core.Resources;
 using Cyclops.Xmpp.Data;
@@ -19,7 +17,7 @@ namespace Cyclops.Core.Resource;
 public class Conference : NotifyPropertyChangedBase, IConference
 {
     private readonly ILogger logger;
-    private readonly Dispatcher dispatcher;
+    private readonly Action<Action> dispatcher;
     private readonly IXmppDataExtractor dataExtractor;
     private readonly UserSession session;
     private IRoom? room;
@@ -27,7 +25,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     internal Conference(
         ILogger logger,
-        Dispatcher dispatcher,
+        Action<Action> dispatcher,
         UserSession session,
         IXmppDataExtractor dataExtractor,
         Jid conferenceId)
@@ -147,7 +145,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
     private bool waitingForPassword = false;
     private void room_OnPresenceError(object _, IPresence pres)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             if (pres.Error == null)
                 return;
@@ -215,7 +213,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnLeave(object _, IPresence pres)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             var userX = dataExtractor.GetExtendedUserData(pres);
             if (userX?.Status.IsNullOrEmpty() == false)
@@ -236,7 +234,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
         if (presence.From is {} from)
             ConferenceId = from;
 
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             var senderRoom = (IRoom)sender;
             if (waitingForPassword)
@@ -262,7 +260,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnParticipantLeave(object sender, IMucParticipant participant)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             var senderRoom = (IRoom)sender;
 
@@ -316,7 +314,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnParticipantJoin(object sender, IMucParticipant participant)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             var senderRoom = (IRoom)sender;
 
@@ -337,7 +335,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnRoomMessage(object sender, IMessage msg)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             var senderRoom = (IRoom)sender;
             if (string.IsNullOrEmpty(msg.Body)) return;
@@ -357,7 +355,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnAdminMessage(object sender, IMessage msg)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             // CAPTCHA required
             var captcha = dataExtractor.GetCaptchaRequest(msg);
@@ -392,7 +390,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnSelfMessage(object _, IMessage msg)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             if (string.IsNullOrEmpty(msg.Body)) return;
             Messages.AsInternalImpl().Add(new ConferenceUserMessage(dataExtractor, session, msg, true));
@@ -401,7 +399,7 @@ public class Conference : NotifyPropertyChangedBase, IConference
 
     private void room_OnSubjectChange(object sender, IMessage msg)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             if (msg.From != null && !string.IsNullOrEmpty(msg.From?.Resource))
                 SubjectChanged(this, new SubjectChangedEventArgs(msg.From!.Value.Resource, msg.Subject));
