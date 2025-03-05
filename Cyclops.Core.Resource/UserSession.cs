@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Cyclops.Configuration;
 using Cyclops.Core.CustomEventArgs;
 using Cyclops.Core.Helpers;
-using Cyclops.Core.Resource.Helpers;
 using Cyclops.Core.Resources;
 using Cyclops.Core.Security;
 using Cyclops.Xmpp.Client;
@@ -20,13 +19,13 @@ namespace Cyclops.Core.Resource;
 public class UserSession : NotifyPropertyChangedBase, IUserSession
 {
     private readonly ILogger logger;
-    private readonly Dispatcher dispatcher;
+    private readonly Action<Action> dispatcher;
     private readonly IXmppDataExtractor dataExtractor;
 
     /// <summary>
     /// Timer for reconnect
     /// </summary>
-    private readonly DispatcherTimer reconnectTimer;
+    private readonly Timer reconnectTimer;
     private readonly IStringEncryptor stringEncryptor;
     private readonly IChatObjectsValidator commonValidator;
     private ConnectionConfig connectionConfig;
@@ -40,7 +39,7 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
 
     public UserSession(
         ILogger logger,
-        Dispatcher dispatcher,
+        Action<Action> dispatcher,
         IXmppDataExtractor dataExtractor,
         IStringEncryptor stringEncryptor,
         IChatObjectsValidator commonValidator,
@@ -57,7 +56,7 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
         Conferences = new InternalObservableCollection<IConference>();
         PrivateMessages = new InternalObservableCollection<IConferenceMessage>();
 
-        reconnectTimer = new DispatcherTimer {Interval = TimeSpan.FromSeconds(10)};
+        reconnectTimer = new Timer(ReconnectTimerTick, null, Timeout.InfiniteTimeSpan, TimeSpan.FromSeconds(10));
         SubscribeToEvents();
 
         statusType = StatusType.Online;
@@ -254,7 +253,7 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
 
     private void OnStreamError(object _, object __)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             if (IsAuthenticated)
             {
@@ -268,31 +267,30 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
                     ConnectionErrorKind.ConnectionError,
                     ErrorMessageResources.CommonAuthenticationErrorMessage));
 
-            reconnectTimer.Start();
+            reconnectTimer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(10));
         });
     }
 
     private void OnError(object sender, Exception ex)
     {
         logger.LogError("Error from the XMPP client.", ex);
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             if (IsAuthenticated)
                 IsAuthenticated = false;
             ConnectionDropped(this, new AuthenticationEventArgs(ConnectionErrorKind.ConnectionError, ex.Message));
-            reconnectTimer.Start();
+            reconnectTimer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(10));
         });
     }
 
     private void OnDisconnected(object _, object __)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
-            reconnectTimer.Start());
+        dispatcher(() => reconnectTimer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(10)));
     }
 
     private void OnAuthenticationError(object _, object __)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
             Authenticated(this,
                 new AuthenticationEventArgs(
                     ConnectionErrorKind.InvalidPasswordOrUserName,
@@ -303,7 +301,7 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
 
     private void OnAuthenticated(object _, object __)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             IsAuthenticated = true;
             Authenticated(this, new AuthenticationEventArgs());
@@ -324,8 +322,8 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
 
     private void SubscribeToEvents()
     {
-        XmppClient.Presence += (_, presence) => dispatcher.InvokeAsyncIfRequired(() => Presence?.Invoke(this, presence));
-        XmppClient.RoomMessage += (_, _) => dispatcher.InvokeAsyncIfRequired(() => PublicMessage.Invoke(this, EventArgs.Empty));
+        XmppClient.Presence += (_, presence) => dispatcher(() => Presence?.Invoke(this, presence));
+        XmppClient.RoomMessage += (_, _) => dispatcher(() => PublicMessage.Invoke(this, EventArgs.Empty));
 
         XmppClient.IqQueryManager.TimeQueried += (_, iq) => IqCommonHandler.HandleTime(this, iq);
         XmppClient.IqQueryManager.LastActivityQueried += (_, iq) => IqCommonHandler.HandleLast(this, iq);
@@ -341,12 +339,11 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
         XmppClient.BookmarkManager.BookmarkAdded += OnBookmarkAdded;
 
         XmppClient.Message += OnMessage;
-        reconnectTimer.Tick += ReconnectTimerTick;
     }
 
     private void OnBookmarkAdded(object _, IBookmark bookmark)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             var conferenceJid = bookmark.ConferenceJid.WithResource(bookmark.Nick);
             if (bookmark.AutoJoin)
@@ -359,7 +356,7 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
 
     private void OnMessage(object sender, IMessage msg)
     {
-        dispatcher.InvokeAsyncIfRequired(() =>
+        dispatcher(() =>
         {
             //some conferences are not allowed to send privates
             if (msg.Error != null)
@@ -444,9 +441,9 @@ public class UserSession : NotifyPropertyChangedBase, IUserSession
 
     public event EventHandler<ConferencesListEventArgs> ConferencesListReceived = delegate { };
 
-    private void ReconnectTimerTick(object sender, EventArgs e)
+    private void ReconnectTimerTick(object sender)
     {
-        reconnectTimer.Stop();
+        reconnectTimer.Change(Timeout.InfiniteTimeSpan, TimeSpan.FromSeconds(10));
         Reconnect();
     }
 
