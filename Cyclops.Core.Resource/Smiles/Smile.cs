@@ -15,7 +15,7 @@ namespace Cyclops.Core.Resource.Smiles
         public string File { get; set; }
 
         [XmlIgnore]
-        public Bitmap? Bitmap { get; set; }
+        public byte[]? Bitmap { get; set; }
 
         [XmlIgnore]
         public MemoryStream Stream { get; set; }
