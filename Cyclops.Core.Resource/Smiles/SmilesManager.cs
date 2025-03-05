@@ -62,7 +62,6 @@ public class SmilesManager : ISmilesManager
                         var ms = new MemoryStream();
                         using var entryStream = item.ZipEntry.Open();
                         entryStream.CopyTo(ms);
-                        ((Smile)item.Smile).Bitmap = (Bitmap)Image.FromStream(ms);
                         ((Smile)item.Smile).Stream = ms;
                     }
                     catch

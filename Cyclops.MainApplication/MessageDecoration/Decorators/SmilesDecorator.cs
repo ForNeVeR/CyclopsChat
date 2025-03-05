@@ -55,7 +55,8 @@ namespace Cyclops.MainApplication.MessageDecoration.Decorators
         private static Inline CreateSmileInline(ISmile smile)
         {
             var smileImage = new AnimatedImage();
-            smileImage.AnimatedBitmap = smile.Bitmap;
+            var bitmap = (Bitmap)System.Drawing.Image.FromStream(smile.Stream);
+            smileImage.AnimatedBitmap = bitmap;
             smileImage.Stretch = Stretch.None;
             smileImage.Width = smileImage.AnimatedBitmap.Width;
             smileImage.Height = smileImage.AnimatedBitmap.Height;

@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Cyclops.Core.Smiles
 {
@@ -11,7 +6,6 @@ namespace Cyclops.Core.Smiles
     {
         string[] Masks { get;}
         string File { get; }
-        Bitmap Bitmap { get; }
         MemoryStream Stream { get; }
     }
 }

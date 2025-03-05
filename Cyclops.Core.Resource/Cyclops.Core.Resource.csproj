@@ -3,6 +3,7 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <UseWpf>true</UseWpf>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
