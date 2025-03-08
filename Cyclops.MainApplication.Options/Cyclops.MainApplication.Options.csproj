@@ -34,9 +34,6 @@
         <Resource Include="Resources\stop.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Resources\text_rich_colored.png" />
-    </ItemGroup>
-    <ItemGroup>
         <Resource Include="Resources\user1_time.png" />
     </ItemGroup>
     <ItemGroup>

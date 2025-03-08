@@ -6,13 +6,14 @@
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="fixed">
+                <ResourceDictionary>
                     <Localization1:ResourceWrapper x:Key="ResourceWrapper"/>
                 </ResourceDictionary>
-                <ResourceDictionary x:Name="menus" Source="View/ContextMenus.xaml"/>
-                <ResourceDictionary Source="Data/Themes/Default/SettingsViewStyles.xaml"/>
+                <ResourceDictionary Source="View/ContextMenus.xaml"/>
+                <ResourceDictionary Source="Data/Themes/Default/OutputAreaStyles.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/General.xaml"/>
+                <ResourceDictionary Source="Data/Themes/Default/SettingsViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-</Application.Resources>
+    </Application.Resources>
 </Application>

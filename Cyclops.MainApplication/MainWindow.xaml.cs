@@ -1,7 +1,7 @@
 using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
-using Cyclops.MainApplication.Controls;
 using Cyclops.MainApplication.Helpers;
 using Cyclops.MainApplication.Notifications;
 using Cyclops.MainApplication.View;
@@ -11,13 +11,12 @@ namespace Cyclops.MainApplication
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class MainWindow
     {
         public MainWindow()
         {
             InitializeComponent();
             Title += " " + Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
-            ThemeManager.ApplyDefault();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -26,7 +25,7 @@ namespace Cyclops.MainApplication
             base.OnSourceInitialized(e);
         }
 
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
             if (ApplicationContext.Current.Settings.HideOnWindowClosing)
             {

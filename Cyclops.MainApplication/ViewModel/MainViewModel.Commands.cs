@@ -9,13 +9,11 @@ partial class MainViewModel
 {
     public RelayCommand OpenConferenceList { get; private set; }
     public RelayCommand CloseActiveConferenceOrPrivate { get; private set; }
-    public RelayCommand UpdateStyles { get; private set; }
     public RelayCommand Quit { get; private set; }
     public RelayCommand ShowOrHide { get; private set; }
 
     private void InitializeCommands()
     {
-        UpdateStyles = new RelayCommand(OnUpdateStyles);
         OpenConferenceList = new RelayCommand(OpenConferenceListAction, OpenConferenceListCanExecute);
         CloseActiveConferenceOrPrivate = new RelayCommand(CloseActiveConferenceOrPrivateAction, CloseActiveConferenceOrPrivateCanExecute);
         Quit = new RelayCommand(() => App.Current.Shutdown());
@@ -51,10 +49,5 @@ partial class MainViewModel
     private bool OpenConferenceListCanExecute()
     {
         return Session.IsAuthenticated;
-    }
-
-    private static void OnUpdateStyles()
-    {
-        ThemeManager.ApplyDefault();
     }
 }
