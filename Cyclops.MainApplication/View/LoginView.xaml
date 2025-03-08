@@ -1,12 +1,13 @@
 <UserControl x:Class="Cyclops.MainApplication.View.LoginView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel"
-             xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
              xmlns:Localization1="clr-namespace:Cyclops.MainApplication.Localization;assembly=Cyclops.MainApplication.Localization"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
+             xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel"
+             xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:Cyclops.MainApplication.Helpers"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" UseLayoutRounding="True"
              FocusManager.FocusedElement="{Binding ElementName=userName}" Loaded="UserControlLoaded"
              TextOptions.TextFormattingMode="Display" TextOptions.TextRenderingMode="ClearType">
@@ -40,9 +41,10 @@
     </UserControl.Resources>
 
 
-    <xctk:BusyIndicator x:Name="busyIndicator"
+    <busyIndicator:BusyMask helpers:BusyMaskProperties.IsBusyWork="{Binding IsBusy}"
+                            Focusable="False"
                             BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}"
-                            IsBusy="{Binding IsBusy}" Focusable="False">
+                            BusyContentMargin="0,40,0,0">
         <Grid x:Name="LayoutRoot">
 
             <Grid VerticalAlignment="Center" >
@@ -111,5 +113,5 @@
                           SelectedItem="{Binding Source={x:Static Localization1:LocalizationManager.Instance}, Path=SelectedLanguage, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-    </xctk:BusyIndicator>
+    </busyIndicator:BusyMask>
 </UserControl>

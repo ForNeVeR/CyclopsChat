@@ -1,10 +1,10 @@
 <UserControl x:Class="Cyclops.MainApplication.Options.View.StatusSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Controls1="clr-namespace:Cyclops.MainApplication.Options.Controls"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:numericUpDownLib="clr-namespace:NumericUpDownLib;assembly=NumericUpDownLib"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -30,12 +30,12 @@
         <Controls1:NamedSeparator Grid.ColumnSpan="2" Text="{Binding Path=Settings.CommonGroup, Source={StaticResource ResourceWrapper}}" />
 
         <TextBlock Grid.Row="1" Text="{Binding Path=Settings.AutoAway, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
-        <xctk:IntegerUpDown Grid.Row="1" Value="{Binding Settings.AutoAwayAfter, Mode=TwoWay}" FontSize="12" Width="50" Minimum="0" Maximum="999"
-                                Grid.Column="1" Style="{StaticResource valueStyle}"/>
+        <numericUpDownLib:UIntegerUpDown Grid.Row="1" Value="{Binding Settings.AutoAwayAfter, Mode=TwoWay}" FontSize="12" Width="50" MinValue="0" MaxValue="999"
+                                Grid.Column="1" Style="{StaticResource NumericUpDownStyle}"/>
 
         <TextBlock Grid.Row="2" Text="{Binding Path=Settings.AutoExtendedAway, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
-        <xctk:IntegerUpDown Grid.Row="2" Value="{Binding Settings.AutoExtendedAwayAfter, Mode=TwoWay}" FontSize="12" Width="50" Minimum="0" Maximum="999"
-                                Grid.Column="1" Style="{StaticResource valueStyle}"/>
+        <numericUpDownLib:UIntegerUpDown Grid.Row="2" Value="{Binding Settings.AutoExtendedAwayAfter, Mode=TwoWay}" FontSize="12" Width="50" MinValue="0" MaxValue="999"
+                                Grid.Column="1" Style="{StaticResource NumericUpDownStyle}"/>
 
         <TextBlock Grid.Row="3" Text="{Binding Path=Settings.ShowStatusChanges, Source={StaticResource ResourceWrapper}}" Style="{StaticResource ParameterNameStyle}"/>
         <CheckBox Grid.Row="3" IsChecked="{Binding Settings.ShowStatusChangingMessages, Mode=TwoWay}" Grid.Column="1" Style="{StaticResource valueStyle}"/>

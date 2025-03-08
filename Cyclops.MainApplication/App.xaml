@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Data/Themes/Default/OutputAreaStyles.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/General.xaml"/>
                 <ResourceDictionary Source="Data/Themes/Default/SettingsViewStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/BusyIndicator;component/Theme/Default.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
     </Application.Resources>

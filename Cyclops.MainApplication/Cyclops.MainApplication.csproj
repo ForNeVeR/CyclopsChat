@@ -12,6 +12,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System.Configuration" />
+        <PackageReference Include="BusyIndicators" Version="2.1.2" />
         <PackageReference Include="CommonServiceLocator" Version="2.0.7" />
         <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
             <NoWarn>NU1701</NoWarn> <!-- TODO: Get rid of it -->

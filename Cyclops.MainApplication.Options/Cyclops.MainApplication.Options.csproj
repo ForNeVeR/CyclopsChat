@@ -4,11 +4,10 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="BusyIndicators" Version="2.1.2" />
+        <PackageReference Include="Dirkster.NumericUpDownLib" Version="3.4.0" />
         <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
             <NoWarn>NU1701</NoWarn> <!-- TODO[#34]: Get rid of it -->
-        </PackageReference>
-        <PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1">
-            <NoWarn>NU1701</NoWarn> <!-- TODO[#41]: Get rid of it -->
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
