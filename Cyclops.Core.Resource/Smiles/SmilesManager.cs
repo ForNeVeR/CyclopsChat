@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -77,7 +76,7 @@ public class SmilesManager : ISmilesManager
 
         if (smilePack != null)
             smilePack.SmilesForDeserialization = smilePack.SmilesForDeserialization
-                .Where(i => i?.Bitmap != null && i.Masks.Any()).ToArray();
+                .Where(i => i?.Stream != null && i.Masks.Any()).ToArray();
 
         return smilePack;
     }
