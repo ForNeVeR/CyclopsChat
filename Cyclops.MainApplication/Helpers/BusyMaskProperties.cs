@@ -7,8 +7,11 @@ public static class BusyMaskProperties
 {
     /// <summary>
     /// The same as <see cref="BusyMask.IsBusy"/> but with <see cref="BusyMask.IsBusyAtStartup"/> combined, so it works
-    /// properly for the cases when <c>IsBusy</c> was <c>true</c> at the moment of the control creation.
+    /// properly for the cases when <see cref="BusyMask.IsBusy"/> was <c>true</c> at the moment of the control creation.
     /// </summary>
+    /// <remarks>
+    /// See <a href="https://github.com/Moh3nGolshani/BusyIndicator/issues/24">BusyIndicator#24</a> for more details.
+    /// </remarks>
     public static readonly DependencyProperty IsBusyWorkProperty =
         DependencyProperty.RegisterAttached(
             "IsBusyWork",
