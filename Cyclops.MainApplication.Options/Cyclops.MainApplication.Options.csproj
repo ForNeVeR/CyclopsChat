@@ -4,7 +4,7 @@
         <UseWpf>true</UseWpf>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="BusyIndicators" Version="2.1.2" />
+        <PackageReference Include="BusyIndicators" Version="2.1.3" />
         <PackageReference Include="Dirkster.NumericUpDownLib" Version="3.4.0" />
         <PackageReference Include="MvvmLightLibs" Version="5.4.1.1">
             <NoWarn>NU1701</NoWarn> <!-- TODO[#34]: Get rid of it -->
