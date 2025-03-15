@@ -4,7 +4,6 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:ValueConverters="clr-namespace:Cyclops.MainApplication.ValueConverters"
         xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
-        xmlns:helpers="clr-namespace:Cyclops.MainApplication.Helpers"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="{Binding Path=Vcard.Title, Source={StaticResource ResourceWrapper}}"
         MaxHeight="261" MaxWidth="533" MinHeight="261" MinWidth="533"
@@ -24,7 +23,7 @@
 
 	</Window.Resources>
     <Grid>
-        <busyIndicator:BusyMask helpers:BusyMaskProperties.IsBusyWork="{Binding IsBusy}"
+        <busyIndicator:BusyMask IsBusy="{Binding IsBusy}"
                                 Focusable="False"
                                 BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}"
                                 BusyContentMargin="0,40,0,0">

@@ -5,7 +5,6 @@
              xmlns:ViewModel="clr-namespace:Cyclops.MainApplication.ViewModel"
              xmlns:busyIndicator="https://github.com/moh3ngolshani/BusyIndicator"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:helpers="clr-namespace:Cyclops.MainApplication.Helpers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              mc:Ignorable="d" Background="Transparent" d:DesignHeight="478" d:DesignWidth="739" UseLayoutRounding="True"
@@ -41,7 +40,7 @@
     </UserControl.Resources>
 
 
-    <busyIndicator:BusyMask helpers:BusyMaskProperties.IsBusyWork="{Binding IsBusy}"
+    <busyIndicator:BusyMask IsBusy="{Binding IsBusy}"
                             Focusable="False"
                             BusyContent="{Binding Path=Common.PleaseWait, Source={StaticResource ResourceWrapper}}"
                             BusyContentMargin="0,40,0,0">
