@@ -48,13 +48,13 @@ jobs:
           output: ./changelog-section.md
 
       - name: Upload the artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: CyclopsChat-v${{ steps.version.outputs.version }}.win-x64.zip
           path: ./CyclopsChat-v${{ steps.version.outputs.version }}.win-x64.zip
 
       - name: Upload the changelog
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: changelog-section.md
           path: ./changelog-section.md
