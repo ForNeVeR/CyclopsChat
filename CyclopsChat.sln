@@ -13,7 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cyclops.MainApplication.Loc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{11D748C8-33AE-4AE8-BA78-D368A8DF70D3}"
 	ProjectSection(SolutionItems) = preProject
-		.github\dependabot.yml = .github\dependabot.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{83BF8062-55BF-4925-B88F-804DCE42F7BA}"
