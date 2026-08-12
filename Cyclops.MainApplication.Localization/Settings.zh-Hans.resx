@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AutoAway" xml:space="preserve">
+    <value>空闲多少分钟后设置“离开”状态：</value>
+  </data>
+  <data name="AutoExtendedAway" xml:space="preserve">
+    <value>空闲多少分钟后设置“不在”状态：</value>
+  </data>
+  <data name="BlinkOnlyOnPrivates" xml:space="preserve">
+    <value>仅私聊闪烁（忽略公共聊天）：</value>
+  </data>
+  <data name="CommonGroup" xml:space="preserve">
+    <value>常用</value>
+  </data>
+  <data name="CommonHeader" xml:space="preserve">
+    <value>常用</value>
+  </data>
+  <data name="ConnectionGroup" xml:space="preserve">
+    <value>连接</value>
+  </data>
+  <data name="DisableAllSounds" xml:space="preserve">
+    <value>禁用所有声音：</value>
+  </data>
+  <data name="DisableBlinking" xml:space="preserve">
+    <value>禁用闪烁：</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="EditConnectionConfiguration" xml:space="preserve">
+    <value>编辑连接配置：</value>
+  </data>
+  <data name="EnableErrorsPopups" xml:space="preserve">
+    <value>启用错误弹窗通知：</value>
+  </data>
+  <data name="EnablePrivatesPopups" xml:space="preserve">
+    <value>启用私聊弹窗通知：</value>
+  </data>
+  <data name="HideOnClosing" xml:space="preserve">
+    <value>窗口关闭时隐藏（否则直接关闭应用）：</value>
+  </data>
+  <data name="HotkeyHeader" xml:space="preserve">
+    <value>快捷键</value>
+  </data>
+  <data name="InterfaceHeader" xml:space="preserve">
+    <value>界面</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言：</value>
+  </data>
+  <data name="NotificationsGroup" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="PopupStaysOpenning" xml:space="preserve">
+    <value>弹窗显示时间（秒）：</value>
+  </data>
+  <data name="ShowEntryAndExits" xml:space="preserve">
+    <value>显示用户进出状态</value>
+  </data>
+  <data name="ShowRoleChanges" xml:space="preserve">
+    <value>显示角色更改</value>
+  </data>
+  <data name="ShowStatusChanges" xml:space="preserve">
+    <value>在聊天中显示状态更改：</value>
+  </data>
+  <data name="SmileLimit" xml:space="preserve">
+    <value>限制单条消息中的表情符号数量：</value>
+  </data>
+  <data name="SoundEvenIfActive" xml:space="preserve">
+    <value>聊天窗口处于活动状态时播放声音：</value>
+  </data>
+  <data name="SoundOnIncomingPrivate" xml:space="preserve">
+    <value>收到私聊消息时：</value>
+  </data>
+  <data name="SoundOnIncomingPublic" xml:space="preserve">
+    <value>收到公共聊天消息时：</value>
+  </data>
+  <data name="SoundOnStatusChange" xml:space="preserve">
+    <value>用户已更改其状态：</value>
+  </data>
+  <data name="SoundOnSystemMessage" xml:space="preserve">
+    <value>收到系统消息时：</value>
+  </data>
+  <data name="SoundOnUserJoin" xml:space="preserve">
+    <value>用户已加入：</value>
+  </data>
+  <data name="SoundOnUserLeave" xml:space="preserve">
+    <value>用户已离开：</value>
+  </data>
+  <data name="SoundsHeader" xml:space="preserve">
+    <value>声音</value>
+  </data>
+  <data name="StartWithWindows" xml:space="preserve">
+    <value>Windows 启动时自动启动聊天：</value>
+  </data>
+  <data name="StatusHeader" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="TrayGroup" xml:space="preserve">
+    <value>托盘</value>
+  </data>
+</root>
